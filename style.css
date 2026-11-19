@@ -1,0 +1,7664 @@
+/* ==========================================================================
+   Ban Loung Primary School - Management System Stylesheet
+   សាលាបឋមសិក្សា បាន្លួង - រចនាបថកម្មវិធីគ្រប់គ្រងសាលារៀន
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&family=Kantumruy+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Moul&family=Siemreap&display=swap');
+
+:root {
+  --primary: #1e3a8a;
+  /* Deep Royal Navy */
+  --primary-light: #3b82f6;
+  /* Blue 500 */
+  --primary-dark: #172554;
+  /* Navy 950 */
+  --accent: #d97706;
+  /* Warm Gold */
+  --accent-light: #fef3c7;
+  --secondary: #0d9488;
+  /* Emerald Teal */
+  --success: #16a34a;
+  /* Green 600 */
+  --warning: #f59e0b;
+  /* Amber 500 */
+  --danger: #dc2626;
+  /* Red 600 */
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border: #cbd5e1;
+  --border-dark: #94a3b8;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  --font-body: 'Khmer OS Battambang', 'Battambang', 'Kantumruy Pro', sans-serif;
+  --font-moul: 'Khmer OS Muol Light', 'Khmer OS Moul Light', 'Khmer OS Muol', 'Moul', serif;
+  --font-battambang: 'Khmer OS Battambang', 'Battambang', 'Kantumruy Pro', sans-serif;
+  --font-moul-light: 'Khmer OS Muol Light', 'Khmer OS Moul Light', 'Khmer OS Muol', 'Moul', serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  line-height: 1.6;
+  font-size: 14px;
+  overflow-x: clip;
+}
+
+/* App Layout */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  align-items: stretch;
+  background-color: var(--bg-main);
+}
+
+/* Sidebar Navigation (អាចពង្រីក ឬបង្រួមបានតាមចិត្ត) */
+.sidebar {
+  width: 270px;
+  min-width: 68px;
+  max-width: 520px;
+  background: linear-gradient(180deg, #1e3a8a 0%, #172554 100%);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  max-height: 100vh;
+  min-height: 100vh;
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.12);
+  z-index: 100;
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar.is-resizing {
+  transition: none !important;
+  user-select: none !important;
+}
+
+/* Sidebar Draggable Resizer Handle (អូសទៅឆ្វេង ឬស្ដាំដើម្បីពង្រីក/បង្រួម) */
+.sidebar-resizer {
+  position: absolute;
+  top: 0;
+  right: -5px;
+  width: 10px;
+  height: 100%;
+  cursor: col-resize;
+  z-index: 110;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.sidebar-resizer .resizer-handle-pill {
+  width: 4px;
+  height: 38px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.25);
+  transition: all 0.2s ease;
+}
+
+.sidebar-resizer:hover,
+.sidebar-resizer.is-dragging {
+  background: rgba(59, 130, 246, 0.35);
+}
+
+.sidebar-resizer:hover .resizer-handle-pill,
+.sidebar-resizer.is-dragging .resizer-handle-pill {
+  background: #38bdf8;
+  height: 60px;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.9);
+}
+
+/* Sidebar Toggle Buttons */
+.sidebar-toggle-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 12px;
+  margin-left: auto;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.sidebar-toggle-btn:hover {
+  background: #2563eb;
+  border-color: #60a5fa;
+  transform: scale(1.08);
+}
+
+.topbar-sidebar-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  color: #1e3a8a;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 14px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.topbar-sidebar-toggle:hover {
+  background: #eff6ff;
+  border-color: #3b82f6;
+  color: #2563eb;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.15);
+}
+
+.sidebar-header {
+  padding: 22px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.school-logo {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: white;
+  box-shadow: 0 4px 10px rgba(217, 119, 6, 0.4);
+  flex-shrink: 0;
+}
+
+.school-title-wrap {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.school-title-wrap h1 {
+  font-family: var(--font-moul);
+  font-size: 14px;
+  line-height: 1.4;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.school-title-wrap p {
+  font-size: 11px;
+  color: #cbd5e1;
+  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nav-section-title {
+  display: none !important;
+}
+
+.nav-menu {
+  list-style: none;
+  padding: 10px 12px;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.nav-item {
+  margin-bottom: 4px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px;
+  color: #e2e8f0;
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  font-size: 13.5px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  transform: translateX(3px);
+}
+
+.nav-link.active {
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+}
+
+.nav-icon {
+  font-size: 18px;
+  width: 22px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.nav-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.sidebar-footer {
+  padding: 14px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 12px;
+  color: #94a3b8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+  overflow: hidden;
+  margin-top: auto;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(4px);
+}
+
+.footer-school-name {
+  font-size: 11.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-size-actions {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.btn-sidebar-size {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  font-size: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 0;
+}
+
+.btn-sidebar-size:hover {
+  background: #2563eb;
+  border-color: #60a5fa;
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+.footer-version {
+  font-size: 11px;
+  font-weight: 600;
+  color: #93c5fd;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   SIDEBAR COLLAPSED STATE (ផ្ទាំងមីនុយបង្រួមទៅជា Icon)
+   ========================================================================== */
+.sidebar.collapsed {
+  width: 72px !important;
+}
+
+.sidebar.collapsed .school-title-wrap {
+  display: none !important;
+}
+
+.sidebar.collapsed .nav-section-title {
+  display: none !important;
+}
+
+.sidebar.collapsed .school-logo {
+  width: 44px;
+  height: 44px;
+  font-size: 20px;
+  margin: 0 auto;
+}
+
+.sidebar.collapsed .sidebar-header {
+  padding: 16px 8px;
+  justify-content: center;
+  position: relative;
+}
+
+.sidebar.collapsed .sidebar-toggle-btn {
+  display: none !important;
+}
+
+.sidebar.collapsed .nav-menu {
+  padding: 10px 8px;
+}
+
+.sidebar.collapsed .nav-link {
+  justify-content: center;
+  padding: 12px 0;
+  gap: 0;
+  position: relative;
+}
+
+.sidebar.collapsed .nav-text {
+  display: none !important;
+}
+
+.sidebar.collapsed .nav-icon {
+  margin: 0;
+  font-size: 20px;
+  width: auto;
+}
+
+.sidebar.collapsed .sidebar-footer {
+  padding: 10px 4px;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sidebar.collapsed .footer-school-name {
+  display: none !important;
+}
+
+.sidebar.collapsed .sidebar-size-actions {
+  display: none !important;
+}
+
+.sidebar.collapsed .footer-version {
+  font-size: 10px;
+  text-align: center;
+}
+
+/* Tooltip on hover when collapsed */
+.sidebar.collapsed .nav-link:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  left: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: #0f172a;
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-family: var(--font-battambang);
+  font-weight: 500;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+  z-index: 1000;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.sidebar.collapsed .nav-link:hover::before {
+  content: "";
+  position: absolute;
+  left: calc(100% + 4px);
+  top: 50%;
+  transform: translateY(-50%);
+  border: 5px solid transparent;
+  border-right-color: #0f172a;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+
+/* ==========================================================================
+   STUDENT MANAGEMENT HUB (គ្រប់គ្រងសិស្ស) & SUB-NAVIGATION
+   ========================================================================== */
+
+/* Sidebar Submenu for គ្រប់គ្រងសិស្ស */
+.nav-has-submenu {
+  position: relative;
+}
+
+.nav-has-submenu .nav-link {
+  position: relative;
+}
+
+.nav-arrow {
+  margin-left: auto;
+  font-size: 11px;
+  color: #93c5fd;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-has-submenu.expanded .nav-arrow {
+  transform: rotate(180deg);
+}
+
+.nav-submenu {
+  list-style: none;
+  padding: 4px 0 6px 18px;
+  margin: 2px 10px 4px 22px;
+  border-left: 2px solid rgba(255, 255, 255, 0.16);
+  display: none;
+  transition: all 0.25s ease;
+}
+
+.nav-has-submenu.expanded .nav-submenu {
+  display: block;
+}
+
+.nav-sublink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  color: #cbd5e1;
+  text-decoration: none;
+  border-radius: var(--radius-sm, 6px);
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-sublink .sub-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.nav-sublink:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  transform: translateX(3px);
+}
+
+.nav-sublink:hover .sub-dot {
+  background: #38bdf8;
+  transform: scale(1.3);
+}
+
+.nav-sublink.active {
+  background: rgba(59, 130, 246, 0.28);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.nav-sublink.active .sub-dot {
+  background: #38bdf8;
+  box-shadow: 0 0 6px rgba(56, 189, 248, 0.9);
+  transform: scale(1.4);
+}
+
+/* Collapsed Sidebar: hide submenu & arrow */
+.sidebar.collapsed .nav-arrow {
+  display: none !important;
+}
+
+.sidebar.collapsed .nav-submenu {
+  display: none !important;
+}
+
+/* ==========================================================================
+   STUDENT MANAGEMENT HUB (ផ្ទាំងធំគ្រប់គ្រងសិស្ស និង ផ្ទាំងតូចៗ)
+   ========================================================================== */
+.student-management-hub {
+  margin-bottom: 24px;
+}
+
+.hub-hero-banner {
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%);
+  color: #ffffff;
+  border-radius: 14px;
+  padding: 16px 22px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 15px rgba(30, 58, 138, 0.18);
+}
+
+.hub-hero-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.hub-hero-title {
+  font-family: var(--font-moul);
+  font-size: 15px;
+  line-height: 1.4;
+  margin: 0;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+.hub-hero-desc {
+  font-size: 12px;
+  color: #bfdbfe;
+  margin: 3px 0 0;
+  font-family: var(--font-battambang);
+}
+
+/* 4 Sub-Panel Cards Grid (ផ្ទាំងតូចៗដែលមានក្នុងផ្ទាំងធំ) */
+.student-hub-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 1200px) {
+  .student-hub-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .student-hub-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.student-hub-card {
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+
+.student-hub-card:hover {
+  transform: translateY(-3px);
+  border-color: #93c5fd;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.12);
+}
+
+.student-hub-card.active {
+  border-color: #2563eb;
+  background: linear-gradient(180deg, #ffffff 0%, #eff6ff 100%);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.18);
+}
+
+.student-hub-card.active::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #1e3a8a, #2563eb, #38bdf8);
+}
+
+.hub-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.hub-card-icon.icon-blue {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.hub-card-icon.icon-green {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.hub-card-icon.icon-indigo {
+  background: #e0e7ff;
+  color: #4338ca;
+}
+
+.hub-card-icon.icon-amber {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.hub-card-body {
+  flex: 1;
+}
+
+.hub-card-title {
+  font-family: var(--font-battambang);
+  font-weight: 700;
+  font-size: 14.5px;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.student-hub-card.active .hub-card-title {
+  color: #1d4ed8;
+}
+
+.hub-card-sub {
+  font-size: 11.5px;
+  color: #64748b;
+  line-height: 1.45;
+}
+
+.hub-card-badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px dashed #e2e8f0;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.student-hub-card.active .hub-card-badge {
+  color: #16a34a;
+  border-top-color: #bfdbfe;
+}
+
+.student-hub-card.active .hub-card-badge span {
+  color: #16a34a;
+  font-weight: 700;
+}
+
+.student-hub-card:not(.active) .hub-card-badge span {
+  color: #2563eb;
+}
+
+/* Student Subpanes */
+.student-subpane {
+  display: none;
+}
+
+.student-subpane.active {
+  display: block;
+  animation: fadeInSubpane 0.22s ease-in-out;
+}
+
+@keyframes fadeInSubpane {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Print Settings for Hub */
+
+/* ==========================================================================
+   ANNUAL RANKS (ចំណាត់ថ្នាក់ប្រចាំឆ្នាំ) - 100% MINISTRY SAMPLE PDF SPEC
+   A4 Portrait (2 Pages: Page 1 rows 1-26, Page 2 rows 27-38 + Stats & Signatures)
+   Official Blue (#0000cc), Red (#dc2626), Green (#16a34a), Crisp Solid Borders
+   ========================================================================== */
+.annual-a4-page {
+  width: 794px;
+  max-width: 794px;
+  min-height: auto;
+  background: #ffffff;
+  margin: 0 auto 20px auto;
+  padding: 24px 36px 20px 36px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.annual-header-wrap {
+  width: 722px;
+  margin: 0 auto 6px auto;
+}
+
+.annual-kingdom-center {
+  text-align: center;
+  margin: 0 auto 3px auto;
+}
+
+.annual-kingdom-title {
+  font-family: var(--font-moul);
+  font-size: 11.5pt;
+  color: #0000cc;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.annual-kingdom-motto {
+  font-family: var(--font-moul);
+  font-size: 11pt;
+  color: #0000cc;
+  line-height: 1.45;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.annual-flourish {
+  margin: 2px auto 4px auto;
+  text-align: center;
+}
+
+.annual-flourish img {
+  height: 12px;
+  object-fit: contain;
+}
+
+.annual-school-grade-left {
+  text-align: left;
+  margin-top: -10px;
+  margin-bottom: 5px;
+}
+
+.annual-school-name {
+  font-family: var(--font-moul);
+  font-size: 11pt;
+  color: #0000cc;
+  line-height: 1.45;
+  outline: none;
+}
+
+.annual-grade-name {
+  font-family: var(--font-moul);
+  font-size: 11pt;
+  color: #0000cc;
+  line-height: 1.45;
+  outline: none;
+}
+
+.annual-main-title {
+  font-family: var(--font-moul);
+  font-size: 12.5pt;
+  color: #16a34a; /* Official Green */
+  line-height: 1.4;
+  text-align: center;
+  width: 100%;
+  margin: 4px auto 8px auto;
+}
+
+.annual-table {
+  width: 722px;
+  border-collapse: collapse;
+  border: 1px solid #000000;
+  table-layout: fixed;
+  background: #ffffff;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.annual-table th,
+.annual-table td {
+  border: 1px solid #000000;
+  padding: 2px 1px;
+  box-sizing: border-box;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.annual-table thead th {
+  font-family: var(--font-battambang);
+  font-size: 8.5pt;
+  font-weight: 700;
+  color: #0000cc;
+  height: 44px;
+  line-height: 1.2;
+  background: #ffffff;
+}
+
+.annual-table thead th.annual-th-red {
+  color: #dc2626 !important;
+}
+
+.annual-table tbody tr {
+  height: 26px;
+}
+
+.annual-table tbody td {
+  font-family: var(--font-battambang);
+  font-size: 9.5pt;
+  color: #000000;
+  height: 26px;
+  line-height: 1.2;
+}
+
+.annual-td-num {
+  font-family: var(--font-battambang);
+  font-size: 9.5pt;
+  text-align: center;
+  color: #000000;
+}
+
+.annual-td-id {
+  font-family: var(--font-battambang);
+  font-size: 9pt;
+  text-align: center;
+  color: #000000;
+}
+
+.annual-td-lastname {
+  font-family: var(--font-battambang);
+  font-size: 9.5pt;
+  text-align: left;
+  padding-left: 6px;
+  padding-right: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  color: #000000;
+}
+
+.annual-td-firstname {
+  font-family: var(--font-battambang);
+  font-size: 9.5pt;
+  text-align: left;
+  padding-left: 2px;
+  padding-right: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  color: #000000;
+}
+
+.annual-td-gender {
+  font-family: var(--font-battambang);
+  font-size: 9.5pt;
+  text-align: center;
+  color: #000000;
+}
+
+.annual-td-dob {
+  font-family: var(--font-battambang);
+  font-size: 9pt;
+  text-align: center;
+  white-space: nowrap;
+  color: #000000;
+}
+
+.annual-td-val {
+  font-family: var(--font-battambang);
+  font-size: 9.5pt;
+  text-align: center;
+  outline: none;
+  color: #000000;
+}
+.annual-td-val:hover, .annual-td-val:focus {
+  background-color: #f0fdf4;
+}
+
+.annual-td-rank {
+  font-family: var(--font-battambang);
+  font-size: 9.5pt;
+  font-weight: 700;
+  text-align: center;
+  color: #dc2626 !important;
+}
+
+.annual-td-mention,
+.annual-td-other {
+  font-family: var(--font-battambang);
+  font-size: 9.5pt;
+  font-weight: 700;
+  text-align: center;
+  color: #000000;
+  outline: none;
+}
+.annual-td-mention:hover, .annual-td-mention:focus,
+.annual-td-other:hover, .annual-td-other:focus {
+  background-color: #f0fdf4;
+}
+
+.annual-footer-wrap {
+  width: 722px;
+  margin: 10px auto 0 auto;
+  box-sizing: border-box;
+}
+
+.annual-roster-end {
+  font-family: var(--font-moul-light);
+  font-size: 10pt;
+  color: #0000cc;
+  text-align: left;
+  margin: 8px 0 10px 10px;
+  line-height: 1.4;
+}
+
+.annual-stats-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 10px 0 18px 24px;
+  font-family: var(--font-battambang);
+}
+
+.annual-stats-title {
+  font-family: var(--font-battambang);
+  font-size: 10pt;
+  font-weight: 700;
+  color: #0000cc;
+  margin-right: 14px;
+}
+
+.annual-stats-bracket {
+  margin-right: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.annual-stats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 9.5pt;
+  color: #0000cc;
+}
+
+.annual-stat-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.annual-stat-grade {
+  min-width: 65px;
+  font-weight: 600;
+}
+.annual-stat-have {
+  min-width: 25px;
+}
+.annual-stat-total {
+  min-width: 55px;
+}
+.annual-stat-female {
+  min-width: 65px;
+}
+.annual-stat-eq {
+  min-width: 40px;
+}
+.annual-stat-pct {
+  min-width: 55px;
+  font-weight: 700;
+}
+.annual-pct-red {
+  color: #dc2626 !important;
+}
+
+.annual-signatures-wrap {
+  display: flex;
+  justify-content: space-between;
+  width: 722px;
+  margin: 20px auto 0 auto;
+}
+
+.annual-sig-block {
+  width: 330px;
+  text-align: center;
+  font-family: var(--font-battambang);
+  color: #0000cc;
+}
+
+.annual-sig-title {
+  font-family: var(--font-moul);
+  font-size: 11pt;
+  color: #0000cc;
+  margin-bottom: 4px;
+}
+
+.annual-sig-date {
+  font-size: 9pt;
+  color: #0000cc;
+  line-height: 1.5;
+  outline: none;
+}
+.annual-sig-date:hover, .annual-sig-date:focus {
+  background-color: #eff6ff;
+  border-radius: 4px;
+}
+
+.annual-sig-role {
+  font-family: var(--font-moul);
+  font-size: 11pt;
+  color: #0000cc;
+  margin-top: 6px;
+  margin-bottom: 50px;
+}
+
+.annual-sig-teacher-name {
+  font-family: var(--font-moul);
+  font-size: 11.5pt;
+  color: #0000cc;
+  margin-top: 10px;
+  outline: none;
+}
+.annual-sig-teacher-name:hover, .annual-sig-teacher-name:focus {
+  background-color: #eff6ff;
+  border-radius: 4px;
+}
+
+/* ==========================================================================
+   STUDY BOOK (សៀវភៅតាមដានការសិក្សា) - 100% MINISTRY SAMPLE SPEC
+   A4 Landscape (297mm x 210mm) - 2 Booklet Halves Side-by-Side
+   Official Blue (#0000cc), Dotted Form Underlines, Solid Table Grid
+   ========================================================================== */
+.study-book-sheet {
+  width: 1080px;
+  max-width: 100%;
+  min-height: 720px;
+  background: #ffffff;
+  margin: 0 auto 30px auto;
+  padding: 16px 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* Left Half: Booklet Cover / Profile */
+.study-book-left-card {
+  width: 49%;
+  flex: 0 0 49%;
+  border: 1.5px solid #0000cc;
+  padding: 14px 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #ffffff;
+  min-height: 700px;
+}
+
+/* Right Half: Monthly Evaluation */
+.study-book-right-card {
+  width: 49%;
+  flex: 0 0 49%;
+  border: 1.5px solid #0000cc;
+  padding: 12px 14px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #ffffff;
+  min-height: 700px;
+}
+
+/* Headings */
+.sb-heading-kingdom {
+  font-family: var(--font-moul);
+  font-size: 11pt;
+  color: #0000cc;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.sb-heading-motto {
+  font-family: var(--font-moul);
+  font-size: 10.5pt;
+  color: #0000cc;
+  line-height: 1.4;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.sb-ministry-title {
+  font-family: var(--font-moul);
+  font-size: 11pt;
+  color: #0000cc;
+  line-height: 1.4;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.sb-cover-title {
+  font-family: var(--font-moul);
+  font-size: 15pt;
+  color: #0000cc;
+  line-height: 1.4;
+  text-align: center;
+  margin: 18px 0;
+  font-weight: 700;
+}
+
+.sb-general-school-title {
+  font-family: var(--font-moul);
+  font-size: 11pt;
+  color: #0000cc;
+  line-height: 1.4;
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.sb-sub-school-dept {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-moul);
+  font-size: 9.5pt;
+  color: #0000cc;
+  margin-bottom: 22px;
+}
+
+/* Profile Form Lines */
+.sb-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: var(--font-battambang);
+  font-size: 9.5pt;
+  color: #0000cc;
+}
+
+.sb-form-row {
+  display: flex;
+  align-items: baseline;
+  line-height: 1.5;
+  width: 100%;
+}
+
+.sb-form-label {
+  font-family: var(--font-battambang);
+  color: #0000cc;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.sb-dotted-val {
+  border-bottom: 1px dotted #0000cc;
+  color: #000000;
+  outline: none;
+  padding: 0 4px;
+  min-height: 19px;
+  font-family: var(--font-battambang);
+}
+.sb-dotted-val:hover, .sb-dotted-val:focus {
+  background-color: #f0fdf4;
+}
+
+.sb-cover-year {
+  font-family: var(--font-moul);
+  font-size: 11pt;
+  color: #0000cc;
+  text-align: center;
+  margin-top: 18px;
+  margin-bottom: 4px;
+}
+
+/* Right Pane Specifics */
+.sb-right-header-wrap {
+  text-align: center;
+  margin-bottom: 2px;
+}
+
+.sb-right-kingdom {
+  font-family: var(--font-moul);
+  font-size: 9.5pt;
+  color: #0000cc;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.sb-right-motto {
+  font-family: var(--font-moul);
+  font-size: 9pt;
+  color: #0000cc;
+  line-height: 1.35;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.sb-right-dept-wrap {
+  text-align: left;
+  margin: 2px 0 3px 0;
+}
+
+.sb-right-dept {
+  font-family: var(--font-moul);
+  font-size: 8.5pt;
+  color: #0000cc;
+  line-height: 1.35;
+  text-align: left;
+}
+
+.sb-right-school {
+  font-family: var(--font-moul);
+  font-size: 8.5pt;
+  color: #0000cc;
+  line-height: 1.35;
+  text-align: left;
+}
+
+.sb-right-grade-month {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 4px 0 5px 0;
+  font-family: var(--font-moul);
+  font-size: 8.5pt;
+  color: #0000cc;
+  text-align: center;
+}
+
+.sb-right-grade-month .sb-grade-tag {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+}
+
+.sb-right-grade-month .sb-month-result-title {
+  text-align: center;
+  margin: 0 auto;
+  white-space: nowrap;
+}
+
+.sb-right-student-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 5px;
+  font-family: var(--font-battambang);
+  font-size: 8.5pt;
+  color: #0000cc;
+}
+
+/* Evaluation Table */
+.sb-eval-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1.5px solid #0000cc;
+  table-layout: fixed;
+  box-sizing: border-box;
+  background: #ffffff;
+  margin: 4px 0;
+}
+
+.sb-eval-table th,
+.sb-eval-table td {
+  border: 1px solid #0000cc;
+  padding: 2px 2px;
+  box-sizing: border-box;
+  vertical-align: middle;
+  text-align: center;
+  font-family: var(--font-battambang);
+}
+
+.sb-eval-table thead th {
+  font-size: 8.5pt;
+  font-weight: 700;
+  color: #0000cc;
+  line-height: 1.2;
+  background: #ffffff;
+  padding: 3px 2px;
+}
+
+.sb-eval-table thead th.sb-th-reinforce {
+  font-size: 7.2pt;
+  line-height: 1.15;
+  padding: 2px 3px;
+}
+
+.sb-eval-table tbody tr {
+  height: 22px;
+}
+
+.sb-eval-table tbody td {
+  font-size: 8.5pt;
+  height: 22px;
+  line-height: 1.15;
+  color: #000000;
+}
+
+.sb-td-subject {
+  text-align: left !important;
+  padding-left: 6px !important;
+  font-size: 8.5pt;
+  white-space: nowrap;
+  overflow: hidden;
+  color: #0000cc !important;
+  font-weight: 600;
+}
+
+.sb-td-grade {
+  cursor: pointer;
+  font-size: 9pt;
+  font-weight: 700;
+  color: #0000cc;
+  user-select: none;
+  text-align: center !important;
+  padding: 0 1px !important;
+}
+.sb-td-grade:hover {
+  background-color: #eff6ff;
+}
+.sb-td-grade.checked {
+  color: #0000cc;
+  font-weight: 900;
+  background-color: #dbeafe;
+}
+
+.sb-td-reinforce {
+  font-size: 7.5pt;
+  text-align: left !important;
+  padding-left: 4px !important;
+  padding-right: 4px !important;
+  outline: none;
+  color: #000000;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sb-td-reinforce:hover, .sb-td-reinforce:focus {
+  background-color: #f0fdf4;
+}
+
+/* Summary below table */
+.sb-summary-wrap {
+  margin-top: 6px;
+  font-family: var(--font-battambang);
+  font-size: 8.5pt;
+  color: #0000cc;
+  line-height: 1.6;
+}
+
+.sb-summary-row1,
+.sb-summary-row2 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sb-summary-row3 {
+  margin-top: 3px;
+}
+
+.sb-signatures-wrap {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  font-family: var(--font-battambang);
+  font-size: 8.5pt;
+  color: #0000cc;
+  text-align: center;
+}
+
+.sb-sig-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 65px;
+}
+
+/* Movable & Draggable Text Blocks in Study Book */
+.sb-movable-block {
+  position: relative;
+  user-select: none;
+  touch-action: none;
+  cursor: grab;
+  transition: box-shadow 0.15s ease, border 0.15s ease;
+  border: 1px dashed transparent;
+  border-radius: 4px;
+}
+
+.sb-movable-block:hover {
+  border-color: #2563eb;
+  background-color: rgba(37, 99, 235, 0.02);
+}
+
+.sb-movable-block.is-dragging {
+  cursor: grabbing;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+  border-color: #1d4ed8;
+  z-index: 100;
+}
+
+.sb-movable-block .approval-action-toolbar {
+  top: -26px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.sb-td-grade.has-score {
+  font-family: var(--font-battambang);
+  font-weight: 700;
+  color: #0000cc;
+  background-color: #eff6ff;
+  font-size: 8.5pt;
+}
+
+.sb-td-grade:focus {
+  background-color: #dbeafe;
+  outline: 1.5px solid #2563eb;
+}
+
+/* ==========================================================================
+   TRAINEE BOOK RECORD SHEET (សៀវភៅសិក្ខាគារិក)
+   100% Exact to Ministry Sample: Pastel Green Background (#d9ead3),
+   Dark Green Borders (#274e13), Yellow Ribbon Badge, Red Accents
+   ========================================================================== */
+.trainee-sheet {
+  width: 1080px;
+  max-width: 100%;
+  min-height: 700px;
+  background-color: #d9ead3;
+  margin: 0 auto 30px auto;
+  padding: 10px 14px 14px 14px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  border: 2px solid #274e13;
+  box-sizing: border-box;
+  position: relative;
+  font-family: var(--font-battambang);
+  color: #000000;
+}
+
+/* Title Badge */
+.trainee-title-wrap {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.trainee-title-badge {
+  display: inline-block;
+  background-color: #ffffcc;
+  border: 1.5px solid #274e13;
+  border-radius: 20px;
+  padding: 3px 32px;
+  font-family: var(--font-moul);
+  font-size: 13pt;
+  color: #c00000;
+  letter-spacing: 0.5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Two Columns Side-by-Side */
+.trainee-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.trainee-col-left,
+.trainee-col-right {
+  width: 49.5%;
+  flex: 0 0 49.5%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Left Column Specifics */
+.trainee-name-header {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #274e13;
+  background-color: #e2f0d9;
+  height: 32px;
+  font-size: 8.5pt;
+  font-family: var(--font-battambang);
+  box-sizing: border-box;
+}
+
+.trainee-name-label {
+  width: 44%;
+  text-align: center;
+  font-weight: 700;
+  border-right: 1.5px solid #274e13;
+  padding: 0 4px;
+  white-space: nowrap;
+}
+
+.trainee-name-val-box {
+  width: 32%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1.5px solid #274e13;
+  padding: 0 4px;
+}
+
+.trainee-name-pill {
+  display: inline-block;
+  border: 1.5px solid #ff0000;
+  background-color: #ffe6e6;
+  border-radius: 12px;
+  padding: 1px 12px;
+  color: #ff0000;
+  font-family: var(--font-moul);
+  font-size: 9pt;
+  font-weight: 700;
+  text-align: center;
+  outline: none;
+}
+
+.trainee-gender-label {
+  width: 12%;
+  text-align: center;
+  font-weight: 700;
+  border-right: 1.5px solid #274e13;
+}
+
+.trainee-gender-val {
+  width: 12%;
+  text-align: center;
+  font-weight: 700;
+  color: #ff0000;
+  font-size: 9pt;
+  outline: none;
+}
+
+/* Section Title Bars */
+.trainee-sec-title {
+  text-align: center;
+  font-weight: 700;
+  font-size: 9pt;
+  margin: 5px 0 3px 0;
+  color: #000000;
+  font-family: var(--font-battambang);
+}
+
+/* Semester Score Table */
+.trainee-table-sem {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1.5px solid #274e13;
+  table-layout: fixed;
+  background-color: #e2f0d9;
+}
+
+.trainee-table-sem th,
+.trainee-table-sem td {
+  border: 1px solid #274e13;
+  padding: 2px 2px;
+  text-align: center;
+  vertical-align: middle;
+  font-family: var(--font-battambang);
+  font-size: 8pt;
+  color: #000000;
+  box-sizing: border-box;
+}
+
+.trainee-table-sem thead th {
+  background-color: #c2e0b8;
+  font-weight: 700;
+  font-size: 8pt;
+}
+
+.trainee-table-sem tbody tr {
+  height: 20px;
+}
+
+.trainee-table-sem td.td-subj-name {
+  text-align: left !important;
+  padding-left: 6px !important;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.trainee-table-sem td.td-editable {
+  outline: none;
+}
+.trainee-table-sem td.td-editable:hover,
+.trainee-table-sem td.td-editable:focus {
+  background-color: #ffffff;
+}
+
+.trainee-table-sem tr.tr-summary td {
+  font-weight: 700;
+  background-color: #d0e8cb;
+}
+
+.trainee-table-sem tr.tr-year-end td {
+  font-weight: 700;
+  text-align: center !important;
+  background-color: #c2e0b8;
+  font-size: 8.5pt;
+  padding: 3px 2px;
+}
+
+/* Attendance Table */
+.trainee-table-att {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1.5px solid #274e13;
+  table-layout: fixed;
+  background-color: #e2f0d9;
+}
+
+.trainee-table-att th,
+.trainee-table-att td {
+  border: 1px solid #274e13;
+  padding: 2px 2px;
+  text-align: center;
+  vertical-align: middle;
+  font-family: var(--font-battambang);
+  font-size: 8pt;
+  color: #000000;
+  box-sizing: border-box;
+}
+
+.trainee-table-att thead th {
+  background-color: #c2e0b8;
+  font-weight: 700;
+  font-size: 8pt;
+}
+
+.trainee-table-att tbody tr {
+  height: 22px;
+}
+
+/* Right Column Specifics */
+.trainee-school-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1.5px solid #274e13;
+  background-color: #e2f0d9;
+  height: 32px;
+  padding: 0 10px;
+  font-size: 8.5pt;
+  font-weight: 700;
+  font-family: var(--font-battambang);
+  box-sizing: border-box;
+}
+
+/* Study Evaluation Table */
+.trainee-table-eval {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1.5px solid #274e13;
+  table-layout: fixed;
+  background-color: #e2f0d9;
+}
+
+.trainee-table-eval th,
+.trainee-table-eval td {
+  border: 1px solid #274e13;
+  padding: 3px 4px;
+  text-align: center;
+  vertical-align: middle;
+  font-family: var(--font-battambang);
+  font-size: 8pt;
+  color: #000000;
+  box-sizing: border-box;
+}
+
+.trainee-table-eval thead th {
+  background-color: #c2e0b8;
+  font-weight: 700;
+  font-size: 8pt;
+}
+
+.trainee-table-eval tbody tr {
+  height: 24px;
+}
+
+/* Annual Results Box */
+.trainee-annual-box {
+  border: 1.5px solid #274e13;
+  background-color: #e2f0d9;
+  padding: 6px 8px;
+  font-size: 8pt;
+  line-height: 1.7;
+  font-family: var(--font-battambang);
+  box-sizing: border-box;
+}
+
+.trainee-dotted-val {
+  border-bottom: 1px dotted #274e13;
+  display: inline-block;
+  padding: 0 4px;
+  min-height: 16px;
+  outline: none;
+  font-weight: 600;
+}
+.trainee-dotted-val:hover,
+.trainee-dotted-val:focus {
+  background-color: #ffffff;
+}
+
+/* Commendation & Correction Box */
+.trainee-praise-box {
+  display: flex;
+  border: 1.5px solid #274e13;
+  background-color: #e2f0d9;
+  box-sizing: border-box;
+}
+
+.trainee-praise-col {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+.trainee-praise-col:first-child {
+  border-right: 1.5px solid #274e13;
+}
+
+.trainee-praise-head {
+  text-align: center;
+  font-weight: 700;
+  font-size: 8pt;
+  background-color: #c2e0b8;
+  padding: 3px;
+  border-bottom: 1px solid #274e13;
+}
+
+.trainee-praise-body {
+  min-height: 90px;
+  padding: 6px;
+  font-size: 8pt;
+  line-height: 1.4;
+  outline: none;
+}
+.trainee-praise-body:hover,
+.trainee-praise-body:focus {
+  background-color: #ffffff;
+}
+
+/* Teacher Signature Area */
+.trainee-sig-wrap {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-right: 28px;
+  font-family: var(--font-battambang);
+  font-size: 8.5pt;
+  color: #000000;
+}
+
+
+/* ==========================================================================
+   សម្រង់ពិន្ទុ ប្រចាំឆមាស (Semester Score Extract Sheet - A4 Landscape)
+   ========================================================================== */
+.sem-extract-wrapper {
+  padding: 10px 0 40px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sem-extract-page {
+  width: 1080px;
+  max-width: 100%;
+  min-height: 0;
+  background: #ffffff;
+  margin: 0 auto 30px auto;
+  padding: 16px 20px 20px 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
+  color: #000000;
+  position: relative;
+  font-family: var(--font-battambang);
+}
+
+.sem-extract-header-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 4px;
+}
+
+.sem-extract-header-left {
+  font-family: var(--font-moul);
+  font-size: 10pt;
+  color: #002060;
+  line-height: 1.5;
+}
+
+.sem-extract-header-center {
+  text-align: center;
+  font-family: var(--font-moul);
+  color: #002060;
+  line-height: 1.5;
+}
+
+.sem-extract-header-center .nat-1 {
+  font-size: 12pt;
+}
+
+.sem-extract-header-center .nat-2 {
+  font-size: 10.5pt;
+}
+
+.sem-extract-main-title {
+  text-align: center;
+  font-family: var(--font-moul);
+  font-size: 14.5pt;
+  color: #1b7a2b;
+  margin: 6px 0 10px 0;
+  letter-spacing: 0.5px;
+}
+
+.sem-extract-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1.5px solid #000000;
+  table-layout: fixed;
+}
+
+.sem-extract-table th,
+.sem-extract-table td {
+  border: 1px solid #000000;
+  box-sizing: border-box;
+  padding: 1px 1px;
+}
+
+.sem-extract-table th {
+  background-color: #ffffff;
+  text-align: center;
+  vertical-align: middle;
+  color: #002060;
+  font-family: var(--font-moul);
+  font-size: 9.5pt;
+}
+
+.sem-extract-table th.th-fixed-text {
+  color: #000000;
+  font-size: 10pt;
+}
+
+.sem-extract-table th.th-vert {
+  height: 110px;
+  max-height: 110px;
+  vertical-align: bottom;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+
+.sem-extract-table th.th-vert .v-text {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  display: inline-block;
+  font-family: var(--font-moul);
+  font-size: 9pt;
+  line-height: 1.1;
+  text-align: left;
+}
+
+.sem-extract-table td {
+  font-family: var(--font-battambang);
+  font-size: 10pt;
+  height: 25px;
+  text-align: center;
+  vertical-align: middle;
+  color: #000000;
+}
+
+.sem-extract-table td.td-name {
+  text-align: left !important;
+  padding-left: 8px !important;
+  white-space: nowrap;
+  overflow: hidden;
+  font-weight: 600;
+  font-size: 10pt;
+}
+
+.sem-extract-table td.td-editable {
+  outline: none;
+}
+.sem-extract-table td.td-editable:hover,
+.sem-extract-table td.td-editable:focus {
+  background-color: #f0fdf4;
+}
+
+.sem-extract-table td.td-mention {
+  color: #002060;
+  font-weight: 700;
+  font-size: 9.5pt;
+}
+
+.sem-extract-sig-grid {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  font-family: var(--font-battambang);
+  color: #002060;
+  padding: 0 30px;
+}
+
+.sem-extract-sig-left {
+  text-align: center;
+  font-family: var(--font-moul);
+  font-size: 10.5pt;
+  line-height: 1.6;
+  margin-top: 20px;
+}
+
+.sem-extract-sig-right {
+  text-align: center;
+  font-size: 9.5pt;
+  line-height: 1.5;
+}
+
+.sem-extract-sig-right .sig-role {
+  font-family: var(--font-moul);
+  font-size: 11pt;
+  margin-top: 4px;
+}
+
+.sem-extract-sig-right .sig-name {
+  font-family: var(--font-moul);
+  font-size: 11pt;
+  margin-top: 45px;
+}
+
+/* --- Semester 2 & Sub-column Name Spacing --- */
+.sem-extract-table th.border-no-r,
+.sem-extract-table td.border-no-r {
+  border-right: none !important;
+}
+
+.sem-extract-table th.border-no-l,
+.sem-extract-table td.border-no-l {
+  border-left: none !important;
+}
+
+.sem-extract-table td.td-lastname {
+  text-align: left !important;
+  padding-left: 6px !important;
+  padding-right: 2px !important;
+  white-space: nowrap !important;
+  font-weight: 600;
+}
+
+.sem-extract-table td.td-firstname {
+  text-align: left !important;
+  padding-left: 2px !important;
+  padding-right: 4px !important;
+  white-space: nowrap !important;
+  font-weight: 600;
+}
+
+/* Semester 2 Table Specifics */
+.sem-extract-table.sem2-table th.th-vert {
+  height: 112px;
+  max-height: 112px;
+}
+
+.sem-extract-table.sem2-table th.th-vert .v-text {
+  font-size: 8pt;
+  line-height: 1.05;
+}
+
+.sem-extract-table.sem2-table td {
+  font-size: 9.5pt;
+  height: 24px;
+}
+
+/* Semester 2 Footer: End of Roster, Stats Bracket & Signatures */
+.sem2-footer-container {
+  display: grid;
+  grid-template-columns: 280px 1fr 300px;
+  align-items: flex-start;
+  margin-top: 10px;
+  padding: 0 4px;
+  font-family: var(--font-battambang);
+  color: #002060;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+.sem2-footer-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.sem2-roster-end {
+  font-size: 9pt;
+  font-family: var(--font-battambang);
+  color: #000000;
+  margin-bottom: 8px;
+  white-space: nowrap;
+}
+
+.sem2-roster-end .num-bold {
+  font-weight: 700;
+  color: #002060;
+}
+
+.sem2-director-block {
+  text-align: center;
+  margin-top: 4px;
+}
+
+.sem2-dir-seen {
+  font-family: var(--font-moul);
+  font-size: 10pt;
+  color: #002060;
+}
+
+.sem2-dir-role {
+  font-family: var(--font-moul);
+  font-size: 10.5pt;
+  color: #002060;
+  margin-top: 4px;
+}
+
+.sem2-footer-middle {
+  display: flex;
+  justify-content: center;
+}
+
+.sem2-stats-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.sem2-stats-title {
+  font-family: var(--font-moul);
+  font-size: 8.5pt;
+  color: #002060;
+  text-align: right;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.sem2-stats-bracket {
+  display: flex;
+  align-items: center;
+}
+
+.sem2-stats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5px;
+  font-family: var(--font-battambang);
+  font-size: 8pt;
+}
+
+.sem2-stat-row {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.sem2-stat-grade {
+  font-family: var(--font-moul);
+  font-size: 8pt;
+  color: #002060;
+  min-width: 52px;
+}
+
+.sem2-stat-have {
+  margin: 0 2px;
+  color: #000000;
+}
+
+.sem2-stat-val {
+  min-width: 44px;
+  text-align: right;
+  font-weight: 600;
+  color: #002060;
+  margin-right: 4px;
+}
+
+.sem2-stat-female {
+  min-width: 58px;
+  font-weight: 600;
+  color: #002060;
+  margin-right: 4px;
+}
+
+.sem2-stat-eq {
+  margin: 0 2px;
+  color: #000000;
+}
+
+.sem2-stat-pct {
+  min-width: 46px;
+  font-weight: 700;
+  color: #dc2626;
+  text-align: right;
+}
+
+.sem2-footer-right {
+  text-align: center;
+  font-size: 8.5pt;
+  line-height: 1.4;
+}
+
+.sem2-date-lunar {
+  font-size: 8pt;
+  white-space: nowrap;
+}
+
+.sem2-date-solar {
+  font-size: 8pt;
+  white-space: nowrap;
+  margin-top: 1px;
+}
+
+.sem2-teacher-role {
+  font-family: var(--font-moul);
+  font-size: 10.5pt;
+  color: #002060;
+  margin-top: 3px;
+}
+
+.sem2-teacher-name {
+  font-family: var(--font-moul);
+  font-size: 10.5pt;
+  color: #002060;
+  margin-top: 35px;
+}
+
+
+@media print {
+
+  @page sem-extract-page {
+    size: A4 landscape !important;
+    margin: 4mm 5mm !important;
+  }
+
+  .tab-pane:not(.active) {
+    display: none !important;
+  }
+
+  body[data-active-tab="semester_extract"] #tab-semester_extract,
+  body.tab-semester_extract-active #tab-semester_extract {
+    display: block !important;
+  }
+
+  body[data-active-tab="semester_extract"] .sem-extract-wrapper,
+  body.tab-semester_extract-active .sem-extract-wrapper {
+    padding: 0 !important;
+    margin: 0 !important;
+    display: block !important;
+  }
+
+  body[data-active-tab="semester_extract"] .sem-extract-page,
+  body.tab-semester_extract-active .sem-extract-page {
+    page: sem-extract-page !important;
+    width: 287mm !important;
+    max-width: 287mm !important;
+    min-height: 0 !important;
+    height: auto !important;
+    max-height: 200mm !important;
+    box-shadow: none !important;
+    margin: 0 auto !important;
+    padding: 2mm 3mm !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  body[data-active-tab="semester_extract"] .sem-extract-page:last-child,
+  body.tab-semester_extract-active .sem-extract-page:last-child {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  body[data-active-tab="semester_extract"]   body[data-active-tab="semester_extract"] .sem2-footer-container,
+  body.tab-semester_extract-active .sem2-footer-container {
+    margin-top: 6px !important;
+    padding: 0 4px !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+.sem-extract-sig-grid,
+  body.tab-semester_extract-active .sem-extract-sig-grid {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+
+  .student-hub-bar {
+    display: none !important;
+  }
+  .student-subpane:not(.active) {
+    display: none !important;
+  }
+  .student-subpane.active {
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  #subpane-attendance_yearly .yearly-a4-page {
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Main Content Area */
+.main-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* Top App Bar */
+.top-bar {
+  background: #ffffff;
+  height: 68px;
+  border-bottom: 1px solid var(--border);
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 90;
+  box-shadow: var(--shadow-sm);
+}
+
+.top-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.page-heading {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary-dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.year-selector-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f1f5f9;
+  padding: 4px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+.year-selector-wrap label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.year-select {
+  border: none;
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--primary);
+  cursor: pointer;
+  outline: none;
+}
+
+.top-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Live Real-Time Date & Clock in Top Bar */
+.live-datetime-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  padding: 6px 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  font-family: 'Kantumruy Pro', var(--font-battambang), sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e293b;
+  user-select: none;
+}
+
+.live-date-text {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #1e3a8a;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: normal !important;
+}
+
+.live-time-divider {
+  width: 1px;
+  height: 18px;
+  background: #cbd5e1;
+}
+
+.live-time-text {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #15803d;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: normal !important;
+}
+
+.live-clock-digits {
+  font-family: var(--font-battambang), 'Battambang', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.5px;
+  color: #15803d;
+}
+
+.live-clock-period {
+  font-family: 'Kantumruy Pro', var(--font-battambang), 'Battambang', sans-serif !important;
+  font-size: 13px;
+  font-weight: 700;
+  color: #15803d;
+  letter-spacing: normal !important;
+  font-variant-numeric: normal !important;
+  white-space: nowrap;
+  margin-left: 2px;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background: #1d4ed8;
+  box-shadow: 0 3px 10px rgba(30, 58, 138, 0.25);
+}
+
+.btn-secondary {
+  background: #ffffff;
+  color: var(--text-main);
+  border-color: var(--border);
+}
+
+.btn-secondary:hover {
+  background: #f1f5f9;
+  border-color: var(--border-dark);
+}
+
+.btn-success {
+  background: #16a34a;
+  color: #ffffff;
+}
+
+.btn-success:hover {
+  background: #15803d;
+}
+
+.btn-warning {
+  background: #f59e0b;
+  color: #ffffff;
+}
+
+.btn-warning:hover {
+  background: #d97706;
+}
+
+.btn-danger {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.btn-danger:hover {
+  background: #dc2626;
+}
+
+.btn-accent {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.btn-accent:hover {
+  background: #b45309;
+}
+
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 4px;
+}
+
+/* ==========================================================================
+   Custom Action Button Bar Styles (Matching User UI Screenshots 100%)
+   ========================================================================== */
+.btn-action-outline {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+  font-family: var(--font-battambang) !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  border-radius: 6px !important;
+  padding: 6px 14px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  line-height: 1.5 !important;
+  text-decoration: none !important;
+}
+
+.btn-action-outline:hover {
+  background: #f8fafc !important;
+  border-color: #94a3b8 !important;
+  color: #000000 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08) !important;
+}
+
+.btn-action-save {
+  background: #16a34a !important;
+  color: #ffffff !important;
+  border: 1px solid #15803d !important;
+  font-family: var(--font-battambang) !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  border-radius: 6px !important;
+  padding: 6px 16px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  box-shadow: 0 1px 3px rgba(22, 163, 74, 0.3) !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  line-height: 1.5 !important;
+  text-decoration: none !important;
+}
+
+.btn-action-save:hover {
+  background: #15803d !important;
+  border-color: #166534 !important;
+  box-shadow: 0 3px 6px rgba(22, 163, 74, 0.45) !important;
+}
+
+.btn-action-navy {
+  background: #1e3a8a !important;
+  color: #ffffff !important;
+  border: 1px solid #1e3a8a !important;
+  font-family: var(--font-battambang) !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  border-radius: 6px !important;
+  padding: 6px 16px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  box-shadow: 0 1px 3px rgba(30, 58, 138, 0.3) !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  line-height: 1.5 !important;
+  text-decoration: none !important;
+}
+
+.btn-action-navy:hover {
+  background: #1e40af !important;
+  border-color: #1d4ed8 !important;
+  box-shadow: 0 3px 6px rgba(30, 58, 138, 0.45) !important;
+}
+
+.btn-action-amber {
+  background: #d97706 !important;
+  color: #ffffff !important;
+  border: 1px solid #b45309 !important;
+  font-family: var(--font-battambang) !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  border-radius: 6px !important;
+  padding: 6px 16px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  box-shadow: 0 1px 3px rgba(217, 119, 6, 0.3) !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  line-height: 1.5 !important;
+  text-decoration: none !important;
+}
+
+.btn-action-amber:hover {
+  background: #b45309 !important;
+  border-color: #92400e !important;
+  box-shadow: 0 3px 6px rgba(217, 119, 6, 0.45) !important;
+}
+
+.btn-action-danger {
+  background: #ffffff !important;
+  color: #dc2626 !important;
+  border: 1px solid #f87171 !important;
+  font-family: var(--font-battambang) !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  border-radius: 6px !important;
+  padding: 6px 14px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  box-shadow: 0 1px 2px rgba(220, 38, 38, 0.08) !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  line-height: 1.5 !important;
+  text-decoration: none !important;
+}
+
+.btn-action-danger:hover {
+  background: #fef2f2 !important;
+  border-color: #dc2626 !important;
+  color: #b91c1c !important;
+  box-shadow: 0 2px 5px rgba(220, 38, 38, 0.18) !important;
+}
+
+.btn-action-undo {
+  background: #ffffff !important;
+  color: #4338ca !important;
+  border: 1px solid #c7d2fe !important;
+  font-family: var(--font-battambang) !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  border-radius: 6px !important;
+  padding: 6px 14px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  box-shadow: 0 1px 2px rgba(67, 56, 202, 0.08) !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  line-height: 1.5 !important;
+  text-decoration: none !important;
+}
+
+.btn-action-undo:hover {
+  background: #eef2ff !important;
+  border-color: #818cf8 !important;
+  color: #3730a3 !important;
+  box-shadow: 0 2px 5px rgba(67, 56, 202, 0.18) !important;
+}
+
+/* Page Content Container */
+.content-body {
+  padding: 24px 28px 40px;
+  flex: 1;
+}
+
+.tab-pane {
+  display: none;
+  animation: fadeIn 0.25s ease-in-out;
+}
+
+.tab-pane.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Stat Metric Cards (Dashboard) */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: var(--bg-card);
+  padding: 18px 20px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+}
+
+.stat-card.blue::before {
+  background: #2563eb;
+}
+
+.stat-card.pink::before {
+  background: #db2777;
+}
+
+.stat-card.emerald::before {
+  background: #059669;
+}
+
+.stat-card.amber::before {
+  background: #d97706;
+}
+
+.stat-card.purple::before {
+  background: #7c3aed;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-info .stat-label {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.stat-info .stat-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--primary-dark);
+  margin-top: 4px;
+  line-height: 1.2;
+}
+
+.stat-info .stat-sub {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.stat-card.blue .stat-icon {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.stat-card.pink .stat-icon {
+  background: #fce7f3;
+  color: #be185d;
+}
+
+.stat-card.emerald .stat-icon {
+  background: #d1fae5;
+  color: #047857;
+}
+
+.stat-card.amber .stat-icon {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.stat-card.purple .stat-icon {
+  background: #ede9fe;
+  color: #6d28d9;
+}
+
+/* Dashboard Charts Grid */
+.charts-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 1024px) {
+  .charts-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.chart-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.chart-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--primary-dark);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chart-container {
+  position: relative;
+  flex: 1;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Quick Action Toolbar for Students */
+.filter-toolbar {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  box-shadow: var(--shadow-sm);
+}
+
+.filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-select,
+.search-input {
+  padding: 7px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 13px;
+  outline: none;
+  background-color: #f8fafc;
+  color: var(--text-main);
+  transition: all 0.2s;
+}
+
+.filter-select:focus,
+.search-input:focus {
+  border-color: var(--primary-light);
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.search-input {
+  min-width: 220px;
+}
+
+/* ==========================================================================
+   A4 LANDSCAPE OFFICIAL STUDENT ROSTER FORMAT (១០០% តាមគម្រូក្រសួង)
+   ========================================================================== */
+.a4-preview-wrapper {
+  background: #e2e8f0;
+  padding: 24px 12px;
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.a4-landscape-page {
+  font-family: var(--font-battambang);
+  font-size: 11px;
+  background: #ffffff;
+  width: 100%;
+  max-width: 1120px;
+  /* A4 landscape aspect ratio approx */
+  min-height: 790px;
+  padding: 24px 30px 32px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Official Header */
+.roster-header {
+  margin-bottom: 12px;
+  font-family: var(--font-battambang);
+  font-size: 11px;
+}
+
+/* Centered Kingdom & Motto across sheet */
+.roster-kingdom-center {
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.roster-kingdom {
+  font-family: var(--font-moul-light);
+  font-size: 13px;
+  color: #1e3a8a;
+  line-height: 1.4;
+}
+
+.roster-motto {
+  font-family: var(--font-moul-light);
+  font-size: 11.5px;
+  color: #b45309;
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+
+/* School Name on the left, moved down to where district/province was */
+.roster-school-row {
+  text-align: left;
+  margin-top: -6px;
+  margin-bottom: 6px;
+}
+
+.roster-school-name {
+  font-family: var(--font-moul-light);
+  font-size: 12px;
+  color: #1e3a8a;
+  line-height: 1.4;
+}
+
+.roster-main-title {
+  text-align: center;
+  margin-top: 4px;
+  margin-bottom: 10px;
+}
+
+.roster-main-title h2 {
+  font-family: var(--font-moul-light);
+  font-size: 12.5px;
+  color: #0f172a;
+  display: inline-block;
+  padding-bottom: 3px;
+  border-bottom: 2px solid #1e3a8a;
+  line-height: 1.5;
+}
+
+/* Official Multi-header Table */
+.official-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.official-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-battambang);
+  font-size: 11px;
+  color: #0f172a;
+  border: 1.5px solid #0f172a;
+}
+
+.official-table th,
+.official-table td {
+  border: 1px solid #475569;
+  padding: 3.5px 4px;
+  text-align: center;
+  vertical-align: middle;
+  font-family: var(--font-battambang);
+  font-size: 11px;
+}
+
+.official-table th {
+  background: #e0f2fe;
+  color: #1e3a8a;
+  font-weight: 700;
+  line-height: 1.3;
+  font-family: var(--font-battambang);
+  font-size: 11px;
+}
+
+.official-table th.sub-th {
+  background: #f0fdf4;
+  color: #166534;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--font-battambang);
+}
+
+/* Helper classes to remove internal vertical borders */
+.official-table td.border-no-r,
+.official-table th.border-no-r {
+  border-right: none !important;
+}
+
+.official-table td.border-no-l,
+.official-table th.border-no-l {
+  border-left: none !important;
+}
+
+.official-table tbody tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+.official-table tbody tr:hover {
+  background-color: #eff6ff;
+}
+
+.official-table td.text-left {
+  text-align: left;
+  padding-left: 6px;
+}
+
+.gender-badge {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 10.5px;
+  font-weight: 600;
+  font-family: var(--font-battambang);
+}
+
+.gender-badge.female {
+  background: #fce7f3;
+  color: #be185d;
+}
+
+.gender-badge.male {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+/* Official Footer */
+.roster-footer {
+  margin-top: 12px;
+  font-family: var(--font-battambang);
+  font-size: 11px;
+}
+
+.roster-closing-count {
+  font-family: var(--font-battambang);
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 8px;
+  padding: 3px 8px;
+  background: #f1f5f9;
+  border-radius: 4px;
+  display: inline-block;
+  font-size: 11px;
+}
+
+.roster-sign-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 6px;
+  font-family: var(--font-battambang);
+  font-size: 11px;
+}
+
+.sign-left {
+  text-align: center;
+}
+
+.sign-right {
+  text-align: center;
+}
+
+.lunar-date,
+.solar-date {
+  font-family: var(--font-battambang);
+  font-style: italic;
+  font-size: 11px;
+  color: #334155;
+  margin-bottom: 3px;
+}
+
+.editable-date-field {
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+  display: inline-block;
+}
+
+.editable-date-field:hover {
+  background: #fef3c7;
+  border-color: #d97706;
+}
+
+.editable-date-field:focus {
+  background: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+  outline: none;
+}
+
+.btn-edit-date {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #1e3a8a;
+  border-radius: 4px;
+  font-family: var(--font-battambang);
+  font-size: 10px;
+  padding: 2px 6px;
+  cursor: pointer;
+  margin-left: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  transition: all 0.15s;
+}
+
+.btn-edit-date:hover {
+  background: #e0f2fe;
+  border-color: #3b82f6;
+  color: #1d4ed8;
+}
+
+.sign-role {
+  font-family: var(--font-moul-light);
+  font-size: 11px;
+  color: #1e3a8a;
+  margin-top: 3px;
+}
+
+.sign-space {
+  height: 50px;
+}
+
+.sign-name {
+  font-family: var(--font-battambang);
+  font-weight: 700;
+  font-size: 11px;
+  color: #0f172a;
+}
+
+/* Action icons inside table */
+.action-btn-group {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.action-icon-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 12px;
+  color: #475569;
+  transition: all 0.2s;
+}
+
+.action-icon-btn:hover {
+  background: #cbd5e1;
+  color: var(--primary);
+}
+
+.action-icon-btn.delete:hover {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* ==========================================================================
+   DAILY & MONTHLY ATTENDANCE STYLES
+   ========================================================================== */
+.attendance-grid-card {
+  background: #ffffff;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.att-status-btn {
+  border: 1px solid var(--border);
+  background: #f8fafc;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.att-status-btn.present {
+  background: #dcfce7;
+  color: #15803d;
+  border-color: #86efac;
+}
+
+.att-status-btn.excused {
+  background: #fef3c7;
+  color: #b45309;
+  border-color: #fde68a;
+}
+
+.att-status-btn.unexcused {
+  background: #fee2e2;
+  color: #b91c1c;
+  border-color: #fca5a5;
+}
+
+/* ==========================================================================
+   OFFICIAL MONTHLY ATTENDANCE REGISTER (សៀវភៅហៅឈ្មោះសិស្ស ផ្នែកអវត្តមានប្រចាំខែ)
+   100% Exact Replica of MoEYS Standard
+   ========================================================================== */
+
+.monthly-register-page {
+  font-family: var(--font-battambang);
+  font-size: 10px;
+  background: #ffffff;
+  width: 100%;
+  max-width: 1120px;
+  min-height: 780px;
+  padding: 24px 28px 30px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  position: relative;
+  box-sizing: border-box;
+  margin-bottom: 24px;
+}
+
+/* Top Official Header */
+.monthly-reg-header {
+  margin-bottom: 8px;
+}
+
+.monthly-reg-top-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+}
+
+/* Administrative Hierarchy (Left) */
+.monthly-reg-admin {
+  text-align: left;
+  color: #0000cc;
+  font-family: var(--font-moul-light);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* National Motto (Center) */
+.monthly-reg-kingdom-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: #0000cc;
+  top: 0;
+}
+
+.monthly-reg-kingdom {
+  font-family: var(--font-moul-light);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+.monthly-reg-motto {
+  font-family: var(--font-moul-light);
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+
+.monthly-reg-flourish {
+  margin-top: 3px;
+  line-height: 1;
+}
+
+.monthly-reg-flourish img {
+  height: 22px;
+  display: inline-block;
+}
+
+/* Main Titles */
+.monthly-reg-title-wrap {
+  text-align: center;
+  margin-top: 22px;
+  margin-bottom: 10px;
+}
+
+.monthly-reg-main-title {
+  font-family: var(--font-moul-light);
+  font-size: 18px;
+  color: #0000cc;
+  letter-spacing: 1px;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.monthly-reg-sub-title {
+  font-family: var(--font-moul-light);
+  font-size: 13px;
+  color: #0000cc;
+  margin-top: 4px;
+}
+
+/* Subheader Row: Month & Year on Left, Gender Counts on Right */
+.monthly-reg-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-moul-light);
+  font-size: 11px;
+  color: #0000cc;
+  margin-bottom: 6px;
+  padding: 0 2px;
+}
+
+/* Official 100% Table */
+.official-monthly-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-battambang);
+  font-size: 10px;
+  border: 1px solid #000000;
+  background: #ffffff;
+}
+
+.official-monthly-table th,
+.official-monthly-table td {
+  border: 1px solid #000000;
+  padding: 2.5px 2px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.official-monthly-table th {
+  background: #ffffff;
+  color: #c00000;
+  /* Dark Crimson Red 100% from PDF sample */
+  font-family: var(--font-battambang);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.official-monthly-table th.th-moul {
+  font-family: var(--font-moul-light);
+}
+
+.official-monthly-table td {
+  color: #0000cc;
+  /* Deep Royal Blue 100% from PDF sample */
+  height: 22px;
+}
+
+.official-monthly-table td.td-id {
+  color: #009900;
+  /* Green 100% from PDF sample */
+  font-weight: 600;
+  font-family: var(--font-battambang);
+}
+
+.official-monthly-table td.td-name {
+  color: #0000cc;
+  font-weight: 600;
+  text-align: left;
+  padding-left: 6px;
+  white-space: nowrap;
+}
+
+.official-monthly-table td.border-no-r,
+.official-monthly-table th.border-no-r {
+  border-right: none !important;
+}
+
+.official-monthly-table td.border-no-l,
+.official-monthly-table th.border-no-l {
+  border-left: none !important;
+}
+
+.official-monthly-table td.td-gender {
+  color: #0000cc;
+  font-weight: 600;
+}
+
+/* Attendance marks */
+.official-monthly-table td.mark-present {
+  color: #009900;
+  font-weight: 700;
+  font-size: 11.5px;
+}
+
+.official-monthly-table td.mark-excused {
+  color: #d97706;
+  font-weight: 700;
+  font-size: 11px;
+}
+
+.official-monthly-table td.mark-unexcused {
+  color: #c00000;
+  font-weight: 700;
+  font-size: 11px;
+}
+
+.official-monthly-table td.mark-sunday {
+  color: #0000cc;
+  font-weight: 700;
+  font-size: 10px;
+}
+
+/* Summary Row */
+.official-monthly-table tr.summary-row td {
+  font-family: var(--font-moul-light);
+  font-size: 10px;
+  font-weight: 700;
+  color: #0000cc;
+  background: #ffffff;
+}
+
+/* Statistics Below Table */
+.monthly-reg-stats-row {
+  margin-top: 10px;
+  font-family: var(--font-battambang);
+  font-size: 10.5px;
+  color: #0000cc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  line-height: 1.6;
+}
+
+.monthly-reg-closure-row {
+  margin-top: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-battambang);
+  font-size: 10.5px;
+  color: #0000cc;
+}
+
+/* Signatures */
+.monthly-reg-signatures {
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-moul-light);
+  color: #0000cc;
+  font-size: 11px;
+}
+
+.monthly-reg-sig-block {
+  text-align: center;
+  width: 260px;
+}
+
+.monthly-reg-sig-title {
+  margin-bottom: 60px;
+}
+
+.monthly-reg-sig-name {
+  font-family: var(--font-moul-light);
+  font-size: 11px;
+  color: #0000cc;
+}
+
+.weekend-col {
+  background-color: #f8fafc !important;
+  color: #94a3b8 !important;
+}
+
+.day-inactive {
+  background-color: #f1f5f9 !important;
+  color: #cbd5e1 !important;
+}
+
+/* Attendance Alert Banner */
+.att-alert-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  animation: attFadeInDown 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.att-alert-banner.success {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.att-alert-banner.info {
+  background: #eff6ff;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+}
+
+.att-alert-banner.warning {
+  background: #fffbeb;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+@keyframes attFadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.att-stat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background: white;
+}
+
+.att-stat-pill.present {
+  background: #ecfdf5;
+  color: #047857;
+  border-color: #a7f3d0;
+}
+
+.att-stat-pill.excused {
+  background: #fffbeb;
+  color: #b45309;
+  border-color: #fde68a;
+}
+
+.att-stat-pill.unexcused {
+  background: #fef2f2;
+  color: #b91c1c;
+  border-color: #fecaca;
+}
+
+.att-stat-pill.total {
+  background: #f1f5f9;
+  color: #334155;
+  border-color: #cbd5e1;
+}
+
+.att-mark-p {
+  color: #16a34a;
+  font-weight: 700;
+}
+
+.att-mark-l {
+  color: #d97706;
+  font-weight: 700;
+}
+
+.att-mark-a {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   SCORES & GRADES STYLES
+   ========================================================================== */
+.score-badge {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 11px;
+}
+
+.mention-excellent {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.mention-verygood {
+  background: #e0f2fe;
+  color: #075985;
+}
+
+.mention-good {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.mention-average {
+  background: #ffedd5;
+  color: #9a3412;
+}
+
+.mention-weak {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.rank-badge {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: white;
+}
+
+.rank-1 {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.rank-2 {
+  background: linear-gradient(135deg, #94a3b8, #64748b);
+}
+
+.rank-3 {
+  background: linear-gradient(135deg, #d97706, #b45309);
+}
+
+.rank-normal {
+  background: #cbd5e1;
+  color: #334155;
+}
+
+/* Modal Dialog */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(3px);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.modal-box {
+  background: #ffffff;
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 650px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border);
+  animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalPop {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-header {
+  padding: 16px 22px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--text-muted);
+}
+
+.modal-body {
+  padding: 20px 22px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-group.col-span-2 {
+  grid-column: span 2;
+}
+
+.form-group label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.form-control {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.form-control:focus {
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.modal-footer {
+  padding: 14px 22px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  background: #f8fafc;
+}
+
+/* ==========================================================================
+   QUICK DAY SELECTOR BAR (តាមថ្ងៃនីមួយៗនៃខែ ក្នុងវត្តមានប្រចាំថ្ងៃ)
+   ========================================================================== */
+.att-day-picker-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 8px 10px;
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 14px;
+}
+
+.att-day-nav-btn {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: #ffffff;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.att-day-nav-btn:hover {
+  background: #eff6ff;
+  border-color: #3b82f6;
+  color: #1d4ed8;
+}
+
+.att-day-pills-scroll {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  flex: 1;
+  padding: 2px 2px;
+}
+
+.att-day-pill {
+  flex: 0 0 auto;
+  min-width: 46px;
+  padding: 4px 6px;
+  text-align: center;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: #ffffff;
+  cursor: pointer;
+  font-family: var(--font-battambang);
+  transition: all 0.15s ease-in-out;
+  user-select: none;
+}
+
+.att-day-pill:hover {
+  border-color: #2563eb;
+  background: #eff6ff;
+  transform: translateY(-1px);
+}
+
+.att-day-pill.active {
+  background: #1e3a8a !important;
+  color: #ffffff !important;
+  border-color: #1e3a8a !important;
+  box-shadow: 0 2px 8px rgba(30, 58, 138, 0.35);
+}
+
+.att-day-pill.off-day {
+  background: #fff1f2;
+  border-color: #fecdd3;
+  color: #be123c;
+}
+
+.att-day-pill.active.off-day {
+  background: #be123c !important;
+  color: #ffffff !important;
+  border-color: #be123c !important;
+}
+
+.att-day-pill .day-num {
+  font-size: 13.5px;
+  font-weight: 700;
+  display: block;
+  line-height: 1.2;
+}
+
+.att-day-pill .day-name {
+  font-size: 10px;
+  display: block;
+  opacity: 0.85;
+}
+
+.att-status-btn {
+  border: 1px solid var(--border);
+  background: #f8fafc;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.att-status-btn:hover {
+  transform: translateY(-1px);
+}
+
+.att-status-btn.present {
+  background: #dcfce7 !important;
+  color: #166534 !important;
+  border-color: #22c55e !important;
+  font-weight: 700 !important;
+  box-shadow: 0 1px 3px rgba(34, 197, 94, 0.25);
+}
+
+.att-status-btn.excused {
+  background: #fef3c7 !important;
+  color: #92400e !important;
+  border-color: #f59e0b !important;
+  font-weight: 700 !important;
+  box-shadow: 0 1px 3px rgba(245, 158, 11, 0.25);
+}
+
+.att-status-btn.unexcused {
+  background: #fee2e2 !important;
+  color: #991b1b !important;
+  border-color: #ef4444 !important;
+  font-weight: 700 !important;
+  box-shadow: 0 1px 3px rgba(239, 68, 68, 0.25);
+}
+
+/* ==========================================================================
+   PRINT STYLES (@media print)
+   ========================================================================== */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 8mm 10mm;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 10.5pt;
+  }
+
+  .sidebar,
+  .top-bar,
+  .filter-toolbar,
+  .btn,
+  .action-col,
+  .no-print {
+    display: none !important;
+  }
+
+  .main-wrapper,
+  .content-body,
+  .a4-preview-wrapper {
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+  }
+
+  .a4-landscape-page {
+    width: 100% !important;
+    max-width: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-family: var(--font-battambang) !important;
+    font-size: 11px !important;
+  }
+
+  .roster-school-name,
+  .roster-kingdom,
+  .roster-motto,
+  .roster-main-title h2,
+  .sign-role {
+    font-family: var(--font-moul-light) !important;
+  }
+
+  .roster-footer,
+  .roster-closing-count,
+  .lunar-date,
+  .solar-date,
+  .sign-name {
+    font-family: var(--font-battambang) !important;
+    font-size: 11px !important;
+  }
+
+  .official-table {
+    border: 1.5pt solid #000000 !important;
+    page-break-inside: auto;
+    font-family: var(--font-battambang) !important;
+    font-size: 11px !important;
+  }
+
+  .official-table tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  .official-table th,
+  .official-table td {
+    border: 0.75pt solid #000000 !important;
+    font-family: var(--font-battambang) !important;
+    font-size: 11px !important;
+  }
+
+  .official-table td.border-no-r,
+  .official-table th.border-no-r {
+    border-right: none !important;
+  }
+
+  .official-table td.border-no-l,
+  .official-table th.border-no-l {
+    border-left: none !important;
+  }
+
+  .official-table th {
+    background: #f1f5f9 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .btn-edit-date {
+    display: none !important;
+  }
+
+  .editable-date-field {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  /* Monthly Attendance Register Print */
+  .monthly-register-page {
+    width: 100% !important;
+    max-width: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .official-monthly-table {
+    border: 1pt solid #000000 !important;
+    page-break-inside: auto;
+    font-size: 8pt !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .official-monthly-table th {
+    color: #c00000 !important;
+    border: 0.75pt solid #000000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .official-monthly-table td {
+    border: 0.75pt solid #000000 !important;
+    color: #0000cc !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .official-monthly-table td.td-id {
+    color: #009900 !important;
+  }
+
+  .official-monthly-table td.mark-present {
+    color: #009900 !important;
+  }
+
+  .official-monthly-table td.mark-excused {
+    color: #d97706 !important;
+  }
+
+  .official-monthly-table td.mark-unexcused {
+    color: #c00000 !important;
+  }
+
+  .official-monthly-table td.mark-sunday {
+    color: #0000cc !important;
+  }
+
+  .official-monthly-table td.border-no-r,
+  .official-monthly-table th.border-no-r {
+    border-right: none !important;
+  }
+
+  .official-monthly-table td.border-no-l,
+  .official-monthly-table th.border-no-l {
+    border-left: none !important;
+  }
+}
+
+/* ==========================================================================
+   DASHBOARD ZOOM & FULLSCREEN CONTROLS (ពង្រីក និង បង្រួម Dashboard)
+   ========================================================================== */
+.dashboard-controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.dashboard-controls-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dashboard-badge-title {
+  font-family: var(--font-battambang);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dashboard-zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.zoom-label {
+  font-family: var(--font-battambang);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #475569;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-dash-zoom {
+  background: #f8fafc;
+  color: #1e293b;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-family: var(--font-battambang);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.btn-dash-zoom:hover {
+  background: #e2e8f0;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+.btn-dash-reset {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+  color: #1d4ed8;
+}
+
+.btn-dash-reset:hover {
+  background: #dbeafe;
+  border-color: #93c5fd;
+  color: #1e40af;
+}
+
+.btn-dash-fullscreen {
+  background: #1e3a8a;
+  border-color: #1e3a8a;
+  color: #ffffff;
+}
+
+.btn-dash-fullscreen:hover {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+  color: #ffffff;
+}
+
+.zoom-level-badge {
+  display: inline-block;
+  min-width: 48px;
+  text-align: center;
+  font-family: var(--font-battambang);
+  font-weight: 700;
+  font-size: 12.5px;
+  color: #0f172a;
+  background: #f1f5f9;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+}
+
+.dashboard-zoom-container {
+  transform-origin: top center;
+  transition: transform 0.2s ease;
+}
+
+/* Fullscreen Dashboard state */
+#tab-dashboard.dashboard-fullscreen {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 99999 !important;
+  background: #f1f5f9 !important;
+  overflow-y: auto !important;
+  padding: 24px 36px 60px !important;
+  box-sizing: border-box !important;
+}
+
+/* Collapsible Chart Cards */
+.btn-card-collapse {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 13px;
+  transition: all 0.15s ease;
+}
+
+.btn-card-collapse:hover {
+  background: #f1f5f9;
+  color: var(--primary);
+}
+
+.chart-card.collapsed .chart-container,
+.chart-card.collapsed #dashClassSummaryTable {
+  display: none !important;
+}
+
+/* ==========================================================================
+   YEARLY ATTENDANCE REGISTER (តារាងស្រង់អវត្តមានសិស្សប្រចាំឆ្នាំ - ១០០% តាមគម្រូ)
+   ========================================================================== */
+.yearly-a4-page {
+  font-family: var(--font-battambang);
+  font-size: 10px;
+  background: #ffffff;
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  min-height: 800px;
+  padding: 24px 28px 36px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.yearly-header {
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.yearly-kingdom-center {
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.yearly-kingdom {
+  font-family: var(--font-moul-light);
+  font-size: 13px;
+  color: #000080;
+  line-height: 1.4;
+}
+
+.yearly-motto {
+  font-family: var(--font-moul-light);
+  font-size: 11.5px;
+  color: #000080;
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
+
+.yearly-crest-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.yearly-header-left {
+  text-align: left;
+  margin-top: -24px;
+  margin-bottom: 6px;
+}
+
+.yearly-admin-line {
+  font-family: var(--font-moul-light);
+  font-size: 10.5px;
+  color: #000080;
+  line-height: 1.5;
+}
+
+.yearly-title {
+  text-align: center;
+  font-family: var(--font-moul-light);
+  font-size: 15px;
+  color: #15803d;
+  margin: 12px 0 10px;
+  letter-spacing: 0.3px;
+}
+
+/* Official Yearly Table */
+.official-yearly-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-battambang);
+  font-size: 10px;
+  border: 1px solid #000000;
+  background: #ffffff;
+}
+
+.official-yearly-table th,
+.official-yearly-table td {
+  border: 1px solid #000000;
+  padding: 3px 2px;
+  text-align: center;
+  box-sizing: border-box;
+  line-height: 1.25;
+}
+
+.official-yearly-table th.th-green {
+  background: #a2d2b5 !important;
+  color: #000000;
+  font-family: var(--font-battambang);
+  font-weight: 700;
+  font-size: 10px;
+}
+
+.official-yearly-table th.th-peach {
+  background: #fbc4ab !important;
+  color: #000000;
+  font-family: var(--font-battambang);
+  font-weight: 700;
+  font-size: 10px;
+}
+
+.official-yearly-table td.td-name {
+  text-align: left;
+  padding-left: 6px;
+  font-weight: 600;
+  color: #000000;
+  white-space: nowrap;
+}
+
+.official-yearly-table td.border-no-r {
+  border-right: none !important;
+}
+
+.official-yearly-table td.border-no-l {
+  border-left: none !important;
+}
+
+.official-yearly-table td.td-center {
+  text-align: center;
+  color: #000000;
+}
+
+.official-yearly-table td.td-num {
+  text-align: center;
+  color: #000000;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+.official-yearly-table td.td-peach {
+  background: #fbc4ab !important;
+  color: #000000;
+  font-weight: 600;
+  text-align: center;
+}
+
+.official-yearly-table td.td-blue {
+  background: #99ccff !important;
+  color: #000000;
+  font-weight: 700;
+  text-align: center;
+}
+
+.official-yearly-table td.td-yellow {
+  background: #fef08a !important;
+  color: #000000;
+  font-weight: 700;
+  text-align: center;
+}
+
+.official-yearly-table td.td-total-label {
+  font-weight: 700;
+  text-align: center;
+  font-family: var(--font-battambang);
+  font-size: 11px;
+  color: #000000;
+  background: #ffffff;
+}
+
+/* Footer & Signatures */
+.yearly-footer {
+  margin-top: 14px;
+}
+
+.yearly-dates-block {
+  text-align: right;
+  font-family: var(--font-battambang);
+  font-size: 11px;
+  color: #000080;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.yearly-lunar-date {
+  font-size: 11px;
+}
+
+.yearly-solar-date {
+  font-size: 11px;
+}
+
+.yearly-signatures-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  padding: 0 30px;
+}
+
+.yearly-sign-col {
+  text-align: center;
+  min-width: 180px;
+}
+
+.yearly-sign-approval {
+  font-family: var(--font-moul-light);
+  font-size: 12px;
+  color: #000080;
+  margin-bottom: 4px;
+}
+
+.yearly-sign-role {
+  font-family: var(--font-moul-light);
+  font-size: 12px;
+  color: #000080;
+}
+
+.yearly-sign-space {
+  height: 48px;
+}
+
+.yearly-teacher-name {
+  font-family: var(--font-moul-light);
+  font-size: 13px;
+  color: #15803d;
+  font-weight: 700;
+}
+
+/* Print Settings for Yearly Attendance */
+@media print {
+  #tab-attendance_yearly .yearly-a4-page {
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+
+/* ========================================================= */
+/* OFFICIAL MONTHLY SCORE SHEET (តារាងស្រង់ពិន្ទុប្រចាំខែ)    */
+/* 100% True to Official Ministry of Education PDF Standard  */
+/* ========================================================= */
+.monthly-score-a4-page {
+  font-family: var(--font-battambang);
+  font-size: 10.2pt;
+  background: #ffffff;
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+  min-height: 800px;
+  padding: 24px 28px 36px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  position: relative;
+  box-sizing: border-box;
+  color: #0000cc;
+}
+
+.score-header-wrap {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.score-kingdom-center {
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.score-kingdom-line1 {
+  font-family: var(--font-moul-light);
+  font-size: 12.96pt;
+  color: #0000cc;
+  line-height: 1.4;
+  letter-spacing: 0.3px;
+}
+
+.score-kingdom-line2 {
+  font-family: var(--font-moul-light);
+  font-size: 11.16pt;
+  color: #0000cc;
+  line-height: 1.4;
+  letter-spacing: 0.2px;
+}
+
+.score-flourish {
+  margin: 3px auto 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.score-flourish img {
+  height: 14px;
+  opacity: 0.9;
+}
+
+.score-dept-left {
+  text-align: left;
+  margin-bottom: 12px;
+}
+
+.score-dept-line1,
+.score-dept-line2,
+.score-dept-line3 {
+  font-family: var(--font-moul-light);
+  font-size: 11.16pt;
+  color: #0000cc;
+  line-height: 1.5;
+}
+
+.score-doc-title {
+  text-align: center;
+  font-family: var(--font-moul-light);
+  font-size: 14pt;
+  color: #0000cc;
+  font-weight: 700;
+  margin: 10px 0 8px 0;
+  letter-spacing: 0.5px;
+}
+
+.score-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-battambang);
+  font-size: 11.16pt;
+  color: #0000cc;
+  margin-bottom: 8px;
+  padding: 0 4px;
+}
+
+.score-meta-item .meta-label {
+  font-family: var(--font-moul-light);
+  font-weight: normal;
+  font-size: 11.16pt;
+  margin-right: 4px;
+}
+
+.score-meta-item .meta-val {
+  font-weight: 700;
+}
+
+/* Official 24-Column Score Table - Ultra Sharp Borders for Screen & Print */
+.official-score-table {
+  width: 100%;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  border: 1.5px solid #000000 !important;
+  font-size: 10.2pt;
+  text-align: center;
+  table-layout: auto;
+}
+
+.official-score-table th,
+.official-score-table td {
+  border: 1px solid #000000 !important;
+  padding: 2px 2px;
+  box-sizing: border-box;
+}
+
+.official-score-table thead th {
+  background-color: #66ff33 !important;
+  color: #0000cc !important;
+  font-family: var(--font-moul-light);
+  font-weight: normal;
+  font-size: 10.2pt;
+  vertical-align: middle;
+  border: 1.5px solid #000000 !important;
+  border-color: #000000 !important;
+  box-shadow: inset 0 0 0 0.8px #000000 !important;
+  background-clip: padding-box !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+.official-score-table th.th-vertical {
+  font-family: var(--font-battambang) !important;
+  font-size: 8.5pt;
+  font-weight: 700;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  height: 125px;
+  width: 22px;
+  min-width: 22px;
+  max-width: 25px;
+  padding: 4px 1px;
+  text-align: left;
+  border: 1.5px solid #000000 !important;
+  border-left: 1.5px solid #000000 !important;
+  border-right: 1.5px solid #000000 !important;
+  border-top: 1.5px solid #000000 !important;
+  border-bottom: 1.5px solid #000000 !important;
+  box-shadow: inset 0 0 0 0.8px #000000 !important;
+  background-clip: padding-box !important;
+}
+
+.official-score-table th.th-group-khmer,
+.official-score-table th.th-group-math,
+.official-score-table th.th-group-pe,
+.official-score-table th.th-group-results {
+  font-size: 11.16pt;
+  padding: 5px 2px;
+  border: 1.5px solid #000000 !important;
+  box-shadow: inset 0 0 0 0.8px #000000 !important;
+  background-clip: padding-box !important;
+}
+
+.official-score-table tbody tr {
+  height: 25px;
+}
+
+.official-score-table tbody tr:hover {
+  background-color: #f0fdf4;
+}
+
+.official-score-table tbody td {
+  font-family: var(--font-battambang);
+  font-size: 10.2pt;
+  color: #0000cc;
+  vertical-align: middle;
+}
+
+.score-td-num {
+  width: 32px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.score-td-lastname,
+.official-score-table td.score-td-lastname,
+.official-score-table td.border-no-r {
+  text-align: left;
+  padding-left: 6px !important;
+  padding-right: 2px !important;
+  border-right: hidden !important;
+  border-right-style: hidden !important;
+  font-weight: 600;
+  white-space: nowrap;
+  width: 60px;
+}
+
+.score-td-firstname,
+.official-score-table td.score-td-firstname,
+.official-score-table td.border-no-l {
+  text-align: left;
+  padding-left: 2px !important;
+  padding-right: 4px !important;
+  border-left: hidden !important;
+  border-left-style: hidden !important;
+  font-weight: 600;
+  white-space: nowrap;
+  width: 85px;
+}
+
+.score-td-gender {
+  width: 30px;
+  text-align: center;
+}
+
+.score-td-val {
+  width: 22px;
+  min-width: 22px;
+  max-width: 24px;
+  text-align: center;
+  font-size: 9.5pt;
+  font-weight: 600;
+  color: #0000cc;
+  cursor: text;
+  outline: none;
+  transition: background 0.15s ease;
+}
+
+.score-td-val:focus,
+.score-td-val:hover {
+  background-color: #e0f2fe;
+}
+
+.score-td-total {
+  width: 34px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.score-td-avg {
+  width: 34px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.score-td-rank {
+  width: 28px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.score-td-mention {
+  width: 32px;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Footer Section */
+.score-footer-wrapper {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  color: #0000cc;
+  font-family: var(--font-battambang);
+  page-break-inside: avoid;
+}
+
+.score-summary-grades {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.summary-grade-title {
+  font-family: var(--font-moul-light);
+  font-size: 11.16pt;
+  color: #0000cc;
+  white-space: nowrap;
+}
+
+.summary-bracket-svg {
+  display: flex;
+  align-items: center;
+}
+
+.summary-grade-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 10.5pt;
+}
+
+.grade-stat-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.stat-grade {
+  font-family: var(--font-moul-light);
+  font-size: 10.5pt;
+  width: 65px;
+}
+
+.stat-has {
+  color: #0000cc;
+}
+
+.stat-val {
+  min-width: 22px;
+  text-align: right;
+  font-weight: 700;
+}
+
+.stat-female-label {
+  margin-left: 6px;
+}
+
+.stat-eq {
+  margin-left: 6px;
+}
+
+.stat-pct {
+  min-width: 48px;
+  text-align: right;
+  font-weight: 700;
+}
+
+/* Signatures */
+.score-signatures-block {
+  text-align: center;
+  min-width: 370px;
+}
+
+.signature-lunar-date,
+.signature-solar-date {
+  font-size: 10.5pt;
+  color: #0000cc;
+  outline: none;
+  border-radius: 4px;
+  padding: 1px 6px;
+  display: inline-block;
+  cursor: text;
+  transition: all 0.2s ease;
+  border: 1px dashed transparent;
+  user-select: text;
+}
+
+.signature-lunar-date {
+  margin-bottom: 3px;
+}
+
+.signature-solar-date {
+  margin-bottom: 12px;
+}
+
+.signature-lunar-date:hover,
+.signature-solar-date:hover {
+  background-color: #f0fdf4;
+  border-color: #86efac;
+}
+
+.signature-lunar-date:focus,
+.signature-solar-date:focus {
+  background-color: #ffffff;
+  border-color: #16a34a;
+  box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.2);
+}
+
+.signature-columns-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.signature-col {
+  flex: 1;
+  text-align: center;
+}
+
+.signature-col.sig-left {
+  margin-top: 36px;
+}
+
+.movable-teacher-block {
+  min-width: 250px;
+  text-align: center;
+}
+
+.teacher-approval-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.sig-title, .sig-role {
+  font-family: var(--font-moul-light);
+  font-size: 11.16pt;
+  color: #0000cc;
+  line-height: 1.4;
+}
+
+.sig-space {
+  height: 55px;
+}
+
+.sig-name {
+  font-family: var(--font-moul-light);
+  font-size: 11.16pt;
+  color: #0000cc;
+}
+
+/* Print Rules for Monthly Score Sheet - Solid Crisp Borders & Fully Visible Signatures */
+@media print {
+  #tab-scores .monthly-score-a4-page {
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+
+  .official-score-table {
+    border-collapse: collapse !important;
+    border-spacing: 0 !important;
+    border: 2px solid #000000 !important;
+  }
+
+  .official-score-table thead {
+    display: table-header-group !important;
+  }
+
+  .official-score-table thead tr {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .official-score-table thead th {
+    background-color: #66ff33 !important;
+    color: #0000cc !important;
+    border: 1.5px solid #000000 !important;
+    border-color: #000000 !important;
+    box-shadow: inset 0 0 0 1px #000000 !important;
+    background-clip: padding-box !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .official-score-table th.th-vertical {
+    border: 1.5px solid #000000 !important;
+    border-left: 1.5px solid #000000 !important;
+    border-right: 1.5px solid #000000 !important;
+    border-top: 1.5px solid #000000 !important;
+    border-bottom: 1.5px solid #000000 !important;
+    box-shadow: inset 0 0 0 1px #000000 !important;
+    background-clip: padding-box !important;
+  }
+
+  .official-score-table tbody tr {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .official-score-table tbody td {
+    border: 1px solid #000000 !important;
+    border-color: #000000 !important;
+    color: #0000cc !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .official-score-table tbody td.score-td-lastname,
+  .official-score-table tbody td.border-no-r {
+    border-right: hidden !important;
+    border-right-style: hidden !important;
+  }
+
+  .official-score-table tbody td.score-td-firstname,
+  .official-score-table tbody td.border-no-l {
+    border-left: hidden !important;
+    border-left-style: hidden !important;
+  }
+
+  .score-footer-wrapper,
+  .score-signatures-block,
+  .signature-columns-row,
+  .movable-approval-block {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .signature-lunar-date,
+  .signature-solar-date,
+  .rank-lunar-date,
+  .rank-solar-date {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  .score-footer-wrapper {
+    margin-top: 14px !important;
+    display: flex !important;
+    width: 100% !important;
+  }
+
+  .movable-approval-block {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .movable-approval-block .sig-title,
+  .movable-approval-block .sig-role {
+    color: #0000cc !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    visibility: visible !important;
+    display: block !important;
+  }
+
+  .approval-drag-handle,
+  .approval-action-toolbar,
+  .approval-resize-handle {
+    display: none !important;
+  }
+}
+
+
+/* ========================================================= */
+/* MOVABLE & RESIZABLE APPROVAL BLOCK (បានឃើញ និង ឯកភាព នាយកសាលា) */
+/* ========================================================= */
+.movable-approval-block {
+  position: relative;
+  display: inline-block;
+  user-select: none;
+  touch-action: none;
+  cursor: grab;
+  transition: box-shadow 0.2s ease, border 0.2s ease;
+  border: 1px dashed transparent;
+  border-radius: 6px;
+  padding: 6px 14px;
+  transform-origin: top center;
+  z-index: 10;
+}
+
+.movable-approval-block:hover {
+  border-color: #2563eb;
+  background-color: rgba(37, 99, 235, 0.04);
+}
+
+.movable-approval-block.is-dragging {
+  cursor: grabbing;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.25);
+  border-color: #1d4ed8;
+  z-index: 100;
+}
+
+.approval-drag-handle {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1e3a8a;
+  color: #ffffff;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  cursor: grab;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.movable-approval-block:hover .approval-drag-handle {
+  opacity: 1;
+}
+
+.approval-action-toolbar {
+  position: absolute;
+  top: -34px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  padding: 2px 6px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 105;
+  white-space: nowrap;
+}
+
+.movable-approval-block:hover .approval-action-toolbar {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.btn-approval-action {
+  background: #f1f5f9;
+  border: none;
+  color: #1e293b;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 4px;
+  border-radius: 11px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.btn-approval-action:hover {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.approval-resize-handle {
+  position: absolute;
+  bottom: -6px;
+  right: -6px;
+  width: 20px;
+  height: 20px;
+  background: #2563eb;
+  color: #ffffff;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  cursor: nwse-resize;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.movable-approval-block:hover .approval-resize-handle {
+  opacity: 1;
+}
+
+@media print {
+  .movable-approval-block {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+  .approval-drag-handle,
+  .approval-action-toolbar,
+  .approval-resize-handle {
+    display: none !important;
+  }
+}
+
+.approval-size-badge {
+  font-family: var(--font-battambang);
+  font-size: 10px;
+  font-weight: 700;
+  color: #1e3a8a;
+  background: #f1f5f9;
+  border-radius: 10px;
+  padding: 1px 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+}
+
+/* ==========================================================================
+   MONTHLY RANKINGS (ចំណាត់ថ្នាក់ប្រចាំខែ) - 100% MOEYS STANDARD (A4 PORTRAIT)
+   ========================================================================== */
+.monthly-rank-a4-page {
+  width: 794px; /* Exact A4 Portrait at 96 DPI */
+  max-width: 794px;
+  min-height: 1123px;
+  background: #ffffff;
+  margin: 0 auto;
+  padding: 24px 36px 24px 36px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #0000cc;
+  position: relative;
+  font-family: var(--font-battambang);
+}
+
+.rank-header-wrap {
+  width: 722px;
+  margin: 0 auto 6px auto;
+}
+
+.rank-kingdom-center {
+  text-align: center;
+  margin-bottom: 3px;
+}
+
+.rank-kingdom-line1,
+.rank-kingdom-line2 {
+  font-family: var(--font-moul-light);
+  font-size: 11pt;
+  color: #0000cc;
+  line-height: 1.5;
+}
+
+.rank-flourish {
+  margin: 1px auto 4px auto;
+  text-align: center;
+}
+
+.rank-flourish img {
+  height: 12px;
+  object-fit: contain;
+}
+
+.rank-meta-row {
+  position: relative;
+  width: 722px;
+  min-height: 48px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin: 6px auto 2px auto;
+}
+
+.rank-school-grade {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  text-align: left;
+  z-index: 2;
+}
+
+.rank-school-name,
+.rank-grade-title {
+  font-family: var(--font-moul-light);
+  font-size: 11pt;
+  color: #0000cc;
+  line-height: 1.45;
+}
+
+.rank-doc-title {
+  font-family: var(--font-moul-light);
+  font-size: 12.5pt;
+  color: #0000cc;
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+  line-height: 1.4;
+}
+
+/* Side-by-side Table */
+.official-rank-table {
+  width: 722px;
+  margin: 6px auto;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  border: 1.5px solid #000000 !important;
+  table-layout: fixed;
+}
+
+.official-rank-table th,
+.official-rank-table td {
+  border: 1px solid #000000 !important;
+  padding: 2px 2px;
+  box-sizing: border-box;
+  height: 28px;
+  vertical-align: middle;
+  line-height: 1.35;
+  white-space: nowrap;
+}
+
+.official-rank-table thead th {
+  background-color: #34bd62 !important;
+  color: #0000cc !important;
+  font-family: var(--font-battambang) !important;
+  font-weight: 700 !important;
+  font-size: 12px !important;
+  height: 28px;
+  border: 1px solid #000000 !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.official-rank-table tbody tr:hover {
+  background-color: #fefce8;
+}
+
+.official-rank-table tbody td {
+  font-family: var(--font-battambang);
+  font-size: 12px !important;
+  color: #0000cc;
+  height: 28px;
+}
+
+.rank-td-num {
+  font-weight: 700;
+  color: #cc0099 !important; /* Reddish purple matching PDF */
+  text-align: center;
+  font-size: 12px !important;
+}
+
+.rank-td-name {
+  text-align: left;
+  padding-left: 4px !important;
+  padding-right: 2px !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px !important;
+}
+
+.rank-name-last {
+  display: inline-block;
+  margin-right: 8px;
+  font-weight: 600;
+  font-size: 12px !important;
+  color: #0000cc;
+}
+
+.rank-name-first {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 12px !important;
+  color: #0000cc;
+}
+
+.rank-td-gender {
+  text-align: center;
+  font-size: 12px !important;
+  color: #0000cc;
+}
+
+.rank-td-score {
+  text-align: center;
+  font-weight: 600;
+  font-size: 12px !important;
+  color: #0000cc;
+}
+
+.rank-td-avg {
+  text-align: center;
+  font-weight: 600;
+  font-size: 12px !important;
+  color: #0000cc;
+}
+
+.rank-td-mention {
+  text-align: center;
+  font-weight: 700;
+  font-size: 12px !important;
+  color: #0000cc;
+}
+
+.rank-stat-num {
+  color: #cc0099 !important;
+  font-weight: 700;
+}
+
+.rank-td-rank {
+  text-align: center;
+  font-weight: 700;
+  font-size: 12px !important;
+  color: #0000cc;
+}
+
+.rank-td-remark {
+  text-align: center;
+  font-size: 12px !important;
+  color: #0000cc;
+}
+
+.rank-placeholder {
+  color: #cc0099 !important;
+}
+
+.rank-roster-end-line {
+  width: 722px;
+  margin: 6px auto;
+  text-align: left;
+  font-family: var(--font-battambang);
+  font-size: 10.2pt;
+  color: #0000cc;
+}
+
+/* Footer Layout Matching User's Image 100% */
+.rank-footer-container {
+  width: 722px;
+  margin: 6px auto 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  page-break-inside: avoid !important;
+  break-inside: avoid !important;
+}
+
+.rank-footer-left {
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+}
+
+.rank-footer-right {
+  width: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.rank-summary-block {
+  display: flex;
+  align-items: center;
+}
+
+.rank-summary-label {
+  font-family: var(--font-battambang);
+  font-weight: 700;
+  font-size: 11px !important;
+  color: #0000cc;
+  width: 120px;
+  text-align: right;
+  padding-right: 8px;
+  line-height: 1.35;
+}
+
+.rank-bracket-svg {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.rank-grades-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-family: var(--font-battambang);
+  font-size: 11px !important;
+  color: #0000cc;
+}
+
+.rank-grade-row {
+  display: flex;
+  align-items: baseline;
+  white-space: nowrap;
+  font-size: 11px !important;
+  line-height: 1.4;
+}
+
+.rank-grade-name {
+  width: 58px;
+  font-weight: 700;
+  color: #0000cc;
+}
+
+.rank-grade-lbl {
+  color: #0000cc;
+  padding: 0 4px;
+}
+
+.rank-grade-val {
+  font-weight: 600;
+  color: #0000cc;
+  min-width: 44px;
+  text-align: right;
+}
+
+.rank-grade-pct {
+  font-weight: 600;
+  color: #0000cc;
+  min-width: 48px;
+  text-align: right;
+}
+
+.rank-director-sign-wrap {
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.rank-dates-block {
+  font-family: var(--font-battambang);
+  font-size: 11px !important;
+  color: #0000cc;
+  line-height: 1.6;
+  text-align: center;
+  width: 100%;
+}
+
+.rank-dates-block .editable-date {
+  outline: none;
+  border-radius: 4px;
+  padding: 1px 6px;
+  display: inline-block;
+  cursor: text;
+  transition: all 0.2s ease;
+  border: 1px dashed transparent;
+  user-select: text;
+}
+
+.rank-dates-block .editable-date:hover {
+  background-color: #f0fdf4;
+  border-color: #86efac;
+}
+
+.rank-dates-block .editable-date:focus {
+  background-color: #ffffff;
+  border-color: #16a34a;
+  box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.2);
+}
+
+.rank-teacher-sign-wrap {
+  margin-top: 8px;
+  text-align: center;
+  width: 100%;
+}
+
+.rank-teacher-sign-wrap .sig-role {
+  font-family: var(--font-moul-light);
+  color: #0000cc;
+  font-size: 10.2pt;
+}
+
+.rank-teacher-sign-wrap .sig-teacher-name {
+  margin-top: 36px;
+  font-family: var(--font-moul-light);
+  color: #0000cc;
+  font-size: 10.2pt;
+}
+
+/* Student Name Spacing matching Student List (បញ្ជីឈ្មោះសិស្ស) */
+.rank-td-lastname,
+.official-rank-table td.rank-td-lastname {
+  text-align: left;
+  padding-left: 4px !important;
+  padding-right: 2px !important;
+  border-right: hidden !important;
+  border-right-style: hidden !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px !important;
+  font-weight: 600;
+  color: #0000cc;
+}
+
+.rank-td-firstname,
+.official-rank-table td.rank-td-firstname {
+  text-align: left;
+  padding-left: 2px !important;
+  padding-right: 4px !important;
+  border-left: hidden !important;
+  border-left-style: hidden !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px !important;
+  font-weight: 600;
+  color: #0000cc;
+}
+
+/* Print Styles for Monthly Rankings - Strictly 1 Page A4 Portrait */
+@media print {
+  @page portrait-sheet {
+    size: A4 portrait;
+    margin: 5mm 7mm;
+  }
+
+  #tab-monthly_ranks .monthly-rank-a4-page {
+    page: portrait-sheet;
+    box-shadow: none !important;
+    padding: 3mm 5mm !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    border-radius: 0 !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  .official-rank-table {
+    width: 100% !important;
+    margin: 4px auto !important;
+    border: 1.5px solid #000000 !important;
+  }
+
+  .official-rank-table thead th {
+    background-color: #34bd62 !important;
+    color: #0000cc !important;
+    font-family: var(--font-battambang) !important;
+    font-weight: 700 !important;
+    font-size: 12px !important;
+    height: 28px !important;
+    border: 1px solid #000000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .official-rank-table tbody td {
+    border: 1px solid #000000 !important;
+    color: #0000cc !important;
+    font-size: 12px !important;
+    height: 27px !important;
+    padding: 1px 2px !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .rank-td-num {
+    color: #cc0099 !important;
+  }
+
+  .official-rank-table tbody td.rank-td-lastname,
+  .official-rank-table tbody td.border-no-r {
+    border-right: hidden !important;
+    border-right-style: hidden !important;
+  }
+
+  .official-rank-table tbody td.rank-td-firstname,
+  .official-rank-table tbody td.border-no-l {
+    border-left: hidden !important;
+    border-left-style: hidden !important;
+  }
+
+  .rank-footer-container,
+  .rank-footer-left,
+  .rank-footer-right,
+  .rank-summary-block,
+  .rank-director-sign-wrap,
+  .rank-teacher-sign-wrap {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .rank-dates-block .editable-date {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+}
+
+/* ==========================================================================
+   HONOR ROLL (តារាងកិត្តិយស) - 100% CUTE BEES SPEC
+   ========================================================================== */
+
+#tab-honor_roll {
+  padding-bottom: 50px;
+}
+
+.honor-bee-page {
+  width: 210mm;
+  min-height: 297mm;
+  height: 297mm;
+  max-width: 100%;
+  margin: 0 auto 30px auto;
+  background: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  position: relative;
+  box-sizing: border-box;
+}
+
+.honor-bee-canvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  /* 210mm x 297mm exact A4 aspect ratio = 141.428% */
+  padding-bottom: 141.428%;
+  overflow: hidden;
+  background: #ffffff;
+  container-type: inline-size;
+}
+
+.honor-bee-bg-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  display: block;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Left Header Fields */
+.honor-bee-field {
+  position: absolute;
+  z-index: 3;
+  font-family: var(--font-moul), 'Khmer OS Muol Light', 'Khmer UI', sans-serif;
+  font-size: 11.5px;
+  font-size: 1.6cqw;
+  font-weight: 700;
+  color: #1e3a8a;
+  outline: none;
+  cursor: text;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.honor-bee-field:hover,
+.honor-bee-field:focus {
+  background-color: rgba(239, 246, 255, 0.85);
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px #3b82f6;
+}
+
+.field-district {
+  top: 11.2%;
+  left: 37.5%;
+}
+
+.field-cluster {
+  top: 13.7%;
+  left: 14.5%;
+}
+
+.field-school {
+  top: 16.2%;
+  left: 23.5%;
+}
+
+.field-grade {
+  top: 18.6%;
+  left: 15.0%;
+}
+
+/* Month in 'ប្រឡងប្រចាំខែ' */
+.honor-bee-month-val {
+  position: absolute;
+  z-index: 3;
+  top: 28.0%;
+  left: 53.0%;
+  font-family: var(--font-moul), 'Khmer OS Muol Light', sans-serif;
+  font-size: 14.5px;
+  font-size: 2.0cqw;
+  font-weight: 700;
+  color: #1d4ed8;
+  outline: none;
+  cursor: text;
+  line-height: 1;
+  padding: 0 4px;
+}
+
+.honor-bee-month-val:hover,
+.honor-bee-month-val:focus {
+  background-color: rgba(239, 246, 255, 0.9);
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px #3b82f6;
+}
+
+/* 5 Top Student Placards */
+.honor-bee-placard {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  cursor: text;
+  box-sizing: border-box;
+  padding: 2px 8px;
+}
+
+.honor-bee-placard:hover,
+.honor-bee-placard:focus {
+  background-color: rgba(239, 246, 255, 0.6);
+  border-radius: 6px;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+.honor-bee-student-text {
+  font-family: var(--font-battambang), 'Khmer OS Siemreap', 'Khmer UI', sans-serif;
+  font-size: 16px;
+  font-size: 2.2cqw;
+  font-weight: 800;
+  color: #0f172a;
+  text-align: center;
+  letter-spacing: 0.6px;
+  white-space: nowrap;
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+/* Rank 1 (Top Center) */
+.placard-r1 {
+  left: 36.85%;
+  top: 41.21%;
+  width: 25.0%;
+  height: 6.64%;
+}
+.placard-r1 .honor-bee-student-text {
+  font-size: 17.5px;
+  font-size: 2.5cqw;
+  font-weight: 900;
+}
+
+/* Rank 2 (Middle Left) */
+.placard-r2 {
+  left: 7.55%;
+  top: 54.88%;
+  width: 25.65%;
+  height: 7.03%;
+}
+
+/* Rank 3 (Middle Right) */
+.placard-r3 {
+  left: 63.15%;
+  top: 54.88%;
+  width: 26.04%;
+  height: 7.03%;
+}
+
+/* Rank 4 (Bottom Left) */
+.placard-r4 {
+  left: 7.55%;
+  top: 72.56%;
+  width: 25.65%;
+  height: 7.03%;
+}
+
+/* Rank 5 (Bottom Right) */
+.placard-r5 {
+  left: 63.15%;
+  top: 72.56%;
+  width: 26.04%;
+  height: 7.03%;
+}
+
+/* Footers */
+.honor-bee-director-name {
+  position: absolute;
+  z-index: 3;
+  top: 93.8%;
+  left: 8.0%;
+  width: 27.0%;
+  text-align: center;
+  font-family: var(--font-moul), 'Khmer OS Muol Light', sans-serif;
+  font-size: 12.5px;
+  font-size: 1.7cqw;
+  font-weight: 700;
+  color: #1e3a8a;
+  outline: none;
+  cursor: text;
+  white-space: nowrap;
+}
+
+.honor-bee-director-name:hover,
+.honor-bee-director-name:focus {
+  background-color: rgba(239, 246, 255, 0.85);
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px #3b82f6;
+}
+
+.honor-bee-teacher-name {
+  position: absolute;
+  z-index: 3;
+  top: 91.2%;
+  left: 57.0%;
+  width: 30.0%;
+  text-align: center;
+  font-family: var(--font-moul), 'Khmer OS Muol Light', sans-serif;
+  font-size: 12.5px;
+  font-size: 1.7cqw;
+  font-weight: 700;
+  color: #1e3a8a;
+  outline: none;
+  cursor: text;
+  white-space: nowrap;
+}
+
+.honor-bee-teacher-name:hover,
+.honor-bee-teacher-name:focus {
+  background-color: rgba(239, 246, 255, 0.85);
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px #3b82f6;
+}
+
+/* Print Rules */
+@media print {
+  @page honor-roll-page {
+    size: A4 portrait !important;
+    margin: 0 !important;
+  }
+
+  body.tab-honor_roll-active #tab-honor_roll,
+  #tab-honor_roll.active {
+    display: block !important;
+  }
+
+  #tab-honor_roll .honor-bee-page {
+    page: honor-roll-page;
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-honor_roll .honor-bee-canvas {
+    width: 210mm !important;
+    height: 297mm !important;
+    padding-bottom: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-honor_roll .honor-bee-bg-img {
+    width: 210mm !important;
+    height: 297mm !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-honor_roll .no-print {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   SEMESTER RANKINGS (ចំណាត់ថ្នាក់ប្រចាំឆមាស) - 100% SAMPLE PDF SPEC
+   A4 Portrait, Purple Theme (#581c87), Crisp Solid Black Table Borders
+   ========================================================================== */
+.semester-a4-page {
+  width: 794px; /* Exact A4 Portrait at 96 DPI */
+  max-width: 794px;
+  min-height: 1123px;
+  background: #ffffff;
+  margin: 0 auto 30px auto;
+  padding: 30px 36px 30px 36px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  box-sizing: border-box;
+  position: relative;
+  font-family: var(--font-battambang);
+  color: #000000;
+}
+
+.semester-header-wrap {
+  width: 100%;
+  margin: 0 auto 16px auto;
+}
+
+.semester-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.semester-school-box {
+  text-align: left;
+}
+
+.sem-school-name {
+  font-family: var(--font-moul);
+  font-size: 13pt;
+  color: #581c87;
+  line-height: 1.6;
+}
+
+.sem-grade-name {
+  font-family: var(--font-moul);
+  font-size: 13pt;
+  color: #581c87;
+  line-height: 1.6;
+  margin-top: 2px;
+}
+
+.semester-kingdom-box {
+  text-align: center;
+  margin-right: 50px;
+}
+
+.sem-kingdom-title {
+  font-family: var(--font-moul);
+  font-size: 13.5pt;
+  color: #581c87;
+  line-height: 1.6;
+}
+
+.sem-kingdom-motto {
+  font-family: var(--font-moul);
+  font-size: 12.5pt;
+  color: #581c87;
+  line-height: 1.6;
+  margin-top: 2px;
+}
+
+.semester-main-title {
+  font-family: var(--font-moul);
+  font-size: 13.5pt;
+  color: #581c87;
+  text-align: center;
+  margin: 22px auto 14px auto;
+  letter-spacing: 0.5px;
+  line-height: 1.6;
+}
+
+.semester-table {
+  width: 100%;
+  max-width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #000000;
+  table-layout: fixed;
+  background: #ffffff;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.semester-table th,
+.semester-table td {
+  border: 1px solid #000000;
+  padding: 4px 2px;
+  box-sizing: border-box;
+  vertical-align: middle;
+  height: 33px;
+}
+
+.semester-table td.border-no-r,
+.semester-table th.border-no-r {
+  border-right: hidden !important;
+  border-right-style: hidden !important;
+}
+
+.semester-table td.border-no-l,
+.semester-table th.border-no-l {
+  border-left: hidden !important;
+  border-left-style: hidden !important;
+}
+
+.semester-table thead th {
+  font-family: var(--font-moul);
+  font-size: 10.5pt;
+  font-weight: normal;
+  color: #581c87;
+  text-align: center;
+  background: #ffffff;
+  line-height: 1.4;
+  height: 36px;
+  padding: 4px 2px;
+}
+
+.semester-table th.sem-th-name {
+  text-align: center;
+  font-family: var(--font-moul);
+}
+
+.sem-td-num {
+  font-family: var(--font-battambang);
+  font-size: 11pt;
+  color: #581c87;
+  text-align: center;
+  font-weight: 500;
+}
+
+.sem-td-lastname,
+.semester-table td.sem-td-lastname {
+  font-family: var(--font-battambang);
+  font-size: 11pt;
+  color: #000000;
+  text-align: left;
+  padding-left: 6px !important;
+  padding-right: 2px !important;
+  border-right: hidden !important;
+  border-right-style: hidden !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sem-td-firstname,
+.semester-table td.sem-td-firstname {
+  font-family: var(--font-battambang);
+  font-size: 11pt;
+  color: #000000;
+  text-align: left;
+  padding-left: 2px !important;
+  padding-right: 4px !important;
+  border-left: hidden !important;
+  border-left-style: hidden !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sem-td-name {
+  font-family: var(--font-battambang);
+  font-size: 11pt;
+  color: #000000;
+  text-align: left;
+  padding-left: 8px !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sem-td-gender {
+  font-family: var(--font-battambang);
+  font-size: 11pt;
+  color: #000000;
+  text-align: center;
+}
+
+.sem-td-score {
+  font-family: var(--font-battambang);
+  font-size: 11pt;
+  color: #000000;
+  text-align: center;
+}
+
+.sem-td-semavg {
+  font-family: var(--font-battambang);
+  font-size: 11pt;
+  color: #000000;
+  text-align: center;
+  font-weight: 600;
+}
+
+.sem-td-rank {
+  font-family: var(--font-battambang);
+  font-size: 11pt;
+  color: #000000;
+  text-align: center;
+  font-weight: 600;
+}
+
+.sem-td-mention {
+  font-family: var(--font-battambang);
+  font-size: 11pt;
+  color: #000000;
+  text-align: center;
+  font-weight: 600;
+}
+
+.sem-th-select-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.sem-col-select {
+  font-family: var(--font-moul);
+  font-size: 10.5pt;
+  color: #581c87;
+  border: none;
+  background: transparent;
+  padding: 1px 2px;
+  cursor: pointer;
+  outline: none;
+  text-align: center;
+  text-align-last: center;
+  width: 100%;
+}
+
+.sem-col-select:hover {
+  background: rgba(88, 28, 135, 0.05);
+  border-radius: 2px;
+}
+
+.sem-th-print {
+  display: none;
+}
+
+/* Print Rules for Semester Rankings (A4 Portrait) */
+@media print {
+  body.tab-semester_ranks-active #tab-semester_ranks,
+  #tab-semester_ranks.active {
+    display: block !important;
+  }
+
+  #tab-semester_ranks .no-print {
+    display: none !important;
+  }
+
+  #tab-semester_ranks .sem-th-print {
+    display: block !important;
+  }
+
+  #tab-semester_ranks .semester-a4-page {
+    width: 210mm !important;
+    max-width: 210mm !important;
+    min-height: 297mm !important;
+    box-shadow: none !important;
+    margin: 0 auto !important;
+    padding: 10mm 12mm !important;
+    page-break-after: always;
+    page-break-inside: avoid;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-semester_ranks .semester-a4-page:last-child {
+    page-break-after: avoid !important;
+  }
+
+  #tab-semester_ranks .semester-table {
+    width: 100% !important;
+    border: 1px solid #000000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-semester_ranks .semester-table th,
+  #tab-semester_ranks .semester-table td {
+    border: 1px solid #000000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-semester_ranks .semester-table td.border-no-r,
+  #tab-semester_ranks .semester-table th.border-no-r {
+    border-right: hidden !important;
+    border-right-style: hidden !important;
+  }
+
+  #tab-semester_ranks .semester-table td.border-no-l,
+  #tab-semester_ranks .semester-table th.border-no-l {
+    border-left: hidden !important;
+    border-left-style: hidden !important;
+  }
+
+  #tab-semester_ranks .sem-school-name,
+  #tab-semester_ranks .sem-grade-name,
+  #tab-semester_ranks .sem-kingdom-title,
+  #tab-semester_ranks .sem-kingdom-motto,
+  #tab-semester_ranks .semester-main-title,
+  #tab-semester_ranks .semester-table thead th,
+  #tab-semester_ranks .sem-td-num {
+    color: #581c87 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-semester_ranks .semester-dual-a4-page {
+    width: 210mm !important;
+    max-width: 210mm !important;
+    min-height: 297mm !important;
+    box-shadow: none !important;
+    margin: 0 auto !important;
+    padding: 8mm 10mm !important;
+    page-break-after: avoid !important;
+    page-break-inside: avoid !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-semester_ranks .sem-dual-table {
+    width: 100% !important;
+    border: 1px solid #000000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-semester_ranks .sem-dual-table th,
+  #tab-semester_ranks .sem-dual-table td {
+    border: 1px solid #000000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-semester_ranks .sem-dual-table td.sem-dual-td-lastname {
+    border-right: hidden !important;
+    border-right-style: hidden !important;
+  }
+
+  #tab-semester_ranks .sem-dual-table td.sem-dual-td-firstname {
+    border-left: hidden !important;
+    border-left-style: hidden !important;
+  }
+
+  #tab-semester_ranks .sem-dual-table thead tr {
+    height: 105px !important;
+  }
+
+  #tab-semester_ranks .sem-dual-table thead th {
+    font-family: var(--font-battambang) !important;
+    font-size: 8.5pt !important;
+    font-weight: 700 !important;
+    height: 105px !important;
+    color: #0000cc !important;
+    vertical-align: middle !important;
+    text-align: center !important;
+    padding: 3px 1px !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-semester_ranks .sem-dual-table thead th.sem-dual-th-vert {
+    writing-mode: vertical-rl !important;
+    -webkit-writing-mode: vertical-rl !important;
+    white-space: nowrap !important;
+    vertical-align: middle !important;
+    text-align: center !important;
+    padding: 4px 1px !important;
+    line-height: 1 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-semester_ranks .sem-dual-kingdom-center {
+    text-align: center !important;
+    margin: 0 auto 3px auto !important;
+  }
+
+  #tab-semester_ranks .sem-dual-flourish {
+    margin: 2px auto 4px auto !important;
+    text-align: center !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-semester_ranks .sem-dual-flourish img {
+    height: 12px !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-semester_ranks .sem-dual-school-grade-left {
+    text-align: left !important;
+    margin-top: -10px !important;
+    margin-bottom: 5px !important;
+  }
+
+  #tab-semester_ranks .sem-dual-school-name,
+  #tab-semester_ranks .sem-dual-grade-name,
+  #tab-semester_ranks .sem-dual-kingdom-title,
+  #tab-semester_ranks .sem-dual-kingdom-motto,
+  #tab-semester_ranks .sem-dual-table thead th.sem-th-blue,
+  #tab-semester_ranks .sem-dual-roster-end,
+  #tab-semester_ranks .sem-dual-stats-title,
+  #tab-semester_ranks .sem-dual-stat-row,
+  #tab-semester_ranks .sem-dual-sig-title,
+  #tab-semester_ranks .sem-dual-sig-date,
+  #tab-semester_ranks .sem-dual-sig-role {
+    color: #0000cc !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-semester_ranks .sem-dual-main-title,
+  #tab-semester_ranks .sem-dual-sig-teacher-name {
+    color: #16a34a !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-semester_ranks .sem-dual-table thead th.sem-th-red,
+  #tab-semester_ranks .sem-dual-td-rank {
+    color: #dc2626 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+/* ==========================================================================
+   SEMESTER RANKS DUAL-COLUMN (ចំណាត់ថ្នាក់ប្រចាំឆមាស - ២ ជួរឈរផ្លូវការ)
+   100% Faithful to Ministry sample PDF: A4 Portrait, Side-by-side 38 Students
+   ========================================================================== */
+.semester-dual-a4-page {
+  width: 794px;
+  max-width: 794px;
+  min-height: 1123px;
+  background: #ffffff;
+  margin: 0 auto 30px auto;
+  padding: 24px 36px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.sem-dual-header-wrap {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.sem-dual-kingdom-center {
+  text-align: center;
+  margin: 0 auto 3px auto;
+}
+
+.sem-dual-kingdom-title {
+  font-family: var(--font-moul);
+  font-size: 11.5pt;
+  color: #0000cc;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.sem-dual-kingdom-motto {
+  font-family: var(--font-moul);
+  font-size: 11pt;
+  color: #0000cc;
+  line-height: 1.45;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.sem-dual-flourish {
+  margin: 2px auto 4px auto;
+  text-align: center;
+}
+
+.sem-dual-flourish img {
+  height: 12px;
+  object-fit: contain;
+}
+
+.sem-dual-school-grade-left {
+  text-align: left;
+  margin-top: -10px;
+  margin-bottom: 5px;
+}
+
+.sem-dual-school-name {
+  font-family: var(--font-moul);
+  font-size: 11pt;
+  color: #0000cc;
+  line-height: 1.45;
+  outline: none;
+}
+
+.sem-dual-grade-name {
+  font-family: var(--font-moul);
+  font-size: 11pt;
+  color: #0000cc;
+  line-height: 1.45;
+  outline: none;
+}
+
+.sem-dual-main-title {
+  font-family: var(--font-moul);
+  font-size: 12.5pt;
+  color: #16a34a; /* Official Green */
+  line-height: 1.4;
+  text-align: center;
+  width: 100%;
+  margin: 4px auto 8px auto;
+}
+
+.sem-dual-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #000000;
+  table-layout: fixed;
+  background: #ffffff;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.sem-dual-table th,
+.sem-dual-table td {
+  border: 1px solid #000000;
+  padding: 1px 2px;
+  box-sizing: border-box;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.sem-dual-table thead tr {
+  height: 105px;
+}
+
+.sem-dual-table thead th {
+  font-family: var(--font-battambang);
+  font-size: 8.5pt;
+  font-weight: 700;
+  color: #0000cc;
+  height: 105px;
+  line-height: 1.15;
+  background: #ffffff;
+  padding: 3px 1px;
+  vertical-align: middle;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.sem-dual-table thead th.sem-dual-th-vert {
+  writing-mode: vertical-rl;
+  -webkit-writing-mode: vertical-rl;
+  -ms-writing-mode: tb-rl;
+  white-space: nowrap;
+  vertical-align: middle;
+  text-align: center;
+  padding: 4px 1px;
+  line-height: 1;
+}
+
+.sem-dual-table thead th.sem-th-blue {
+  color: #0000cc !important;
+}
+
+.sem-dual-table thead th.sem-th-red {
+  color: #dc2626 !important;
+}
+
+.sem-dual-table tbody tr {
+  height: 20px;
+}
+
+.sem-dual-table tbody td {
+  font-family: var(--font-battambang);
+  font-size: 9.5pt;
+  color: #000000;
+  height: 20px;
+  line-height: 1.15;
+}
+
+.sem-dual-td-num {
+  font-family: var(--font-battambang);
+  font-size: 9.5pt;
+  text-align: center;
+  color: #000000;
+}
+
+.sem-dual-td-gender {
+  font-family: var(--font-battambang);
+  font-size: 9.5pt;
+  text-align: center;
+}
+
+.sem-dual-td-val {
+  font-family: var(--font-battambang);
+  font-size: 9.5pt;
+  text-align: center;
+  outline: none;
+}
+.sem-dual-td-val:hover, .sem-dual-td-val:focus {
+  background-color: #f0fdf4;
+}
+
+.sem-dual-td-rank {
+  font-family: var(--font-battambang);
+  font-size: 9.5pt;
+  font-weight: bold;
+  color: #dc2626;
+  text-align: center;
+}
+
+.sem-dual-td-lastname {
+  font-family: var(--font-battambang);
+  font-size: 9.5pt;
+  text-align: left;
+  padding-left: 4px !important;
+  padding-right: 1px !important;
+  border-right: hidden !important;
+  border-right-style: hidden !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sem-dual-td-firstname {
+  font-family: var(--font-battambang);
+  font-size: 9.5pt;
+  text-align: left;
+  padding-left: 1px !important;
+  padding-right: 2px !important;
+  border-left: hidden !important;
+  border-left-style: hidden !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sem-dual-footer-wrap {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.sem-dual-roster-end {
+  font-family: var(--font-battambang);
+  font-size: 11pt;
+  color: #0000cc;
+  text-align: left;
+  margin-left: 55px;
+  margin-bottom: 8px;
+}
+
+.sem-dual-stat-num {
+  font-weight: bold;
+  color: #0000cc;
+}
+
+.sem-dual-stats-container {
+  display: flex;
+  align-items: center;
+  margin-left: 100px;
+  margin-bottom: 12px;
+  gap: 12px;
+}
+
+.sem-dual-stats-title {
+  font-family: var(--font-moul-light);
+  font-size: 10pt;
+  color: #0000cc;
+  width: 140px;
+  text-align: right;
+  line-height: 1.4;
+}
+
+.sem-dual-stats-bracket {
+  display: flex;
+  align-items: center;
+}
+
+.sem-dual-stats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sem-dual-stat-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-battambang);
+  font-size: 9.5pt;
+  color: #0000cc;
+  line-height: 1.35;
+}
+
+.sem-dual-stat-row .stat-grade {
+  font-family: var(--font-moul-light);
+  font-size: 9pt;
+  width: 60px;
+}
+
+.sem-dual-stat-row .stat-have {
+  width: 30px;
+}
+
+.sem-dual-stat-row .stat-total {
+  width: 52px;
+  text-align: right;
+}
+
+.sem-dual-stat-row .stat-female {
+  width: 70px;
+  text-align: right;
+}
+
+.sem-dual-stat-row .stat-equal {
+  width: 44px;
+  text-align: center;
+}
+
+.sem-dual-stat-row .stat-pct {
+  width: 52px;
+  text-align: right;
+}
+
+.sem-dual-signatures-wrap {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
+  padding: 0 35px;
+  box-sizing: border-box;
+}
+
+.sem-dual-sig-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 260px;
+  text-align: center;
+}
+
+.sem-dual-sig-title {
+  font-family: var(--font-moul-light);
+  font-size: 11pt;
+  color: #0000cc;
+  margin-bottom: 3px;
+}
+
+.sem-dual-sig-date {
+  font-family: var(--font-battambang);
+  font-size: 9.5pt;
+  color: #0000cc;
+  line-height: 1.4;
+  outline: none;
+  border-bottom: 1px dashed transparent;
+}
+.sem-dual-sig-date:hover, .sem-dual-sig-date:focus {
+  border-bottom: 1px dashed #2563eb;
+}
+
+.sem-dual-sig-role {
+  font-family: var(--font-moul-light);
+  font-size: 11pt;
+  color: #0000cc;
+  margin-top: 4px;
+}
+
+.sem-dual-sig-teacher-name {
+  font-family: var(--font-moul-light);
+  font-size: 11pt;
+  color: #16a34a; /* Green matching sample PDF */
+  margin-top: 40px;
+  outline: none;
+  border-bottom: 1px dashed transparent;
+}
+.sem-dual-sig-teacher-name:hover, .sem-dual-sig-teacher-name:focus {
+  border-bottom: 1px dashed #16a34a;
+}
+
+/* ==========================================================================
+   SEMESTER SCORES (សម្រង់ពិន្ទុឆមាស) - 100% SAMPLE PDF SPEC
+   A4 Portrait, Official Blue (#0000cc), Red & Green Title, Crisp Solid Black Borders
+   ========================================================================== */
+.semester-score-a4-page {
+  width: 794px; /* Exact A4 Portrait at 96 DPI */
+  max-width: 794px;
+  min-height: 1123px;
+  background: #ffffff;
+  margin: 0 auto 30px auto;
+  padding: 24px 36px 24px 36px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  box-sizing: border-box;
+  position: relative;
+  font-family: var(--font-battambang);
+  color: #000000;
+}
+
+.sem-score-header-wrap {
+  width: 100%;
+  margin: 0 auto 8px auto;
+}
+
+.sem-score-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.sem-score-school-box {
+  text-align: left;
+}
+
+.sem-score-movable-school {
+  transform-origin: top left;
+  text-align: left;
+  min-width: 180px;
+}
+
+.sem-score-movable-school .approval-drag-handle {
+  left: 20px;
+  transform: none;
+}
+
+.sem-score-movable-school .approval-action-toolbar {
+  left: 0;
+  transform: none;
+}
+
+.sem-score-movable-school .approval-resize-handle {
+  bottom: -6px;
+  right: -6px;
+}
+
+.sem-score-school-name {
+  font-family: var(--font-moul);
+  font-size: 13pt;
+  color: #0000cc;
+  line-height: 1.6;
+}
+
+.sem-score-grade-name {
+  font-family: var(--font-moul);
+  font-size: 13pt;
+  color: #0000cc;
+  line-height: 1.6;
+  margin-top: 2px;
+}
+
+.sem-score-kingdom-box {
+  text-align: center;
+  margin-right: 40px;
+}
+
+.sem-score-kingdom-title {
+  font-family: var(--font-moul);
+  font-size: 13.5pt;
+  color: #0000cc;
+  line-height: 1.6;
+}
+
+.sem-score-kingdom-motto {
+  font-family: var(--font-moul);
+  font-size: 12.5pt;
+  color: #0000cc;
+  line-height: 1.6;
+  margin-top: 2px;
+}
+
+.sem-score-main-title {
+  font-family: var(--font-moul);
+  font-size: 13.5pt;
+  color: #dc2626; /* Red matching PDF */
+  text-align: center;
+  margin: 10px auto 2px auto;
+  letter-spacing: 0.5px;
+  line-height: 1.4;
+}
+
+.sem-score-year-title {
+  font-family: var(--font-moul);
+  font-size: 12pt;
+  color: #16a34a; /* Green matching PDF */
+  text-align: center;
+  margin: 2px auto 10px auto;
+  line-height: 1.4;
+}
+
+.sem-score-table {
+  width: 100%;
+  max-width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #000000;
+  table-layout: fixed;
+  background: #ffffff;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.sem-score-table th,
+.sem-score-table td {
+  border: 1px solid #000000;
+  padding: 3px 1px;
+  box-sizing: border-box;
+  vertical-align: middle;
+  height: 29px;
+}
+
+.sem-score-table td.border-no-r {
+  border-right: hidden !important;
+  border-right-style: hidden !important;
+}
+
+.sem-score-table td.border-no-l {
+  border-left: hidden !important;
+  border-left-style: hidden !important;
+}
+
+.sem-score-table thead th {
+  font-family: var(--font-moul-light);
+  font-size: 9pt;
+  font-weight: normal;
+  color: #0000cc;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid #000000;
+  vertical-align: middle;
+  height: 125px;
+  padding: 2px 1px;
+  box-sizing: border-box;
+}
+
+.sem-score-table th.th-h {
+  height: 125px;
+  vertical-align: middle;
+  text-align: center;
+  padding: 4px 2px;
+  font-family: var(--font-moul-light);
+  font-size: 9pt;
+  color: #0000cc;
+  line-height: 1.3;
+}
+
+.sem-score-table th.th-v {
+  height: 125px;
+  vertical-align: middle;
+  text-align: center;
+  padding: 2px 1px;
+  white-space: nowrap;
+}
+
+.sem-score-table th.th-v span.th-v-text {
+  display: inline-block;
+  writing-mode: vertical-rl;
+  -webkit-writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  white-space: nowrap;
+  font-family: var(--font-moul-light);
+  font-size: 8.8pt;
+  font-weight: normal;
+  color: #0000cc;
+  line-height: 1;
+  letter-spacing: normal;
+  text-align: left;
+}
+
+.sem-score-td-num {
+  font-family: var(--font-battambang);
+  font-size: 10.5pt;
+  color: #0000cc;
+  text-align: center;
+  font-weight: 500;
+}
+
+.sem-score-td-lastname {
+  font-family: var(--font-battambang);
+  font-size: 10.5pt;
+  color: #000000;
+  text-align: left;
+  padding-left: 5px !important;
+  padding-right: 1px !important;
+  border-right: hidden !important;
+  border-right-style: hidden !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sem-score-td-firstname {
+  font-family: var(--font-battambang);
+  font-size: 10.5pt;
+  color: #000000;
+  text-align: left;
+  padding-left: 1px !important;
+  padding-right: 3px !important;
+  border-left: hidden !important;
+  border-left-style: hidden !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sem-score-td-gender {
+  font-family: var(--font-battambang);
+  font-size: 10.5pt;
+  color: #000000;
+  text-align: center;
+}
+
+.sem-score-td-val {
+  font-family: var(--font-battambang);
+  font-size: 10pt;
+  color: #000000;
+  text-align: center;
+  cursor: text;
+}
+
+.sem-score-td-val:hover {
+  background: #f1f5f9;
+}
+
+.sem-score-td-total {
+  font-family: var(--font-battambang);
+  font-size: 10pt;
+  color: #000000;
+  text-align: center;
+  font-weight: 700;
+}
+
+.sem-score-td-avg {
+  font-family: var(--font-battambang);
+  font-size: 10pt;
+  color: #000000;
+  text-align: center;
+  font-weight: 700;
+}
+
+.sem-score-td-rank {
+  font-family: var(--font-battambang);
+  font-size: 10pt;
+  color: #000000;
+  text-align: center;
+  font-weight: 700;
+}
+
+.sem-score-td-mention {
+  font-family: var(--font-battambang);
+  font-size: 10pt;
+  color: #000000;
+  text-align: center;
+  font-weight: 700;
+}
+
+.sem-score-roster-end {
+  width: 100%;
+  margin: 8px auto 14px auto;
+  font-family: var(--font-moul-light);
+  font-size: 10pt;
+  color: #0000cc;
+  text-align: left;
+  padding-left: 4px;
+}
+
+.sem-score-stat-num {
+  font-family: var(--font-battambang);
+  font-weight: 700;
+}
+
+.sem-score-footer-container {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.sem-score-stats-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.sem-score-summary-label {
+  font-family: var(--font-moul-light);
+  font-size: 10pt;
+  color: #0000cc;
+}
+
+.sem-score-bracket-svg {
+  display: flex;
+  align-items: center;
+}
+
+.sem-score-grades-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.sem-score-grade-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 9.5pt;
+  color: #0000cc;
+}
+
+.sem-score-grade-name {
+  font-family: var(--font-moul-light);
+  min-width: 75px;
+}
+
+.sem-score-grade-lbl {
+  font-family: var(--font-battambang);
+}
+
+.sem-score-grade-val {
+  font-family: var(--font-battambang);
+  font-weight: 700;
+  min-width: 50px;
+}
+
+.sem-score-grade-pct {
+  font-family: var(--font-battambang);
+  font-weight: 700;
+  min-width: 50px;
+}
+
+.sem-score-signatures-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  margin-top: 12px;
+  padding: 0 20px;
+}
+
+.sem-score-sig-block {
+  min-width: 280px;
+  text-align: center;
+}
+
+.sem-score-sig-title {
+  font-family: var(--font-moul-light);
+  font-size: 10.5pt;
+  color: #0000cc;
+  margin-bottom: 3px;
+}
+
+.sem-score-sig-date {
+  font-family: var(--font-battambang);
+  font-size: 9.5pt;
+  color: #0000cc;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.sem-score-sig-role {
+  font-family: var(--font-moul-light);
+  font-size: 10.5pt;
+  color: #0000cc;
+  margin-top: 6px;
+  margin-bottom: 45px;
+}
+
+.sem-score-sig-name {
+  font-family: var(--font-moul-light);
+  font-size: 10.5pt;
+  color: #0000cc;
+  cursor: pointer;
+}
+
+/* Print Rules for Semester Scores (A4 Portrait) */
+@media print {
+  body.tab-semester_scores-active #tab-semester_scores,
+  #tab-semester_scores.active {
+    display: block !important;
+  }
+
+  #tab-semester_scores .no-print {
+    display: none !important;
+  }
+
+  #tab-semester_scores .semester-score-a4-page {
+    width: 210mm !important;
+    max-width: 210mm !important;
+    min-height: 297mm !important;
+    box-shadow: none !important;
+    margin: 0 auto !important;
+    padding: 8mm 12mm !important;
+    page-break-after: always;
+    page-break-inside: avoid;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-semester_scores .semester-score-a4-page:last-child {
+    page-break-after: avoid !important;
+  }
+
+  #tab-semester_scores .sem-score-table {
+    width: 100% !important;
+    border: 1px solid #000000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-semester_scores .sem-score-table th,
+  #tab-semester_scores .sem-score-table td {
+    border: 1px solid #000000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-semester_scores .sem-score-table td.border-no-r {
+    border-right: hidden !important;
+    border-right-style: hidden !important;
+  }
+
+  #tab-semester_scores .sem-score-table td.border-no-l {
+    border-left: hidden !important;
+    border-left-style: hidden !important;
+  }
+
+  #tab-semester_scores .sem-score-table thead th {
+    height: 125px !important;
+    vertical-align: middle !important;
+    text-align: center !important;
+    background: #ffffff !important;
+    border: 1px solid #000000 !important;
+    color: #0000cc !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-semester_scores .sem-score-table th.th-h {
+    height: 125px !important;
+    vertical-align: middle !important;
+    text-align: center !important;
+    font-family: var(--font-moul-light) !important;
+    font-size: 9pt !important;
+    color: #0000cc !important;
+  }
+
+  #tab-semester_scores .sem-score-table th.th-v {
+    height: 125px !important;
+    vertical-align: middle !important;
+    text-align: center !important;
+    padding: 2px 1px !important;
+  }
+
+  #tab-semester_scores .sem-score-table th.th-v span.th-v-text {
+    display: inline-block !important;
+    writing-mode: vertical-rl !important;
+    -webkit-writing-mode: vertical-rl !important;
+    transform: rotate(180deg) !important;
+    -webkit-transform: rotate(180deg) !important;
+    white-space: nowrap !important;
+    font-family: var(--font-moul-light) !important;
+    font-size: 8.5pt !important;
+    font-weight: normal !important;
+    color: #0000cc !important;
+    line-height: 1 !important;
+    letter-spacing: normal !important;
+    text-align: left !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-semester_scores .sem-score-movable-school {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  #tab-semester_scores .sem-score-school-name,
+  #tab-semester_scores .sem-score-grade-name,
+  #tab-semester_scores .sem-score-kingdom-title,
+  #tab-semester_scores .sem-score-kingdom-motto,
+  #tab-semester_scores .sem-score-table thead th,
+  #tab-semester_scores .sem-score-td-num,
+  #tab-semester_scores .sem-score-roster-end,
+  #tab-semester_scores .sem-score-summary-label,
+  #tab-semester_scores .sem-score-grade-row,
+  #tab-semester_scores .sem-score-sig-title,
+  #tab-semester_scores .sem-score-sig-date,
+  #tab-semester_scores .sem-score-sig-role,
+  #tab-semester_scores .sem-score-sig-name {
+    color: #0000cc !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-semester_scores .sem-score-main-title {
+    color: #dc2626 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-semester_scores .sem-score-year-title {
+    color: #16a34a !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* ANNUAL RANKS PRINT */
+  #tab-annual_ranks.active {
+    display: block !important;
+  }
+
+  #tab-annual_ranks .annual-a4-page {
+    width: 210mm !important;
+    max-width: 210mm !important;
+    min-height: 297mm !important;
+    height: 297mm !important;
+    max-height: 297mm !important;
+    overflow: hidden !important;
+    box-shadow: none !important;
+    margin: 0 auto !important;
+    padding: 8mm 12mm !important;
+    page-break-after: always !important;
+    page-break-inside: avoid !important;
+    break-after: page !important;
+    break-inside: avoid !important;
+    box-sizing: border-box !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-annual_ranks .annual-a4-page:last-child {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  #tab-annual_ranks .annual-table {
+    width: 100% !important;
+    border: 1px solid #000000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-annual_ranks .annual-table th,
+  #tab-annual_ranks .annual-table td {
+    border: 1px solid #000000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-annual_ranks .annual-table td.annual-td-lastname {
+    border-right: hidden !important;
+    border-right-style: hidden !important;
+  }
+
+  #tab-annual_ranks .annual-table td.annual-td-firstname {
+    border-left: hidden !important;
+    border-left-style: hidden !important;
+  }
+
+  #tab-annual_ranks .annual-school-name,
+  #tab-annual_ranks .annual-grade-name,
+  #tab-annual_ranks .annual-kingdom-title,
+  #tab-annual_ranks .annual-kingdom-motto,
+  #tab-annual_ranks .annual-table thead th,
+  #tab-annual_ranks .annual-roster-end,
+  #tab-annual_ranks .annual-stats-title,
+  #tab-annual_ranks .annual-stat-row,
+  #tab-annual_ranks .annual-sig-title,
+  #tab-annual_ranks .annual-sig-date,
+  #tab-annual_ranks .annual-sig-role,
+  #tab-annual_ranks .annual-sig-teacher-name {
+    color: #0000cc !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-annual_ranks .annual-main-title {
+    color: #16a34a !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-annual_ranks .annual-table thead th.annual-th-red,
+  #tab-annual_ranks .annual-td-rank,
+  #tab-annual_ranks .annual-pct-red {
+    color: #dc2626 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* STUDY BOOK PRINT - FULL A4 LANDSCAPE EXACT 1 SHEET PER STUDENT */
+  @page study-book-sheet {
+    size: A4 landscape !important;
+    margin: 4mm 5mm !important;
+  }
+
+  body.tab-study_book-active #tab-study_book,
+  #tab-study_book.active {
+    display: block !important;
+  }
+
+  #tab-study_book .study-book-sheet {
+    page: study-book-sheet !important;
+    width: 287mm !important;
+    max-width: 287mm !important;
+    height: 201mm !important;
+    max-height: 201mm !important;
+    min-height: 201mm !important;
+    box-shadow: none !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    page-break-after: always !important;
+    page-break-inside: avoid !important;
+    break-after: page !important;
+    break-inside: avoid !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    gap: 3mm !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-study_book .study-book-sheet:last-child {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  #tab-study_book .study-book-left-card,
+  #tab-study_book .study-book-right-card {
+    width: 49.4% !important;
+    flex: 0 0 49.4% !important;
+    height: 201mm !important;
+    min-height: 201mm !important;
+    max-height: 201mm !important;
+    border: 1.5px solid #0000cc !important;
+    padding: 3mm 4.5mm !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-study_book .sb-movable-block {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    cursor: default !important;
+  }
+
+  #tab-study_book .sb-movable-block .approval-action-toolbar,
+  #tab-study_book .sb-movable-block .approval-drag-handle {
+    display: none !important;
+  }
+
+  #tab-study_book .sb-td-grade.has-score {
+    background-color: transparent !important;
+    color: #0000cc !important;
+    font-weight: 700 !important;
+  }
+
+  #tab-study_book .sb-heading-kingdom,
+  #tab-study_book .sb-heading-motto,
+  #tab-study_book .sb-ministry-title,
+  #tab-study_book .sb-cover-title,
+  #tab-study_book .sb-general-school-title,
+  #tab-study_book .sb-sub-school-dept,
+  #tab-study_book .sb-form-label,
+  #tab-study_book .sb-cover-year,
+  #tab-study_book .sb-right-kingdom,
+  #tab-study_book .sb-right-motto,
+  #tab-study_book .sb-right-dept,
+  #tab-study_book .sb-right-school,
+  #tab-study_book .sb-right-grade-month,
+  #tab-study_book .sb-right-student-info,
+  #tab-study_book .sb-eval-table th,
+  #tab-study_book .sb-td-subject,
+  #tab-study_book .sb-td-grade,
+  #tab-study_book .sb-summary-wrap,
+  #tab-study_book .sb-signatures-wrap {
+    color: #0000cc !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-study_book .sb-right-header-wrap {
+    text-align: center !important;
+    margin-bottom: 1mm !important;
+  }
+
+  #tab-study_book .sb-right-kingdom {
+    text-align: center !important;
+  }
+
+  #tab-study_book .sb-right-motto {
+    text-align: center !important;
+  }
+
+  #tab-study_book .sb-right-dept-wrap,
+  #tab-study_book .sb-right-dept,
+  #tab-study_book .sb-right-school {
+    text-align: left !important;
+  }
+
+  #tab-study_book .sb-right-grade-month {
+    position: relative !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    margin: 1.5mm 0 !important;
+  }
+
+  #tab-study_book .sb-right-grade-month .sb-grade-tag {
+    position: absolute !important;
+    left: 0 !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    white-space: nowrap !important;
+  }
+
+  #tab-study_book .sb-right-grade-month .sb-month-result-title {
+    text-align: center !important;
+    margin: 0 auto !important;
+    white-space: nowrap !important;
+  }
+
+  #tab-study_book .sb-right-student-info {
+    margin-bottom: 1.5mm !important;
+  }
+
+  #tab-study_book .sb-eval-table {
+    border: 1.5px solid #0000cc !important;
+    margin: 1.5mm 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-study_book .sb-eval-table th,
+  #tab-study_book .sb-eval-table td {
+    border: 1px solid #0000cc !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-study_book .sb-eval-table thead th {
+    font-size: 8.5pt !important;
+    padding: 0.8mm 1px !important;
+  }
+
+  #tab-study_book .sb-eval-table thead th.sb-th-reinforce {
+    font-size: 7.2pt !important;
+    line-height: 1.15 !important;
+    padding: 0.5mm 1px !important;
+  }
+
+  #tab-study_book .sb-eval-table tbody tr {
+    height: 5.6mm !important;
+  }
+
+  #tab-study_book .sb-eval-table tbody td {
+    height: 5.6mm !important;
+    font-size: 8.5pt !important;
+    line-height: 1.15 !important;
+  }
+
+  #tab-study_book .sb-td-subject {
+    font-size: 8.5pt !important;
+    padding-left: 2mm !important;
+    font-weight: 600 !important;
+  }
+
+  #tab-study_book .sb-td-grade {
+    font-size: 9pt !important;
+    text-align: center !important;
+  }
+
+  #tab-study_book .sb-td-reinforce {
+    font-size: 7.5pt !important;
+    padding-left: 1.5mm !important;
+    padding-right: 1.5mm !important;
+  }
+
+  #tab-study_book .sb-dotted-val,
+  #tab-study_book .sb-dotted-line {
+    border-bottom: 1px dotted #0000cc !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* ==========================================================================
+     TRAINEE BOOK RECORD SHEET PRINT (សៀវភៅសិក្ខាគារិក)
+     Strictly A4 Landscape (297mm x 210mm), Exact 1 Sheet Per Student
+     ========================================================================== */
+  @page trainee-sheet {
+    size: A4 landscape !important;
+    margin: 4mm 5mm !important;
+  }
+
+  body.tab-trainee-active #tab-trainee,
+  #tab-trainee.active {
+    display: block !important;
+  }
+
+  #tab-trainee .trainee-sheet {
+    page: trainee-sheet !important;
+    width: 287mm !important;
+    max-width: 287mm !important;
+    height: 198mm !important;
+    max-height: 198mm !important;
+    min-height: 198mm !important;
+    box-shadow: none !important;
+    margin: 0 auto !important;
+    padding: 3mm 4mm !important;
+    background-color: #d9ead3 !important;
+    border: 2px solid #274e13 !important;
+    page-break-after: always !important;
+    page-break-inside: avoid !important;
+    break-after: page !important;
+    break-inside: avoid !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-trainee .trainee-sheet:last-child {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  #tab-trainee .trainee-title-badge {
+    background-color: #ffffcc !important;
+    border: 1.5px solid #274e13 !important;
+    color: #c00000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-trainee .trainee-name-header,
+  #tab-trainee .trainee-school-header,
+  #tab-trainee .trainee-annual-box,
+  #tab-trainee .trainee-praise-box,
+  #tab-trainee .trainee-table-sem,
+  #tab-trainee .trainee-table-att,
+  #tab-trainee .trainee-table-eval {
+    background-color: #e2f0d9 !important;
+    border-color: #274e13 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-trainee .trainee-table-sem th,
+  #tab-trainee .trainee-table-sem td,
+  #tab-trainee .trainee-table-att th,
+  #tab-trainee .trainee-table-att td,
+  #tab-trainee .trainee-table-eval th,
+  #tab-trainee .trainee-table-eval td {
+    border-color: #274e13 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-trainee .trainee-table-sem thead th,
+  #tab-trainee .trainee-table-att thead th,
+  #tab-trainee .trainee-table-eval thead th,
+  #tab-trainee .trainee-praise-head,
+  #tab-trainee .trainee-table-sem tr.tr-year-end td {
+    background-color: #c2e0b8 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-trainee .trainee-table-sem tr.tr-summary td {
+    background-color: #d0e8cb !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-trainee .trainee-name-pill {
+    background-color: #ffe6e6 !important;
+    border-color: #ff0000 !important;
+    color: #ff0000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-trainee .trainee-gender-val {
+    color: #ff0000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  #tab-trainee .trainee-dotted-val {
+    border-bottom: 1px dotted #274e13 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+}

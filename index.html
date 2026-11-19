@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ប្រព័ន្ធគ្រប់គ្រងសាលាបឋមសិក្សា បាន្លួង - Ban Loung Primary School</title>
+  
+  <!-- Google Fonts: Battambang, Kantumruy Pro, Moul, Siemreap -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&family=Kantumruy+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Moul&family=Siemreap&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app-container">
+
+  <!-- ========================================== -->
+  <!-- SIDEBAR NAVIGATION                        -->
+  <!-- ========================================== -->
+  <aside class="sidebar" id="appSidebar">
+    <!-- Draggable Resizer Edge (ចុចអូសដើម្បីពង្រីក ឬបង្រួមតាមចិត្ត) -->
+    <div class="sidebar-resizer" id="sidebarResizer" title="ចុចអូសទៅឆ្វេង ឬស្ដាំ ដើម្បីពង្រីក ឬបង្រួមតាមចិត្ត (Drag to resize)">
+      <div class="resizer-handle-pill"></div>
+    </div>
+
+    <div class="sidebar-header">
+      <div class="school-logo">
+        <i class="fa fa-graduation-cap"></i>
+      </div>
+      <div class="school-title-wrap">
+        <h1>បឋមសិក្សា បាន្លួង</h1>
+        <p>ស្រុកព្រៃកប្បាស ខេត្តតាកែវ</p>
+      </div>
+      <button type="button" class="sidebar-toggle-btn" id="btnSidebarToggle" onclick="toggleSidebar()" title="ពង្រីក / បង្រួមផ្ទាំងមីនុយ (Toggle Sidebar)">
+        <i class="fa-solid fa-chevron-left" id="sidebarToggleIcon"></i>
+      </button>
+    </div>
+
+    <ul class="nav-menu">
+      <li class="nav-item">
+        <a class="nav-link active" data-tab="dashboard" data-tooltip="ផ្ទាំងគ្រប់គ្រងរួម" title="ផ្ទាំងគ្រប់គ្រងរួម">
+          <span class="nav-icon"><i class="fa fa-chart-pie"></i></span>
+          <span class="nav-text">ផ្ទាំងគ្រប់គ្រងរួម</span>
+        </a>
+      </li>
+      <!-- គ្រប់គ្រងសិស្ស (Student Management) - រួមបញ្ចូលទាំង ៤ ផ្ទាំង -->
+      <li class="nav-item nav-has-submenu" id="navItemStudentsHub">
+        <a class="nav-link" data-tab="students_management" data-tooltip="គ្រប់គ្រងសិស្ស" title="គ្រប់គ្រងសិស្ស">
+          <span class="nav-icon"><i class="fa-solid fa-user-graduate"></i></span>
+          <span class="nav-text">គ្រប់គ្រងសិស្ស</span>
+          <span class="nav-arrow"><i class="fa-solid fa-chevron-down"></i></span>
+        </a>
+        <ul class="nav-submenu">
+          <li>
+            <a class="nav-sublink active" id="sublink-students" data-subtab="students" onclick="switchStudentSubTab('students')" title="បញ្ជីឈ្មោះសិស្ស">
+              <span class="sub-dot"></span>
+              <span class="sub-text">បញ្ជីឈ្មោះសិស្ស</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-sublink" id="sublink-attendance_daily" data-subtab="attendance_daily" onclick="switchStudentSubTab('attendance_daily')" title="វត្តមានប្រចាំថ្ងៃ">
+              <span class="sub-dot"></span>
+              <span class="sub-text">វត្តមានប្រចាំថ្ងៃ</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-sublink" id="sublink-attendance_monthly" data-subtab="attendance_monthly" onclick="switchStudentSubTab('attendance_monthly')" title="វត្តមានប្រចាំខែ">
+              <span class="sub-dot"></span>
+              <span class="sub-text">វត្តមានប្រចាំខែ</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-sublink" id="sublink-attendance_yearly" data-subtab="attendance_yearly" onclick="switchStudentSubTab('attendance_yearly')" title="វត្តមានប្រចាំឆ្នាំ">
+              <span class="sub-dot"></span>
+              <span class="sub-text">វត្តមានប្រចាំឆ្នាំ</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+            <li class="nav-item">
+        <a class="nav-link" data-tab="scores" data-tooltip="សម្រង់ពិន្ទុប្រចាំខែ" title="សម្រង់ពិន្ទុប្រចាំខែ">
+          <span class="nav-icon"><i class="fa fa-award"></i></span>
+          <span class="nav-text">សម្រង់ពិន្ទុប្រចាំខែ</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-tab="monthly_ranks" data-tooltip="ចំណាត់ថ្នាក់ប្រចាំខែ" title="ចំណាត់ថ្នាក់ប្រចាំខែ">
+          <span class="nav-icon"><i class="fa-solid fa-ranking-star"></i></span>
+          <span class="nav-text">ចំណាត់ថ្នាក់ប្រចាំខែ</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-tab="honor_roll" data-tooltip="តារាងកិត្តិយស" title="តារាងកិត្តិយស">
+          <span class="nav-icon"><i class="fa-solid fa-award" style="color: #f59e0b;"></i></span>
+          <span class="nav-text">តារាងកិត្តិយស</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-tab="semester_ranks" data-tooltip="ចំណាត់ថ្នាក់ប្រចាំឆមាស" title="ចំណាត់ថ្នាក់ប្រចាំឆមាស">
+          <span class="nav-icon"><i class="fa-solid fa-file-invoice" style="color: #9333ea;"></i></span>
+          <span class="nav-text">ចំណាត់ថ្នាក់ប្រចាំឆមាស</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-tab="semester_scores" data-tooltip="សម្រង់ពិន្ទុឆមាស" title="សម្រង់ពិន្ទុឆមាស">
+          <span class="nav-icon"><i class="fa-solid fa-clipboard-list" style="color: #2563eb;"></i></span>
+          <span class="nav-text">សម្រង់ពិន្ទុឆមាស</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-tab="semester_extract" id="navItemSemesterExtract" data-tooltip="សម្រង់ពិន្ទុ ប្រចាំឆមាស" title="សម្រង់ពិន្ទុ ប្រចាំឆមាស">
+          <span class="nav-icon"><i class="fa-solid fa-file-waveform" style="color: #059669;"></i></span>
+          <span class="nav-text">សម្រង់ពិន្ទុ ប្រចាំឆមាស</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-tab="annual_ranks" data-tooltip="ចំណាត់ថ្នាក់ប្រចាំឆ្នាំ" title="ចំណាត់ថ្នាក់ប្រចាំឆ្នាំ">
+          <span class="nav-icon"><i class="fa-solid fa-award" style="color: #ea580c;"></i></span>
+          <span class="nav-text">ចំណាត់ថ្នាក់ប្រចាំឆ្នាំ</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-tab="study_book" data-tooltip="សៀវភៅតាមដានការសិក្សា" title="សៀវភៅតាមដានការសិក្សា">
+          <span class="nav-icon"><i class="fa-solid fa-book-open" style="color: #0284c7;"></i></span>
+          <span class="nav-text">សៀវភៅតាមដានការសិក្សា</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-tab="trainee" id="navItemTrainee" data-tooltip="សៀវភៅសិក្ខាគារិក" title="សៀវភៅសិក្ខាគារិក">
+          <span class="nav-icon"><i class="fa-solid fa-address-book" style="color: #16a34a;"></i></span>
+          <span class="nav-text">សិក្ខាគារិក</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-tab="teachers" data-tooltip="គ្រប់គ្រងគ្រូបង្រៀន" title="គ្រប់គ្រងគ្រូបង្រៀន">
+          <span class="nav-icon"><i class="fa fa-chalkboard-user"></i></span>
+          <span class="nav-text">គ្រប់គ្រងគ្រូបង្រៀន</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-tab="exams" data-tooltip="បន្ទប់ប្រឡងតេស្ដ" title="បន្ទប់ប្រឡងតេស្ដ">
+          <span class="nav-icon"><i class="fa fa-door-open"></i></span>
+          <span class="nav-text">បន្ទប់ប្រឡងតេស្ដ</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-tab="reports" data-tooltip="វ៉ាក់សាំង & របាយការណ៍" title="វ៉ាក់សាំង & របាយការណ៍">
+          <span class="nav-icon"><i class="fa fa-file-medical"></i></span>
+          <span class="nav-text">វ៉ាក់សាំង & របាយការណ៍</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <div class="footer-school-name">សាលាបឋមសិក្សា បាន្លួង</div>
+      <div class="sidebar-size-actions" title="ពង្រីក ឬបង្រួមទំហំផ្ទាំងមីនុយ">
+        <button type="button" class="btn-sidebar-size" onclick="adjustSidebarWidth(-25)" title="បង្រួម (-25px)">
+          <i class="fa-solid fa-minus"></i>
+        </button>
+        <button type="button" class="btn-sidebar-size" onclick="resetSidebarWidth()" title="ទំហំដើម (270px)">
+          <i class="fa-solid fa-rotate-right"></i>
+        </button>
+        <button type="button" class="btn-sidebar-size" onclick="adjustSidebarWidth(25)" title="ពង្រីក (+25px)">
+          <i class="fa-solid fa-plus"></i>
+        </button>
+      </div>
+      <div class="footer-version">v2.5</div>
+    </div>
+  </aside>
+
+  <!-- ========================================== -->
+  <!-- MAIN APPLICATION CONTENT                  -->
+  <!-- ========================================== -->
+  <main class="main-wrapper">
+
+    <!-- Top App Bar -->
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <button type="button" class="topbar-sidebar-toggle no-print" id="btnTopbarSidebarToggle" onclick="toggleSidebar()" title="ពង្រីក / បង្រួមផ្ទាំងមីនុយ (Toggle Sidebar)">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <div class="page-heading" id="pageTitle">
+          ផ្ទាំងគ្រប់គ្រងរួម (Dashboard)
+        </div>
+        <div class="year-selector-wrap">
+          <label><i class="fa fa-calendar"></i> ឆ្នាំសិក្សា៖</label>
+          <select id="yearSelector" class="year-select">
+            <option value="២០២៦-២០២៧" selected>២០២៦-២០២៧</option>
+            <option value="២០២៧-២០២៨">២០២៧-២០២៨</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Live Real-Time Date & Clock (កាលបរិច្ឆេទ និង ម៉ោងពិតប្រាកដនៅលើប្រព័ន្ធទាំងមូល) -->
+      <div class="top-bar-actions no-print">
+        <div class="live-datetime-badge" title="កាលបរិច្ឆេទ និងម៉ោងជាក់ស្តែងបច្ចុប្បន្ន">
+          <div class="live-date-text">
+            <i class="fa-solid fa-calendar-day" style="color: #2563eb;"></i>
+            <span id="systemLiveDate">កំពុងដំណើរការ...</span>
+          </div>
+          <div class="live-time-divider"></div>
+          <div class="live-time-text">
+            <i class="fa-solid fa-clock" style="color: #16a34a;"></i>
+            <span id="systemLiveTime">--:--:--</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content Body -->
+    <div class="content-body">
+
+      <!-- ========================================== -->
+      <!-- TAB 1: DASHBOARD                          -->
+      <!-- ========================================== -->
+      <section id="tab-dashboard" class="tab-pane active">
+        <!-- Dashboard Expand / Collapse & Zoom Toolbar (ពង្រីក និង បង្រួម Dashboard) -->
+        <div class="dashboard-controls-bar no-print">
+          <div class="dashboard-controls-left">
+            <span class="dashboard-badge-title">
+              <i class="fa fa-chart-line" style="color: #2563eb;"></i> ផ្ទាំងវិភាគទិន្នន័យទូទៅ
+            </span>
+          </div>
+          <div class="dashboard-zoom-controls">
+            <span class="zoom-label"><i class="fa fa-magnifying-glass"></i> ទំហំផ្ទាំង៖</span>
+            <button type="button" class="btn-dash-zoom" onclick="zoomDashboard(-0.1)" title="បង្រួមផ្ទាំង (Zoom Out)">
+              <i class="fa-solid fa-minus"></i> បង្រួម
+            </button>
+            <span id="dashZoomLevel" class="zoom-level-badge">100%</span>
+            <button type="button" class="btn-dash-zoom" onclick="zoomDashboard(0.1)" title="ពង្រីកផ្ទាំង (Zoom In)">
+              <i class="fa-solid fa-plus"></i> ពង្រីក
+            </button>
+            <button type="button" class="btn-dash-zoom btn-dash-reset" onclick="resetDashboardZoom()" title="កំណត់ទំហំដើម (Reset 100%)">
+              <i class="fa-solid fa-rotate-right"></i> កំណត់ដើម
+            </button>
+            <button type="button" class="btn-dash-zoom btn-dash-fullscreen" onclick="toggleDashboardFullscreen()" id="btnDashFullscreen" title="ពង្រីកពេញអេក្រង់ (Fullscreen)">
+              <i class="fa-solid fa-expand"></i> ពេញអេក្រង់
+            </button>
+          </div>
+        </div>
+
+        <div id="dashboardZoomContainer" class="dashboard-zoom-container">
+        <!-- Stat Metrics -->
+        <div class="stats-grid">
+          <div class="stat-card blue">
+            <div class="stat-info">
+              <div class="stat-label">សិស្សសរុប (Total Students)</div>
+              <div class="stat-value" id="dashTotalStudents">0</div>
+              <div class="stat-sub">ក្នុងឆ្នាំសិក្សាដែលបានជ្រើស</div>
+            </div>
+            <div class="stat-icon"><i class="fa fa-users"></i></div>
+          </div>
+
+          <div class="stat-card pink">
+            <div class="stat-info">
+              <div class="stat-label">សិស្សស្រី (Female Students)</div>
+              <div class="stat-value" id="dashFemaleStudents">0</div>
+              <div class="stat-sub">អត្រាសិស្សស្រីក្នុងសាលា</div>
+            </div>
+            <div class="stat-icon"><i class="fa fa-female"></i></div>
+          </div>
+
+          <div class="stat-card emerald">
+            <div class="stat-info">
+              <div class="stat-label">គ្រូបង្រៀនសរុប (Teachers)</div>
+              <div class="stat-value" id="dashTotalTeachers">0</div>
+              <div class="stat-sub">បុគ្គលិកអប់រំក្នុងសាលា</div>
+            </div>
+            <div class="stat-icon"><i class="fa fa-chalkboard-user"></i></div>
+          </div>
+
+          <div class="stat-card amber">
+            <div class="stat-info">
+              <div class="stat-label">គ្រូស្រី (Female Teachers)</div>
+              <div class="stat-value" id="dashFemaleTeachers">0</div>
+              <div class="stat-sub">សមាមាត្រគ្រូបង្រៀនស្រី</div>
+            </div>
+            <div class="stat-icon"><i class="fa fa-user-tie"></i></div>
+          </div>
+
+          <div class="stat-card purple">
+            <div class="stat-info">
+              <div class="stat-label">ថ្នាក់រៀនសរុប (Total Classes)</div>
+              <div class="stat-value" id="dashTotalClasses">0</div>
+              <div class="stat-sub">មត្តេយ្យ ដល់ ថ្នាក់ទី៦</div>
+            </div>
+            <div class="stat-icon"><i class="fa fa-school"></i></div>
+          </div>
+        </div>
+
+        <!-- Charts Grid (Bar Chart + Donut Chart) -->
+        <div class="charts-grid">
+          <div class="chart-card">
+            <div class="chart-header">
+              <div class="chart-title">
+                <i class="fa fa-chart-column" style="color: var(--primary);"></i>
+                ក្រាបសសរ៖ ចំនួនសិស្សតាមកម្រិតថ្នាក់ (ប្រុស និង ស្រី)
+              </div>
+              <button type="button" class="btn-card-collapse" onclick="toggleCardCollapse(this)" title="បង្រួម/ពង្រីកប្រអប់នេះ">
+                <i class="fa fa-chevron-up"></i>
+              </button>
+            </div>
+            <div class="chart-container">
+              <canvas id="barChartCanvas"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-header">
+              <div class="chart-title">
+                <i class="fa fa-chart-pie" style="color: #db2777;"></i>
+                ក្រាបផ្លិត៖ សមាមាត្រភេទសិស្ស (ប្រុស/ស្រី)
+              </div>
+              <button type="button" class="btn-card-collapse" onclick="toggleCardCollapse(this)" title="បង្រួម/ពង្រីកប្រអប់នេះ">
+                <i class="fa fa-chevron-up"></i>
+              </button>
+            </div>
+            <div class="chart-container">
+              <canvas id="pieChartCanvas"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary Table of Classes -->
+        <div class="chart-card" style="margin-top: 20px;">
+          <div class="chart-header">
+            <div class="chart-title">
+              <i class="fa fa-table-list" style="color: var(--secondary);"></i>
+              តារាងសង្ខេបស្ថិតិសិស្សតាមថ្នាក់រៀន
+            </div>
+            <button type="button" class="btn-card-collapse" onclick="toggleCardCollapse(this)" title="បង្រួម/ពង្រីកប្រអប់នេះ">
+              <i class="fa fa-chevron-up"></i>
+            </button>
+          </div>
+          <div id="dashClassSummaryTable"></div>
+        </div>
+        </div><!-- /#dashboardZoomContainer -->
+      </section>
+
+      <!-- ========================================== -->
+      <!-- TAB 2: STUDENT MANAGEMENT (គ្រប់គ្រងសិស្ស) -->
+      <!-- រួមបញ្ចូល៖ បញ្ជីឈ្មោះសិស្ស, វត្តមានប្រចាំថ្ងៃ, វត្តមានប្រចាំខែ, វត្តមានប្រចាំឆ្នាំ -->
+      <!-- ========================================== -->
+      <section id="tab-students_management" class="tab-pane">
+        <!-- ផ្ទាំងតូចៗទាំង ៤ ក្នុងផ្ទាំងធំគ្រប់គ្រងសិស្ស -->
+        <!-- 1. បញ្ជីឈ្មោះសិស្ស -->
+        <div class="student-subpane active" id="subpane-students">
+<!-- Filter Toolbar -->
+        <div class="filter-toolbar no-print">
+          <div class="filter-group">
+            <label style="font-weight: 600; font-size: 13px;"><i class="fa fa-layer-group"></i> ជ្រើសរើសថ្នាក់៖</label>
+            <select class="filter-select class-select-input" style="min-width: 190px;"></select>
+
+            <label style="font-weight: 600; font-size: 13px; margin-left: 8px;"><i class="fa fa-venus-mars"></i> ភេទ៖</label>
+            <select id="genderFilterSelect" class="filter-select">
+              <option value="all">ទាំងអស់ (All)</option>
+              <option value="ប្រុស">ប្រុស (Male)</option>
+              <option value="ស្រី">ស្រី (Female)</option>
+            </select>
+
+            <input type="text" id="studentSearchInput" class="search-input" placeholder="🔍 ស្វែងរកតាមឈ្មោះ អត្តលេខ ភូមិ...">
+          </div>
+
+          <div class="filter-group">
+            <button type="button" class="btn btn-action-outline" onclick="exportRosterExcel()" title="នាំចេញបញ្ជីឈ្មោះសិស្សជា File Excel">
+              <i class="fa-solid fa-file-excel" style="color: #16a34a; font-size: 14px;"></i> នាំចេញ Excel
+            </button>
+            <button type="button" class="btn btn-action-outline" onclick="openImportModal()" title="នាំចូលសិស្សថ្មីជា File Excel ឬ CSV">
+              <i class="fa-solid fa-file-import" style="color: #2563eb; font-size: 14px;"></i> នាំចូល File
+            </button>
+            <button type="button" class="btn btn-action-navy" onclick="printRoster()" title="បោះពុម្ពបញ្ជីឈ្មោះសិស្សជាទម្រង់ A4 ផ្ដេក">
+              <i class="fa-solid fa-print" style="font-size: 14px;"></i> បោះពុម្ព (Print)
+            </button>
+            <button type="button" class="btn btn-action-danger" onclick="clearClassStudentsData()" title="សម្អាតទិន្នន័យបញ្ជីឈ្មោះសិស្សក្នុងថ្នាក់នេះ">
+              <i class="fa-solid fa-trash-can" style="color: #dc2626; font-size: 14px;"></i> សម្អាតទិន្នន័យ
+            </button>
+            <button type="button" class="btn btn-action-undo" onclick="undoClassStudentsData()" title="ត្រឡប់ទិន្នន័យបញ្ជីឈ្មោះសិស្សមកវិញ">
+              <i class="fa-solid fa-rotate-left" style="color: #4338ca; font-size: 14px;"></i> ត្រឡប់មកវិញ (Undo)
+            </button>
+          </div>
+        </div>
+
+        <!-- A4 Landscape Paper Preview Container -->
+        <div class="a4-preview-wrapper" id="studentRosterContent"></div>
+        </div>
+
+        <!-- 2. វត្តមានប្រចាំថ្ងៃ -->
+        <div class="student-subpane" id="subpane-attendance_daily" style="display: none;">
+<div class="filter-toolbar no-print">
+          <div class="filter-group">
+            <label style="font-weight: 600; font-size: 13px;"><i class="fa fa-layer-group"></i> ថ្នាក់រៀន៖</label>
+            <select class="filter-select class-select-input" style="min-width: 190px;"></select>
+
+            <label style="font-weight: 600; font-size: 13px; margin-left: 10px;"><i class="fa fa-calendar-day"></i> កាលបរិច្ឆេទ៖</label>
+            <input type="date" id="attDatePicker" class="filter-select">
+          </div>
+
+          <div class="filter-group">
+            <button type="button" class="btn btn-action-save" onclick="saveDailyAttendanceExplicit()" title="ចុចត្រង់នេះដើម្បីរក្សាទុកវត្តមាន និងបញ្ជូនចូលវត្តមានប្រចាំខែ">
+              <i class="fa-solid fa-floppy-disk" style="font-size: 14px;"></i> រក្សាទុកវត្តមាន
+            </button>
+            <button type="button" class="btn btn-action-outline" onclick="markAllDailyPresent()" title="កំណត់សិស្សទាំងអស់ក្នុងថ្នាក់ជា «វត្តមាន» ដោយស្វ័យប្រវត្តិ">
+              <i class="fa-solid fa-check-double" style="color: #16a34a; font-size: 14px;"></i> វត្តមានទាំងអស់
+            </button>
+            <button type="button" class="btn btn-action-outline" onclick="switchTab('attendance_monthly')" title="មើលតារាងវត្តមានប្រចាំខែ">
+              <i class="fa-solid fa-calendar-days" style="color: #2563eb; font-size: 14px;"></i> មើលវត្តមានប្រចាំខែ
+            </button>
+            <button type="button" class="btn btn-action-amber" onclick="window.print()" title="បោះពុម្ពបញ្ជីវត្តមានប្រចាំថ្ងៃ">
+              <i class="fa-solid fa-print" style="font-size: 14px;"></i> បោះពុម្ព
+            </button>
+            <button type="button" class="btn btn-action-danger" onclick="clearDailyAttendanceData()" title="សម្អាតទិន្នន័យវត្តមានប្រចាំថ្ងៃនេះ">
+              <i class="fa-solid fa-trash-can" style="color: #dc2626; font-size: 14px;"></i> សម្អាតទិន្នន័យ
+            </button>
+            <button type="button" class="btn btn-action-undo" onclick="undoDailyAttendanceData()" title="ត្រឡប់ទិន្នន័យវត្តមានប្រចាំថ្ងៃមកវិញ">
+              <i class="fa-solid fa-rotate-left" style="color: #4338ca; font-size: 14px;"></i> ត្រឡប់មកវិញ (Undo)
+            </button>
+          </div>
+        </div>
+
+        <div class="attendance-grid-card" id="dailyAttendanceTableWrap"></div>
+        </div>
+
+        <!-- 3. វត្តមានប្រចាំខែ -->
+        <div class="student-subpane" id="subpane-attendance_monthly" style="display: none;">
+<div class="filter-toolbar no-print">
+          <div class="filter-group">
+            <label style="font-weight: 600; font-size: 13px;"><i class="fa fa-layer-group"></i> ថ្នាក់រៀន៖</label>
+            <select class="filter-select class-select-input" style="min-width: 190px;"></select>
+
+            <label style="font-weight: 600; font-size: 13px; margin-left: 10px;"><i class="fa fa-calendar-alt"></i> ប្រចាំខែ៖</label>
+            <select id="monthlyMonthSelect" class="filter-select" onchange="changeMonthlyMonth(this.value)">
+              <option value="1">មករា (January)</option>
+              <option value="2">កុម្ភៈ (February)</option>
+              <option value="3">មីនា (March)</option>
+              <option value="4">មេសា (April)</option>
+              <option value="5">ឧសភា (May)</option>
+              <option value="6">មិថុនា (June)</option>
+              <option value="7">កក្កដា (July)</option>
+              <option value="8">សីហា (August)</option>
+              <option value="9">កញ្ញា (September)</option>
+              <option value="10">តុលា (October)</option>
+              <option value="11" selected>វិច្ឆិកា (November)</option>
+              <option value="12">ធ្នូ (December)</option>
+            </select>
+
+            <label style="font-weight: 600; font-size: 13px; margin-left: 10px;"><i class="fa fa-clock"></i> ឆ្នាំ៖</label>
+            <select id="monthlyYearSelect" class="filter-select" onchange="changeMonthlyYear(this.value)">
+              <option value="2026" selected>២០២៦ (2026)</option>
+              <option value="2027">២០២៧ (2027)</option>
+              <option value="2028">២០២៨ (2028)</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <button type="button" class="btn btn-action-outline" onclick="exportMonthlyAttendanceExcel()" title="នាំចេញវត្តមានប្រចាំខែជា File Excel">
+              <i class="fa-solid fa-file-excel" style="color: #16a34a; font-size: 14px;"></i> នាំចេញ Excel
+            </button>
+            <button type="button" class="btn btn-action-outline" onclick="switchTab('attendance_daily')" title="ទៅកាន់ការចុះវត្តមានប្រចាំថ្ងៃ">
+              <i class="fa-solid fa-calendar-check" style="color: #2563eb; font-size: 14px;"></i> ចុះវត្តមានប្រចាំថ្ងៃ
+            </button>
+            <button type="button" class="btn btn-action-navy" onclick="window.print()" title="បោះពុម្ពបញ្ជីវត្តមានប្រចាំខែ (A4 ផ្ដេក)">
+              <i class="fa-solid fa-print" style="font-size: 14px;"></i> បោះពុម្ព (Print)
+            </button>
+            <button type="button" class="btn btn-action-danger" onclick="clearMonthlyAttendanceData()" title="សម្អាតទិន្នន័យវត្តមានប្រចាំខែនេះ">
+              <i class="fa-solid fa-trash-can" style="color: #dc2626; font-size: 14px;"></i> សម្អាតទិន្នន័យ
+            </button>
+            <button type="button" class="btn btn-action-undo" onclick="undoMonthlyAttendanceData()" title="ត្រឡប់ទិន្នន័យវត្តមានប្រចាំខែមកវិញ">
+              <i class="fa-solid fa-rotate-left" style="color: #4338ca; font-size: 14px;"></i> ត្រឡប់មកវិញ (Undo)
+            </button>
+          </div>
+        </div>
+
+        <div class="a4-preview-wrapper" id="monthlyAttendanceWrap"></div>
+        </div>
+
+        <!-- 4. វត្តមានប្រចាំឆ្នាំ -->
+        <div class="student-subpane" id="subpane-attendance_yearly" style="display: none;">
+<div class="filter-toolbar no-print">
+          <div class="filter-group">
+            <label style="font-weight: 600; font-size: 13px;"><i class="fa fa-layer-group"></i> ជ្រើសរើសថ្នាក់៖</label>
+            <select class="filter-select class-select-input" style="min-width: 190px;" onchange="changeClass(this.value)"></select>
+          </div>
+
+          <div class="filter-group">
+            <button type="button" class="btn btn-action-outline" onclick="exportYearlyAttendanceExcel()" title="នាំចេញវត្តមានប្រចាំឆ្នាំជា File Excel">
+              <i class="fa-solid fa-file-excel" style="color: #16a34a; font-size: 14px;"></i> នាំចេញ Excel
+            </button>
+            <button type="button" class="btn btn-action-navy" onclick="printYearlyAttendance()" title="បោះពុម្ពតារាងស្រង់អវត្តមានសិស្សប្រចាំឆ្នាំ (A4 ផ្ដេក)">
+              <i class="fa-solid fa-print" style="font-size: 14px;"></i> បោះពុម្ព (Print)
+            </button>
+            <button type="button" class="btn btn-action-danger" onclick="clearYearlyAttendanceData()" title="សម្អាតទិន្នន័យស្រង់វត្តមានប្រចាំឆ្នាំ">
+              <i class="fa-solid fa-trash-can" style="color: #dc2626; font-size: 14px;"></i> សម្អាតទិន្នន័យ
+            </button>
+            <button type="button" class="btn btn-action-undo" onclick="undoYearlyAttendanceData()" id="btnUndoYearlyAttendance" title="ត្រឡប់ទិន្នន័យមកវិញ">
+              <i class="fa-solid fa-rotate-left" style="color: #4338ca; font-size: 14px;"></i> ត្រឡប់មកវិញ (Undo)
+            </button>
+          </div>
+        </div>
+
+        <!-- A4 Landscape Paper Preview Container -->
+        <div class="a4-preview-wrapper" id="yearlyAttendanceWrap"></div>
+        </div>
+      </section>
+
+
+      <!-- ========================================== -->
+      <!-- TAB 5: SCORES & RANKINGS (តារាងស្រង់ពិន្ទុប្រចាំខែ) -->
+      <!-- ========================================== -->
+      <section id="tab-scores" class="tab-pane">
+        <div class="filter-toolbar no-print">
+          <div class="filter-group">
+            <label style="font-weight: 600; font-size: 13px;"><i class="fa fa-layer-group"></i> ជ្រើសរើសថ្នាក់៖</label>
+            <select class="filter-select class-select-input" style="min-width: 190px;" onchange="changeClass(this.value)"></select>
+
+            <label style="font-weight: 600; font-size: 13px; margin-left: 8px;"><i class="fa fa-calendar-alt"></i> ប្រចាំខែ៖</label>
+            <select id="scoreMonthSelect" class="filter-select" onchange="changeScoreMonth(this.value)">
+              <option value="មករា" selected>ខែ មករា</option>
+              <option value="កុម្ភៈ">ខែ កុម្ភៈ</option>
+              <option value="មីនា">ខែ មីនា</option>
+              <option value="មេសា">ខែ មេសា</option>
+              <option value="ឧសភា">ខែ ឧសភា</option>
+              <option value="មិថុនា">ខែ មិថុនា</option>
+              <option value="កក្កដា">ខែ កក្កដា</option>
+              <option value="សីហា">ខែ សីហា</option>
+              <option value="កញ្ញា">ខែ កញ្ញា</option>
+              <option value="តុលា">ខែ តុលា</option>
+              <option value="វិច្ឆិកា">ខែ វិច្ឆិកា</option>
+              <option value="ធ្នូ">ខែ ធ្នូ</option>
+            </select>
+
+            <label style="font-weight: 600; font-size: 13px; margin-left: 8px;"><i class="fa fa-award"></i> សម័យពិន្ទុ៖</label>
+            <select id="scorePeriodSelect" class="filter-select" onchange="state.activeScorePeriod = this.value; renderScores();">
+              <option value="ប្រចាំខែ" selected>តារាងស្រង់ពិន្ទុប្រចាំខែ (គម្រូផ្លូវការ)</option>
+              <option value="ឆមាសទី១">ប្រឡងឆមាសទី១</option>
+              <option value="ឆមាសទី២">ប្រឡងឆមាសទី២</option>
+              <option value="ប្រចាំឆ្នាំ">លទ្ធផលប្រចាំឆ្នាំ</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <button type="button" class="btn btn-action-outline" onclick="exportMonthlyScoresExcel()" title="នាំចេញតារាងស្រង់ពិន្ទុជា File Excel">
+              <i class="fa-solid fa-file-excel" style="color: #16a34a; font-size: 14px;"></i> នាំចេញ Excel
+            </button>
+            <button type="button" class="btn btn-action-outline" onclick="changeApprovalFontSize(-1, 'default')" title="បង្រួមទំហំអក្សរ «បានឃើញ និង ឯកភាព នាយកសាលា» កុំឱ្យបាត់ពេលព្រីន">
+              <i class="fa-solid fa-font" style="font-size: 11px;"></i>- បង្រួមអក្សរនាយក
+            </button>
+            <button type="button" class="btn btn-action-outline" onclick="changeApprovalFontSize(1, 'default')" title="ពង្រីកទំហំអក្សរ «បានឃើញ និង ឯកភាព នាយកសាលា»">
+              <i class="fa-solid fa-font" style="font-size: 11px;"></i>+ ពង្រីកអក្សរនាយក
+            </button>
+            <button type="button" class="btn btn-action-navy" onclick="printMonthlyScores()" title="បោះពុម្ពតារាងស្រង់ពិន្ទុប្រចាំខែ (A4 ផ្ដេក គម្រូផ្លូវការ)">
+              <i class="fa-solid fa-print" style="font-size: 14px;"></i> បោះពុម្ព (Print)
+            </button>
+            <button type="button" class="btn btn-action-danger" onclick="clearMonthlyScoresData()" title="សម្អាតទិន្នន័យពិន្ទុ">
+              <i class="fa-solid fa-trash-can" style="color: #dc2626; font-size: 14px;"></i> សម្អាតទិន្នន័យ
+            </button>
+            <button type="button" class="btn btn-action-undo" onclick="undoMonthlyScoresData()" id="btnUndoMonthlyScores" title="ត្រឡប់ទិន្នន័យមកវិញ">
+              <i class="fa-solid fa-rotate-left" style="color: #4338ca; font-size: 14px;"></i> ត្រឡប់មកវិញ (Undo)
+            </button>
+            <button type="button" class="btn btn-action-accent" onclick="openHonorRollModal()" title="មើលតារាងកិត្តិយសសិស្សពូកែ Top 5">
+              <i class="fa-solid fa-trophy" style="color: #d97706; font-size: 14px;"></i> តារាងកិត្តិយស (Top 5)
+            </button>
+          </div>
+        </div>
+
+        <!-- A4 Landscape Paper Preview Container -->
+        <div class="a4-preview-wrapper" id="scoresContentWrap"></div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- TAB: MONTHLY RANKINGS (ចំណាត់ថ្នាក់ប្រចាំខែ)   -->
+      <!-- គម្រូផ្លូវការ ១០០% តាមច្បាប់ដើម (A4 Portrait)    -->
+      <!-- ========================================== -->
+      <section id="tab-monthly_ranks" class="tab-pane">
+        <div class="filter-toolbar no-print">
+          <div class="filter-group">
+            <label style="font-weight: 600; font-size: 13px;"><i class="fa fa-layer-group"></i> ជ្រើសរើសថ្នាក់៖</label>
+            <select class="filter-select class-select-input" style="min-width: 190px;" onchange="changeClass(this.value)"></select>
+
+            <label style="font-weight: 600; font-size: 13px; margin-left: 8px;"><i class="fa fa-calendar-alt"></i> ប្រចាំខែ៖</label>
+            <select id="rankMonthSelect" class="filter-select" onchange="changeRankMonth(this.value)">
+              <option value="មករា">ខែ មករា</option>
+              <option value="កុម្ភៈ">ខែ កុម្ភៈ</option>
+              <option value="មីនា" selected>ខែ មីនា</option>
+              <option value="មេសា">ខែ មេសា</option>
+              <option value="ឧសភា">ខែ ឧសភា</option>
+              <option value="មិថុនា">ខែ មិថុនា</option>
+              <option value="កក្កដា">ខែ កក្កដា</option>
+              <option value="សីហា">ខែ សីហា</option>
+              <option value="កញ្ញា">ខែ កញ្ញា</option>
+              <option value="តុលា">ខែ តុលា</option>
+              <option value="វិច្ឆិកា">ខែ វិច្ឆិកា</option>
+              <option value="ធ្នូ">ខែ ធ្នូ</option>
+            </select>
+
+            <label style="font-weight: 600; font-size: 13px; margin-left: 8px;"><i class="fa fa-arrow-down-wide-short"></i> តម្រៀប៖</label>
+            <select id="rankSortSelect" class="filter-select" onchange="state.rankSortMode = this.value; renderMonthlyRanks();">
+              <option value="rank" selected>តាមចំណាត់ថ្នាក់ (Rank 1 ដល់ N)</option>
+              <option value="roster">តាមបញ្ជីឈ្មោះ (ល.រ ធម្មតា)</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <button type="button" class="btn btn-action-outline" onclick="exportMonthlyRanksExcel()" title="នាំចេញតារាងចំណាត់ថ្នាក់ជា File Excel">
+              <i class="fa-solid fa-file-excel" style="color: #16a34a; font-size: 14px;"></i> នាំចេញ Excel
+            </button>
+            <button type="button" class="btn btn-action-outline" onclick="changeApprovalFontSize(-1, 'rank')" title="បង្រួមទំហំអក្សរ «បានឃើញ និង ឯកភាព នាយកសាលា» កុំឱ្យបាត់ពេលព្រីន">
+              <i class="fa-solid fa-font" style="font-size: 11px;"></i>- បង្រួមអក្សរនាយក
+            </button>
+            <button type="button" class="btn btn-action-outline" onclick="changeApprovalFontSize(1, 'rank')" title="ពង្រីកទំហំអក្សរ «បានឃើញ និង ឯកភាព នាយកសាលា»">
+              <i class="fa-solid fa-font" style="font-size: 11px;"></i>+ ពង្រីកអក្សរនាយក
+            </button>
+            <button type="button" class="btn btn-action-navy" onclick="printMonthlyRanks()" title="បោះពុម្ពតារាងចំណាត់ថ្នាក់ប្រចាំខែ (A4 បញ្ឈរ គម្រូផ្លូវការ)">
+              <i class="fa-solid fa-print" style="font-size: 14px;"></i> បោះពុម្ព (Print)
+            </button>
+          </div>
+        </div>
+
+        <!-- A4 Portrait Preview Container -->
+        <div class="a4-preview-wrapper" id="monthlyRanksContentWrap"></div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- TAB: HONOR ROLL (តារាងកិត្តិយស)              -->
+      <!-- គម្រូផ្លូវការ ១០០% តាមច្បាប់ដើម (A4 Portrait)    -->
+      <!-- ========================================== -->
+      <section id="tab-honor_roll" class="tab-pane">
+        <div class="filter-toolbar no-print">
+          <div class="filter-group">
+            <label style="font-weight: 600; font-size: 13px;"><i class="fa fa-layer-group"></i> ជ្រើសរើសថ្នាក់៖</label>
+            <select class="filter-select class-select-input" style="min-width: 190px;" onchange="changeClass(this.value)"></select>
+
+            <label style="font-weight: 600; font-size: 13px; margin-left: 8px;"><i class="fa fa-calendar-alt"></i> ប្រចាំខែ៖</label>
+            <select id="honorMonthSelect" class="filter-select" onchange="changeHonorMonth(this.value)">
+              <option value="មករា">ខែ មករា</option>
+              <option value="កុម្ភៈ">ខែ កុម្ភៈ</option>
+              <option value="មីនា" selected>ខែ មីនា</option>
+              <option value="មេសា">ខែ មេសា</option>
+              <option value="ឧសភា">ខែ ឧសភា</option>
+              <option value="មិថុនា">ខែ មិថុនា</option>
+              <option value="កក្កដា">ខែ កក្កដា</option>
+              <option value="សីហា">ខែ សីហា</option>
+              <option value="កញ្ញា">ខែ កញ្ញា</option>
+              <option value="តុលា">ខែ តុលា</option>
+              <option value="វិច្ឆិកា">ខែ វិច្ឆិកា</option>
+              <option value="ធ្នូ">ខែ ធ្នូ</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <button type="button" class="btn btn-action-navy" onclick="printHonorRoll()" title="បោះពុម្ពតារាងកិត្តិយស (A4 បញ្ឈរ គម្រូផ្លូវការ)">
+              <i class="fa-solid fa-print" style="font-size: 14px;"></i> បោះពុម្ព (Print A4)
+            </button>
+          </div>
+        </div>
+
+        <!-- A4 Portrait Preview Container -->
+        <div class="a4-preview-wrapper" id="honorRollContentWrap"></div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- TAB: SEMESTER RANKS (ចំណាត់ថ្នាក់ប្រចាំឆមាស)   -->
+      <!-- គម្រូផ្លូវការ ១០០% តាមច្បាប់ដើម (A4 Portrait)    -->
+      <!-- ========================================== -->
+      <section id="tab-semester_ranks" class="tab-pane">
+        <div class="filter-toolbar no-print">
+          <div class="filter-group">
+            <label style="font-weight: 600; font-size: 13px;"><i class="fa fa-layer-group"></i> ជ្រើសរើសថ្នាក់៖</label>
+            <select class="filter-select class-select-input" style="min-width: 190px;" onchange="changeClass(this.value)"></select>
+
+            <label style="font-weight: 600; font-size: 13px; margin-left: 8px;"><i class="fa fa-calendar-alt"></i> ជ្រើសរើសឆមាស៖</label>
+            <select id="semesterSelect" class="filter-select" onchange="changeSemester(this.value)" style="min-width: 240px;">
+              <option value="1" selected>ឆមាសទី ១ (ធ្នូ , មករា , កុម្ភៈ , មីនា)</option>
+              <option value="2">ឆមាសទី ២ (ឧសភា , មិថុនា , កក្កដា , សីហា)</option>
+            </select>
+
+            <div class="btn-group" style="display: inline-flex; border-radius: 6px; overflow: hidden; border: 1px solid #cbd5e1; margin-left: 10px;">
+              <button type="button" id="btnSemViewDual" class="btn btn-sm btn-primary" onclick="setSemesterRankViewMode('dual_table')" title="ទម្រង់ផ្លូវការ (២ ជួរឈរ)"><i class="fa fa-table-columns"></i> តារាងផ្លូវការ (២ ជួរឈរ)</button>
+              <button type="button" id="btnSemView4M" class="btn btn-sm btn-light" onclick="setSemesterRankViewMode('monthly_4m')" title="តារាងមធ្យមភាគ ៤ខែ"><i class="fa fa-calendar-days"></i> មធ្យមភាគ ៤ខែ</button>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <button type="button" class="btn btn-action-excel" onclick="exportSemesterRanksExcel()" title="ទាញយកជាឯកសារ Excel">
+              <i class="fa-solid fa-file-excel" style="font-size: 14px;"></i> ទាញយកជា Excel
+            </button>
+            <button type="button" class="btn btn-action-navy" onclick="printSemesterRanks()" title="បោះពុម្ពតារាងចំណាត់ថ្នាក់ប្រចាំឆមាស (A4 បញ្ឈរ)">
+              <i class="fa-solid fa-print" style="font-size: 14px;"></i> បោះពុម្ព (Print A4)
+            </button>
+          </div>
+        </div>
+
+        <!-- A4 Portrait Preview Container -->
+        <div class="a4-preview-wrapper" id="semesterRanksContentWrap"></div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- TAB: SEMESTER SCORES (សម្រង់ពិន្ទុឆមាស)       -->
+      <!-- គម្រូផ្លូវការ ១០០% តាមច្បាប់ដើម (A4 Portrait)    -->
+      <!-- ========================================== -->
+      <section id="tab-semester_scores" class="tab-pane">
+        <div class="filter-toolbar no-print">
+          <div class="filter-group">
+            <label style="font-weight: 600; font-size: 13px;"><i class="fa fa-layer-group"></i> ជ្រើសរើសថ្នាក់៖</label>
+            <select class="filter-select class-select-input" style="min-width: 190px;" onchange="changeClass(this.value)"></select>
+
+            <label style="font-weight: 600; font-size: 13px; margin-left: 8px;"><i class="fa fa-calendar-alt"></i> ជ្រើសរើសឆមាស៖</label>
+            <select id="semesterScoreSelect" class="filter-select" onchange="changeSemesterScore(this.value)" style="min-width: 160px;">
+              <option value="1" selected>ឆមាសទី ១</option>
+              <option value="2">ឆមាសទី ២</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <button type="button" class="btn btn-action-excel" onclick="exportSemesterScoresExcel()" title="ទាញយកជាឯកសារ Excel">
+              <i class="fa-solid fa-file-excel" style="font-size: 14px;"></i> ទាញយកជា Excel
+            </button>
+            <button type="button" class="btn btn-action-navy" onclick="printSemesterScores()" title="បោះពុម្ពតារាងសម្រង់ពិន្ទុឆមាស (A4 បញ្ឈរ)">
+              <i class="fa-solid fa-print" style="font-size: 14px;"></i> បោះពុម្ព (Print A4)
+            </button>
+          </div>
+        </div>
+
+        <!-- A4 Portrait Preview Container -->
+        <div class="a4-preview-wrapper" id="semesterScoresContentWrap"></div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- TAB: ANNUAL RANKS (ចំណាត់ថ្នាក់ប្រចាំឆ្នាំ)     -->
+      <!-- ========================================== -->
+      <section id="tab-annual_ranks" class="tab-pane">
+        <div class="filter-toolbar no-print">
+          <div class="filter-group">
+            <label style="font-weight: 600; font-size: 13px;"><i class="fa fa-layer-group"></i> ជ្រើសរើសថ្នាក់៖</label>
+            <select class="filter-select class-select-input" style="min-width: 190px;" onchange="changeClass(this.value)"></select>
+
+            <label style="font-weight: 600; font-size: 13px; margin-left: 12px;"><i class="fa fa-calendar-alt"></i> ឆ្នាំសិក្សា៖</label>
+            <span id="annualYearDisplay" style="font-weight: 700; color: #1e3a8a; font-size: 13px; padding: 4px 10px; background: #e0f2fe; border-radius: 6px;"></span>
+          </div>
+
+          <div class="filter-group">
+            <button type="button" class="btn btn-action-excel" onclick="exportAnnualRanksExcel()" title="ទាញយកជា Excel">
+              <i class="fa-solid fa-file-excel" style="font-size: 14px;"></i> ទាញយកជា Excel
+            </button>
+            <button type="button" class="btn btn-action-navy" onclick="printAnnualRanks()" title="បោះពុម្ពតារាងចំណាត់ថ្នាក់ប្រចាំឆ្នាំ (A4 បញ្ឈរ)">
+              <i class="fa-solid fa-print" style="font-size: 14px;"></i> បោះពុម្ព (Print A4)
+            </button>
+          </div>
+        </div>
+
+        <!-- A4 Portrait Preview Container -->
+        <div class="a4-preview-wrapper" id="annualRanksContentWrap">
+          <!-- Rendered dynamically by renderAnnualRanks() -->
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- TAB: STUDY BOOK (សៀវភៅតាមដានការសិក្សា)        -->
+      <!-- ========================================== -->
+      <section id="tab-study_book" class="tab-pane">
+        <div class="filter-toolbar no-print">
+          <div class="filter-group">
+            <label style="font-weight: 600; font-size: 13px;"><i class="fa fa-layer-group"></i> ជ្រើសរើសថ្នាក់៖</label>
+            <select class="filter-select class-select-input" style="min-width: 170px;" onchange="changeClass(this.value)"></select>
+
+            <label style="font-weight: 600; font-size: 13px; margin-left: 8px;"><i class="fa fa-calendar-alt"></i> ជ្រើសរើសខែ៖</label>
+            <select id="studyBookMonthSelect" class="filter-select" style="min-width: 130px;" onchange="changeStudyBookMonth(this.value)">
+              <option value="ធ្នូ">ខែធ្នូ</option>
+              <option value="មករា">ខែមករា</option>
+              <option value="កុម្ភៈ">ខែកុម្ភៈ</option>
+              <option value="មីនា">ខែមីនា</option>
+              <option value="មេសា">ខែមេសា</option>
+              <option value="ឧសភា">ខែឧសភា</option>
+              <option value="មិថុនា">ខែមិថុនា</option>
+              <option value="កក្កដា">ខែកក្កដា</option>
+              <option value="សីហា">ខែសីហា</option>
+            </select>
+
+            <label style="font-weight: 600; font-size: 13px; margin-left: 8px;"><i class="fa fa-user-graduate"></i> ជ្រើសរើសសិស្ស៖</label>
+            <select id="studyBookStudentSelect" class="filter-select" style="min-width: 180px;" onchange="changeStudyBookStudent(this.value)"></select>
+
+            <div class="btn-group" style="margin-left: 4px; display: inline-flex; gap: 2px;">
+              <button type="button" class="btn btn-action-outline" onclick="prevStudyBookStudent()" title="សិស្សមុន (Previous Student)" style="padding: 5px 10px;">
+                <i class="fa fa-chevron-left" style="color: #1e3a8a;"></i>
+              </button>
+              <button type="button" class="btn btn-action-outline" onclick="nextStudyBookStudent()" title="សិស្សបន្ទាប់ (Next Student)" style="padding: 5px 10px;">
+                <i class="fa fa-chevron-right" style="color: #1e3a8a;"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <button type="button" class="btn btn-action-outline" onclick="resetAllStudyBookTransforms()" title="កំណត់ទីតាំងអក្សរទាំងអស់ឡើងវិញ (Reset All Text Positions)" style="padding: 6px 12px; font-size: 13px;">
+              <i class="fa-solid fa-rotate-left" style="color: #475569;"></i> កំណត់ទីតាំងដើម
+            </button>
+            <button type="button" class="btn btn-action-excel" onclick="exportStudyBookExcel()" title="ទាញយកជា Excel">
+              <i class="fa-solid fa-file-excel" style="font-size: 14px;"></i> នាំចេញ Excel
+            </button>
+            <button type="button" class="btn btn-action-navy" onclick="printStudyBookCurrent()" title="បោះពុម្ពសៀវភៅតាមដានសិស្សនេះ (A4 Landscape)">
+              <i class="fa-solid fa-print" style="font-size: 14px;"></i> បោះពុម្ពសិស្សនេះ
+            </button>
+            <button type="button" class="btn btn-action-navy" onclick="printStudyBookAll()" title="បោះពុម្ពសៀវភៅតាមដានសិស្សទាំងអស់ក្នុងថ្នាក់ (A4 Landscape)">
+              <i class="fa-solid fa-print" style="font-size: 14px;"></i> បោះពុម្ពទាំងអស់
+            </button>
+          </div>
+        </div>
+
+        <!-- A4 Landscape Preview Container -->
+        <div class="a4-preview-wrapper" id="studyBookContentWrap" style="padding: 16px 8px;">
+          <!-- Rendered dynamically by renderStudyBook() -->
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- TAB: TRAINEE BOOK (សៀវភៅសិក្ខាគារិក)           -->
+      <!-- ========================================== -->
+      <section id="tab-trainee" class="tab-pane">
+        <div class="filter-toolbar no-print">
+          <div class="filter-group">
+            <label style="font-weight: 600; font-size: 13px;"><i class="fa fa-layer-group"></i> ជ្រើសរើសថ្នាក់៖</label>
+            <select class="filter-select class-select-input" id="traineeClassSelect" style="min-width: 170px;" onchange="changeTraineeClass(this.value)"></select>
+
+            <label style="font-weight: 600; font-size: 13px; margin-left: 8px;"><i class="fa fa-user-graduate"></i> ជ្រើសរើសសិស្ស៖</label>
+            <select id="traineeStudentSelect" class="filter-select" style="min-width: 190px;" onchange="changeTraineeStudent(this.value)"></select>
+
+            <div class="btn-group" style="margin-left: 4px; display: inline-flex; gap: 2px;">
+              <button type="button" class="btn btn-action-outline" onclick="prevTraineeStudent()" title="សិស្សមុន (Previous Student)" style="padding: 5px 10px;">
+                <i class="fa fa-chevron-left" style="color: #1e3a8a;"></i>
+              </button>
+              <button type="button" class="btn btn-action-outline" onclick="nextTraineeStudent()" title="សិស្សបន្ទាប់ (Next Student)" style="padding: 5px 10px;">
+                <i class="fa fa-chevron-right" style="color: #1e3a8a;"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <label style="font-weight: 600; font-size: 13px;"><i class="fa-solid fa-sliders"></i> ទម្រង់មើល៖</label>
+            <select id="traineePrintModeSelect" class="filter-select" style="min-width: 160px;" onchange="changeTraineePrintMode(this.value)">
+              <option value="single">សិស្សបច្ចុប្បន្ន (១ នាក់)</option>
+              <option value="all">សិស្សទាំងអស់ (Batch All)</option>
+            </select>
+
+            <button type="button" class="btn btn-action-excel" onclick="exportTraineeToExcel()" title="ទាញយកជា Excel">
+              <i class="fa-solid fa-file-excel" style="font-size: 14px;"></i> នាំចេញ Excel
+            </button>
+            <button type="button" class="btn btn-action-navy" onclick="printTraineeBook()" title="បោះពុម្ពសៀវភៅសិក្ខាគារិក (A4 Landscape)">
+              <i class="fa-solid fa-print" style="font-size: 14px;"></i> បោះពុម្ព (Print A4)
+            </button>
+          </div>
+        </div>
+
+        <!-- A4 Landscape Preview Container -->
+        <div class="a4-preview-wrapper" id="traineeContentWrap" style="padding: 16px 8px;">
+          <!-- Rendered dynamically by renderTraineeBook() -->
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- TAB: សម្រង់ពិន្ទុ ប្រចាំឆមាស (Semester Score Extract Sheet) -->
+      <!-- ========================================== -->
+      <section id="tab-semester_extract" class="tab-pane">
+        <div class="filter-toolbar no-print">
+          <div class="filter-group">
+            <label style="font-weight: 600; font-size: 13px;"><i class="fa fa-layer-group"></i> ជ្រើសរើសថ្នាក់៖</label>
+            <select class="filter-select class-select-input" id="semExtractClassSelect" style="min-width: 190px;" onchange="changeSemesterExtractClass(this.value)"></select>
+
+            <label style="font-weight: 600; font-size: 13px; margin-left: 8px;"><i class="fa fa-calendar-alt"></i> ជ្រើសរើសឆមាស៖</label>
+            <select id="semExtractSemesterSelect" class="filter-select" onchange="changeSemesterExtractSem(this.value)" style="min-width: 160px;">
+              <option value="1" selected>ឆមាសទី ១</option>
+              <option value="2">ឆមាសទី ២</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <button type="button" class="btn btn-action-excel" onclick="exportSemesterExtractExcel()" title="ទាញយកជាឯកសារ Excel">
+              <i class="fa-solid fa-file-excel" style="font-size: 14px;"></i> ទាញយកជា Excel
+            </button>
+            <button type="button" class="btn btn-action-navy" onclick="printSemesterExtract()" title="បោះពុម្ពតារាងសម្រង់ពិន្ទុប្រចាំឆមាស (A4 បញ្ឈរ)">
+              <i class="fa-solid fa-print" style="font-size: 14px;"></i> បោះពុម្ព (Print A4)
+            </button>
+          </div>
+        </div>
+
+        <!-- A4 Portrait Preview Container -->
+        <div class="sem-extract-wrapper" id="semExtractContentWrap">
+          <!-- Rendered dynamically by renderSemesterExtract() -->
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- TAB 6: TEACHERS MANAGEMENT                -->
+      <!-- ========================================== -->
+      <section id="tab-teachers" class="tab-pane">
+        <div class="attendance-grid-card" id="teachersContentWrap"></div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- TAB 7: EXAM ROOMS                         -->
+      <!-- ========================================== -->
+      <section id="tab-exams" class="tab-pane">
+        <div id="examRoomsContentWrap"></div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- TAB 8: VACCINE & REPORTS                  -->
+      <!-- ========================================== -->
+      <section id="tab-reports" class="tab-pane">
+        <div id="reportsContentWrap"></div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- ========================================== -->
+<!-- MODAL: ADD / EDIT STUDENT                  -->
+<!-- ========================================== -->
+<div class="modal-overlay" id="studentModalOverlay">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title" id="studentModalTitle">ព័ត៌មានសិស្ស</div>
+      <button class="modal-close" onclick="closeStudentModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="studentEditNum">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>អត្តលេខ (Student ID)</label>
+          <input type="text" id="formStudentId" class="form-control" placeholder="ឧ. 5180">
+        </div>
+        <div class="form-group">
+          <label>ភេទ (Gender)</label>
+          <select id="formGender" class="form-control">
+            <option value="ប្រុស">ប្រុស (Male)</option>
+            <option value="ស្រី">ស្រី (Female)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>គោត្តនាម (Last Name)</label>
+          <input type="text" id="formLastName" class="form-control" placeholder="ឧ. ខន">
+        </div>
+        <div class="form-group">
+          <label>នាម (First Name)</label>
+          <input type="text" id="formFirstName" class="form-control" placeholder="ឧ. ច័ន្ទរស្មី">
+        </div>
+        <div class="form-group">
+          <label>ថ្ងៃកំណើត</label>
+          <input type="text" id="formDobDay" class="form-control" placeholder="ឧ. 15">
+        </div>
+        <div class="form-group">
+          <label>ខែកំណើត</label>
+          <input type="text" id="formDobMonth" class="form-control" placeholder="ឧ. តុលា">
+        </div>
+        <div class="form-group">
+          <label>ឆ្នាំកំណើត</label>
+          <input type="text" id="formDobYear" class="form-control" placeholder="ឧ. 2018">
+        </div>
+        <div class="form-group">
+          <label>ទូរសព្ទអាណាព្យាបាល</label>
+          <input type="text" id="formPhone" class="form-control" placeholder="ឧ. 096 123 4567">
+        </div>
+        <div class="form-group">
+          <label>ភូមិកំណើត</label>
+          <input type="text" id="formPobVillage" class="form-control" placeholder="ឧ. រនាមពេជ្រ">
+        </div>
+        <div class="form-group">
+          <label>ឃុំកំណើត</label>
+          <input type="text" id="formPobCommune" class="form-control" placeholder="ឧ. ចំប៉ា">
+        </div>
+        <div class="form-group">
+          <label>គោត្តនាមឪពុក</label>
+          <input type="text" id="formFatherLastName" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>នាមឪពុក</label>
+          <input type="text" id="formFatherFirstName" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>មុខរបរឪពុក</label>
+          <input type="text" id="formFatherJob" class="form-control" value="កសិករ">
+        </div>
+        <div class="form-group">
+          <label>គោត្តនាមម្ដាយ</label>
+          <input type="text" id="formMotherLastName" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>នាមម្ដាយ</label>
+          <input type="text" id="formMotherFirstName" class="form-control">
+        </div>
+        <div class="form-group">
+          <label>មុខរបរម្ដាយ</label>
+          <input type="text" id="formMotherJob" class="form-control" value="កសិករ">
+        </div>
+        <div class="form-group">
+          <label>ភូមិបច្ចុប្បន្ន</label>
+          <input type="text" id="formAddrVillage" class="form-control" value="រនាមពេជ្រ">
+        </div>
+        <div class="form-group">
+          <label>ឃុំបច្ចុប្បន្ន</label>
+          <input type="text" id="formAddrCommune" class="form-control" value="ចំប៉ា">
+        </div>
+        <div class="form-group col-span-2">
+          <label>ផ្សេងៗ / កំណត់សម្គាល់ (Note / Age / Remark)</label>
+          <input type="text" id="formNote" class="form-control" placeholder="ឧ. ត្រួត, ធ្លាក់, ពិការ, អាយុ 6...">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeStudentModal()">បោះបង់</button>
+      <button class="btn btn-primary" onclick="saveStudentForm()">
+        <i class="fa fa-save"></i> រក្សាទុក
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- MODAL: ADD / EDIT TEACHER                  -->
+<!-- ========================================== -->
+<div class="modal-overlay" id="teacherModalOverlay">
+  <div class="modal-box" style="max-width: 500px;">
+    <div class="modal-header">
+      <div class="modal-title" id="teacherModalTitle">ព័ត៌មានគ្រូបង្រៀន</div>
+      <button class="modal-close" onclick="closeTeacherModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="teacherEditId">
+      <div class="form-group" style="margin-bottom: 12px;">
+        <label>គោត្តនាម និង នាម</label>
+        <input type="text" id="formTeacherName" class="form-control" placeholder="ឧ. លី ស្រីនូ">
+      </div>
+      <div class="form-group" style="margin-bottom: 12px;">
+        <label>ភេទ</label>
+        <select id="formTeacherGender" class="form-control">
+          <option value="ស្រី">ស្រី (Female)</option>
+          <option value="ប្រុស">ប្រុស (Male)</option>
+        </select>
+      </div>
+      <div class="form-group" style="margin-bottom: 12px;">
+        <label>តួនាទី</label>
+        <input type="text" id="formTeacherPosition" class="form-control" value="គ្រូបង្រៀន">
+      </div>
+      <div class="form-group" style="margin-bottom: 12px;">
+        <label>ថ្នាក់ទទួលបន្ទុក</label>
+        <input type="text" id="formTeacherGrade" class="form-control" placeholder="ឧ. ថ្នាក់ទី១">
+      </div>
+      <div class="form-group" style="margin-bottom: 12px;">
+        <label>លេខទូរសព្ទ</label>
+        <input type="text" id="formTeacherPhone" class="form-control" placeholder="ឧ. 012 345 678">
+      </div>
+      <div class="form-group">
+        <label>អ៊ីមែល</label>
+        <input type="email" id="formTeacherEmail" class="form-control" placeholder="name@banloung.edu.kh">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeTeacherModal()">បោះបង់</button>
+      <button class="btn btn-primary" onclick="saveTeacherForm()">
+        <i class="fa fa-save"></i> រក្សាទុក
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- MODAL: IMPORT EXCEL / CSV                  -->
+<!-- ========================================== -->
+<div class="modal-overlay" id="importModalOverlay">
+  <div class="modal-box" style="max-width: 680px;">
+    <div class="modal-header">
+      <div class="modal-title">
+        <i class="fa fa-file-excel" style="color: #16a34a;"></i> នាំចូលសិស្សថ្មីជា File Excel / CSV
+      </div>
+      <button class="modal-close" onclick="closeImportModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div style="background: #eff6ff; border: 1px solid #bfdbfe; padding: 12px 16px; border-radius: 8px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <div style="font-weight: 700; color: #1e3a8a; font-size: 13px;">
+            <i class="fa fa-circle-info"></i> គម្រូ File Excel តាមស្តង់ដាប្រព័ន្ធ
+          </div>
+          <div style="font-size: 11.5px; color: #475569; margin-top: 2px;">
+            ទាញយកគម្រូដើម្បីបំពេញទិន្នន័យសិស្សថ្មីឱ្យត្រូវតាមជួរឈរ មិនឱ្យខុសគ្នា
+          </div>
+        </div>
+        <button class="btn btn-sm btn-success" onclick="downloadExcelTemplate()">
+          <i class="fa fa-download"></i> ទាញយកគម្រូ Excel
+        </button>
+      </div>
+
+      <div style="margin-bottom: 14px;">
+        <label style="font-weight: 600; font-size: 12.5px; margin-bottom: 6px; display: block;">
+          វិធីសាស្រ្តនាំចូល៖
+        </label>
+        <div style="display: flex; gap: 16px; margin-bottom: 10px;">
+          <label style="font-size: 12.5px; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+            <input type="radio" name="importType" value="file" checked onchange="toggleImportType('file')"> ជ្រើសរើស File (.xlsx, .xls, .csv)
+          </label>
+          <label style="font-size: 12.5px; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+            <input type="radio" name="importType" value="paste" onchange="toggleImportType('paste')"> បិទភ្ជាប់ទិន្នន័យ (Paste ពី Excel)
+          </label>
+        </div>
+
+        <div id="importFileInputWrap">
+          <input type="file" id="importFileInput" accept=".csv, .txt, .xlsx, .xls" onchange="handleFileImport(event)" class="form-control">
+          <div style="font-size: 11px; color: #64748b; margin-top: 4px;">
+            * គាំទ្រឯកសារ Excel (.xlsx, .xls) និង CSV (UTF-8)
+          </div>
+        </div>
+
+        <div id="importPasteInputWrap" style="display: none;">
+          <textarea id="importPasteText" class="form-control" rows="5" placeholder="ជ្រើសរើសទិន្នន័យក្នុង Excel រួច Copy (Ctrl+C) ហើយ Paste (Ctrl+V) ទីនេះ..." style="font-size: 11.5px; font-family: monospace;"></textarea>
+          <button class="btn btn-sm btn-secondary" style="margin-top: 6px;" onclick="handlePasteImport()">
+            <i class="fa fa-magnifying-glass"></i> ពិនិត្យទិន្នន័យដែលបានបិទភ្ជាប់
+          </button>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 12px; padding: 10px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px;">
+        <label style="font-weight: 600; font-size: 12px; margin-bottom: 4px; display: block;">
+          ជម្រើសនៃការបញ្ចូល៖
+        </label>
+        <div style="display: flex; gap: 20px;">
+          <label style="font-size: 12px; cursor: pointer;">
+            <input type="radio" name="importMode" value="append" checked> បន្ថែមលើសិស្សដែលមានស្រាប់ (Append)
+          </label>
+          <label style="font-size: 12px; cursor: pointer; color: #dc2626;">
+            <input type="radio" name="importMode" value="replace"> ជំនួសសិស្សទាំងអស់ក្នុងថ្នាក់នេះ (Replace)
+          </label>
+        </div>
+      </div>
+
+      <div id="importPreviewArea"></div>
+    </div>
+    <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center;">
+      <button type="button" class="btn btn-secondary btn-sm" onclick="closeImportModal(); openAddStudentModal();" title="បញ្ចូលទិន្នន័យសិស្សម្នាក់ៗដោយផ្ទាល់">
+        <i class="fa-solid fa-user-plus" style="color: #2563eb;"></i> ឬ បន្ថែមសិស្សដោយដៃ (Manual Add)
+      </button>
+      <div style="display: flex; gap: 8px;">
+        <button class="btn btn-secondary" onclick="closeImportModal()">បោះបង់</button>
+        <button class="btn btn-success" onclick="commitImport()">
+          <i class="fa fa-check"></i> បញ្ជាក់ការនាំចូល
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- MODAL: EDIT CLASS DATE (កាលបរិច្ឆេទគ្រូ)     -->
+<!-- ========================================== -->
+<div class="modal-overlay" id="classDateModalOverlay">
+  <div class="modal-box" style="max-width: 520px;">
+    <div class="modal-header">
+      <div class="modal-title">
+        <i class="fa fa-calendar-pen" style="color: #2563eb;"></i> បំពេញកាលបរិច្ឆេទ (កន្លែងគ្រូប្រចាំថ្នាក់)
+      </div>
+      <button class="modal-close" onclick="closeClassDateModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editDateClassId">
+      <div class="form-group" style="margin-bottom: 14px;">
+        <label>កាលបរិច្ឆេទចន្ទគតិ (Lunar Date)</label>
+        <input type="text" id="inputLunarDate" class="form-control" placeholder="ឧ. ថ្ងៃ សៅរ៍ ៣ រោច  ខែ កត្តិក  ឆ្នាំ ម្សាញ់ សប្ដស័ក ព.ស ២៥៦៩">
+      </div>
+      <div class="form-group" style="margin-bottom: 14px;">
+        <label>កាលបរិច្ឆេទសុរិយគតិ (Solar Date)</label>
+        <input type="text" id="inputSolarDate" class="form-control" placeholder="ឧ. បាន្លួង  ថ្ងៃទី  ០៨  ខែ វិច្ឆិកា ឆ្នាំ ២០២៦">
+      </div>
+      <div style="display: flex; gap: 8px;">
+        <button type="button" class="btn btn-sm btn-secondary" onclick="setTodayDateForClass()">
+          <i class="fa fa-clock"></i> យកកាលបរិច្ឆេទថ្ងៃនេះ
+        </button>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeClassDateModal()">បោះបង់</button>
+      <button class="btn btn-primary" onclick="saveClassDateModal()">
+        <i class="fa fa-save"></i> រក្សាទុកកាលបរិច្ឆេទ
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- MODAL: EDIT MONTHLY TEACHER DATE (កាលបរិច្ឆេទគ្រូប្រចាំខែ) -->
+<!-- ========================================== -->
+<div class="modal-overlay" id="monthlyDateModalOverlay">
+  <div class="modal-box" style="max-width: 520px;">
+    <div class="modal-header">
+      <div class="modal-title">
+        <i class="fa fa-calendar-alt" style="color: #2563eb;"></i> កែប្រែកាលបរិច្ឆេទគ្រូប្រចាំថ្នាក់ (វត្តមានប្រចាំខែ)
+      </div>
+      <button class="modal-close" onclick="closeMonthlyDateModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editMonthlyClassId">
+      <input type="hidden" id="editMonthlyPrefix">
+      <div class="form-group" style="margin-bottom: 14px;">
+        <label style="font-weight: 600; font-size: 13px;">កាលបរិច្ឆេទធ្វើនៅ (កន្លែងគ្រូប្រចាំថ្នាក់)៖</label>
+        <input type="text" id="inputMonthlyTeacherDate" class="form-control" placeholder="ឧ. ធ្វើនៅ បាន្លួង ថ្ងៃទី ៣១ ខែ មករា ឆ្នាំ ២០២៦">
+      </div>
+      <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <button type="button" class="btn btn-sm btn-secondary" onclick="setDefaultEndOfMonthDate()">
+          <i class="fa fa-calendar-check" style="color: #16a34a;"></i> យកថ្ងៃចុងខែស្វ័យប្រវត្ត
+        </button>
+        <button type="button" class="btn btn-sm btn-secondary" onclick="setTodayDateForMonthly()">
+          <i class="fa fa-clock" style="color: #2563eb;"></i> យកកាលបរិច្ឆេទថ្ងៃនេះ
+        </button>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeMonthlyDateModal()">បោះបង់</button>
+      <button class="btn btn-primary" onclick="saveMonthlyDateModal()">
+        <i class="fa fa-save"></i> រក្សាទុកកាលបរិច្ឆេទ
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- MODAL: REPORT CARD (ព្រឹត្តិបត្រពិន្ទុ)         -->
+<!-- ========================================== -->
+<div class="modal-overlay" id="reportCardModalOverlay">
+  <div class="modal-box" style="max-width: 720px;">
+    <div class="modal-header">
+      <div class="modal-title">ព្រឹត្តិបត្រតាមដានការសិក្សាផ្ទាល់ខ្លួន</div>
+      <button class="modal-close" onclick="closeReportCardModal()">&times;</button>
+    </div>
+    <div class="modal-body" id="reportCardModalBody"></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeReportCardModal()">បិទ</button>
+      <button class="btn btn-primary" onclick="window.print()">
+        <i class="fa fa-print"></i> បោះពុម្ពប័ណ្ណ
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- MODAL: HONOR ROLL (តារាងកិត្តិយស)           -->
+<!-- ========================================== -->
+<div class="modal-overlay" id="honorRollModalOverlay">
+  <div class="modal-box" style="max-width: 580px;">
+    <div class="modal-header">
+      <div class="modal-title">តារាងកិត្តិយស (Honor Roll)</div>
+      <button class="modal-close" onclick="closeHonorRollModal()">&times;</button>
+    </div>
+    <div class="modal-body" id="honorRollModalBody"></div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" onclick="closeHonorRollModal(); switchTab('honor_roll');">
+        <i class="fa fa-award"></i> មើលផ្ទាំងតារាងកិត្តិយសផ្លូវការ (A4)
+      </button>
+      <button class="btn btn-secondary" onclick="closeHonorRollModal()">បិទ</button>
+    </div>
+  </div>
+</div>
+
+<!-- SheetJS for pure client-side Excel Import & Export -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<!-- Load Database and Application Scripts -->
+<script src="data.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>

@@ -2807,6 +2807,19 @@ body {
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0s !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0s !important;
+  }
+  .tab-pane, .tab-pane.active {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+}
+
 /* Stat Metric Cards (Dashboard) */
 .stats-grid {
   display: grid;
@@ -8252,21 +8265,37 @@ body {
   box-shadow: 0 3px 8px rgba(37, 99, 235, 0.25);
 }
 
+.pill-count,
 .lib-pill-count {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 20px;
+  min-width: 22px;
   height: 20px;
-  padding: 0 6px;
-  border-radius: 10px;
+  padding: 0 7px;
+  border-radius: 12px;
   background: rgba(0, 0, 0, 0.08);
   font-size: 0.78rem;
+  font-weight: 600;
 }
 
-.lib-grade-pill.active .lib-pill-count {
+.pill-count.pill-count-empty {
+  background: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fde68a;
+  font-size: 0.74rem;
+  padding: 0 8px;
+}
+
+.lib-grade-pill.active .pill-count {
   background: rgba(255, 255, 255, 0.25);
   color: #ffffff;
+}
+
+.lib-grade-pill.active .pill-count.pill-count-empty {
+  background: #fef08a;
+  color: #854d0e;
+  border-color: #fef08a;
 }
 
 /* Sub-toolbar (Subjects + Search) */
@@ -9020,4 +9049,248 @@ body {
 .p-month {
   font-size: 0.78rem;
   color: #64748b;
+}
+
+
+/* ==========================================================================
+   របាយការណ៍ប្រចាំខែរបស់សាលា (School Monthly Dossier) - 9 Sheets
+   ========================================================================== */
+.school-dossier-wrapper {
+  background: #ffffff;
+  border-radius: var(--radius-lg, 12px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+
+.school-dossier-toolbar {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: #ffffff;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.dossier-title-group .dossier-title {
+  font-family: 'Khmer OS Muol Light', 'Khmer OS Muol', cursive;
+  font-size: 18px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dossier-title-group .dossier-subtitle {
+  font-size: 12px;
+  color: #94a3b8;
+  margin-top: 3px;
+}
+
+.dossier-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.dossier-filter-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.dossier-filter-box select {
+  background: #ffffff;
+  color: #0f172a;
+  border: none;
+  font-size: 12.5px;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+/* 9 Sheet Tabs Navigation Bar */
+.school-sheet-tabs-bar {
+  display: flex;
+  gap: 6px;
+  background: #f8fafc;
+  padding: 12px 20px;
+  border-bottom: 2px solid #e2e8f0;
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  scrollbar-width: thin;
+}
+
+.school-sheet-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-family: 'Khmer OS Siemreap', 'Segoe UI', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.school-sheet-tab-btn:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+.school-sheet-tab-btn.active {
+  background: #1e3a8a;
+  color: #ffffff;
+  border-color: #1e3a8a;
+  box-shadow: 0 2px 8px rgba(30, 58, 138, 0.3);
+}
+
+.school-sheet-tab-btn .sheet-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 50%;
+  font-size: 11px;
+}
+
+.school-sheet-tab-btn.active .sheet-num {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+/* Sheet Stage and Paper */
+.school-sheet-stage,
+.school-sheet-stage.a4-landscape {
+  padding: 24px 16px;
+  background: #cbd5e1;
+  overflow-x: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 650px;
+}
+
+.school-sheet-paper,
+.school-sheet-paper.a4-landscape-paper {
+  background: #ffffff;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.08);
+  padding: 24px 30px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1140px;
+  min-height: 700px;
+  border-radius: 4px;
+  border: 1px solid #94a3b8;
+  box-sizing: border-box;
+  overflow-x: auto;
+  transition: all 0.3s ease;
+}
+
+/* Exact Excel Table Styling */
+.excel-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: 'Khmer OS Content', 'Khmer OS Siemreap', 'Segoe UI', Tahoma, sans-serif;
+  font-size: 11px;
+  color: #000000;
+  background: #ffffff;
+  margin: 0 auto;
+}
+
+.excel-table td {
+  padding: 4px 6px;
+  line-height: 1.45;
+  white-space: nowrap;
+}
+
+.excel-table td.border-cell {
+  border: 1px solid #000000;
+}
+
+.excel-table td.font-muol {
+  font-family: 'Khmer OS Muol Light', 'Khmer OS Muol', cursive;
+  font-weight: normal;
+}
+
+.excel-table td.font-bold {
+  font-weight: bold;
+}
+
+.excel-table td.align-center { text-align: center; }
+.excel-table td.align-left { text-align: left; }
+.excel-table td.align-right { text-align: right; }
+.excel-table td.valign-center { vertical-align: middle; }
+.excel-table td.valign-top { vertical-align: top; }
+.excel-table td.valign-bottom { vertical-align: bottom; }
+
+.excel-table td.b-top { border-top: 1px solid #000; }
+.excel-table td.b-bottom { border-bottom: 1px solid #000; }
+.excel-table td.b-left { border-left: 1px solid #000; }
+.excel-table td.b-right { border-right: 1px solid #000; }
+
+.royal-flourish {
+  height: 12px;
+  display: inline-block;
+  margin-top: 2px;
+}
+
+/* Print CSS */
+@media print {
+  .school-dossier-toolbar,
+  .school-sheet-tabs-bar,
+  .sidebar,
+  .header,
+  .nav,
+  .admin-hub-bar {
+    display: none !important;
+  }
+
+  .school-dossier-wrapper {
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .school-sheet-stage {
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: block !important;
+  }
+
+  .school-sheet-paper {
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .excel-table {
+    width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  .excel-table td.border-cell {
+    border: 1px solid #000 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
 }

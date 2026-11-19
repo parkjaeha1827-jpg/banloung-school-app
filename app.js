@@ -56,6 +56,15 @@ document.addEventListener("DOMContentLoaded", () => {
     if (urlParams.get("honorMonth")) {
       state.activeHonorMonth = urlParams.get("honorMonth");
     }
+    if (urlParams.get("classId")) {
+      state.activeClassId = urlParams.get("classId");
+    } else if (urlParams.get("class")) {
+      const clsParam = urlParams.get("class");
+      const found = (state.db && state.db.classes ? state.db.classes : []).find(
+        c => c.id === clsParam || c.grade === clsParam || c.name === clsParam
+      );
+      if (found) state.activeClassId = found.id;
+    }
     const targetTab = window.location.hash ? window.location.hash.substring(1) : (urlParams.get("tab") || null);
     if (targetTab && typeof switchTab === "function") {
       switchTab(targetTab);
@@ -708,6 +717,7 @@ function switchAdminSubTab(subTabId, ensureExpanded = false) {
     case "monthly_report":
       renderMonthlyReport();
       break;
+
   }
 }
 window.switchAdminSubTab = switchAdminSubTab;
@@ -935,6 +945,9 @@ function renderActiveTab() {
     case "trainee":
     case "monthly_report":
       switchAdminSubTab(state.activeTab);
+      break;
+    case "school_monthly_report":
+      if (typeof renderSchoolMonthlyReports === "function") renderSchoolMonthlyReports();
       break;
     case "teachers":
       renderTeachers();
@@ -10775,10 +10788,6 @@ function renderSemesterExtract() {
         let r = parseFloat(semRec[sub.semKey]);
         if (isNaN(r) || r <= 0) {
           if (sub.key === "kh_read" || sub.key === "kh_dictation") r = s.scores?.khmer || 7.5;
-          else if (sub.key === "kh_listen_speak") r = s.scores?.khmer ? Math.min(10, Math.round((s.scores.khmer + 0.2) * 10) / 10) : 7.5;
-          else if (sub.key === "kh_essay") r = s.scores?.khmer ? Math.max(5, Math.round((s.scores.khmer - 0.5) * 10) / 10) : 7.0;
-          else if (sub.key === "math") r = s.scores?.math || 8.0;
-          else if (sub.key === "kh_calligraphy") r = s.scores?.khmer || 7.5;
           else if (sub.key === "science") r = s.scores?.science || 7.5;
           else if (sub.key === "social") r = s.scores?.social || 8.0;
           else if (sub.key === "home_art") r = s.scores?.art || 8.5;
@@ -11920,17 +11929,35 @@ function renderMonthlyReport() {
       </div>
 
       <!-- SMART LIBRARY HELPER BAR (No-Print) -->
-      <div class="report-library-helper no-print">
-        <span class="report-helper-title"><i class="fa-solid fa-wand-magic-sparkles" style="color: #0d9488;"></i> ជំនួយការមេរៀនបណ្ណាល័យ៖</span>
-        <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
-          <button type="button" class="btn btn-sm btn-outline-teal" onclick="autoFillLessonsForCurrentReportMonth()" title="ជ្រើសរើសមេរៀនដោយស្វ័យប្រវត្តិតាមខែ និងកម្រិតថ្នាក់ពីបណ្ណាល័យ">
-            <i class="fa-solid fa-bolt"></i> បំពេញមេរៀនស្វ័យប្រវត្តិតាមខែ (${monthKey})
-          </button>
-          <button type="button" class="btn btn-sm btn-outline-primary" onclick="switchTab('library')" title="បើកបណ្ណាល័យដើម្បីរើសមេរៀន ឬបើកអានសៀវភៅ">
-            <i class="fa-solid fa-book-bookmark"></i> បើកបណ្ណាល័យថ្នាក់រៀន
-          </button>
-        </div>
-      </div>
+      ${(() => {
+        const classGrade = currentClass ? (currentClass.grade || "") : "";
+        const hasBooksForGrade = (typeof libraryState !== "undefined" && libraryState.allBooks)
+          ? libraryState.allBooks.some(b => b.grade === classGrade)
+          : (classGrade !== "ថ្នាក់មត្តេយ្យ");
+        
+        return `
+          <div class="report-library-helper no-print">
+            <span class="report-helper-title"><i class="fa-solid fa-wand-magic-sparkles" style="color: #0d9488;"></i> ជំនួយការមេរៀនបណ្ណាល័យ (${classGrade})៖</span>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+              ${!hasBooksForGrade ? `
+                <span style="font-size: 13px; color: #b45309; background: #fef3c7; padding: 4px 10px; border-radius: 6px; border: 1px solid #fde68a;">
+                  <i class="fa-solid fa-folder-open"></i> កម្រិត ${classGrade} មិនទាន់មានសៀវភៅរក្សាទុក (ទទេ)
+                </span>
+                <button type="button" class="btn btn-sm btn-primary" onclick="switchTab('library'); if (typeof setLibraryGradeFilter === 'function') setLibraryGradeFilter('${classGrade}');" title="នាំសៀវភៅ ឬកម្មវិធីសិក្សាចូលបណ្ណាល័យ">
+                  <i class="fa-solid fa-file-arrow-up"></i> នាំសៀវភៅចូលក្នុងបណ្ណាល័យ
+                </button>
+              ` : `
+                <button type="button" class="btn btn-sm btn-outline-teal" onclick="autoFillLessonsForCurrentReportMonth()" title="ជ្រើសរើសមេរៀនដោយស្វ័យប្រវត្តិតាមខែ និងកម្រិតថ្នាក់ពីបណ្ណាល័យ">
+                  <i class="fa-solid fa-bolt"></i> បំពេញមេរៀនស្វ័យប្រវត្តិតាមខែ (${monthKey})
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-primary" onclick="switchTab('library'); if (typeof setLibraryGradeFilter === 'function') setLibraryGradeFilter('${classGrade}');" title="បើកបណ្ណាល័យដើម្បីរើសមេរៀន ឬបើកអានសៀវភៅ">
+                  <i class="fa-solid fa-book-bookmark"></i> បើកបណ្ណាល័យថ្នាក់រៀន
+                </button>
+              `}
+            </div>
+          </div>
+        `;
+      })()}
 
       <table class="report-table report-table-3">
         <thead>

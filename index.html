@@ -177,6 +177,12 @@
           <span class="nav-text">បណ្ណាល័យថ្នាក់រៀន</span>
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" data-tab="school_monthly_report" data-tooltip="របាយការណ៍ប្រចាំខែរបស់សាលា" title="របាយការណ៍ប្រចាំខែរបស់សាលា">
+          <span class="nav-icon"><i class="fa-solid fa-file-excel" style="color: #10b981;"></i></span>
+          <span class="nav-text">របាយការណ៍ប្រចាំខែរបស់សាលា</span>
+        </a>
+      </li>
     </ul>
 
     <div class="sidebar-footer">
@@ -985,6 +991,12 @@
             <!-- Rendered dynamically by renderMonthlyReport() -->
           </div>
         </div>
+
+      </section>
+
+      <!-- ================= SCHOOL MONTHLY REPORT DOSSIER (Standalone) ================= -->
+      <section id="tab-school_monthly_report" class="tab-pane">
+        <div id="schoolMonthlyReportContentWrap"></div>
       </section>
 
 <!-- ========================================== -->
@@ -1496,12 +1508,16 @@
         </div>
         <div class="form-group" style="margin-bottom: 14px;">
           <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 5px;">ជ្រើសរើសឯកសារ PDF <span style="color:#0284c7;">(.pdf)</span></label>
-          <input type="file" id="uploadBookPdfFile" accept="application/pdf" style="width: 100%; padding: 8px; border: 1px dashed #38bdf8; border-radius: 6px; background: #f0f9ff;">
-          <small style="color: #64748b; display: block; margin-top: 4px;">គាំទ្រឯកសារ PDF គ្រប់ទំហំ (រក្សាទុកក្នុង IndexedDB ដោយសុវត្ថិភាព)</small>
+          <input type="file" id="uploadBookPdfFile" accept="application/pdf" onchange="handleBookPdfFileChosen(this)" style="width: 100%; padding: 8px; border: 1px dashed #38bdf8; border-radius: 6px; background: #f0f9ff;">
+          <div id="pdfScanStatus" style="display: none; margin-top: 6px; font-size: 13px;"></div>
+          <small style="color: #64748b; display: block; margin-top: 4px;">គាំទ្រឯកសារ PDF គ្រប់ទំហំ (ប្រព័ន្ធនឹងពិនិត្យមើលគ្រប់សន្លឹកដើម្បីស្រង់ចំនួន និងចំណងជើងមេរៀនស្វ័យប្រវត្តិ)</small>
         </div>
         <div class="form-group" style="margin-bottom: 6px;">
-          <label style="font-weight: 600; font-size: 13px; display: block; margin-bottom: 5px;">បញ្ជីមេរៀន (ស្រេចចិត្ត - សរសេរមួយជួរមួយមេរៀន)</label>
-          <textarea id="uploadCustomLessons" rows="4" class="form-control" placeholder="ឧទាហរណ៍៖&#10;មេរៀនទី១៖ ការអប់រំ និងការបណ្តុះបណ្តាល&#10;មេរៀនទី២៖ គ្រួសារកក់ក្តៅ" style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-family: var(--font-battambang);"></textarea>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+            <label style="font-weight: 600; font-size: 13px; margin: 0;">បញ្ជីមេរៀនធំៗ (ស្រង់ស្វ័យប្រវត្តពី PDF ឬសរសេរមួយជួរមួយមេរៀន)</label>
+            <span id="pdfLessonCountBadge" class="badge badge-info" style="font-size: 11px;">0 មេរៀន</span>
+          </div>
+          <textarea id="uploadBookLessons" rows="5" class="form-control" placeholder="ឧទាហរណ៍៖&#10;មេរៀនទី១៖ ការអប់រំ និងការបណ្តុះបណ្តាល&#10;មេរៀនទី២៖ គ្រួសារកក់ក្តៅ" style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-family: var(--font-battambang);"></textarea>
         </div>
       </div>
       <div class="modal-footer" style="padding: 14px 20px; display: flex; justify-content: flex-end; gap: 8px;">
@@ -1555,9 +1571,11 @@
 </div>
 
 
+<script src="pdf.min.js"></script>
 <script src="data.js"></script>
-<script src="app.js"></script>
 <script src="library.js"></script>
+<script src="school_reports.js"></script>
+  <script src="app.js"></script>
 
 </body>
 </html>

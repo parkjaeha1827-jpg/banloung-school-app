@@ -38,12 +38,15 @@ window._undoHistory = {
 
 // Initialize App
 document.addEventListener("DOMContentLoaded", () => {
+  // 1. Immediately start real-time system clock (so time is always ticking)
+  try { initLiveClock(); } catch(e) { console.error("initLiveClock error:", e); }
+
+  // 2. Load database with self-healing validation
   loadDatabase();
   setupNavigation();
   initSidebarResize();
   setupEventListeners();
   renderApp();
-  initLiveClock();
 
   try {
     const urlParams = new URLSearchParams(window.location.search);
@@ -74,75 +77,153 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// Load Database from LocalStorage or Default
-function loadDatabase() {
-  const saved = localStorage.getItem("banloung_school_db");
-  if (saved) {
-    try {
-      state.db = JSON.parse(saved);
-    } catch (e) {
-      console.error("Failed to parse saved database:", e);
-      state.db = INITIAL_SCHOOL_DATA;
+// Universal Database Normalizer (Handles Firebase Objects, missing arrays, academic years)
+function normalizeSchoolDatabase(db) {
+  if (!db || typeof db !== "object") {
+    return JSON.parse(JSON.stringify(window.INITIAL_SCHOOL_DATA || {}));
+  }
+
+  // 1. Ensure schoolInfo
+  if (!db.schoolInfo || typeof db.schoolInfo !== "object") {
+    db.schoolInfo = (window.INITIAL_SCHOOL_DATA && window.INITIAL_SCHOOL_DATA.schoolInfo)
+      ? JSON.parse(JSON.stringify(window.INITIAL_SCHOOL_DATA.schoolInfo))
+      : { currentAcademicYear: "២០២៦-២០២៧", academicYears: ["២០២៦-២០២៧", "២០២៧-២០២៨"] };
+  }
+  db.schoolInfo.currentAcademicYear = "២០២៦-២០២៧";
+  db.schoolInfo.academicYears = ["២០២៦-២០២៧", "២០២៧-២០២៨"];
+
+  // 2. Ensure classes array
+  if (db.classes) {
+    if (!Array.isArray(db.classes)) {
+      db.classes = Object.values(db.classes);
     }
   } else {
-    state.db = INITIAL_SCHOOL_DATA;
-    saveDatabase();
+    db.classes = [];
   }
 
-  // Ensure academic years are updated to ២០២៦-២០២៧ and ២០២៧-២០២៨ across the whole system
-  if (state.db) {
-    if (!state.db.schoolInfo) state.db.schoolInfo = {};
-    state.db.schoolInfo.currentAcademicYear = "២០២៦-២០២៧";
-    state.db.schoolInfo.academicYears = ["២០២៦-២០២៧", "២០២៧-២០២៨"];
+  // If classes array is empty, restore from INITIAL_SCHOOL_DATA
+  if (db.classes.length === 0 && window.INITIAL_SCHOOL_DATA && window.INITIAL_SCHOOL_DATA.classes) {
+    db.classes = JSON.parse(JSON.stringify(window.INITIAL_SCHOOL_DATA.classes));
+  }
 
-    let hasMigrated = false;
-    if (state.db.classes) {
-      state.db.classes.forEach(c => {
-        if (c.academicYear === "២០២៥-២០២៦" || !c.academicYear) {
-          c.academicYear = "២០២៦-២០២៧";
-          if (c.solarDate && c.solarDate.includes("២០២៥")) {
-            c.solarDate = c.solarDate.replace(/២០២៥/g, "២០២៦");
-          }
-          hasMigrated = true;
-        }
+  // Normalize each class
+  db.classes.forEach(c => {
+    if (!c.students) {
+      c.students = [];
+    } else if (!Array.isArray(c.students)) {
+      c.students = Object.values(c.students);
+    }
+    if (!c.attendanceRecords || typeof c.attendanceRecords !== "object") {
+      c.attendanceRecords = {};
+    }
+    if (!c.monthlyDates || typeof c.monthlyDates !== "object") {
+      c.monthlyDates = {};
+    }
+    c.totalStudents = c.students.length;
+    c.femaleStudents = c.students.filter(s => s.gender === "ស្រី").length;
+    c.maleStudents = c.totalStudents - c.femaleStudents;
+  });
+
+  // Ensure 2026-2027 classes exist
+  const y2026Classes = db.classes.filter(c => c.academicYear === "២០២៦-២០២៧");
+  if (y2026Classes.length === 0 && window.INITIAL_SCHOOL_DATA && window.INITIAL_SCHOOL_DATA.classes) {
+    const default2026 = window.INITIAL_SCHOOL_DATA.classes.filter(c => c.academicYear === "២០២៦-២០២៧");
+    default2026.forEach(defCls => {
+      db.classes.push(JSON.parse(JSON.stringify(defCls)));
+    });
+  }
+
+  // Ensure 2027-2028 classes exist
+  const y2027Classes = db.classes.filter(c => c.academicYear === "២០២៧-២០២៨");
+  if (y2027Classes.length === 0) {
+    const classesFor2026 = db.classes.filter(c => c.academicYear === "២០២៦-២០២៧");
+    classesFor2026.forEach(c => {
+      db.classes.push({
+        id: `CLS_2027_${c.grade}`.replace(/\s+/g, '_'),
+        grade: c.grade,
+        teacher: c.teacher,
+        academicYear: "២០២៧-២០២៨",
+        totalStudents: 0,
+        femaleStudents: 0,
+        maleStudents: 0,
+        students: [],
+        attendanceRecords: {},
+        monthlyDates: {},
+        solarDate: "បាន្លួង  ថ្ងៃទី  ០៨  ខែ វិច្ឆិកា ឆ្នាំ ២០២៧"
       });
+    });
+  }
 
-      // Filter classes to keep only 2026-2027 and 2027-2028
-      const prevLen = state.db.classes.length;
-      state.db.classes = state.db.classes.filter(c => c.academicYear === "២០២៦-២០២៧" || c.academicYear === "២០២៧-២០២៨");
-      if (state.db.classes.length !== prevLen) hasMigrated = true;
-
-      // Ensure 2027-2028 classes exist
-      const y2027Classes = state.db.classes.filter(c => c.academicYear === "២០២៧-២០២៨");
-      if (y2027Classes.length === 0) {
-        const y2026Classes = state.db.classes.filter(c => c.academicYear === "២០២៦-២០២៧");
-        y2026Classes.forEach(c => {
-          state.db.classes.push({
-            id: `CLS_2027_${c.grade}`.replace(/\s+/g, '_'),
-            grade: c.grade,
-            teacher: c.teacher,
-            academicYear: "២០២៧-២០២៨",
-            totalStudents: 0,
-            femaleStudents: 0,
-            maleStudents: 0,
-            students: [],
-            attendanceRecords: {},
-            monthlyDates: {},
-            solarDate: "បាន្លួង  ថ្ងៃទី  ០៨  ខែ វិច្ឆិកា ឆ្នាំ ២០២៧"
-          });
-        });
-        hasMigrated = true;
-      }
+  // 3. Ensure teachers array
+  if (db.teachers) {
+    if (!Array.isArray(db.teachers)) {
+      db.teachers = Object.values(db.teachers);
     }
-    if (hasMigrated) {
-      saveDatabase();
+  } else {
+    db.teachers = [];
+  }
+  if (db.teachers.length === 0 && window.INITIAL_SCHOOL_DATA && window.INITIAL_SCHOOL_DATA.teachers) {
+    db.teachers = JSON.parse(JSON.stringify(window.INITIAL_SCHOOL_DATA.teachers));
+  }
+
+  // 4. Ensure examRooms
+  if (db.examRooms) {
+    if (!Array.isArray(db.examRooms)) db.examRooms = Object.values(db.examRooms);
+  } else {
+    db.examRooms = [];
+  }
+
+  // 5. Ensure hpvList
+  if (db.hpvList) {
+    if (!Array.isArray(db.hpvList)) db.hpvList = Object.values(db.hpvList);
+  } else {
+    db.hpvList = [];
+  }
+
+  // 6. Ensure schoolProfile
+  if (!db.schoolProfile || typeof db.schoolProfile !== "object") {
+    db.schoolProfile = (window.INITIAL_SCHOOL_DATA && window.INITIAL_SCHOOL_DATA.schoolProfile)
+      ? JSON.parse(JSON.stringify(window.INITIAL_SCHOOL_DATA.schoolProfile))
+      : {};
+  }
+
+  return db;
+}
+window.normalizeSchoolDatabase = normalizeSchoolDatabase;
+
+// Load Database with Self-Healing Fallback
+function loadDatabase() {
+  const saved = localStorage.getItem("banloung_school_db");
+  let parsedDb = null;
+  if (saved) {
+    try {
+      parsedDb = JSON.parse(saved);
+    } catch (e) {
+      console.error("Failed to parse saved database:", e);
     }
   }
+
+  // Normalize
+  state.db = normalizeSchoolDatabase(parsedDb);
+
+  // Safety Check: If total students in 2026-2027 is 0, restore authentic 233 students
+  const totalSt2026 = state.db.classes
+    .filter(c => c.academicYear === "២០២៦-២០២៧")
+    .reduce((sum, c) => sum + (c.students ? c.students.length : 0), 0);
+
+  if (totalSt2026 === 0 && window.INITIAL_SCHOOL_DATA) {
+    console.warn("Detected 0 students in 2026-2027. Restoring authentic 233 students from INITIAL_SCHOOL_DATA!");
+    state.db = normalizeSchoolDatabase(JSON.parse(JSON.stringify(window.INITIAL_SCHOOL_DATA)));
+  }
+
+  // Save clean state to localStorage
+  try {
+    localStorage.setItem("banloung_school_db", JSON.stringify(state.db));
+  } catch (e) {}
 
   // Set default active class
   const currentClasses = getClassesForYear(state.activeYear);
   if (currentClasses.length > 0) {
-    // Prefer class with students
     const withStudents = currentClasses.find(c => c.students && c.students.length > 0);
     state.activeClassId = withStudents ? withStudents.id : currentClasses[0].id;
     const activeCls = getActiveClass();
@@ -155,21 +236,44 @@ function loadDatabase() {
   if (window.firebaseSync && typeof window.firebaseSync.initSync === "function") {
     window.firebaseSync.initSync({
       onInitialData: (cloudData) => {
-        if (cloudData && cloudData.classes) {
-          state.db = cloudData;
-          localStorage.setItem("banloung_school_db", JSON.stringify(state.db));
-          if (typeof renderApp === "function") renderApp();
+        if (cloudData) {
+          const normalized = normalizeSchoolDatabase(cloudData);
+          const cloudStCount = normalized.classes
+            .filter(c => c.academicYear === "២០២៦-២០២៧")
+            .reduce((sum, c) => sum + (c.students ? c.students.length : 0), 0);
+
+          if (cloudStCount > 0) {
+            state.db = normalized;
+            try { localStorage.setItem("banloung_school_db", JSON.stringify(state.db)); } catch(e){}
+            renderApp();
+          } else {
+            console.warn("[FirebaseSync] Cloud had 0 students. Seeding cloud with authentic 233 students!");
+            window.firebaseSync.saveToCloud(state.db, true);
+          }
         }
       },
       onRemoteUpdate: (cloudData) => {
-        if (cloudData && cloudData.classes) {
-          state.db = cloudData;
-          localStorage.setItem("banloung_school_db", JSON.stringify(state.db));
+        if (cloudData) {
+          const normalized = normalizeSchoolDatabase(cloudData);
+          const cloudStCount = normalized.classes
+            .filter(c => c.academicYear === "២០២៦-២០២៧")
+            .reduce((sum, c) => sum + (c.students ? c.students.length : 0), 0);
+          const localStCount = (state.db && state.db.classes)
+            ? state.db.classes.filter(c => c.academicYear === "២០២៦-២០២៧").reduce((sum, c) => sum + (c.students ? c.students.length : 0), 0)
+            : 0;
+
+          if (cloudStCount === 0 && localStCount > 0) {
+            console.warn("[FirebaseSync] Ignoring remote update with 0 students while local has", localStCount);
+            window.firebaseSync.saveToCloud(state.db, true);
+            return;
+          }
+
+          state.db = normalized;
+          try { localStorage.setItem("banloung_school_db", JSON.stringify(state.db)); } catch(e){}
           const activeEl = document.activeElement;
           const isTyping = activeEl && (activeEl.tagName === "INPUT" || activeEl.tagName === "TEXTAREA");
           if (!isTyping) {
-            if (typeof renderActiveTab === "function") renderActiveTab();
-            if (typeof renderDashboard === "function") renderDashboard();
+            renderApp();
           }
         }
       },
@@ -1033,20 +1137,27 @@ function updateClassSelectOptions() {
    1. DASHBOARD & CHARTS
    ========================================================================== */
 function renderDashboard() {
-  const currentClasses = getClassesForYear(state.activeYear);
+  if (!state.db) state.db = normalizeSchoolDatabase(null);
+
+  let currentClasses = getClassesForYear(state.activeYear);
+  if (!currentClasses || currentClasses.length === 0) {
+    state.activeYear = "២០២៦-២០២៧";
+    currentClasses = getClassesForYear("២០២៦-២០២៧");
+  }
+
   let totalStudents = 0;
   let femaleStudents = 0;
   let maleStudents = 0;
 
-  currentClasses.forEach(c => {
-    c.students.forEach(s => {
+  (currentClasses || []).forEach(c => {
+    (c.students || []).forEach(s => {
       totalStudents++;
       if (s.gender === "ស្រី") femaleStudents++;
       else maleStudents++;
     });
   });
 
-  const teachers = state.db.teachers || [];
+  const teachers = (state.db && Array.isArray(state.db.teachers)) ? state.db.teachers : [];
   const totalTeachers = teachers.length;
   const femaleTeachers = teachers.filter(t => t.gender === "ស្រី").length;
   const maleTeachers = totalTeachers - femaleTeachers;
@@ -1065,12 +1176,12 @@ function renderDashboard() {
   if (elFemaleSt) elFemaleSt.innerText = `${femaleStudents.toLocaleString()} (${femalePct}%)`;
   if (elTotalTeach) elTotalTeach.innerText = totalTeachers.toLocaleString();
   if (elFemaleTeach) elFemaleTeach.innerText = `${femaleTeachers.toLocaleString()} (${femaleTeacherPct}%)`;
-  if (elTotalClasses) elTotalClasses.innerText = currentClasses.length;
+  if (elTotalClasses) elTotalClasses.innerText = (currentClasses || []).length;
 
   // Draw Interactive Canvas Bar Chart & Donut Chart
-  drawBarChart(currentClasses);
-  drawDonutChart(maleStudents, femaleStudents);
-  renderDashboardClassSummaryTable(currentClasses);
+  try { drawBarChart(currentClasses); } catch(e) { console.error("drawBarChart error:", e); }
+  try { drawDonutChart(maleStudents, femaleStudents); } catch(e) { console.error("drawDonutChart error:", e); }
+  try { renderDashboardClassSummaryTable(currentClasses); } catch(e) { console.error("renderDashboardClassSummaryTable error:", e); }
 }
 
 // Pure HTML5 Canvas Bar Chart (No external CDN required, crisp high-DPI rendering)
@@ -1106,8 +1217,9 @@ function drawBarChart(classesList) {
   // Calculate Max
   let maxVal = 0;
   classesList.forEach(c => {
-    const fCount = c.students.filter(s => s.gender === "ស្រី").length;
-    const mCount = c.students.length - fCount;
+    const students = c.students || [];
+    const fCount = students.filter(s => s.gender === "ស្រី").length;
+    const mCount = students.length - fCount;
     maxVal = Math.max(maxVal, mCount, fCount);
   });
   maxVal = Math.ceil((maxVal + 5) / 10) * 10 || 40;

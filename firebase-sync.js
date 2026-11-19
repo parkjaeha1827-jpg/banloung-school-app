@@ -58,7 +58,9 @@
       connectedRef.on('value', (snap) => {
         syncState.isConnected = !!snap.val();
         if (syncState.isConnected) {
-          if (!syncState.rulesRequired && !syncState.isSyncing) {
+          if (syncState.rulesRequired) {
+            updateSyncStatusUI('rules_required', 'Cloud: រង់ចាំបើក Rules');
+          } else if (syncState.isVerifiedOnline && !syncState.isSyncing) {
             updateSyncStatusUI('synced', 'Cloud: បានតភ្ជាប់ (Online)');
           }
         } else {
@@ -156,17 +158,30 @@
     // Read initial data from Firebase Realtime Database
     schoolDbRef.once('value').then((snapshot) => {
       syncState.rulesRequired = false;
-      const cloudData = snapshot.val();
+      syncState.isVerifiedOnline = true;
+      const rawCloudData = snapshot.val();
 
-      // Case 1: Database is empty -> Safe Auto-import initial data
-      if (!snapshot.exists() || !cloudData || !cloudData.classes || cloudData.classes.length === 0) {
-        console.log('[FirebaseSync] Realtime Database is empty. Seeding initial data safely...');
+      // Normalize cloud data (rebuilding arrays if Firebase stored as objects)
+      const cloudData = (typeof window.normalizeSchoolDatabase === 'function')
+        ? window.normalizeSchoolDatabase(rawCloudData)
+        : rawCloudData;
+
+      const totalCloudStudents = (cloudData && cloudData.classes && Array.isArray(cloudData.classes))
+        ? cloudData.classes.reduce((sum, c) => sum + (c.students ? c.students.length : 0), 0)
+        : 0;
+
+      // Case 1: Database is empty OR has 0 students -> Safe Auto-import initial authentic data
+      if (!snapshot.exists() || !cloudData || !cloudData.classes || totalCloudStudents === 0) {
+        console.log('[FirebaseSync] Realtime Database is empty or has 0 students. Seeding initial data safely...');
         const initialToSeed = (typeof syncState.getLocalDataCb === 'function' ? syncState.getLocalDataCb() : null) || window.INITIAL_SCHOOL_DATA;
 
         if (initialToSeed && initialToSeed.classes && initialToSeed.classes.length > 0) {
-          importLocalDatabaseToCloud(false, initialToSeed).then(() => {
+          importLocalDatabaseToCloud(true, initialToSeed).then(() => {
             updateSyncStatusUI('synced', 'Cloud: បានតភ្ជាប់ (Synced)');
             showSyncToast('បាននាំចូលទិន្នន័យដើមទៅកាន់ Cloud ដោយជោគជ័យ!', 'success');
+            if (typeof syncState.onInitialDataCb === 'function') {
+              syncState.onInitialDataCb(initialToSeed);
+            }
           }).catch(err => {
             console.error('[FirebaseSync] Seeding error:', err);
             updateSyncStatusUI('synced', 'Cloud: បានតភ្ជាប់');
@@ -175,8 +190,8 @@
           updateSyncStatusUI('synced', 'Cloud: បានតភ្ជាប់ (ទទេ)');
         }
       } else {
-        // Case 2: Database has existing data -> Provide to application
-        console.log('[FirebaseSync] Cloud data loaded successfully! Records:', cloudData.classes ? cloudData.classes.length : 0);
+        // Case 2: Database has existing data with real students -> Provide to application
+        console.log('[FirebaseSync] Cloud data loaded successfully! Records:', cloudData.classes.length, 'Students:', totalCloudStudents);
         syncState.lastSyncTime = new Date();
         updateSyncStatusUI('synced', 'Cloud: បានតភ្ជាប់ (Synced)');
         showSyncToast('ទិន្នន័យត្រូវបានទាញយកពី Cloud ដោយជោគជ័យ!', 'success');

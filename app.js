@@ -804,7 +804,8 @@ function switchTab(tabId) {
     trainee: "សៀវភៅសិក្ខាគារិក (Trainee Record Book)",
     teachers: "គ្រប់គ្រងគ្រូបង្រៀន (Teacher Management)",
     exams: "បន្ទប់ប្រឡងតេស្ដស្តង់ដា (Exam Rooms)",
-    reports: "របាយការណ៍ & ស្ថិតិ (Reports & Statistics)"
+    reports: "របាយការណ៍ & ស្ថិតិ (Reports & Statistics)",
+    library: "បណ្ណាល័យថ្នាក់រៀនឌីជីថល (Classroom Digital Library)"
   };
   const titleElem = document.getElementById("pageTitle");
   if (titleElem && titles[tabId]) {
@@ -943,6 +944,9 @@ function renderActiveTab() {
       break;
     case "reports":
       renderReports();
+      break;
+    case "library":
+      if (typeof renderLibrary === "function") renderLibrary();
       break;
   }
 }
@@ -11716,7 +11720,12 @@ function renderMonthlyReport() {
         <td style="font-family: 'Khmer OS Content-Bold', var(--font-battambang); font-weight: bold; width: 6%;">${sub.num}</td>
         <td style="font-family: 'Khmer OS Content-Bold', var(--font-battambang); font-weight: bold; width: 14%; text-align: left; padding-left: 6px;">${sub.name}</td>
         <td style="width: 44%; text-align: left; padding-left: 4px;">
-          <span contenteditable="true" onblur="saveMonthlyReportField(this, '${currentClass.id}', '${monthKey}', 't3_lesson_${sub.key}')">${lesson}</span>
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span contenteditable="true" style="flex-grow: 1;" onblur="saveMonthlyReportField(this, '${currentClass.id}', '${monthKey}', 't3_lesson_${sub.key}')">${lesson}</span>
+            <button type="button" class="btn-lesson-pick no-print" onclick="openSubjectLessonPicker('${sub.key}', '${sub.name}')" title="រើសមេរៀន ${sub.name} ពីបណ្ណាល័យ">
+              <i class="fa-solid fa-book-bookmark"></i>
+            </button>
+          </div>
         </td>
         <td style="width: 18%;">
           <div class="report-calc-box">
@@ -11908,6 +11917,19 @@ function renderMonthlyReport() {
       <div class="report-sec-heading">
         <span class="report-bullet">➢</span>
         <span class="report-sec-text">ឈ្មោះ និង ភាគរយនៃមេរៀនចុងក្រោយ ក្នុងខែ</span>
+      </div>
+
+      <!-- SMART LIBRARY HELPER BAR (No-Print) -->
+      <div class="report-library-helper no-print">
+        <span class="report-helper-title"><i class="fa-solid fa-wand-magic-sparkles" style="color: #0d9488;"></i> ជំនួយការមេរៀនបណ្ណាល័យ៖</span>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+          <button type="button" class="btn btn-sm btn-outline-teal" onclick="autoFillLessonsForCurrentReportMonth()" title="ជ្រើសរើសមេរៀនដោយស្វ័យប្រវត្តិតាមខែ និងកម្រិតថ្នាក់ពីបណ្ណាល័យ">
+            <i class="fa-solid fa-bolt"></i> បំពេញមេរៀនស្វ័យប្រវត្តិតាមខែ (${monthKey})
+          </button>
+          <button type="button" class="btn btn-sm btn-outline-primary" onclick="switchTab('library')" title="បើកបណ្ណាល័យដើម្បីរើសមេរៀន ឬបើកអានសៀវភៅ">
+            <i class="fa-solid fa-book-bookmark"></i> បើកបណ្ណាល័យថ្នាក់រៀន
+          </button>
+        </div>
       </div>
 
       <table class="report-table report-table-3">

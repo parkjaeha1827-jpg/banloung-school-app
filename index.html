@@ -145,6 +145,12 @@
               <span class="sub-text">សិក្ខាគារិក</span>
             </a>
           </li>
+          <li>
+            <a class="nav-sublink" id="sublink-monthly_report" data-subtab="monthly_report" onclick="switchAdminSubTab('monthly_report')" title="របាយការណ៍ប្រចាំខែ">
+              <span class="sub-dot"></span>
+              <span class="sub-text">របាយការណ៍ប្រចាំខែ</span>
+            </a>
+          </li>
         </ul>
       </li>
       <li class="nav-item">
@@ -556,6 +562,9 @@
             <button type="button" class="admin-pill" id="pill-trainee" data-subtab="trainee" onclick="switchAdminSubTab('trainee')">
               <i class="fa-solid fa-address-book"></i> សិក្ខាគារិក
             </button>
+            <button type="button" class="admin-pill" id="pill-monthly_report" data-subtab="monthly_report" onclick="switchAdminSubTab('monthly_report')">
+              <i class="fa-solid fa-file-lines"></i> របាយការណ៍ប្រចាំខែ
+            </button>
           </div>
         </div>
 
@@ -929,7 +938,46 @@
         <div class="a4-preview-wrapper" id="traineeContentWrap" style="padding: 16px 8px;">
           <!-- Rendered dynamically by renderTraineeBook() -->
         </div>
-      
+        </div>
+
+        <!-- របាយការណ៍ប្រចាំខែ (Monthly Teacher Report) -->
+        <div class="admin-subpane" id="tab-monthly_report" style="display: none;">
+          <div class="filter-toolbar no-print">
+            <div class="filter-group">
+              <label style="font-weight: 600; font-size: 13px;"><i class="fa fa-layer-group"></i> ជ្រើសរើសថ្នាក់៖</label>
+              <select class="filter-select class-select-input" id="monthlyReportClassSelect" style="min-width: 170px;" onchange="changeClass(this.value)"></select>
+
+              <label style="font-weight: 600; font-size: 13px; margin-left: 8px;"><i class="fa fa-calendar-alt"></i> ប្រចាំខែ៖</label>
+              <select id="monthlyReportMonthSelect" class="filter-select" style="min-width: 130px;" onchange="changeMonthlyReportMonth(this.value)">
+                <option value="មករា" selected>ខែ មករា</option>
+                <option value="កុម្ភៈ">ខែ កុម្ភៈ</option>
+                <option value="មីនា">ខែ មីនា</option>
+                <option value="មេសា">ខែ មេសា</option>
+                <option value="ឧសភា">ខែ ឧសភា</option>
+                <option value="មិថុនា">ខែ មិថុនា</option>
+                <option value="កក្កដា">ខែ កក្កដា</option>
+                <option value="សីហា">ខែ សីហា</option>
+                <option value="កញ្ញា">ខែ កញ្ញា</option>
+                <option value="តុលា">ខែ តុលា</option>
+                <option value="វិច្ឆិកា">ខែ វិច្ឆិកា</option>
+                <option value="ធ្នូ">ខែ ធ្នូ</option>
+              </select>
+            </div>
+
+            <div class="filter-group">
+              <button type="button" class="btn btn-action-excel" onclick="exportMonthlyReportToExcel()" title="ទាញយកជា Excel">
+                <i class="fa-solid fa-file-excel" style="font-size: 14px;"></i> នាំចេញ Excel
+              </button>
+              <button type="button" class="btn btn-action-navy" onclick="printMonthlyReport()" title="បោះពុម្ពរបាយការណ៍ប្រចាំខែ (A4 Portrait)">
+                <i class="fa-solid fa-print" style="font-size: 14px;"></i> បោះពុម្ព (Print A4)
+              </button>
+            </div>
+          </div>
+
+          <!-- A4 Portrait Container -->
+          <div class="monthly-report-wrapper" id="monthlyReportContentWrap">
+            <!-- Rendered dynamically by renderMonthlyReport() -->
+          </div>
         </div>
       </section>
 

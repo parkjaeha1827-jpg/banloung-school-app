@@ -52,6 +52,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (urlParams.get("sem")) {
       state.activeSemesterExtractSem = urlParams.get("sem");
     }
+    if (urlParams.get("honorMonth")) {
+      state.activeHonorMonth = urlParams.get("honorMonth");
+    }
     const targetTab = window.location.hash ? window.location.hash.substring(1) : (urlParams.get("tab") || null);
     if (targetTab && typeof switchTab === "function") {
       switchTab(targetTab);
@@ -5069,13 +5072,16 @@ function exportMonthlyRanksExcel() {
    ========================================================================== */
 
 function changeHonorMonth(monthVal) {
-  state.activeScoreMonth = monthVal;
+  state.activeHonorMonth = monthVal;
   const honorMonthSelect = document.getElementById("honorMonthSelect");
   if (honorMonthSelect) honorMonthSelect.value = monthVal;
-  const scoreMonthSelect = document.getElementById("scoreMonthSelect");
-  if (scoreMonthSelect) scoreMonthSelect.value = monthVal;
-  const rankMonthSelect = document.getElementById("rankMonthSelect");
-  if (rankMonthSelect) rankMonthSelect.value = monthVal;
+  if (!monthVal.startsWith("ប្រចាំ")) {
+    state.activeScoreMonth = monthVal;
+    const scoreMonthSelect = document.getElementById("scoreMonthSelect");
+    if (scoreMonthSelect) scoreMonthSelect.value = monthVal;
+    const rankMonthSelect = document.getElementById("rankMonthSelect");
+    if (rankMonthSelect) rankMonthSelect.value = monthVal;
+  }
   renderHonorRoll();
 }
 window.changeHonorMonth = changeHonorMonth;
@@ -5128,64 +5134,174 @@ function renderHonorRoll() {
     return;
   }
 
-  const monthKey = state.activeScoreMonth || "មីនា";
+  const monthKey = state.activeHonorMonth || state.activeScoreMonth || "មីនា";
   const honorMonthSelect = document.getElementById("honorMonthSelect");
   if (honorMonthSelect) honorMonthSelect.value = monthKey;
 
   const academicYear = currentClass.academicYear || state.activeYear || "២០២៦-២០២៧";
   const students = currentClass.students || [];
 
-  // Ensure monthlyScores data exists
-  currentClass.monthlyScores = currentClass.monthlyScores || {};
-  currentClass.monthlyScores[monthKey] = currentClass.monthlyScores[monthKey] || {};
-  const isCleared = currentClass.clearedScores && currentClass.clearedScores[monthKey];
+  let studentComputed = [];
+  const sem1Months = (state.semesterCustomMonths && state.semesterCustomMonths["1"]) || ["ធ្នូ", "មករា", "កុម្ភៈ", "មីនា"];
+  const sem2Months = (state.semesterCustomMonths && state.semesterCustomMonths["2"]) || ["ឧសភា", "មិថុនា", "កក្កដា", "សីហា"];
 
-  // Pre-calculate total, average and mention for ranking exactly like monthly rankings
-  const studentComputed = [];
-  students.forEach((s) => {
-    let rec = currentClass.monthlyScores[monthKey][s.num];
-    if (!rec) {
-      rec = {};
-      SCORE_SKILLS.forEach(sk => {
-        if (isCleared) {
-          rec[sk.key] = 0;
+  if (monthKey === "ប្រចាំឆមាសទី១") {
+    studentComputed = students.map((s, idx) => {
+      let semAvg = 0;
+      if (currentClass.semesterRankEdits?.["1"]?.[s.num]?.semAvg !== undefined) {
+        semAvg = currentClass.semesterRankEdits["1"][s.num].semAvg;
+      } else {
+        let sum = 0, count = 0;
+        sem1Months.forEach(m => {
+          const res = getStudentMonthAvg(currentClass, m, s);
+          if (res.avg > 0) { sum += res.avg; count++; }
+        });
+        const mAvg = count > 0 ? (sum / count) : 0;
+        const exAvg = getStudentSemesterExamScores(currentClass, "1", s).avg || 0;
+        if (mAvg > 0 && exAvg > 0) semAvg = Math.round(((mAvg + exAvg) / 2) * 100) / 100;
+        else if (mAvg > 0) semAvg = Math.round(mAvg * 100) / 100;
+        else if (exAvg > 0) semAvg = Math.round(exAvg * 100) / 100;
+      }
+      return {
+        student: s,
+        avg: semAvg,
+        total: semAvg,
+        num: s.num || (idx + 1)
+      };
+    });
+  } else if (monthKey === "ប្រចាំឆមាសទី២") {
+    studentComputed = students.map((s, idx) => {
+      let semAvg = 0;
+      if (currentClass.semesterRankEdits?.["2"]?.[s.num]?.semAvg !== undefined) {
+        semAvg = currentClass.semesterRankEdits["2"][s.num].semAvg;
+      } else {
+        let sum = 0, count = 0;
+        sem2Months.forEach(m => {
+          const res = getStudentMonthAvg(currentClass, m, s);
+          if (res.avg > 0) { sum += res.avg; count++; }
+        });
+        const mAvg = count > 0 ? (sum / count) : 0;
+        const exAvg = getStudentSemesterExamScores(currentClass, "2", s).avg || 0;
+        if (mAvg > 0 && exAvg > 0) semAvg = Math.round(((mAvg + exAvg) / 2) * 100) / 100;
+        else if (mAvg > 0) semAvg = Math.round(mAvg * 100) / 100;
+        else if (exAvg > 0) semAvg = Math.round(exAvg * 100) / 100;
+      }
+      return {
+        student: s,
+        avg: semAvg,
+        total: semAvg,
+        num: s.num || (idx + 1)
+      };
+    });
+  } else if (monthKey === "ប្រចាំឆ្នាំ") {
+    studentComputed = students.map((s, idx) => {
+      let annualAvg = 0;
+      if (currentClass.annualRankEdits?.[s.num]?.annualAvg !== undefined) {
+        annualAvg = currentClass.annualRankEdits[s.num].annualAvg;
+      } else {
+        let sem1Avg = 0;
+        if (currentClass.annualRankEdits?.[s.num]?.sem1Avg !== undefined) {
+          sem1Avg = currentClass.annualRankEdits[s.num].sem1Avg;
+        } else if (currentClass.semesterRankEdits?.["1"]?.[s.num]?.semAvg !== undefined) {
+          sem1Avg = currentClass.semesterRankEdits["1"][s.num].semAvg;
         } else {
-          if (sk.group === "khmer") rec[sk.key] = s.scores?.khmer || 7;
-          else if (sk.group === "math") rec[sk.key] = s.scores?.math || 7.5;
-          else if (sk.key === "science") rec[sk.key] = s.scores?.science || 7;
-          else if (sk.key === "social") rec[sk.key] = s.scores?.social || 7;
-          else if (sk.key === "pe_home_art") rec[sk.key] = s.scores?.art || 8;
-          else if (sk.key === "pe_sport" || sk.key === "pe_health") rec[sk.key] = s.scores?.pe || 8.5;
-          else rec[sk.key] = 7;
+          let sum = 0, count = 0;
+          sem1Months.forEach(m => {
+            const res = getStudentMonthAvg(currentClass, m, s);
+            if (res.avg > 0) { sum += res.avg; count++; }
+          });
+          const mAvg = count > 0 ? (sum / count) : 0;
+          const exAvg = getStudentSemesterExamScores(currentClass, "1", s).avg || 0;
+          if (mAvg > 0 && exAvg > 0) sem1Avg = Math.round(((mAvg + exAvg) / 2) * 100) / 100;
+          else if (mAvg > 0) sem1Avg = Math.round(mAvg * 100) / 100;
+          else if (exAvg > 0) sem1Avg = Math.round(exAvg * 100) / 100;
         }
+
+        let sem2Avg = 0;
+        if (currentClass.annualRankEdits?.[s.num]?.sem2Avg !== undefined) {
+          sem2Avg = currentClass.annualRankEdits[s.num].sem2Avg;
+        } else if (currentClass.semesterRankEdits?.["2"]?.[s.num]?.semAvg !== undefined) {
+          sem2Avg = currentClass.semesterRankEdits["2"][s.num].semAvg;
+        } else {
+          let sum = 0, count = 0;
+          sem2Months.forEach(m => {
+            const res = getStudentMonthAvg(currentClass, m, s);
+            if (res.avg > 0) { sum += res.avg; count++; }
+          });
+          const mAvg = count > 0 ? (sum / count) : 0;
+          const exAvg = getStudentSemesterExamScores(currentClass, "2", s).avg || 0;
+          if (mAvg > 0 && exAvg > 0) sem2Avg = Math.round(((mAvg + exAvg) / 2) * 100) / 100;
+          else if (mAvg > 0) sem2Avg = Math.round(mAvg * 100) / 100;
+          else if (exAvg > 0) sem2Avg = Math.round(exAvg * 100) / 100;
+        }
+
+        if (sem1Avg > 0 && sem2Avg > 0) {
+          annualAvg = Math.round(((sem1Avg + sem2Avg) / 2) * 100) / 100;
+        } else if (sem1Avg > 0) {
+          annualAvg = sem1Avg;
+        } else if (sem2Avg > 0) {
+          annualAvg = sem2Avg;
+        }
+      }
+      return {
+        student: s,
+        avg: annualAvg,
+        total: annualAvg,
+        num: s.num || (idx + 1)
+      };
+    });
+  } else {
+    // Ensure monthlyScores data exists
+    currentClass.monthlyScores = currentClass.monthlyScores || {};
+    currentClass.monthlyScores[monthKey] = currentClass.monthlyScores[monthKey] || {};
+    const isCleared = currentClass.clearedScores && currentClass.clearedScores[monthKey];
+
+    // Pre-calculate total, average and mention for ranking exactly like monthly rankings
+    students.forEach((s) => {
+      let rec = currentClass.monthlyScores[monthKey][s.num];
+      if (!rec) {
+        rec = {};
+        SCORE_SKILLS.forEach(sk => {
+          if (isCleared) {
+            rec[sk.key] = 0;
+          } else {
+            if (sk.group === "khmer") rec[sk.key] = s.scores?.khmer || 7;
+            else if (sk.group === "math") rec[sk.key] = s.scores?.math || 7.5;
+            else if (sk.key === "science") rec[sk.key] = s.scores?.science || 7;
+            else if (sk.key === "social") rec[sk.key] = s.scores?.social || 7;
+            else if (sk.key === "pe_home_art") rec[sk.key] = s.scores?.art || 8;
+            else if (sk.key === "pe_sport" || sk.key === "pe_health") rec[sk.key] = s.scores?.pe || 8.5;
+            else rec[sk.key] = 7;
+          }
+        });
+        currentClass.monthlyScores[monthKey][s.num] = rec;
+      }
+
+      let total = 0;
+      SCORE_SKILLS.forEach(sk => {
+        const v = parseFloat(rec[sk.key]);
+        total += isNaN(v) ? 0 : v;
       });
-      currentClass.monthlyScores[monthKey][s.num] = rec;
-    }
+      total = Math.round(total * 10) / 10;
+      const avg = total > 0 ? Math.round((total / 16) * 100) / 100 : 0;
 
-    let total = 0;
-    SCORE_SKILLS.forEach(sk => {
-      const v = parseFloat(rec[sk.key]);
-      total += isNaN(v) ? 0 : v;
+      let mention = "";
+      if (avg >= 8.5) mention = "A";
+      else if (avg >= 8.0) mention = "B";
+      else if (avg >= 7.0) mention = "C";
+      else if (avg >= 6.0) mention = "D";
+      else if (avg >= 5.0) mention = "E";
+      else if (total > 0) mention = "F";
+
+      studentComputed.push({
+        student: s,
+        rec: rec,
+        total: total,
+        avg: avg,
+        mention: mention
+      });
     });
-    total = Math.round(total * 10) / 10;
-    const avg = total > 0 ? Math.round((total / 16) * 100) / 100 : 0;
-
-    let mention = "";
-    if (avg >= 8.5) mention = "A";
-    else if (avg >= 8.0) mention = "B";
-    else if (avg >= 7.0) mention = "C";
-    else if (avg >= 6.0) mention = "D";
-    else if (avg >= 5.0) mention = "E";
-    else if (total > 0) mention = "F";
-
-    studentComputed.push({
-      student: s,
-      rec: rec,
-      total: total,
-      avg: avg,
-      mention: mention
-    });
-  });
+  }
 
   // Assign ranks based on avg descending (Top 1 to 5)
   const sortedByAvg = [...studentComputed].sort((a, b) => {
@@ -5196,12 +5312,14 @@ function renderHonorRoll() {
   });
 
   function getStudentHonorName(item) {
-    if (!item || !item.student) return "........................................";
+    if (!item || !item.student) return "";
     const s = item.student;
-    if (s.lastName && s.firstName) return `${s.lastName}  ${s.firstName}`;
-    if (s.fullName) return s.fullName;
-    if (s.name) return s.name;
-    return "........................................";
+    const last = (s.lastName || "").trim();
+    const first = (s.firstName || "").trim();
+    if (last && first) return `${last}  ${first}`.normalize("NFC");
+    if (s.fullName) return s.fullName.trim().normalize("NFC");
+    if (s.name) return s.name.trim().normalize("NFC");
+    return "";
   }
 
   const r1Name = getStudentHonorName(sortedByAvg[0]);
@@ -5210,15 +5328,21 @@ function renderHonorRoll() {
   const r4Name = getStudentHonorName(sortedByAvg[3]);
   const r5Name = getStudentHonorName(sortedByAvg[4]);
 
-  const districtVal = "ព្រៃកប្បាស";
-  const clusterVal = "..................................";
-  const schoolVal = "បាន្លួង";
+  const districtVal = (state.db && state.db.schoolProfile && state.db.schoolProfile.district) ? state.db.schoolProfile.district : "ព្រៃកប្បាស";
+  const clusterVal = (state.db && state.db.schoolProfile && state.db.schoolProfile.cluster) ? state.db.schoolProfile.cluster : "ព្រៃល្វា";
+  const schoolVal = (state.db && state.db.schoolProfile && state.db.schoolProfile.school) ? state.db.schoolProfile.school : "បាន្លួង";
   const gradeRaw = currentClass.grade || "ថ្នាក់ទី ៣";
   const cleanGrade = getCleanGradeDisplay(gradeRaw);
   const gradeVal = cleanGrade.replace(/^ថ្នាក់ទី\s*/, "").replace(/^ថ្នាក់\s*/, "").trim() || cleanGrade;
 
   const teacherVal = currentClass.teacher || "លី ស្រីនូ";
-  const directorVal = (state.db && state.db.schoolProfile && state.db.schoolProfile.director) ? state.db.schoolProfile.director : "អ៊ិន សុខុម";
+  const directorVal = (state.db && state.db.schoolProfile && state.db.schoolProfile.director && state.db.schoolProfile.director !== "អ៊ិន សុខុម") ? state.db.schoolProfile.director : "";
+
+  currentClass.honorRollDates = currentClass.honorRollDates || {};
+  const dirDateLunar = currentClass.honorRollDates.dirDateLunar || "";
+  const dirDateSolar = currentClass.honorRollDates.dirDateSolar || "";
+  const teachDateLunar = currentClass.honorRollDates.teachDateLunar || "";
+  const teachDateSolar = currentClass.honorRollDates.teachDateSolar || "";
 
   let html = `
     <div class="honor-bee-page" id="printableHonorRoll">
@@ -5227,9 +5351,9 @@ function renderHonorRoll() {
         <img src="honor_bee_bg_a4.png" class="honor-bee-bg-img" alt="តារាងកិត្តិយស" />
 
         <!-- Left Header Fields -->
-        <div class="honor-bee-field field-district" contenteditable="true" spellcheck="false" title="ចុចដើម្បីកែប្រែស្រុក">${escapeHtml(districtVal)}</div>
-        <div class="honor-bee-field field-cluster" contenteditable="true" spellcheck="false" title="ចុចដើម្បីកែប្រែកម្រង">${escapeHtml(clusterVal)}</div>
-        <div class="honor-bee-field field-school" contenteditable="true" spellcheck="false" title="ចុចដើម្បីកែប្រែសាលា">${escapeHtml(schoolVal)}</div>
+        <div class="honor-bee-field field-district" contenteditable="true" spellcheck="false" title="ចុចដើម្បីកែប្រែស្រុក" onblur="saveHonorProfileField('district', this.innerText)">${escapeHtml(districtVal)}</div>
+        <div class="honor-bee-field field-cluster" contenteditable="true" spellcheck="false" title="ចុចដើម្បីកែប្រែកម្រង" onblur="saveHonorProfileField('cluster', this.innerText)">${escapeHtml(clusterVal)}</div>
+        <div class="honor-bee-field field-school" contenteditable="true" spellcheck="false" title="ចុចដើម្បីកែប្រែសាលា" onblur="saveHonorProfileField('school', this.innerText)">${escapeHtml(schoolVal)}</div>
         <div class="honor-bee-field field-grade" contenteditable="true" spellcheck="false" title="ចុចដើម្បីកែប្រែថ្នាក់">${escapeHtml(gradeVal)}</div>
 
         <!-- Month in 'ប្រឡងប្រចាំខែ' -->
@@ -5252,8 +5376,18 @@ function renderHonorRoll() {
           <span class="honor-bee-student-text">${r5Name}</span>
         </div>
 
+        <!-- Director Date Lines (Editable) -->
+        <div class="honor-bee-date dir-date-lunar" contenteditable="true" spellcheck="false" title="ចុចដើម្បីបំពេញកាលបរិច្ឆេទតាមច័ន្ទគតិ នាយកសាលា" onblur="saveHonorRollDate('dirDateLunar', this.innerText)">${escapeHtml(dirDateLunar)}</div>
+        <div class="honor-bee-date dir-date-solar" contenteditable="true" spellcheck="false" title="ចុចដើម្បីបំពេញកាលបរិច្ឆេទតាមសុរិយគតិ នាយកសាលា" onblur="saveHonorRollDate('dirDateSolar', this.innerText)">${escapeHtml(dirDateSolar)}</div>
+
         <!-- Footers -->
-        <div class="honor-bee-director-name" contenteditable="true" spellcheck="false" title="ឈ្មោះនាយកសាលា (ចុចដើម្បីកែប្រែ)">${escapeHtml(directorVal)}</div>
+        <div class="honor-bee-director-name" contenteditable="true" spellcheck="false" title="ឈ្មោះនាយកសាលា (ចុចដើម្បីបំពេញ)" onblur="saveHonorDirectorName(this.innerText)">${escapeHtml(directorVal)}</div>
+        
+        <!-- Teacher Date Lines (Editable) -->
+        <div class="honor-bee-date teach-date-lunar" contenteditable="true" spellcheck="false" title="ចុចដើម្បីបំពេញកាលបរិច្ឆេទតាមច័ន្ទគតិ គ្រូទទួលបន្ទុកថ្នាក់" onblur="saveHonorRollDate('teachDateLunar', this.innerText)">${escapeHtml(teachDateLunar)}</div>
+        <div class="honor-bee-date teach-date-solar" contenteditable="true" spellcheck="false" title="ចុចដើម្បីបំពេញកាលបរិច្ឆេទតាមសុរិយគតិ គ្រូទទួលបន្ទុកថ្នាក់" onblur="saveHonorRollDate('teachDateSolar', this.innerText)">${escapeHtml(teachDateSolar)}</div>
+
+        <!-- Teacher Name -->
         <div class="honor-bee-teacher-name" contenteditable="true" spellcheck="false" title="ឈ្មោះគ្រូទទួលបន្ទុកថ្នាក់ (ចុចដើម្បីកែប្រែ)" onblur="saveClassTeacherDirect('${currentClass.id}', this.innerText)">${escapeHtml(teacherVal)}</div>
       </div>
     </div>
@@ -5262,6 +5396,31 @@ function renderHonorRoll() {
   container.innerHTML = html;
 }
 window.renderHonorRoll = renderHonorRoll;
+
+function saveHonorRollDate(field, val) {
+  const currentClass = getActiveClass();
+  if (!currentClass) return;
+  currentClass.honorRollDates = currentClass.honorRollDates || {};
+  currentClass.honorRollDates[field] = val.trim();
+  saveDatabase();
+}
+window.saveHonorRollDate = saveHonorRollDate;
+
+function saveHonorDirectorName(val) {
+  state.db = state.db || {};
+  state.db.schoolProfile = state.db.schoolProfile || {};
+  state.db.schoolProfile.director = val.trim();
+  saveDatabase();
+}
+window.saveHonorDirectorName = saveHonorDirectorName;
+
+function saveHonorProfileField(field, val) {
+  state.db = state.db || {};
+  state.db.schoolProfile = state.db.schoolProfile || {};
+  state.db.schoolProfile[field] = val.trim();
+  saveDatabase();
+}
+window.saveHonorProfileField = saveHonorProfileField;
 
 /* ==========================================================================
    SEMESTER RANKINGS (ចំណាត់ថ្នាក់ប្រចាំឆមាស) - 100% SAMPLE PDF SPEC
@@ -10611,12 +10770,46 @@ function renderSemesterExtract() {
   const lunarTeacher = savedDates.lunarTeacher || lunarTeacherDefault;
   const solarTeacher = savedDates.solarTeacher || solarTeacherDefault;
 
-  // Pagination for Landscape:
-  // For totalStudents <= 20: 1 single page
-  // For totalStudents > 20: exactly 2 pages (Page 1 has 20 rows, Page 2 has 21..end + Signatures & Stats)
-  const PAGE1_SIZE = totalStudents <= 20 ? totalStudents : 20;
-  const page1Items = studentComputed.slice(0, PAGE1_SIZE);
-  const page2Items = studentComputed.slice(PAGE1_SIZE);
+  // Dynamic Multi-Page Pagination for Landscape A4:
+  // Ensures 100% of rows and footer fit with ZERO truncation/overflow.
+  // Page 1 (with top title header): up to 20 rows (Sem 2) or 19 rows (Sem 1)
+  // Middle pages (table header only): up to 22 rows
+  // Final page (with signatures / stats footer): up to 18 rows
+  const maxFinalRows = 18;
+  const maxPage1Rows = sem === "2" ? 20 : 19;
+  const maxMidRows = 22;
+
+  let pagesChunks = [];
+  if (totalStudents <= (sem === "2" ? 14 : 16)) {
+    // 1 Single Page!
+    pagesChunks.push(studentComputed);
+  } else if (totalStudents <= (maxPage1Rows + maxFinalRows)) {
+    // Exactly 2 Pages!
+    let p1Count = Math.min(maxPage1Rows, Math.ceil(totalStudents / 2));
+    let p2Count = totalStudents - p1Count;
+    if (p2Count > maxFinalRows) {
+      p1Count = totalStudents - maxFinalRows;
+      p2Count = maxFinalRows;
+    }
+    pagesChunks.push(studentComputed.slice(0, p1Count));
+    pagesChunks.push(studentComputed.slice(p1Count));
+  } else {
+    // 3 or more Pages!
+    let remaining = [...studentComputed];
+    // Page 1
+    pagesChunks.push(remaining.splice(0, maxPage1Rows));
+    // Middle pages & Last page
+    while (remaining.length > 0) {
+      if (remaining.length <= maxFinalRows) {
+        pagesChunks.push(remaining.splice(0, remaining.length));
+      } else if (remaining.length <= maxMidRows + maxFinalRows) {
+        let pNextCount = Math.ceil(remaining.length / 2);
+        pagesChunks.push(remaining.splice(0, pNextCount));
+      } else {
+        pagesChunks.push(remaining.splice(0, maxMidRows));
+      }
+    }
+  }
 
   // Common Top Header
   const topHeaderHtml = `
@@ -10650,12 +10843,12 @@ function renderSemesterExtract() {
           <th rowspan="3" style="width: 32px;" class="th-fixed-text">ល.រ</th>
           <th colspan="2" rowspan="3" style="width: 165px;" class="th-fixed-text">គោត្តនាម និងនាម</th>
           <th rowspan="3" style="width: 36px;" class="th-fixed-text">ភេទ</th>
-          <th colspan="20" style="font-size: 11pt; padding: 4px 0; color: #002060;">ឆមាសទី១</th>
+          <th colspan="20" style="font-size: 11pt; padding: 3px 0; color: #002060;">ឆមាសទី១</th>
         </tr>
         <tr>
-          <th colspan="12" style="font-size: 9.5pt; padding: 3px 0; color: #002060;">ពិន្ទុប្រឡងឆមាស</th>
-          <th colspan="5" style="font-size: 9.5pt; padding: 3px 0; color: #002060;">លទ្ធផលប្រចាំឆមាស</th>
-          <th colspan="3" style="font-size: 9.5pt; padding: 3px 0; color: #002060;">និទ្ទេសតាមផ្នែក</th>
+          <th colspan="12" style="font-size: 9.5pt; padding: 2px 0; color: #002060;">ពិន្ទុប្រឡងឆមាស</th>
+          <th colspan="5" style="font-size: 9.5pt; padding: 2px 0; color: #002060;">លទ្ធផលប្រចាំឆមាស</th>
+          <th colspan="3" style="font-size: 9.5pt; padding: 2px 0; color: #002060;">និទ្ទេសតាមផ្នែក</th>
         </tr>
         <tr>
           ${subVertHeaders}
@@ -10705,7 +10898,7 @@ function renderSemesterExtract() {
     return rowsHtml;
   }
 
-  // BUILD TABLE HEADER FOR SEMESTER 2 (100% MATCHING ដំណាច់ឆ្នាំ និង ឆមាសទី២.pdf)
+  // BUILD TABLE HEADER FOR SEMESTER 2 (100% SPEC MATCHING ដំណាច់ឆ្នាំ និង ឆមាសទី២.pdf)
   function buildTableHeaderHtmlSem2() {
     let subVertHeaders = "";
     SEMESTER_EXTRACT_SUBJECTS.forEach(sub => {
@@ -10718,16 +10911,16 @@ function renderSemesterExtract() {
           <th rowspan="3" style="width: 28px;" class="th-fixed-text">ល.រ</th>
           <th colspan="2" rowspan="3" style="width: 140px;" class="th-fixed-text">គោត្តនាម និងនាម</th>
           <th rowspan="3" style="width: 28px;" class="th-fixed-text">ភេទ</th>
-          <th colspan="20" style="font-size: 10.5pt; padding: 3px 0; color: #002060;">ឆមាសទី២</th>
-          <th colspan="6" style="font-size: 10.5pt; padding: 3px 0; color: #002060;">ប្រចាំឆ្នាំ</th>
+          <th colspan="20" style="font-size: 10.5pt; padding: 2px 0; color: #002060;">ឆមាសទី២</th>
+          <th colspan="6" style="font-size: 10.5pt; padding: 2px 0; color: #002060;">ប្រចាំឆ្នាំ</th>
           <th rowspan="3" class="th-vert" style="width: 34px;"><span class="v-text">សេចក្ដីផ្សេងៗ</span></th>
         </tr>
         <tr>
-          <th colspan="12" style="font-size: 9pt; padding: 2px 0; color: #002060;">ពិន្ទុប្រឡងឆមាស</th>
-          <th colspan="5" style="font-size: 9pt; padding: 2px 0; color: #002060;">លទ្ធផលប្រចាំឆមាស</th>
-          <th colspan="3" style="font-size: 9pt; padding: 2px 0; color: #002060;">និទ្ទេសតាមផ្នែក</th>
-          <th colspan="3" style="font-size: 9pt; padding: 2px 0; color: #002060;">លទ្ធផល</th>
-          <th colspan="3" style="font-size: 9pt; padding: 2px 0; color: #002060;">និទ្ទេសតាមផ្នែក</th>
+          <th colspan="12" style="font-size: 8.5pt; padding: 2px 0; color: #002060;">ពិន្ទុប្រឡងឆមាស</th>
+          <th colspan="5" style="font-size: 8.5pt; padding: 2px 0; color: #002060;">លទ្ធផលប្រចាំឆមាស</th>
+          <th colspan="3" style="font-size: 8.5pt; padding: 2px 0; color: #002060;">និទ្ទេសតាមផ្នែក</th>
+          <th colspan="3" style="font-size: 8.5pt; padding: 2px 0; color: #002060;">លទ្ធផល</th>
+          <th colspan="3" style="font-size: 8.5pt; padding: 2px 0; color: #002060;">និទ្ទេសតាមផ្នែក</th>
         </tr>
         <tr>
           ${subVertHeaders}
@@ -10796,8 +10989,8 @@ function renderSemesterExtract() {
     <div class="sem-extract-sig-grid">
       <div class="sem-extract-sig-left">
         <div>បានឃើញ និងឯកភាព</div>
-        <div style="font-size: 11pt; margin-top: 4px;">នាយកសាលា</div>
-        <div style="height: 50px;"></div>
+        <div style="font-size: 10.5pt; margin-top: 3px;">នាយកសាលា</div>
+        <div style="height: 25px;"></div>
       </div>
       <div class="sem-extract-sig-right">
         <div class="td-editable sig-date-lunar" contenteditable="true" onblur="saveSemesterExtractDate('1', 'lunarTeacher', this.innerText)">${lunarTeacher}</div>
@@ -10818,7 +11011,7 @@ function renderSemesterExtract() {
         <div class="sem2-director-block">
           <div class="sem2-dir-seen">បានឃើញ និង ឯកភាព</div>
           <div class="sem2-dir-role">នាយកសាលា</div>
-          <div style="height: 45px;"></div>
+          <div style="height: 35px;"></div>
         </div>
       </div>
 
@@ -10826,8 +11019,8 @@ function renderSemesterExtract() {
         <div class="sem2-stats-container">
           <div class="sem2-stats-title">សរុបសិស្សទទួលបាននិទ្ទេស</div>
           <div class="sem2-stats-bracket">
-            <svg width="18" height="128" viewBox="0 0 18 128" fill="none" style="stroke: #002060; stroke-width: 1.6;">
-              <path d="M 16 2 C 8 2, 3 6, 3 14 L 3 58 C 3 63, 0 65, 0 65 C 0 65, 3 67, 3 72 L 3 114 C 3 122, 8 126, 16 126" />
+            <svg width="18" height="124" viewBox="0 0 18 124" fill="none" style="stroke: #002060; stroke-width: 1.6;">
+              <path d="M 16 2 C 8 2, 3 6, 3 14 L 3 56 C 3 61, 0 62, 0 62 C 0 62, 3 64, 3 69 L 3 110 C 3 118, 8 122, 16 122" />
             </svg>
           </div>
           <div class="sem2-stats-list">
@@ -10893,63 +11086,43 @@ function renderSemesterExtract() {
   `;
 
   let finalHtml = "";
+  const totalPages = pagesChunks.length;
 
-  if (sem === "1") {
-    finalHtml = `
-      <div class="sem-extract-page" id="semExtractPage1">
-        ${topHeaderHtml}
-        <table class="sem-extract-table">
+  pagesChunks.forEach((chunkItems, pIndex) => {
+    const isFirstPage = pIndex === 0;
+    const isLastPage = pIndex === totalPages - 1;
+    const pageNum = pIndex + 1;
+
+    let pageTableHtml = "";
+    if (sem === "1") {
+      pageTableHtml = `
+        <table class="sem-extract-table" style="${isFirstPage ? '' : 'margin-top: 4px;'}">
           ${buildTableHeaderHtmlSem1()}
           <tbody>
-            ${buildTableRowsHtmlSem1(page1Items)}
+            ${buildTableRowsHtmlSem1(chunkItems)}
           </tbody>
         </table>
-        ${page2Items.length === 0 ? sem1SignaturesHtml : ""}
-      </div>
-    `;
-
-    if (page2Items.length > 0) {
-      finalHtml += `
-        <div class="sem-extract-page" id="semExtractPage2">
-          <table class="sem-extract-table" style="margin-top: 5px;">
-            ${buildTableHeaderHtmlSem1()}
-            <tbody>
-              ${buildTableRowsHtmlSem1(page2Items)}
-            </tbody>
-          </table>
-          ${sem1SignaturesHtml}
-        </div>
+        ${isLastPage ? sem1SignaturesHtml : ""}
       `;
-    }
-  } else {
-    // SEMESTER 2 (100% SPEC MATCHING ដំណាច់ឆ្នាំ និង ឆមាសទី២.pdf)
-    finalHtml = `
-      <div class="sem-extract-page" id="semExtractPage1">
-        ${topHeaderHtml}
-        <table class="sem-extract-table sem2-table">
+    } else {
+      pageTableHtml = `
+        <table class="sem-extract-table sem2-table" style="${isFirstPage ? '' : 'margin-top: 4px;'}">
           ${buildTableHeaderHtmlSem2()}
           <tbody>
-            ${buildTableRowsHtmlSem2(page1Items)}
+            ${buildTableRowsHtmlSem2(chunkItems)}
           </tbody>
         </table>
-        ${page2Items.length === 0 ? sem2FooterHtml : ""}
-      </div>
-    `;
-
-    if (page2Items.length > 0) {
-      finalHtml += `
-        <div class="sem-extract-page" id="semExtractPage2">
-          <table class="sem-extract-table sem2-table" style="margin-top: 5px;">
-            ${buildTableHeaderHtmlSem2()}
-            <tbody>
-              ${buildTableRowsHtmlSem2(page2Items)}
-            </tbody>
-          </table>
-          ${sem2FooterHtml}
-        </div>
+        ${isLastPage ? sem2FooterHtml : ""}
       `;
     }
-  }
+
+    finalHtml += `
+      <div class="sem-extract-page" id="semExtractPage${pageNum}">
+        ${isFirstPage ? topHeaderHtml : ""}
+        ${pageTableHtml}
+      </div>
+    `;
+  });
 
   container.innerHTML = finalHtml;
 }
@@ -10970,6 +11143,18 @@ function changeSemesterExtractSem(sem) {
 window.changeSemesterExtractSem = changeSemesterExtractSem;
 
 function printSemesterExtract() {
+  let styleEl = document.getElementById("printPageOrientationStyle");
+  if (!styleEl) {
+    styleEl = document.createElement("style");
+    styleEl.id = "printPageOrientationStyle";
+    document.head.appendChild(styleEl);
+  }
+  styleEl.innerHTML = `
+    @page {
+      size: A4 landscape !important;
+      margin: 2mm 3mm !important;
+    }
+  `;
   window.print();
 }
 window.printSemesterExtract = printSemesterExtract;

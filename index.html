@@ -227,6 +227,12 @@
 
       <!-- Live Real-Time Date & Clock (កាលបរិច្ឆេទ និង ម៉ោងពិតប្រាកដនៅលើប្រព័ន្ធទាំងមូល) -->
       <div class="top-bar-actions no-print">
+        <!-- Firebase Cloud Realtime Database Sync Badge -->
+        <div class="cloud-sync-badge synced" id="cloudSyncBadge" onclick="window.firebaseSync && window.firebaseSync.openCloudSyncModal()" title="ស្ថានភាពតភ្ជាប់ Firebase Realtime Database">
+          <span class="sync-status-dot"></span>
+          <i class="fa-solid fa-cloud text-success" id="cloudSyncIcon"></i>
+          <span id="cloudSyncText">Cloud Realtime</span>
+        </div>
         <div class="live-datetime-badge" title="កាលបរិច្ឆេទ និងម៉ោងជាក់ស្តែងបច្ចុប្បន្ន">
           <div class="live-date-text">
             <i class="fa-solid fa-calendar-day" style="color: #2563eb;"></i>
@@ -1575,6 +1581,10 @@
 <script src="data.js"></script>
 <script src="library.js"></script>
 <script src="school_reports.js"></script>
+  <!-- Firebase Realtime Database SDK & Sync Manager -->
+  <script src="firebase-app-compat.js"></script>
+  <script src="firebase-database-compat.js"></script>
+  <script src="firebase-sync.js"></script>
   <script src="app.js"></script>
 
 </body>

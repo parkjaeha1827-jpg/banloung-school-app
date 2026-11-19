@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="firebase-app-compat.js"></script>
+  <script src="firebase-database-compat.js"></script>
+  <script src="data.js"></script>
+  <script src="firebase-sync.js"></script>
+</head>
+<body style="background:#f1f5f9;padding:40px;">
+  <div class="top-bar-actions" style="margin-bottom:20px;">
+    <div class="cloud-sync-badge synced" id="cloudSyncBadge" onclick="window.firebaseSync.openCloudSyncModal()">
+      <span class="sync-status-dot"></span>
+      <i class="fa-solid fa-cloud text-success" id="cloudSyncIcon"></i>
+      <span id="cloudSyncText">Cloud Realtime</span>
+    </div>
+  </div>
+  <script>
+    // Trigger modal on load
+    setTimeout(() => {
+      window.firebaseSync.openCloudSyncModal();
+    }, 500);
+  </script>
+</body>
+</html>

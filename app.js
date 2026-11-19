@@ -150,6 +150,32 @@ function loadDatabase() {
       ensureDefaultMonthlyAttendance(activeCls, state.activeAttendanceYear, state.activeAttendanceMonth);
     }
   }
+
+  // Connect and sync with Firebase Realtime Database
+  if (window.firebaseSync && typeof window.firebaseSync.initSync === "function") {
+    window.firebaseSync.initSync({
+      onInitialData: (cloudData) => {
+        if (cloudData && cloudData.classes) {
+          state.db = cloudData;
+          localStorage.setItem("banloung_school_db", JSON.stringify(state.db));
+          if (typeof renderApp === "function") renderApp();
+        }
+      },
+      onRemoteUpdate: (cloudData) => {
+        if (cloudData && cloudData.classes) {
+          state.db = cloudData;
+          localStorage.setItem("banloung_school_db", JSON.stringify(state.db));
+          const activeEl = document.activeElement;
+          const isTyping = activeEl && (activeEl.tagName === "INPUT" || activeEl.tagName === "TEXTAREA");
+          if (!isTyping) {
+            if (typeof renderActiveTab === "function") renderActiveTab();
+            if (typeof renderDashboard === "function") renderDashboard();
+          }
+        }
+      },
+      getLocalData: () => state.db || INITIAL_SCHOOL_DATA
+    });
+  }
 }
 
 function saveDatabase() {
@@ -170,7 +196,10 @@ function saveDatabase() {
     });
   }
 
-
+  // Sync to Firebase Realtime Database (with debouncing & live status indicator)
+  if (window.firebaseSync && typeof window.firebaseSync.saveToCloud === "function") {
+    window.firebaseSync.saveToCloud(state.db);
+  }
 }
 
 function getClassesForYear(year) {

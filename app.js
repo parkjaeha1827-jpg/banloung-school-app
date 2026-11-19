@@ -784,7 +784,24 @@ function switchTab(tabId) {
     styleEl.id = "printPageOrientationStyle";
     document.head.appendChild(styleEl);
   }
-  if (tabId === "study_book" || tabId === "trainee" || tabId === "scores" || tabId === "semester_scores" || tabId === "semester_extract") {
+  if (tabId === "school_monthly_report") {
+    const isPortrait = (window.schoolReportState && window.schoolReportState.activeSheet === "បូកសរុបអប់រំ");
+    if (isPortrait) {
+      styleEl.innerHTML = `
+        @page {
+          size: A4 portrait !important;
+          margin: 8mm 10mm !important;
+        }
+      `;
+    } else {
+      styleEl.innerHTML = `
+        @page {
+          size: A4 landscape !important;
+          margin: 6mm 8mm !important;
+        }
+      `;
+    }
+  } else if (tabId === "study_book" || tabId === "trainee" || tabId === "scores" || tabId === "semester_scores" || tabId === "semester_extract") {
     styleEl.innerHTML = `
       @page {
         size: A4 landscape !important;

@@ -9202,6 +9202,30 @@ body {
   transition: all 0.3s ease;
 }
 
+/* Portrait Paper Mode for Summary Education Sheet (បូកសរុបអប់រំ) */
+.school-sheet-paper.a4-portrait-paper,
+.school-sheet-paper.portrait-mode {
+  max-width: 840px !important;
+  padding: 30px 42px !important;
+  min-height: 950px;
+}
+
+.school-sheet-paper.a4-landscape-paper,
+.school-sheet-paper.landscape-mode {
+  max-width: 1140px !important;
+  padding: 24px 30px !important;
+  min-height: 700px;
+}
+
+.excel-sheet-container.a4-portrait-sheet {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.excel-sheet-container.a4-landscape-sheet {
+  width: 100%;
+}
+
 /* Exact Excel Table Styling */
 .excel-table {
   border-collapse: collapse;
@@ -9250,8 +9274,34 @@ body {
   margin-top: 2px;
 }
 
-/* Print CSS */
+/* ==========================================================================
+   OFFICIAL SCHOOL MONTHLY REPORTS (របាយការណ៍ប្រចាំខែរបស់សាលា) PRINT RULES
+   Strict A4 Landscape for 4 sheets (ស្ថិតិសិស្ស, មេរៀនចុងក្រោយ, សិស្សរៀនយឺត, លទ្ធផលសិក្សា)
+   Strict A4 Portrait for 1 sheet (បូកសរុបអប់រំ)
+   ========================================================================== */
+@page school-report-landscape-page {
+  size: A4 landscape !important;
+  margin: 6mm 8mm !important;
+}
+
+@page school-report-portrait-page {
+  size: A4 portrait !important;
+  margin: 8mm 10mm !important;
+}
+
 @media print {
+  /* Scope strictly to School Monthly Report when active */
+  body[data-active-tab="school_monthly_report"] .tab-pane:not(#tab-school_monthly_report),
+  body.tab-school_monthly_report-active .tab-pane:not(#tab-school_monthly_report) {
+    display: none !important;
+  }
+
+  body[data-active-tab="school_monthly_report"] #tab-school_monthly_report,
+  body.tab-school_monthly_report-active #tab-school_monthly_report {
+    display: block !important;
+    visibility: visible !important;
+  }
+
   .school-dossier-toolbar,
   .school-sheet-tabs-bar,
   .sidebar,
@@ -9266,6 +9316,7 @@ body {
     border: none !important;
     margin: 0 !important;
     padding: 0 !important;
+    background: transparent !important;
   }
 
   .school-sheet-stage {
@@ -9277,10 +9328,36 @@ body {
 
   .school-sheet-paper {
     box-shadow: none !important;
+    border: none !important;
     padding: 0 !important;
-    margin: 0 !important;
+    margin: 0 auto !important;
+    background: transparent !important;
+  }
+
+  /* 4 Sheets are strictly A4 Landscape */
+  .school-sheet-paper.a4-landscape-paper,
+  .school-sheet-paper.landscape-mode,
+  #schoolSheetPaper.a4-landscape-paper,
+  #schoolSheetPaper.landscape-mode,
+  body[data-school-orientation="landscape"] #schoolSheetPaper,
+  body.school-sheet-landscape-active #schoolSheetPaper,
+  .a4-landscape-sheet {
+    page: school-report-landscape-page !important;
     width: 100% !important;
-    max-width: 100% !important;
+    max-width: 297mm !important;
+  }
+
+  /* 1 Sheet (បូកសរុបអប់រំ) is strictly A4 Portrait */
+  .school-sheet-paper.a4-portrait-paper,
+  .school-sheet-paper.portrait-mode,
+  #schoolSheetPaper.a4-portrait-paper,
+  #schoolSheetPaper.portrait-mode,
+  body[data-school-orientation="portrait"] #schoolSheetPaper,
+  body.school-sheet-portrait-active #schoolSheetPaper,
+  .a4-portrait-sheet {
+    page: school-report-portrait-page !important;
+    width: 100% !important;
+    max-width: 210mm !important;
   }
 
   .excel-table {
@@ -9289,8 +9366,8 @@ body {
   }
 
   .excel-table td.border-cell {
-    border: 1px solid #000 !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    border: 1px solid #000000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 }

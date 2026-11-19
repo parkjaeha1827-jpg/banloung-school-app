@@ -83,59 +83,69 @@
           </li>
         </ul>
       </li>
-            <li class="nav-item">
-        <a class="nav-link" data-tab="scores" data-tooltip="សម្រង់ពិន្ទុប្រចាំខែ" title="សម្រង់ពិន្ទុប្រចាំខែ">
-          <span class="nav-icon"><i class="fa fa-award"></i></span>
-          <span class="nav-text">សម្រង់ពិន្ទុប្រចាំខែ</span>
+      <!-- កិច្ចការរដ្ឋបាល (Administrative Tasks Hub) - រួមបញ្ចូលទាំង ៩ ផ្ទាំង -->
+      <li class="nav-item nav-has-submenu" id="navItemAdminTasksHub">
+        <a class="nav-link" data-tab="admin_tasks" data-tooltip="កិច្ចការរដ្ឋបាល" title="កិច្ចការរដ្ឋបាល">
+          <span class="nav-icon"><i class="fa-solid fa-briefcase" style="color: #38bdf8;"></i></span>
+          <span class="nav-text">កិច្ចការរដ្ឋបាល</span>
+          <span class="nav-arrow"><i class="fa-solid fa-chevron-down"></i></span>
         </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-tab="monthly_ranks" data-tooltip="ចំណាត់ថ្នាក់ប្រចាំខែ" title="ចំណាត់ថ្នាក់ប្រចាំខែ">
-          <span class="nav-icon"><i class="fa-solid fa-ranking-star"></i></span>
-          <span class="nav-text">ចំណាត់ថ្នាក់ប្រចាំខែ</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-tab="honor_roll" data-tooltip="តារាងកិត្តិយស" title="តារាងកិត្តិយស">
-          <span class="nav-icon"><i class="fa-solid fa-award" style="color: #f59e0b;"></i></span>
-          <span class="nav-text">តារាងកិត្តិយស</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-tab="semester_ranks" data-tooltip="ចំណាត់ថ្នាក់ប្រចាំឆមាស" title="ចំណាត់ថ្នាក់ប្រចាំឆមាស">
-          <span class="nav-icon"><i class="fa-solid fa-file-invoice" style="color: #9333ea;"></i></span>
-          <span class="nav-text">ចំណាត់ថ្នាក់ប្រចាំឆមាស</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-tab="semester_scores" data-tooltip="សម្រង់ពិន្ទុឆមាស" title="សម្រង់ពិន្ទុឆមាស">
-          <span class="nav-icon"><i class="fa-solid fa-clipboard-list" style="color: #2563eb;"></i></span>
-          <span class="nav-text">សម្រង់ពិន្ទុឆមាស</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-tab="semester_extract" id="navItemSemesterExtract" data-tooltip="សម្រង់ពិន្ទុ ប្រចាំឆមាស" title="សម្រង់ពិន្ទុ ប្រចាំឆមាស">
-          <span class="nav-icon"><i class="fa-solid fa-file-waveform" style="color: #059669;"></i></span>
-          <span class="nav-text">សម្រង់ពិន្ទុ ប្រចាំឆមាស</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-tab="annual_ranks" data-tooltip="ចំណាត់ថ្នាក់ប្រចាំឆ្នាំ" title="ចំណាត់ថ្នាក់ប្រចាំឆ្នាំ">
-          <span class="nav-icon"><i class="fa-solid fa-award" style="color: #ea580c;"></i></span>
-          <span class="nav-text">ចំណាត់ថ្នាក់ប្រចាំឆ្នាំ</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-tab="study_book" data-tooltip="សៀវភៅតាមដានការសិក្សា" title="សៀវភៅតាមដានការសិក្សា">
-          <span class="nav-icon"><i class="fa-solid fa-book-open" style="color: #0284c7;"></i></span>
-          <span class="nav-text">សៀវភៅតាមដានការសិក្សា</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-tab="trainee" id="navItemTrainee" data-tooltip="សៀវភៅសិក្ខាគារិក" title="សៀវភៅសិក្ខាគារិក">
-          <span class="nav-icon"><i class="fa-solid fa-address-book" style="color: #16a34a;"></i></span>
-          <span class="nav-text">សិក្ខាគារិក</span>
-        </a>
+        <ul class="nav-submenu">
+          <li>
+            <a class="nav-sublink active" id="sublink-scores" data-subtab="scores" onclick="switchAdminSubTab('scores')" title="សម្រង់ពិន្ទុប្រចាំខែ">
+              <span class="sub-dot"></span>
+              <span class="sub-text">សម្រង់ពិន្ទុប្រចាំខែ</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-sublink" id="sublink-monthly_ranks" data-subtab="monthly_ranks" onclick="switchAdminSubTab('monthly_ranks')" title="ចំណាត់ថ្នាក់ប្រចាំខែ">
+              <span class="sub-dot"></span>
+              <span class="sub-text">ចំណាត់ថ្នាក់ប្រចាំខែ</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-sublink" id="sublink-honor_roll" data-subtab="honor_roll" onclick="switchAdminSubTab('honor_roll')" title="តារាងកិត្តិយស">
+              <span class="sub-dot"></span>
+              <span class="sub-text">តារាងកិត្តិយស</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-sublink" id="sublink-semester_ranks" data-subtab="semester_ranks" onclick="switchAdminSubTab('semester_ranks')" title="ចំណាត់ថ្នាក់ប្រចាំឆមាស">
+              <span class="sub-dot"></span>
+              <span class="sub-text">ចំណាត់ថ្នាក់ប្រចាំឆមាស</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-sublink" id="sublink-semester_scores" data-subtab="semester_scores" onclick="switchAdminSubTab('semester_scores')" title="សម្រង់ពិន្ទុឆមាស">
+              <span class="sub-dot"></span>
+              <span class="sub-text">សម្រង់ពិន្ទុឆមាស</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-sublink" id="sublink-semester_extract" data-subtab="semester_extract" onclick="switchAdminSubTab('semester_extract')" title="សម្រង់ពិន្ទុ ប្រចាំឆមាស">
+              <span class="sub-dot"></span>
+              <span class="sub-text">សម្រង់ពិន្ទុ ប្រចាំឆមាស</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-sublink" id="sublink-annual_ranks" data-subtab="annual_ranks" onclick="switchAdminSubTab('annual_ranks')" title="ចំណាត់ថ្នាក់ប្រចាំឆ្នាំ">
+              <span class="sub-dot"></span>
+              <span class="sub-text">ចំណាត់ថ្នាក់ប្រចាំឆ្នាំ</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-sublink" id="sublink-study_book" data-subtab="study_book" onclick="switchAdminSubTab('study_book')" title="សៀវភៅតាមដានការសិក្សា">
+              <span class="sub-dot"></span>
+              <span class="sub-text">សៀវភៅតាមដានការសិក្សា</span>
+            </a>
+          </li>
+          <li>
+            <a class="nav-sublink" id="sublink-trainee" data-subtab="trainee" onclick="switchAdminSubTab('trainee')" title="សិក្ខាគារិក">
+              <span class="sub-dot"></span>
+              <span class="sub-text">សិក្ខាគារិក</span>
+            </a>
+          </li>
+        </ul>
       </li>
       <li class="nav-item">
         <a class="nav-link" data-tab="teachers" data-tooltip="គ្រប់គ្រងគ្រូបង្រៀន" title="គ្រប់គ្រងគ្រូបង្រៀន">
@@ -511,8 +521,46 @@
 
       <!-- ========================================== -->
       <!-- TAB 5: SCORES & RANKINGS (តារាងស្រង់ពិន្ទុប្រចាំខែ) -->
+            <!-- ========================================== -->
+      <!-- TAB: ADMINISTRATIVE TASKS (កិច្ចការរដ្ឋបាល) -->
+      <!-- រួមបញ្ចូល៖ សម្រង់ពិន្ទុប្រចាំខែ, ចំណាត់ថ្នាក់ប្រចាំខែ, តារាងកិត្តិយស, ចំណាត់ថ្នាក់ប្រចាំឆមាស, សម្រង់ពិន្ទុឆមាស, សម្រង់ពិន្ទុប្រចាំឆមាស, ចំណាត់ថ្នាក់ប្រចាំឆ្នាំ, សៀវភៅតាមដានការសិក្សា, សិក្ខាគារិក -->
       <!-- ========================================== -->
-      <section id="tab-scores" class="tab-pane">
+      <section id="tab-admin_tasks" class="tab-pane">
+        <!-- Quick Sub-Tab Switcher Pills (No-Print) -->
+        <div class="admin-hub-bar no-print">
+          <div class="admin-hub-pills">
+            <button type="button" class="admin-pill active" id="pill-scores" data-subtab="scores" onclick="switchAdminSubTab('scores')">
+              <i class="fa fa-award"></i> សម្រង់ពិន្ទុប្រចាំខែ
+            </button>
+            <button type="button" class="admin-pill" id="pill-monthly_ranks" data-subtab="monthly_ranks" onclick="switchAdminSubTab('monthly_ranks')">
+              <i class="fa-solid fa-ranking-star"></i> ចំណាត់ថ្នាក់ប្រចាំខែ
+            </button>
+            <button type="button" class="admin-pill" id="pill-honor_roll" data-subtab="honor_roll" onclick="switchAdminSubTab('honor_roll')">
+              <i class="fa-solid fa-award"></i> តារាងកិត្តិយស
+            </button>
+            <button type="button" class="admin-pill" id="pill-semester_ranks" data-subtab="semester_ranks" onclick="switchAdminSubTab('semester_ranks')">
+              <i class="fa-solid fa-file-invoice"></i> ចំណាត់ថ្នាក់ប្រចាំឆមាស
+            </button>
+            <button type="button" class="admin-pill" id="pill-semester_scores" data-subtab="semester_scores" onclick="switchAdminSubTab('semester_scores')">
+              <i class="fa-solid fa-clipboard-list"></i> សម្រង់ពិន្ទុឆមាស
+            </button>
+            <button type="button" class="admin-pill" id="pill-semester_extract" data-subtab="semester_extract" onclick="switchAdminSubTab('semester_extract')">
+              <i class="fa-solid fa-file-waveform"></i> សម្រង់ពិន្ទុ ប្រចាំឆមាស
+            </button>
+            <button type="button" class="admin-pill" id="pill-annual_ranks" data-subtab="annual_ranks" onclick="switchAdminSubTab('annual_ranks')">
+              <i class="fa-solid fa-award"></i> ចំណាត់ថ្នាក់ប្រចាំឆ្នាំ
+            </button>
+            <button type="button" class="admin-pill" id="pill-study_book" data-subtab="study_book" onclick="switchAdminSubTab('study_book')">
+              <i class="fa-solid fa-book-open"></i> សៀវភៅតាមដានការសិក្សា
+            </button>
+            <button type="button" class="admin-pill" id="pill-trainee" data-subtab="trainee" onclick="switchAdminSubTab('trainee')">
+              <i class="fa-solid fa-address-book"></i> សិក្ខាគារិក
+            </button>
+          </div>
+        </div>
+
+        <!-- សម្រង់ពិន្ទុប្រចាំខែ -->
+        <div class="admin-subpane active" id="tab-scores">
         <div class="filter-toolbar no-print">
           <div class="filter-group">
             <label style="font-weight: 600; font-size: 13px;"><i class="fa fa-layer-group"></i> ជ្រើសរើសថ្នាក់៖</label>
@@ -570,13 +618,11 @@
 
         <!-- A4 Landscape Paper Preview Container -->
         <div class="a4-preview-wrapper" id="scoresContentWrap"></div>
-      </section>
+      
+        </div>
 
-      <!-- ========================================== -->
-      <!-- TAB: MONTHLY RANKINGS (ចំណាត់ថ្នាក់ប្រចាំខែ)   -->
-      <!-- គម្រូផ្លូវការ ១០០% តាមច្បាប់ដើម (A4 Portrait)    -->
-      <!-- ========================================== -->
-      <section id="tab-monthly_ranks" class="tab-pane">
+        <!-- ចំណាត់ថ្នាក់ប្រចាំខែ -->
+        <div class="admin-subpane" id="tab-monthly_ranks" style="display: none;">
         <div class="filter-toolbar no-print">
           <div class="filter-group">
             <label style="font-weight: 600; font-size: 13px;"><i class="fa fa-layer-group"></i> ជ្រើសរើសថ្នាក់៖</label>
@@ -623,13 +669,11 @@
 
         <!-- A4 Portrait Preview Container -->
         <div class="a4-preview-wrapper" id="monthlyRanksContentWrap"></div>
-      </section>
+      
+        </div>
 
-      <!-- ========================================== -->
-      <!-- TAB: HONOR ROLL (តារាងកិត្តិយស)              -->
-      <!-- គម្រូផ្លូវការ ១០០% តាមច្បាប់ដើម (A4 Portrait)    -->
-      <!-- ========================================== -->
-      <section id="tab-honor_roll" class="tab-pane">
+        <!-- តារាងកិត្តិយស -->
+        <div class="admin-subpane" id="tab-honor_roll" style="display: none;">
         <div class="filter-toolbar no-print">
           <div class="filter-group">
             <label style="font-weight: 600; font-size: 13px;"><i class="fa fa-layer-group"></i> ជ្រើសរើសថ្នាក់៖</label>
@@ -664,13 +708,11 @@
 
         <!-- A4 Portrait Preview Container -->
         <div class="a4-preview-wrapper" id="honorRollContentWrap"></div>
-      </section>
+      
+        </div>
 
-      <!-- ========================================== -->
-      <!-- TAB: SEMESTER RANKS (ចំណាត់ថ្នាក់ប្រចាំឆមាស)   -->
-      <!-- គម្រូផ្លូវការ ១០០% តាមច្បាប់ដើម (A4 Portrait)    -->
-      <!-- ========================================== -->
-      <section id="tab-semester_ranks" class="tab-pane">
+        <!-- ចំណាត់ថ្នាក់ប្រចាំឆមាស -->
+        <div class="admin-subpane" id="tab-semester_ranks" style="display: none;">
         <div class="filter-toolbar no-print">
           <div class="filter-group">
             <label style="font-weight: 600; font-size: 13px;"><i class="fa fa-layer-group"></i> ជ្រើសរើសថ្នាក់៖</label>
@@ -700,13 +742,11 @@
 
         <!-- A4 Portrait Preview Container -->
         <div class="a4-preview-wrapper" id="semesterRanksContentWrap"></div>
-      </section>
+      
+        </div>
 
-      <!-- ========================================== -->
-      <!-- TAB: SEMESTER SCORES (សម្រង់ពិន្ទុឆមាស)       -->
-      <!-- គម្រូផ្លូវការ ១០០% តាមច្បាប់ដើម (A4 Portrait)    -->
-      <!-- ========================================== -->
-      <section id="tab-semester_scores" class="tab-pane">
+        <!-- សម្រង់ពិន្ទុឆមាស -->
+        <div class="admin-subpane" id="tab-semester_scores" style="display: none;">
         <div class="filter-toolbar no-print">
           <div class="filter-group">
             <label style="font-weight: 600; font-size: 13px;"><i class="fa fa-layer-group"></i> ជ្រើសរើសថ្នាក់៖</label>
@@ -731,12 +771,42 @@
 
         <!-- A4 Portrait Preview Container -->
         <div class="a4-preview-wrapper" id="semesterScoresContentWrap"></div>
-      </section>
+      
+        </div>
 
-      <!-- ========================================== -->
-      <!-- TAB: ANNUAL RANKS (ចំណាត់ថ្នាក់ប្រចាំឆ្នាំ)     -->
-      <!-- ========================================== -->
-      <section id="tab-annual_ranks" class="tab-pane">
+        <!-- សម្រង់ពិន្ទុ ប្រចាំឆមាស -->
+        <div class="admin-subpane" id="tab-semester_extract" style="display: none;">
+        <div class="filter-toolbar no-print">
+          <div class="filter-group">
+            <label style="font-weight: 600; font-size: 13px;"><i class="fa fa-layer-group"></i> ជ្រើសរើសថ្នាក់៖</label>
+            <select class="filter-select class-select-input" id="semExtractClassSelect" style="min-width: 190px;" onchange="changeSemesterExtractClass(this.value)"></select>
+
+            <label style="font-weight: 600; font-size: 13px; margin-left: 8px;"><i class="fa fa-calendar-alt"></i> ជ្រើសរើសឆមាស៖</label>
+            <select id="semExtractSemesterSelect" class="filter-select" onchange="changeSemesterExtractSem(this.value)" style="min-width: 160px;">
+              <option value="1" selected>ឆមាសទី ១</option>
+              <option value="2">ឆមាសទី ២</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <button type="button" class="btn btn-action-excel" onclick="exportSemesterExtractExcel()" title="ទាញយកជាឯកសារ Excel">
+              <i class="fa-solid fa-file-excel" style="font-size: 14px;"></i> ទាញយកជា Excel
+            </button>
+            <button type="button" class="btn btn-action-navy" onclick="printSemesterExtract()" title="បោះពុម្ពតារាងសម្រង់ពិន្ទុប្រចាំឆមាស (A4 បញ្ឈរ)">
+              <i class="fa-solid fa-print" style="font-size: 14px;"></i> បោះពុម្ព (Print A4)
+            </button>
+          </div>
+        </div>
+
+        <!-- A4 Portrait Preview Container -->
+        <div class="sem-extract-wrapper" id="semExtractContentWrap">
+          <!-- Rendered dynamically by renderSemesterExtract() -->
+        </div>
+      
+        </div>
+
+        <!-- ចំណាត់ថ្នាក់ប្រចាំឆ្នាំ -->
+        <div class="admin-subpane" id="tab-annual_ranks" style="display: none;">
         <div class="filter-toolbar no-print">
           <div class="filter-group">
             <label style="font-weight: 600; font-size: 13px;"><i class="fa fa-layer-group"></i> ជ្រើសរើសថ្នាក់៖</label>
@@ -760,12 +830,11 @@
         <div class="a4-preview-wrapper" id="annualRanksContentWrap">
           <!-- Rendered dynamically by renderAnnualRanks() -->
         </div>
-      </section>
+      
+        </div>
 
-      <!-- ========================================== -->
-      <!-- TAB: STUDY BOOK (សៀវភៅតាមដានការសិក្សា)        -->
-      <!-- ========================================== -->
-      <section id="tab-study_book" class="tab-pane">
+        <!-- សៀវភៅតាមដានការសិក្សា -->
+        <div class="admin-subpane" id="tab-study_book" style="display: none;">
         <div class="filter-toolbar no-print">
           <div class="filter-group">
             <label style="font-weight: 600; font-size: 13px;"><i class="fa fa-layer-group"></i> ជ្រើសរើសថ្នាក់៖</label>
@@ -817,12 +886,11 @@
         <div class="a4-preview-wrapper" id="studyBookContentWrap" style="padding: 16px 8px;">
           <!-- Rendered dynamically by renderStudyBook() -->
         </div>
-      </section>
+      
+        </div>
 
-      <!-- ========================================== -->
-      <!-- TAB: TRAINEE BOOK (សៀវភៅសិក្ខាគារិក)           -->
-      <!-- ========================================== -->
-      <section id="tab-trainee" class="tab-pane">
+        <!-- សិក្ខាគារិក -->
+        <div class="admin-subpane" id="tab-trainee" style="display: none;">
         <div class="filter-toolbar no-print">
           <div class="filter-group">
             <label style="font-weight: 600; font-size: 13px;"><i class="fa fa-layer-group"></i> ជ្រើសរើសថ្នាក់៖</label>
@@ -861,43 +929,11 @@
         <div class="a4-preview-wrapper" id="traineeContentWrap" style="padding: 16px 8px;">
           <!-- Rendered dynamically by renderTraineeBook() -->
         </div>
-      </section>
-
-      <!-- ========================================== -->
-      <!-- TAB: សម្រង់ពិន្ទុ ប្រចាំឆមាស (Semester Score Extract Sheet) -->
-      <!-- ========================================== -->
-      <section id="tab-semester_extract" class="tab-pane">
-        <div class="filter-toolbar no-print">
-          <div class="filter-group">
-            <label style="font-weight: 600; font-size: 13px;"><i class="fa fa-layer-group"></i> ជ្រើសរើសថ្នាក់៖</label>
-            <select class="filter-select class-select-input" id="semExtractClassSelect" style="min-width: 190px;" onchange="changeSemesterExtractClass(this.value)"></select>
-
-            <label style="font-weight: 600; font-size: 13px; margin-left: 8px;"><i class="fa fa-calendar-alt"></i> ជ្រើសរើសឆមាស៖</label>
-            <select id="semExtractSemesterSelect" class="filter-select" onchange="changeSemesterExtractSem(this.value)" style="min-width: 160px;">
-              <option value="1" selected>ឆមាសទី ១</option>
-              <option value="2">ឆមាសទី ២</option>
-            </select>
-          </div>
-
-          <div class="filter-group">
-            <button type="button" class="btn btn-action-excel" onclick="exportSemesterExtractExcel()" title="ទាញយកជាឯកសារ Excel">
-              <i class="fa-solid fa-file-excel" style="font-size: 14px;"></i> ទាញយកជា Excel
-            </button>
-            <button type="button" class="btn btn-action-navy" onclick="printSemesterExtract()" title="បោះពុម្ពតារាងសម្រង់ពិន្ទុប្រចាំឆមាស (A4 បញ្ឈរ)">
-              <i class="fa-solid fa-print" style="font-size: 14px;"></i> បោះពុម្ព (Print A4)
-            </button>
-          </div>
-        </div>
-
-        <!-- A4 Portrait Preview Container -->
-        <div class="sem-extract-wrapper" id="semExtractContentWrap">
-          <!-- Rendered dynamically by renderSemesterExtract() -->
+      
         </div>
       </section>
 
-      <!-- ========================================== -->
-      <!-- TAB 6: TEACHERS MANAGEMENT                -->
-      <!-- ========================================== -->
+<!-- ========================================== -->
       <section id="tab-teachers" class="tab-pane">
         <div class="attendance-grid-card" id="teachersContentWrap"></div>
       </section>

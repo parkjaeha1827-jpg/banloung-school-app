@@ -17,6 +17,7 @@ const state = {
   activeClassId: null,
   activeTab: "dashboard",
   activeStudentSubTab: "students",
+  activeAdminSubTab: "scores",
   searchQuery: "",
   genderFilter: "all",
   activeAttendanceDate: _initDateStr,
@@ -181,6 +182,8 @@ function setupNavigation() {
       const tab = link.getAttribute("data-tab");
       if (tab === "students_management") {
         toggleStudentsHub(e);
+      } else if (tab === "admin_tasks") {
+        toggleAdminTasksHub(e);
       } else if (tab) {
         switchTab(tab);
       }
@@ -192,9 +195,16 @@ function setupNavigation() {
       e.preventDefault();
       const subtab = link.getAttribute("data-subtab");
       if (subtab) {
-        const navItem = document.getElementById("navItemStudentsHub");
-        if (navItem) navItem.classList.add("expanded");
-        switchStudentSubTab(subtab);
+        const studentSubTabs = ["students", "attendance_daily", "attendance_monthly", "attendance_yearly"];
+        if (studentSubTabs.includes(subtab)) {
+          const navItem = document.getElementById("navItemStudentsHub");
+          if (navItem) navItem.classList.add("expanded");
+          switchStudentSubTab(subtab);
+        } else {
+          const navItem = document.getElementById("navItemAdminTasksHub");
+          if (navItem) navItem.classList.add("expanded");
+          switchAdminSubTab(subtab);
+        }
       }
     });
   });
@@ -424,6 +434,29 @@ function toggleStudentsHub(e) {
 }
 
 /**
+ * Toggle កិច្ចការរដ្ឋបាល Submenu
+ */
+function toggleAdminTasksHub(e) {
+  if (e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+  const navItem = document.getElementById("navItemAdminTasksHub");
+  if (!navItem) return;
+
+  const isExpanded = navItem.classList.contains("expanded");
+
+  if (!isExpanded) {
+    navItem.classList.add("expanded");
+    switchTab("admin_tasks");
+  } else {
+    navItem.classList.remove("expanded");
+  }
+}
+window.toggleAdminTasksHub = toggleAdminTasksHub;
+
+/**
  * Switch Sub-Tab inside គ្រប់គ្រងសិស្ស (Student Management)
  * @param {string} subTabId ('students', 'attendance_daily', 'attendance_monthly', 'attendance_yearly')
  * @param {boolean} ensureExpanded
@@ -444,8 +477,11 @@ function switchStudentSubTab(subTabId, ensureExpanded = false) {
   const navItem = document.getElementById("navItemStudentsHub");
   if (navItem && ensureExpanded) navItem.classList.add("expanded");
 
+  const adminNav = document.getElementById("navItemAdminTasksHub");
+  if (adminNav) adminNav.classList.remove("expanded");
+
   // 3. Activate sidebar sublinks
-  document.querySelectorAll(".nav-sublink").forEach(l => {
+  document.querySelectorAll("#navItemStudentsHub .nav-sublink").forEach(l => {
     l.classList.toggle("active", l.getAttribute("data-subtab") === subTabId);
   });
 
@@ -516,8 +552,173 @@ function switchStudentSubTab(subTabId, ensureExpanded = false) {
   }
 }
 
+/**
+ * Switch Sub-Tab inside កិច្ចការរដ្ឋបាល (Administrative Tasks Hub)
+ * @param {string} subTabId
+ * @param {boolean} ensureExpanded
+ */
+function switchAdminSubTab(subTabId, ensureExpanded = false) {
+  state.activeTab = "admin_tasks";
+  state.activeAdminSubTab = subTabId;
+
+  // 1. Activate tab-admin_tasks pane
+  document.querySelectorAll(".tab-pane").forEach(p => {
+    p.classList.toggle("active", p.id === "tab-admin_tasks");
+  });
+
+  // 2. Activate sidebar parent item and expand submenu
+  document.querySelectorAll(".nav-link").forEach(l => {
+    l.classList.toggle("active", l.getAttribute("data-tab") === "admin_tasks");
+  });
+  const navItem = document.getElementById("navItemAdminTasksHub");
+  if (navItem && ensureExpanded) navItem.classList.add("expanded");
+
+  const studentsNav = document.getElementById("navItemStudentsHub");
+  if (studentsNav) studentsNav.classList.remove("expanded");
+
+  // 3. Activate sidebar sublinks
+  document.querySelectorAll("#navItemAdminTasksHub .nav-sublink").forEach(l => {
+    l.classList.toggle("active", l.getAttribute("data-subtab") === subTabId);
+  });
+
+  // 4. Activate top hub pills
+  document.querySelectorAll(".admin-pill").forEach(pill => {
+    pill.classList.toggle("active", pill.getAttribute("data-subtab") === subTabId);
+  });
+
+  // 5. Toggle subpanes display
+  const adminSubpanes = [
+    { id: "tab-scores", subTab: "scores" },
+    { id: "tab-monthly_ranks", subTab: "monthly_ranks" },
+    { id: "tab-honor_roll", subTab: "honor_roll" },
+    { id: "tab-semester_ranks", subTab: "semester_ranks" },
+    { id: "tab-semester_scores", subTab: "semester_scores" },
+    { id: "tab-semester_extract", subTab: "semester_extract" },
+    { id: "tab-annual_ranks", subTab: "annual_ranks" },
+    { id: "tab-study_book", subTab: "study_book" },
+    { id: "tab-trainee", subTab: "trainee" }
+  ];
+
+  adminSubpanes.forEach(item => {
+    const el = document.getElementById(item.id);
+    if (el) {
+      if (item.subTab === subTabId) {
+        el.style.display = "block";
+        el.classList.add("active");
+      } else {
+        el.style.display = "none";
+        el.classList.remove("active");
+      }
+    }
+  });
+
+  // 6. Set body attributes and scoped classes for print and CSS
+  document.body.setAttribute("data-active-tab", subTabId);
+  document.body.classList.remove(
+    "tab-scores-active",
+    "tab-honor_roll-active",
+    "tab-monthly_ranks-active",
+    "tab-semester_ranks-active",
+    "tab-semester_scores-active",
+    "tab-semester_extract-active",
+    "tab-annual_ranks-active",
+    "tab-study_book-active",
+    "tab-trainee-active"
+  );
+  document.body.classList.add(`tab-${subTabId}-active`);
+
+  // 7. Enforce correct print orientation per subtab
+  let styleEl = document.getElementById("printPageOrientationStyle");
+  if (!styleEl) {
+    styleEl = document.createElement("style");
+    styleEl.id = "printPageOrientationStyle";
+    document.head.appendChild(styleEl);
+  }
+  if (
+    subTabId === "study_book" ||
+    subTabId === "trainee" ||
+    subTabId === "scores" ||
+    subTabId === "semester_scores" ||
+    subTabId === "semester_extract"
+  ) {
+    styleEl.innerHTML = `
+      @page {
+        size: A4 landscape !important;
+        margin: 4mm 5mm !important;
+      }
+    `;
+  } else {
+    styleEl.innerHTML = `
+      @page {
+        size: A4 portrait !important;
+        margin: 6mm 8mm !important;
+      }
+    `;
+  }
+
+  // 8. Update Page Title
+  const titleElem = document.getElementById("pageTitle");
+  if (titleElem) {
+    const subTitles = {
+      scores: "សម្រង់ពិន្ទុប្រចាំខែ (Monthly Score Sheet)",
+      monthly_ranks: "ចំណាត់ថ្នាក់ប្រចាំខែ (Monthly Rankings)",
+      honor_roll: "តារាងកិត្តិយស (Honor Roll)",
+      semester_ranks: "ចំណាត់ថ្នាក់ប្រចាំឆមាស (Semester Rankings)",
+      semester_scores: "សម្រង់ពិន្ទុឆមាស (Semester Score Sheet)",
+      semester_extract: "សម្រង់ពិន្ទុ ប្រចាំឆមាស (Semester Score Summary Sheet)",
+      annual_ranks: "ចំណាត់ថ្នាក់ប្រចាំឆ្នាំ (Annual Rankings)",
+      study_book: "សៀវភៅតាមដានការសិក្សា (Study Tracking Book)",
+      trainee: "សៀវភៅសិក្ខាគារិក (Trainee Record Book)"
+    };
+    titleElem.innerText = `កិច្ចការរដ្ឋបាល — ${subTitles[subTabId] || "សម្រង់ពិន្ទុប្រចាំខែ"}`;
+  }
+
+  // 9. Dispatch active subtab render
+  switch (subTabId) {
+    case "scores":
+      renderScores();
+      break;
+    case "monthly_ranks":
+      renderMonthlyRanks();
+      break;
+    case "honor_roll":
+      renderHonorRoll();
+      break;
+    case "semester_ranks":
+      renderSemesterRanks();
+      break;
+    case "semester_scores":
+      renderSemesterScores();
+      break;
+    case "semester_extract":
+      renderSemesterExtract();
+      break;
+    case "annual_ranks":
+      renderAnnualRanks();
+      break;
+    case "study_book":
+      renderStudyBook();
+      break;
+    case "trainee":
+      renderTraineeBook();
+      break;
+  }
+}
+window.switchAdminSubTab = switchAdminSubTab;
+
 function switchTab(tabId) {
   const studentSubTabs = ["students", "attendance_daily", "attendance_monthly", "attendance_yearly"];
+  const adminSubTabs = [
+    "scores",
+    "monthly_ranks",
+    "honor_roll",
+    "semester_ranks",
+    "semester_scores",
+    "semester_extract",
+    "annual_ranks",
+    "study_book",
+    "trainee"
+  ];
 
   if (studentSubTabs.includes(tabId)) {
     switchStudentSubTab(tabId);
@@ -529,11 +730,23 @@ function switchTab(tabId) {
     return;
   }
 
-  // Normal tab switching (dashboard, scores, teachers, exams, reports)
+  if (adminSubTabs.includes(tabId)) {
+    switchAdminSubTab(tabId);
+    return;
+  }
+
+  if (tabId === "admin_tasks") {
+    switchAdminSubTab(state.activeAdminSubTab || "scores", true);
+    return;
+  }
+
+  // Normal tab switching (dashboard, teachers, exams, reports)
   state.activeTab = tabId;
 
   const navItem = document.getElementById("navItemStudentsHub");
   if (navItem) navItem.classList.remove("expanded");
+  const adminNavItem = document.getElementById("navItemAdminTasksHub");
+  if (adminNavItem) adminNavItem.classList.remove("expanded");
 
   document.querySelectorAll(".nav-link").forEach(l => {
     l.classList.toggle("active", l.getAttribute("data-tab") === tabId);
@@ -700,32 +913,19 @@ function renderActiveTab() {
     case "attendance_yearly":
       switchStudentSubTab("attendance_yearly");
       break;
+    case "admin_tasks":
+      switchAdminSubTab(state.activeAdminSubTab || "scores");
+      break;
     case "scores":
-      renderScores();
-      break;
     case "monthly_ranks":
-      renderMonthlyRanks();
-      break;
     case "honor_roll":
-      renderHonorRoll();
-      break;
     case "semester_ranks":
-      renderSemesterRanks();
-      break;
     case "semester_scores":
-      renderSemesterScores();
-      break;
     case "semester_extract":
-      renderSemesterExtract();
-      break;
     case "annual_ranks":
-      renderAnnualRanks();
-      break;
     case "study_book":
-      renderStudyBook();
-      break;
     case "trainee":
-      renderTraineeBook();
+      switchAdminSubTab(state.activeTab);
       break;
     case "teachers":
       renderTeachers();

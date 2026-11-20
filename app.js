@@ -154,22 +154,81 @@ function normalizeSchoolDatabase(db) {
     }
   }
 
-  // Ensure all 2026-2027 classes have complete semester scores and extract data
+  // Ensure all 2026-2027 classes (including Kindergarten) have complete semester scores, 12-subject extract data, and A-F mentions
   db.classes.forEach(c => {
     if (c.academicYear === "២០២៦-២០២៧" && c.students && c.students.length > 0) {
       const srcClasses = initData?.classes || window.INITIAL_SCHOOL_DATA?.classes || [];
       const initCls = srcClasses.find(ic => ic.id === c.id);
-      if ((!c.semesterExtractData || !c.semesterExtractData["1"] || Object.keys(c.semesterExtractData["1"]).length === 0) && initCls && initCls.semesterExtractData) {
+
+      const isExtractIncomplete = (cls) => {
+        if (!cls.semesterExtractData || !cls.semesterExtractData["1"] || !cls.semesterExtractData["2"]) return true;
+        const s1 = cls.semesterExtractData["1"];
+        const keys = Object.keys(s1);
+        if (keys.length === 0) return true;
+        const first = s1[keys[0]];
+        if (!first || !first.scores || Object.keys(first.scores).length < 12) return true;
+        const m = (first.mention || "").trim().toUpperCase();
+        if (!["A", "B", "C", "D", "E", "F"].includes(m)) return true;
+        return false;
+      };
+
+      if (isExtractIncomplete(c) && initCls && initCls.semesterExtractData) {
         c.semesterExtractData = JSON.parse(JSON.stringify(initCls.semesterExtractData));
       }
       if ((!c.semesterScores || !c.semesterScores["1"] || Object.keys(c.semesterScores["1"]).length === 0) && initCls && initCls.semesterScores) {
         c.semesterScores = JSON.parse(JSON.stringify(initCls.semesterScores));
       }
-      if ((!c.semesterExtractAnnual || Object.keys(c.semesterExtractAnnual).length === 0) && initCls && initCls.semesterExtractAnnual) {
+      if ((!c.semesterExtractAnnual || Object.keys(c.semesterExtractAnnual).length === 0 || isExtractIncomplete(c)) && initCls && initCls.semesterExtractAnnual) {
         c.semesterExtractAnnual = JSON.parse(JSON.stringify(initCls.semesterExtractAnnual));
       }
-      if ((!c.semesterExtractDates || Object.keys(c.semesterExtractDates).length === 0) && initCls && initCls.semesterExtractDates) {
+      if ((!c.semesterExtractDates || Object.keys(c.semesterExtractDates).length === 0 || (c.semesterExtractDates["1"]?.solarTeacher?.includes("២០២៣"))) && initCls && initCls.semesterExtractDates) {
         c.semesterExtractDates = JSON.parse(JSON.stringify(initCls.semesterExtractDates));
+      }
+
+      // Convert any remaining Khmer mentions to A, B, C, D, E, F
+      const toGradeLetterLocal = (val, avg) => {
+        if (typeof val === "string" && val.trim()) {
+          const v = val.trim().toUpperCase();
+          if (["A", "B", "C", "D", "E", "F"].includes(v)) return v;
+          if (v.includes("ល្អប្រសើរ")) return "A";
+          if (v.includes("ល្អណាស់")) return "B";
+          if (v.includes("ល្អបង្គួរ") || v === "ល្អ") return "C";
+          if (v.includes("មធ្យម")) return "D";
+          if (v.includes("ខ្សោយណាស់")) return "F";
+          if (v.includes("ខ្សោយ")) return "E";
+        }
+        const a = parseFloat(avg) || 0;
+        if (a >= 8.5) return "A";
+        if (a >= 8.0) return "B";
+        if (a >= 7.0) return "C";
+        if (a >= 6.0) return "D";
+        if (a >= 5.0) return "E";
+        if (a > 0) return "F";
+        return "C";
+      };
+
+      if (c.semesterExtractData) {
+        ["1", "2"].forEach(sem => {
+          if (c.semesterExtractData[sem]) {
+            Object.keys(c.semesterExtractData[sem]).forEach(sNum => {
+              const rec = c.semesterExtractData[sem][sNum];
+              if (rec) {
+                const stu = c.students.find(s => String(s.num) === String(sNum));
+                rec.mention = toGradeLetterLocal(rec.mention, stu?.avgScore);
+              }
+            });
+          }
+        });
+      }
+
+      if (c.semesterExtractAnnual) {
+        Object.keys(c.semesterExtractAnnual).forEach(sNum => {
+          const rec = c.semesterExtractAnnual[sNum];
+          if (rec) {
+            const stu = c.students.find(s => String(s.num) === String(sNum));
+            rec.annualMention = toGradeLetterLocal(rec.annualMention, stu?.avgScore);
+          }
+        });
       }
     }
   });
@@ -10840,6 +10899,28 @@ const SEMESTER_EXTRACT_SUBJECTS = [
   { key: "foreign",         name: "ភាសាបរទេស",             semKey: "lifeskills" }
 ];
 
+function toSemesterGradeLetter(val, avg) {
+  if (typeof val === "string" && val.trim()) {
+    const v = val.trim().toUpperCase();
+    if (["A", "B", "C", "D", "E", "F"].includes(v)) return v;
+    if (v.includes("ល្អប្រសើរ")) return "A";
+    if (v.includes("ល្អណាស់")) return "B";
+    if (v.includes("ល្អបង្គួរ") || v === "ល្អ") return "C";
+    if (v.includes("មធ្យម")) return "D";
+    if (v.includes("ខ្សោយណាស់")) return "F";
+    if (v.includes("ខ្សោយ")) return "E";
+  }
+  const a = parseFloat(avg) || 0;
+  if (a >= 8.5) return "A";
+  if (a >= 8.0) return "B";
+  if (a >= 7.0) return "C";
+  if (a >= 6.0) return "D";
+  if (a >= 5.0) return "E";
+  if (a > 0) return "F";
+  return "C";
+}
+window.toSemesterGradeLetter = toSemesterGradeLetter;
+
 function getStudentSemesterExtractData(currentClass, sem, studentNum) {
   currentClass.semesterExtractData = currentClass.semesterExtractData || {};
   currentClass.semesterExtractData[sem] = currentClass.semesterExtractData[sem] || {};
@@ -10869,7 +10950,11 @@ function saveSemesterExtractMention(studentNum, sem, colKey, value) {
   const currentClass = getActiveClass();
   if (!currentClass) return;
   const data = getStudentSemesterExtractData(currentClass, sem, studentNum);
-  data[colKey] = value.trim();
+  let v = (value || "").trim();
+  if (colKey === "mention") {
+    v = toSemesterGradeLetter(v, 0);
+  }
+  data[colKey] = v;
   saveDb();
 }
 window.saveSemesterExtractMention = saveSemesterExtractMention;
@@ -10889,7 +10974,11 @@ function saveSemesterExtractAnnualMention(studentNum, colKey, value) {
   if (!currentClass) return;
   currentClass.semesterExtractAnnual = currentClass.semesterExtractAnnual || {};
   currentClass.semesterExtractAnnual[studentNum] = currentClass.semesterExtractAnnual[studentNum] || {};
-  currentClass.semesterExtractAnnual[studentNum][colKey] = (value || "").trim();
+  let v = (value || "").trim();
+  if (colKey === "annualMention") {
+    v = toSemesterGradeLetter(v, 0);
+  }
+  currentClass.semesterExtractAnnual[studentNum][colKey] = v;
   if (typeof saveDb === "function") saveDb();
   else if (typeof saveDatabase === "function") saveDatabase();
 }
@@ -11019,16 +11108,9 @@ function renderSemesterExtract() {
     // Semester average
     const semAvg = examAvg > 0 ? Math.round(((monthAvg + examAvg) / 2) * 100) / 100 : monthAvg;
 
-    // Default Semester mention
-    let autoMention = "";
-    if (semAvg >= 8.5) autoMention = "A";
-    else if (semAvg >= 8.0) autoMention = "B";
-    else if (semAvg >= 7.0) autoMention = "C";
-    else if (semAvg >= 6.0) autoMention = "D";
-    else if (semAvg >= 5.0) autoMention = "E";
-    else if (semAvg > 0) autoMention = "F";
-
-    const displayMention = (sExtract.mention !== undefined && sExtract.mention !== "") ? sExtract.mention : autoMention;
+    // Default Semester mention (Always A, B, C, D, E, F)
+    let autoMention = toSemesterGradeLetter("", semAvg);
+    const displayMention = toSemesterGradeLetter(sExtract.mention, semAvg);
 
     // Sem 1 Average for Annual calculation
     let sem1Avg = 0;
@@ -11066,16 +11148,9 @@ function renderSemesterExtract() {
       }
     }
 
-    // Default Annual Mention
-    let autoAnnualMention = "";
-    if (annualAvg >= 8.5) autoAnnualMention = "A";
-    else if (annualAvg >= 8.0) autoAnnualMention = "B";
-    else if (annualAvg >= 7.0) autoAnnualMention = "C";
-    else if (annualAvg >= 6.0) autoAnnualMention = "D";
-    else if (annualAvg >= 5.0) autoAnnualMention = "E";
-    else if (annualAvg > 0) autoAnnualMention = "F";
-
-    const displayAnnualMention = (sAnnual.annualMention !== undefined && sAnnual.annualMention !== "") ? sAnnual.annualMention : autoAnnualMention;
+    // Default Annual Mention (Always A, B, C, D, E, F)
+    let autoAnnualMention = toSemesterGradeLetter("", annualAvg);
+    const displayAnnualMention = toSemesterGradeLetter(sAnnual.annualMention, annualAvg);
 
     let defaultOther = sAnnual.other;
     if (defaultOther === undefined || defaultOther === null || defaultOther === "") {
@@ -11677,8 +11752,9 @@ function exportSemesterExtractExcel() {
     const monthAvg = mCount > 0 ? Math.round((mTotal / mCount) * 100) / 100 : examAvg;
     const semAvg = examAvg > 0 ? Math.round(((monthAvg + examAvg) / 2) * 100) / 100 : monthAvg;
 
+    const excelSemMention = toSemesterGradeLetter(sExtract.mention, semAvg);
     row.push(examAvg, monthAvg, semAvg);
-    row.push("", sExtract.mention || "", sExtract.mention1 || "ល្អ", sExtract.mention2 || "ល្អ", sExtract.mention3 || "ល្អ");
+    row.push("", excelSemMention || "", sExtract.mention1 || "ល្អ", sExtract.mention2 || "ល្អ", sExtract.mention3 || "ល្អ");
 
     if (sem === "2") {
       let sem1Avg = 0;
@@ -11701,7 +11777,8 @@ function exportSemesterExtractExcel() {
       if (sem1Avg <= 0) sem1Avg = semAvg > 0 ? semAvg : 7.5;
 
       const annualAvg = (sem1Avg > 0 && semAvg > 0) ? Math.round(((sem1Avg + semAvg) / 2) * 100) / 100 : semAvg;
-      row.push(annualAvg, "", sAnnual.annualMention || "", sAnnual.annualMention1 || "ល្អ", sAnnual.annualMention2 || "ល្អ", sAnnual.annualMention3 || "ល្អ", sAnnual.other || (annualAvg >= 5 ? "ឡើងថ្នាក់" : ""));
+      const excelAnnMention = toSemesterGradeLetter(sAnnual.annualMention, annualAvg);
+      row.push(annualAvg, "", excelAnnMention || "", sAnnual.annualMention1 || "ល្អ", sAnnual.annualMention2 || "ល្អ", sAnnual.annualMention3 || "ល្អ", sAnnual.other || (annualAvg >= 5 ? "ឡើងថ្នាក់" : ""));
     }
 
     wsData.push(row);

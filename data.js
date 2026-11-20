@@ -39070,7 +39070,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.1,
               "foreign": 8.9
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39090,7 +39090,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.1,
               "foreign": 8.9
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39110,7 +39110,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.2,
               "foreign": 9.0
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39130,7 +39130,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.3,
               "foreign": 9.1
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39150,7 +39150,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.3,
               "foreign": 9.1
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39170,7 +39170,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.4,
               "foreign": 9.2
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39190,7 +39190,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.4,
               "foreign": 9.2
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39210,7 +39210,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.1,
               "foreign": 7.9
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39230,7 +39230,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.2,
               "foreign": 8.0
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39250,7 +39250,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.4,
               "foreign": 8.2
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39270,7 +39270,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.5,
               "foreign": 9.3
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39290,7 +39290,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.5,
               "foreign": 8.3
             },
-            "mention": "ល្អណាស់",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39310,7 +39310,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.7,
               "foreign": 8.5
             },
-            "mention": "ល្អណាស់",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39330,7 +39330,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.1,
               "foreign": 7.9
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39350,7 +39350,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39370,7 +39370,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.2,
               "foreign": 8.0
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39390,7 +39390,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.2,
               "foreign": 7.0
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39410,7 +39410,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.4,
               "foreign": 8.2
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39430,7 +39430,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.5,
               "foreign": 8.3
             },
-            "mention": "ល្អណាស់",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39450,7 +39450,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.3,
               "foreign": 7.1
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39470,7 +39470,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.4,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39490,7 +39490,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.7,
               "foreign": 8.5
             },
-            "mention": "ល្អណាស់",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39510,7 +39510,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39530,7 +39530,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.3
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39550,7 +39550,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.6,
               "foreign": 7.4
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39570,7 +39570,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.2,
               "foreign": 7.0
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39590,7 +39590,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.7,
               "foreign": 7.5
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39610,7 +39610,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.2,
               "foreign": 6.0
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39630,7 +39630,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.4,
               "foreign": 6.2
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39650,7 +39650,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.6,
               "foreign": 6.4
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39670,7 +39670,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39690,7 +39690,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.4,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39710,7 +39710,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.3
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39730,7 +39730,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39750,7 +39750,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39770,7 +39770,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.7,
               "foreign": 7.5
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39790,7 +39790,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39812,7 +39812,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.1,
               "foreign": 8.9
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39832,7 +39832,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.1,
               "foreign": 8.9
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39852,7 +39852,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.2,
               "foreign": 9.0
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39872,7 +39872,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.3,
               "foreign": 9.1
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39892,7 +39892,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.3,
               "foreign": 9.1
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39912,7 +39912,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.4,
               "foreign": 9.2
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39932,7 +39932,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.4,
               "foreign": 9.2
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39952,7 +39952,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.1,
               "foreign": 7.9
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39972,7 +39972,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.2,
               "foreign": 8.0
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -39992,7 +39992,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.4,
               "foreign": 8.2
             },
-            "mention": "ល្អណាស់",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40012,7 +40012,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.5,
               "foreign": 9.3
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40032,7 +40032,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.5,
               "foreign": 8.3
             },
-            "mention": "ល្អណាស់",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40052,7 +40052,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.7,
               "foreign": 8.5
             },
-            "mention": "ល្អណាស់",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40072,7 +40072,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.1,
               "foreign": 7.9
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40092,7 +40092,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40112,7 +40112,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.2,
               "foreign": 8.0
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40132,7 +40132,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.2,
               "foreign": 7.0
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40152,7 +40152,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.4,
               "foreign": 8.2
             },
-            "mention": "ល្អណាស់",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40172,7 +40172,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.5,
               "foreign": 8.3
             },
-            "mention": "ល្អណាស់",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40192,7 +40192,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.3,
               "foreign": 7.1
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40212,7 +40212,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.4,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40232,7 +40232,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.7,
               "foreign": 8.5
             },
-            "mention": "ល្អណាស់",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40252,7 +40252,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40272,7 +40272,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.3
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40292,7 +40292,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.6,
               "foreign": 7.4
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40312,7 +40312,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.2,
               "foreign": 7.0
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40332,7 +40332,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.7,
               "foreign": 7.5
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40352,7 +40352,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.2,
               "foreign": 6.0
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40372,7 +40372,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.4,
               "foreign": 6.2
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40392,7 +40392,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.6,
               "foreign": 6.4
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40412,7 +40412,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40432,7 +40432,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.4,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40452,7 +40452,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.3
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40472,7 +40472,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40492,7 +40492,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40512,7 +40512,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.7,
               "foreign": 7.5
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40532,7 +40532,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -40541,259 +40541,259 @@ const INITIAL_SCHOOL_DATA = {
       },
       "semesterExtractAnnual": {
         "1": {
-          "annualMention": "ល្អប្រសើរ",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "2": {
-          "annualMention": "ល្អប្រសើរ",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "3": {
-          "annualMention": "ល្អប្រសើរ",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "4": {
-          "annualMention": "ល្អប្រសើរ",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "5": {
-          "annualMention": "ល្អប្រសើរ",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "6": {
-          "annualMention": "ល្អប្រសើរ",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "7": {
-          "annualMention": "ល្អប្រសើរ",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "8": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "B",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "9": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "B",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "10": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "11": {
-          "annualMention": "ល្អប្រសើរ",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "12": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "13": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "14": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "B",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "15": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "16": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "B",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "17": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "18": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "19": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "20": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "21": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "22": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "23": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "24": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "25": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "26": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "27": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "28": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "29": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "30": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "31": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "32": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "33": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "34": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "35": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "36": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "37": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
@@ -51474,7 +51474,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.0,
               "foreign": 8.8
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -51494,7 +51494,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.2,
               "foreign": 9.1
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -51514,7 +51514,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.2,
               "foreign": 8.0
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -51534,7 +51534,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.4,
               "foreign": 8.2
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -51554,7 +51554,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -51574,7 +51574,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.2,
               "foreign": 7.0
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -51594,7 +51594,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.0,
               "foreign": 8.8
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -51614,7 +51614,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.3,
               "foreign": 7.1
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -51634,7 +51634,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.2,
               "foreign": 9.0
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -51654,7 +51654,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.4,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -51674,7 +51674,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -51694,7 +51694,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.3,
               "foreign": 9.1
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -51714,7 +51714,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.2,
               "foreign": 8.0
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -51734,7 +51734,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.3
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -51754,7 +51754,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.6,
               "foreign": 7.4
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -51774,7 +51774,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.7,
               "foreign": 7.5
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -51794,7 +51794,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.2,
               "foreign": 6.0
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -51814,7 +51814,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.3,
               "foreign": 6.1
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -51834,7 +51834,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.4,
               "foreign": 6.2
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -51854,7 +51854,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.6,
               "foreign": 6.4
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -51874,7 +51874,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -51894,7 +51894,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.3,
               "foreign": 7.1
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -51914,7 +51914,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.7,
               "foreign": 6.5
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -51934,7 +51934,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -51954,7 +51954,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.4,
               "foreign": 5.2
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -51974,7 +51974,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.6,
               "foreign": 5.4
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -51994,7 +51994,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.6,
               "foreign": 7.4
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52014,7 +52014,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.0,
               "foreign": 3.8
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52034,7 +52034,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.2,
               "foreign": 4.0
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52054,7 +52054,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52074,7 +52074,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.5,
               "foreign": 5.3
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52094,7 +52094,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.0,
               "foreign": 3.8
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52114,7 +52114,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.3,
               "foreign": 4.1
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52134,7 +52134,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.5,
               "foreign": 4.3
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52156,7 +52156,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.0,
               "foreign": 8.8
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52176,7 +52176,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.2,
               "foreign": 9.1
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52196,7 +52196,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.2,
               "foreign": 8.0
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52216,7 +52216,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.4,
               "foreign": 8.2
             },
-            "mention": "ល្អណាស់",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52236,7 +52236,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52256,7 +52256,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.2,
               "foreign": 7.0
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52276,7 +52276,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.0,
               "foreign": 8.8
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52296,7 +52296,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.3,
               "foreign": 7.1
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52316,7 +52316,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.2,
               "foreign": 9.0
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52336,7 +52336,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.4,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52356,7 +52356,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52376,7 +52376,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.3,
               "foreign": 9.1
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52396,7 +52396,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.2,
               "foreign": 8.0
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52416,7 +52416,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.3
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52436,7 +52436,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.6,
               "foreign": 7.4
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52456,7 +52456,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.7,
               "foreign": 7.5
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52476,7 +52476,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.2,
               "foreign": 6.0
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52496,7 +52496,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.3,
               "foreign": 6.1
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52516,7 +52516,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.4,
               "foreign": 6.2
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52536,7 +52536,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.6,
               "foreign": 6.4
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52556,7 +52556,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52576,7 +52576,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.3,
               "foreign": 7.1
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52596,7 +52596,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.7,
               "foreign": 6.5
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52616,7 +52616,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52636,7 +52636,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.4,
               "foreign": 5.2
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52656,7 +52656,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.6,
               "foreign": 5.4
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52676,7 +52676,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.6,
               "foreign": 7.4
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52696,7 +52696,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.0,
               "foreign": 3.8
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52716,7 +52716,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.2,
               "foreign": 4.0
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52736,7 +52736,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52756,7 +52756,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.5,
               "foreign": 5.3
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52776,7 +52776,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.0,
               "foreign": 3.8
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52796,7 +52796,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.3,
               "foreign": 4.1
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52816,7 +52816,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.5,
               "foreign": 4.3
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -52825,238 +52825,238 @@ const INITIAL_SCHOOL_DATA = {
       },
       "semesterExtractAnnual": {
         "1": {
-          "annualMention": "ល្អប្រសើរ",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "2": {
-          "annualMention": "ល្អប្រសើរ",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "3": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "B",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "4": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "5": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "6": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "7": {
-          "annualMention": "ល្អប្រសើរ",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "8": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "9": {
-          "annualMention": "ល្អប្រសើរ",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "10": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "11": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "12": {
-          "annualMention": "ល្អប្រសើរ",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "13": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "B",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "14": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "15": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "16": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "17": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "18": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "19": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "20": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "21": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "22": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "23": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "24": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "25": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "26": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "27": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "28": {
-          "annualMention": "ខ្សោយ",
+          "annualMention": "F",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ត្រួតថ្នាក់"
         },
         "29": {
-          "annualMention": "ខ្សោយ",
+          "annualMention": "F",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ត្រួតថ្នាក់"
         },
         "30": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "31": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "32": {
-          "annualMention": "ខ្សោយ",
+          "annualMention": "F",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ត្រួតថ្នាក់"
         },
         "33": {
-          "annualMention": "ខ្សោយ",
+          "annualMention": "F",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ត្រួតថ្នាក់"
         },
         "34": {
-          "annualMention": "ខ្សោយ",
+          "annualMention": "F",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
@@ -70370,7 +70370,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.1,
               "foreign": 8.9
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70390,7 +70390,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.2,
               "foreign": 8.0
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70410,7 +70410,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.2,
               "foreign": 8.0
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70430,7 +70430,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.4,
               "foreign": 8.2
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70450,7 +70450,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.4,
               "foreign": 8.2
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70470,7 +70470,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.5,
               "foreign": 8.3
             },
-            "mention": "ល្អណាស់",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70490,7 +70490,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70510,7 +70510,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.2,
               "foreign": 7.0
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70530,7 +70530,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70550,7 +70550,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.3,
               "foreign": 7.1
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70570,7 +70570,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.4,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70590,7 +70590,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70610,7 +70610,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.6,
               "foreign": 7.4
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70630,7 +70630,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.2,
               "foreign": 6.0
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70650,7 +70650,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.3,
               "foreign": 6.1
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70670,7 +70670,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.4,
               "foreign": 6.2
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70690,7 +70690,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.3
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70710,7 +70710,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.7,
               "foreign": 7.5
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70730,7 +70730,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.2,
               "foreign": 6.0
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70750,7 +70750,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70770,7 +70770,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.6,
               "foreign": 6.4
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70790,7 +70790,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.7,
               "foreign": 6.5
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70810,7 +70810,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.3,
               "foreign": 5.1
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70830,7 +70830,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70850,7 +70850,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.3,
               "foreign": 5.1
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70870,7 +70870,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.5,
               "foreign": 5.3
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70890,7 +70890,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.7,
               "foreign": 5.5
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70910,7 +70910,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.4,
               "foreign": 5.2
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70930,7 +70930,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.1,
               "foreign": 3.9
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70950,7 +70950,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.3,
               "foreign": 4.1
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70970,7 +70970,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.5,
               "foreign": 5.3
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -70990,7 +70990,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.5,
               "foreign": 4.2
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71010,7 +71010,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.6,
               "foreign": 5.4
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71030,7 +71030,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.7,
               "foreign": 5.5
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71050,7 +71050,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.1,
               "foreign": 3.9
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71070,7 +71070,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.6,
               "foreign": 4.4
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71090,7 +71090,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.3,
               "foreign": 4.1
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71110,7 +71110,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.6,
               "foreign": 4.4
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71132,7 +71132,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.1,
               "foreign": 8.9
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71152,7 +71152,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.2,
               "foreign": 8.0
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71172,7 +71172,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.2,
               "foreign": 8.0
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71192,7 +71192,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.4,
               "foreign": 8.2
             },
-            "mention": "ល្អណាស់",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71212,7 +71212,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.4,
               "foreign": 8.2
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71232,7 +71232,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.5,
               "foreign": 8.3
             },
-            "mention": "ល្អណាស់",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71252,7 +71252,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71272,7 +71272,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.2,
               "foreign": 7.0
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71292,7 +71292,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71312,7 +71312,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.3,
               "foreign": 7.1
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71332,7 +71332,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.4,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71352,7 +71352,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71372,7 +71372,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.6,
               "foreign": 7.4
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71392,7 +71392,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.2,
               "foreign": 6.0
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71412,7 +71412,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.3,
               "foreign": 6.1
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71432,7 +71432,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.4,
               "foreign": 6.2
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71452,7 +71452,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.3
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71472,7 +71472,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.7,
               "foreign": 7.5
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71492,7 +71492,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.2,
               "foreign": 6.0
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71512,7 +71512,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71532,7 +71532,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.6,
               "foreign": 6.4
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71552,7 +71552,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.7,
               "foreign": 6.5
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71572,7 +71572,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.3,
               "foreign": 5.1
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71592,7 +71592,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71612,7 +71612,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.3,
               "foreign": 5.1
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71632,7 +71632,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.5,
               "foreign": 5.3
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71652,7 +71652,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.7,
               "foreign": 5.5
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71672,7 +71672,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.4,
               "foreign": 5.2
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71692,7 +71692,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.1,
               "foreign": 3.9
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71712,7 +71712,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.3,
               "foreign": 4.1
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71732,7 +71732,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.5,
               "foreign": 5.3
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71752,7 +71752,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.5,
               "foreign": 4.2
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71772,7 +71772,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.6,
               "foreign": 5.4
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71792,7 +71792,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.7,
               "foreign": 5.5
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71812,7 +71812,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.1,
               "foreign": 3.9
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71832,7 +71832,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.6,
               "foreign": 4.4
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71852,7 +71852,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.3,
               "foreign": 4.1
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71872,7 +71872,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.6,
               "foreign": 4.4
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -71881,266 +71881,266 @@ const INITIAL_SCHOOL_DATA = {
       },
       "semesterExtractAnnual": {
         "1": {
-          "annualMention": "ល្អប្រសើរ",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "2": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "B",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "3": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "B",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "4": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "5": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "B",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "6": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "7": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "8": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "9": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "10": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "11": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "12": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "13": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "14": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "15": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "16": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "17": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "18": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "19": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "20": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "21": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "22": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "23": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "24": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "25": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "26": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "27": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "28": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "29": {
-          "annualMention": "ខ្សោយ",
+          "annualMention": "F",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ត្រួតថ្នាក់"
         },
         "30": {
-          "annualMention": "ខ្សោយ",
+          "annualMention": "F",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ត្រួតថ្នាក់"
         },
         "31": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "32": {
-          "annualMention": "ខ្សោយ",
+          "annualMention": "F",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ត្រួតថ្នាក់"
         },
         "33": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "34": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "35": {
-          "annualMention": "ខ្សោយ",
+          "annualMention": "F",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ត្រួតថ្នាក់"
         },
         "36": {
-          "annualMention": "ខ្សោយ",
+          "annualMention": "F",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ត្រួតថ្នាក់"
         },
         "37": {
-          "annualMention": "ខ្សោយ",
+          "annualMention": "F",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ត្រួតថ្នាក់"
         },
         "38": {
-          "annualMention": "ខ្សោយ",
+          "annualMention": "F",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
@@ -84198,7 +84198,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.0,
               "foreign": 8.8
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84218,7 +84218,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.1,
               "foreign": 8.9
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84238,7 +84238,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.2,
               "foreign": 8.0
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84258,7 +84258,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.4,
               "foreign": 8.2
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84278,7 +84278,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84298,7 +84298,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.5,
               "foreign": 8.3
             },
-            "mention": "ល្អណាស់",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84318,7 +84318,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84338,7 +84338,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84358,7 +84358,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84378,7 +84378,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.2,
               "foreign": 6.0
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84398,7 +84398,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.3,
               "foreign": 6.1
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84418,7 +84418,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.4,
               "foreign": 6.2
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84438,7 +84438,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.5,
               "foreign": 6.3
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84458,7 +84458,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.2,
               "foreign": 6.0
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84478,7 +84478,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.6,
               "foreign": 6.4
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84498,7 +84498,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.7,
               "foreign": 6.5
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84518,7 +84518,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.1,
               "foreign": 4.9
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84538,7 +84538,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.4,
               "foreign": 6.2
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84558,7 +84558,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.6,
               "foreign": 6.4
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84578,7 +84578,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.1,
               "foreign": 4.9
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84598,7 +84598,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84618,7 +84618,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.3,
               "foreign": 5.1
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84638,7 +84638,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84658,7 +84658,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.3,
               "foreign": 5.1
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84678,7 +84678,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.4,
               "foreign": 5.2
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84698,7 +84698,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.5,
               "foreign": 5.3
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84718,7 +84718,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84738,7 +84738,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.3,
               "foreign": 5.1
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84758,7 +84758,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.4,
               "foreign": 5.2
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84778,7 +84778,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.5,
               "foreign": 5.3
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84798,7 +84798,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.5,
               "foreign": 5.3
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84818,7 +84818,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.6,
               "foreign": 5.4
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84838,7 +84838,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.6,
               "foreign": 5.4
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84858,7 +84858,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.7,
               "foreign": 5.5
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84878,7 +84878,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.7,
               "foreign": 5.5
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84898,7 +84898,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.7,
               "foreign": 5.5
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84918,7 +84918,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.8,
               "foreign": 5.5
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84938,7 +84938,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.8,
               "foreign": 5.6
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84958,7 +84958,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.2,
               "foreign": 4.0
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84978,7 +84978,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.3,
               "foreign": 4.1
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -84998,7 +84998,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.4,
               "foreign": 4.2
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85018,7 +85018,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.8,
               "foreign": 5.6
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85038,7 +85038,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.5,
               "foreign": 4.3
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85058,7 +85058,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.6,
               "foreign": 4.4
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85078,7 +85078,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.7,
               "foreign": 4.5
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85100,7 +85100,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.0,
               "foreign": 8.8
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85120,7 +85120,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.1,
               "foreign": 8.9
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85140,7 +85140,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.2,
               "foreign": 8.0
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85160,7 +85160,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.4,
               "foreign": 8.2
             },
-            "mention": "ល្អណាស់",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85180,7 +85180,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85200,7 +85200,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.5,
               "foreign": 8.3
             },
-            "mention": "ល្អណាស់",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85220,7 +85220,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85240,7 +85240,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85260,7 +85260,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85280,7 +85280,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.2,
               "foreign": 6.0
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85300,7 +85300,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.3,
               "foreign": 6.1
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85320,7 +85320,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.4,
               "foreign": 6.2
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85340,7 +85340,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.5,
               "foreign": 6.3
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85360,7 +85360,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.2,
               "foreign": 6.0
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85380,7 +85380,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.6,
               "foreign": 6.4
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85400,7 +85400,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.7,
               "foreign": 6.5
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85420,7 +85420,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.1,
               "foreign": 4.9
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85440,7 +85440,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.4,
               "foreign": 6.2
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85460,7 +85460,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.6,
               "foreign": 6.4
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85480,7 +85480,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.1,
               "foreign": 4.9
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85500,7 +85500,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85520,7 +85520,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.3,
               "foreign": 5.1
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85540,7 +85540,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85560,7 +85560,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.3,
               "foreign": 5.1
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85580,7 +85580,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.4,
               "foreign": 5.2
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85600,7 +85600,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.5,
               "foreign": 5.3
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85620,7 +85620,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85640,7 +85640,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.3,
               "foreign": 5.1
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85660,7 +85660,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.4,
               "foreign": 5.2
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85680,7 +85680,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.5,
               "foreign": 5.3
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85700,7 +85700,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.5,
               "foreign": 5.3
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85720,7 +85720,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.6,
               "foreign": 5.4
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85740,7 +85740,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.6,
               "foreign": 5.4
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85760,7 +85760,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.7,
               "foreign": 5.5
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85780,7 +85780,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.7,
               "foreign": 5.5
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85800,7 +85800,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.7,
               "foreign": 5.5
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85820,7 +85820,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.8,
               "foreign": 5.5
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85840,7 +85840,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.8,
               "foreign": 5.6
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85860,7 +85860,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.2,
               "foreign": 4.0
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85880,7 +85880,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.3,
               "foreign": 4.1
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85900,7 +85900,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.4,
               "foreign": 4.2
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85920,7 +85920,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.8,
               "foreign": 5.6
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85940,7 +85940,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.5,
               "foreign": 4.3
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85960,7 +85960,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.6,
               "foreign": 4.4
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85980,7 +85980,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.7,
               "foreign": 4.5
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -85989,315 +85989,315 @@ const INITIAL_SCHOOL_DATA = {
       },
       "semesterExtractAnnual": {
         "1": {
-          "annualMention": "ល្អប្រសើរ",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "2": {
-          "annualMention": "ល្អប្រសើរ",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "3": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "B",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "4": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "5": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "6": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "7": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "8": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "9": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "10": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "11": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "12": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "13": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "14": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "15": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "16": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "17": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "18": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "19": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "20": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "21": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "22": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "23": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "24": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "25": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "26": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "27": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "28": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "29": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "30": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "31": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "32": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "33": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "34": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "35": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "36": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "37": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "38": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "39": {
-          "annualMention": "ខ្សោយ",
+          "annualMention": "F",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ត្រួតថ្នាក់"
         },
         "40": {
-          "annualMention": "ខ្សោយ",
+          "annualMention": "F",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ត្រួតថ្នាក់"
         },
         "41": {
-          "annualMention": "ខ្សោយ",
+          "annualMention": "F",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ត្រួតថ្នាក់"
         },
         "42": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "43": {
-          "annualMention": "ខ្សោយ",
+          "annualMention": "F",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ត្រួតថ្នាក់"
         },
         "44": {
-          "annualMention": "ខ្សោយ",
+          "annualMention": "F",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ត្រួតថ្នាក់"
         },
         "45": {
-          "annualMention": "ខ្សោយ",
+          "annualMention": "F",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
@@ -96355,7 +96355,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.2,
               "foreign": 8.0
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96375,7 +96375,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.0,
               "foreign": 8.8
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96395,7 +96395,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.4,
               "foreign": 8.2
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96415,7 +96415,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96435,7 +96435,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.2,
               "foreign": 8.0
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96455,7 +96455,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.3,
               "foreign": 7.1
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96475,7 +96475,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96495,7 +96495,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.4,
               "foreign": 8.2
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96515,7 +96515,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96535,7 +96535,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.3,
               "foreign": 7.1
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96555,7 +96555,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96575,7 +96575,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.6,
               "foreign": 7.4
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96595,7 +96595,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.2,
               "foreign": 6.0
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96615,7 +96615,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.3,
               "foreign": 6.1
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96635,7 +96635,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.5,
               "foreign": 6.3
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96655,7 +96655,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.7,
               "foreign": 6.5
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96675,7 +96675,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.6,
               "foreign": 7.4
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96695,7 +96695,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.1,
               "foreign": 4.9
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96715,7 +96715,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.2,
               "foreign": 6.0
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96735,7 +96735,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96755,7 +96755,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.5,
               "foreign": 6.3
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96775,7 +96775,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.1,
               "foreign": 4.9
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96795,7 +96795,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96815,7 +96815,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.4,
               "foreign": 5.2
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96835,7 +96835,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.5,
               "foreign": 5.3
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96855,7 +96855,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.3,
               "foreign": 5.1
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96875,7 +96875,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.4,
               "foreign": 5.2
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96895,7 +96895,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.6,
               "foreign": 5.4
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96915,7 +96915,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.8,
               "foreign": 5.6
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96935,7 +96935,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.5,
               "foreign": 5.3
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96955,7 +96955,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.5,
               "foreign": 5.3
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96975,7 +96975,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.6,
               "foreign": 5.4
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -96995,7 +96995,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.7,
               "foreign": 5.5
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97015,7 +97015,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.2,
               "foreign": 4.0
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97035,7 +97035,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.8,
               "foreign": 5.6
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97055,7 +97055,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.5,
               "foreign": 4.3
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97075,7 +97075,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.2,
               "foreign": 4.0
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97097,7 +97097,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.2,
               "foreign": 8.0
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97117,7 +97117,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.0,
               "foreign": 8.8
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97137,7 +97137,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.4,
               "foreign": 8.2
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97157,7 +97157,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97177,7 +97177,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.2,
               "foreign": 8.0
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97197,7 +97197,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.3,
               "foreign": 7.1
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97217,7 +97217,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97237,7 +97237,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.4,
               "foreign": 8.2
             },
-            "mention": "ល្អណាស់",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97257,7 +97257,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97277,7 +97277,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.3,
               "foreign": 7.1
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97297,7 +97297,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97317,7 +97317,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.6,
               "foreign": 7.4
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97337,7 +97337,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.2,
               "foreign": 6.0
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97357,7 +97357,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.3,
               "foreign": 6.1
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97377,7 +97377,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.5,
               "foreign": 6.3
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97397,7 +97397,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.7,
               "foreign": 6.5
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97417,7 +97417,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.6,
               "foreign": 7.4
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97437,7 +97437,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.1,
               "foreign": 4.9
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97457,7 +97457,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.2,
               "foreign": 6.0
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97477,7 +97477,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97497,7 +97497,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.5,
               "foreign": 6.3
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97517,7 +97517,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.1,
               "foreign": 4.9
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97537,7 +97537,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97557,7 +97557,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.4,
               "foreign": 5.2
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97577,7 +97577,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.5,
               "foreign": 5.3
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97597,7 +97597,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.3,
               "foreign": 5.1
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97617,7 +97617,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.4,
               "foreign": 5.2
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97637,7 +97637,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.6,
               "foreign": 5.4
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97657,7 +97657,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.8,
               "foreign": 5.6
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97677,7 +97677,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.5,
               "foreign": 5.3
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97697,7 +97697,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.5,
               "foreign": 5.3
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97717,7 +97717,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.6,
               "foreign": 5.4
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97737,7 +97737,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.7,
               "foreign": 5.5
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97757,7 +97757,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.2,
               "foreign": 4.0
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97777,7 +97777,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.8,
               "foreign": 5.6
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97797,7 +97797,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.5,
               "foreign": 4.3
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97817,7 +97817,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.2,
               "foreign": 4.0
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -97826,259 +97826,259 @@ const INITIAL_SCHOOL_DATA = {
       },
       "semesterExtractAnnual": {
         "1": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "B",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "2": {
-          "annualMention": "ល្អប្រសើរ",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "3": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "B",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "4": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "5": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "B",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "6": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "7": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "8": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "9": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "10": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "11": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "12": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "13": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "14": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "15": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "16": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "17": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "18": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "19": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "20": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "21": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "22": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "23": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "24": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "25": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "26": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "27": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "28": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "29": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "30": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "31": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "32": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "33": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "34": {
-          "annualMention": "ខ្សោយ",
+          "annualMention": "F",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ត្រួតថ្នាក់"
         },
         "35": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "36": {
-          "annualMention": "ខ្សោយ",
+          "annualMention": "F",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ត្រួតថ្នាក់"
         },
         "37": {
-          "annualMention": "ខ្សោយ",
+          "annualMention": "F",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
@@ -107636,7 +107636,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.2,
               "foreign": 8.0
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -107656,7 +107656,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.0,
               "foreign": 8.8
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -107676,7 +107676,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.2,
               "foreign": 8.0
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -107696,7 +107696,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.4,
               "foreign": 8.2
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -107716,7 +107716,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -107736,7 +107736,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.4,
               "foreign": 8.2
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -107756,7 +107756,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -107776,7 +107776,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.2,
               "foreign": 6.0
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -107796,7 +107796,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.3,
               "foreign": 6.1
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -107816,7 +107816,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.5,
               "foreign": 6.3
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -107836,7 +107836,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.7,
               "foreign": 6.5
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -107856,7 +107856,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -107876,7 +107876,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.1,
               "foreign": 4.9
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -107896,7 +107896,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.3,
               "foreign": 7.1
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -107916,7 +107916,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -107936,7 +107936,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.3,
               "foreign": 5.1
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -107956,7 +107956,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -107976,7 +107976,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.4,
               "foreign": 5.2
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -107996,7 +107996,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.6,
               "foreign": 5.4
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108016,7 +108016,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.6,
               "foreign": 7.4
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108036,7 +108036,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.7,
               "foreign": 5.5
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108056,7 +108056,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.8,
               "foreign": 5.6
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108076,7 +108076,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.2,
               "foreign": 6.0
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108096,7 +108096,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.3,
               "foreign": 6.1
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108116,7 +108116,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.2,
               "foreign": 4.0
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108136,7 +108136,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108156,7 +108156,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108176,7 +108176,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.5,
               "foreign": 6.3
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108196,7 +108196,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108216,7 +108216,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108236,7 +108236,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.7,
               "foreign": 6.5
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108256,7 +108256,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.1,
               "foreign": 4.9
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108276,7 +108276,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108296,7 +108296,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108316,7 +108316,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.3,
               "foreign": 5.1
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108338,7 +108338,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.2,
               "foreign": 8.0
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108358,7 +108358,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.0,
               "foreign": 8.8
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108378,7 +108378,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.2,
               "foreign": 8.0
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108398,7 +108398,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.4,
               "foreign": 8.2
             },
-            "mention": "ល្អណាស់",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108418,7 +108418,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108438,7 +108438,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.4,
               "foreign": 8.2
             },
-            "mention": "ល្អណាស់",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108458,7 +108458,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108478,7 +108478,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.2,
               "foreign": 6.0
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108498,7 +108498,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.3,
               "foreign": 6.1
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108518,7 +108518,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.5,
               "foreign": 6.3
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108538,7 +108538,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.7,
               "foreign": 6.5
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108558,7 +108558,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108578,7 +108578,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.1,
               "foreign": 4.9
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108598,7 +108598,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.3,
               "foreign": 7.1
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108618,7 +108618,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108638,7 +108638,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.3,
               "foreign": 5.1
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108658,7 +108658,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108678,7 +108678,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.4,
               "foreign": 5.2
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108698,7 +108698,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.6,
               "foreign": 5.4
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108718,7 +108718,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.6,
               "foreign": 7.4
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108738,7 +108738,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.7,
               "foreign": 5.5
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108758,7 +108758,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.8,
               "foreign": 5.6
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108778,7 +108778,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.2,
               "foreign": 6.0
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108798,7 +108798,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.3,
               "foreign": 6.1
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108818,7 +108818,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 4.2,
               "foreign": 4.0
             },
-            "mention": "ខ្សោយ",
+            "mention": "F",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108838,7 +108838,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108858,7 +108858,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108878,7 +108878,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.5,
               "foreign": 6.3
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108898,7 +108898,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108918,7 +108918,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108938,7 +108938,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.7,
               "foreign": 6.5
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108958,7 +108958,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.1,
               "foreign": 4.9
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108978,7 +108978,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -108998,7 +108998,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -109018,7 +109018,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.3,
               "foreign": 5.1
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -109027,245 +109027,245 @@ const INITIAL_SCHOOL_DATA = {
       },
       "semesterExtractAnnual": {
         "1": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "B",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "2": {
-          "annualMention": "ល្អប្រសើរ",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "3": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "B",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "4": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "5": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "6": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "7": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "8": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "9": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "10": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "11": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "12": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "13": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "14": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "15": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "16": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "17": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "18": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "19": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "20": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "21": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "22": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "23": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "24": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "25": {
-          "annualMention": "ខ្សោយ",
+          "annualMention": "F",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ត្រួតថ្នាក់"
         },
         "26": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "27": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "28": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "29": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "30": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "31": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "32": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "33": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "34": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "35": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
@@ -120323,7 +120323,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.0,
               "foreign": 8.8
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120343,7 +120343,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.2,
               "foreign": 8.0
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120363,7 +120363,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.4,
               "foreign": 8.2
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120383,7 +120383,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120403,7 +120403,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.0,
               "foreign": 8.8
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120423,7 +120423,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.2,
               "foreign": 8.0
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120443,7 +120443,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.4,
               "foreign": 8.2
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120463,7 +120463,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.3,
               "foreign": 7.1
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120483,7 +120483,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120503,7 +120503,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.3,
               "foreign": 7.1
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120523,7 +120523,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120543,7 +120543,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120563,7 +120563,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.6,
               "foreign": 7.4
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120583,7 +120583,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.6,
               "foreign": 7.4
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120603,7 +120603,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.2,
               "foreign": 6.0
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120623,7 +120623,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.2,
               "foreign": 6.0
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120643,7 +120643,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.3,
               "foreign": 6.1
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120663,7 +120663,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.3,
               "foreign": 6.1
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120683,7 +120683,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.4,
               "foreign": 6.2
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120703,7 +120703,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.4,
               "foreign": 6.2
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120723,7 +120723,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.6,
               "foreign": 6.4
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120743,7 +120743,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.7,
               "foreign": 6.5
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120763,7 +120763,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.6,
               "foreign": 6.4
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120783,7 +120783,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.7,
               "foreign": 6.5
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120803,7 +120803,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.1,
               "foreign": 4.9
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120823,7 +120823,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.1,
               "foreign": 4.9
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120843,7 +120843,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120863,7 +120863,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120883,7 +120883,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.3,
               "foreign": 5.1
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120903,7 +120903,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.3,
               "foreign": 5.1
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120923,7 +120923,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.4,
               "foreign": 5.2
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120943,7 +120943,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.4,
               "foreign": 5.2
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120963,7 +120963,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.5,
               "foreign": 5.3
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -120983,7 +120983,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.5,
               "foreign": 5.3
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121003,7 +121003,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.6,
               "foreign": 5.4
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121023,7 +121023,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.7,
               "foreign": 5.5
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121043,7 +121043,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.8,
               "foreign": 5.6
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121063,7 +121063,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.6,
               "foreign": 5.4
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121083,7 +121083,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.2,
               "foreign": 7.0
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121103,7 +121103,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.2,
               "foreign": 7.0
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121123,7 +121123,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.2,
               "foreign": 7.0
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121145,7 +121145,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.0,
               "foreign": 8.8
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121165,7 +121165,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.2,
               "foreign": 8.0
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121185,7 +121185,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.4,
               "foreign": 8.2
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121205,7 +121205,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121225,7 +121225,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 9.0,
               "foreign": 8.8
             },
-            "mention": "ល្អប្រសើរ",
+            "mention": "A",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121245,7 +121245,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.2,
               "foreign": 8.0
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121265,7 +121265,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 8.4,
               "foreign": 8.2
             },
-            "mention": "ល្អណាស់",
+            "mention": "B",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121285,7 +121285,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.3,
               "foreign": 7.1
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121305,7 +121305,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.1,
               "foreign": 6.9
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121325,7 +121325,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.3,
               "foreign": 7.1
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121345,7 +121345,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121365,7 +121365,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.5,
               "foreign": 7.2
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121385,7 +121385,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.6,
               "foreign": 7.4
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121405,7 +121405,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.6,
               "foreign": 7.4
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121425,7 +121425,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.2,
               "foreign": 6.0
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121445,7 +121445,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.2,
               "foreign": 6.0
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121465,7 +121465,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.3,
               "foreign": 6.1
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121485,7 +121485,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.3,
               "foreign": 6.1
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121505,7 +121505,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.4,
               "foreign": 6.2
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121525,7 +121525,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.4,
               "foreign": 6.2
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121545,7 +121545,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.6,
               "foreign": 6.4
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121565,7 +121565,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.7,
               "foreign": 6.5
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121585,7 +121585,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.6,
               "foreign": 6.4
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121605,7 +121605,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 6.7,
               "foreign": 6.5
             },
-            "mention": "ល្អបង្គួរ",
+            "mention": "D",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121625,7 +121625,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.1,
               "foreign": 4.9
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121645,7 +121645,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.1,
               "foreign": 4.9
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121665,7 +121665,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121685,7 +121685,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.2,
               "foreign": 5.0
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121705,7 +121705,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.3,
               "foreign": 5.1
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121725,7 +121725,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.3,
               "foreign": 5.1
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121745,7 +121745,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.4,
               "foreign": 5.2
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121765,7 +121765,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.4,
               "foreign": 5.2
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121785,7 +121785,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.5,
               "foreign": 5.3
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121805,7 +121805,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.5,
               "foreign": 5.3
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121825,7 +121825,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.6,
               "foreign": 5.4
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121845,7 +121845,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.7,
               "foreign": 5.5
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121865,7 +121865,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.8,
               "foreign": 5.6
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121885,7 +121885,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 5.6,
               "foreign": 5.4
             },
-            "mention": "មធ្យម",
+            "mention": "E",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121905,7 +121905,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.2,
               "foreign": 7.0
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121925,7 +121925,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.2,
               "foreign": 7.0
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121945,7 +121945,7 @@ const INITIAL_SCHOOL_DATA = {
               "lifeskills": 7.2,
               "foreign": 7.0
             },
-            "mention": "ល្អ",
+            "mention": "C",
             "mention1": "ល្អ",
             "mention2": "ល្អ",
             "mention3": "ល្អ"
@@ -121954,287 +121954,287 @@ const INITIAL_SCHOOL_DATA = {
       },
       "semesterExtractAnnual": {
         "1": {
-          "annualMention": "ល្អប្រសើរ",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "2": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "B",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "3": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "B",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "4": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "5": {
-          "annualMention": "ល្អប្រសើរ",
+          "annualMention": "A",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "6": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "B",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "7": {
-          "annualMention": "ល្អណាស់",
+          "annualMention": "B",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "8": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "9": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "10": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "11": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "12": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "13": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "14": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "15": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "16": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "17": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "18": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "19": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "20": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "21": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "22": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "23": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "24": {
-          "annualMention": "ល្អបង្គួរ",
+          "annualMention": "D",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "25": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "26": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "27": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "28": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "29": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "30": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "31": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "32": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "33": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "34": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "35": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "36": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "37": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "38": {
-          "annualMention": "មធ្យម",
+          "annualMention": "E",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "39": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "40": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",
           "other": "ឡើងថ្នាក់"
         },
         "41": {
-          "annualMention": "ល្អ",
+          "annualMention": "C",
           "annualMention1": "ល្អ",
           "annualMention2": "ល្អ",
           "annualMention3": "ល្អ",

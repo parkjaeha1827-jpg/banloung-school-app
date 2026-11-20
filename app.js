@@ -38,7 +38,7 @@ window._undoHistory = {
 };
 
 // Initialize App
-document.addEventListener("DOMContentLoaded", () => {
+function initBanLoungApp() {
   // 1. Immediately start real-time system clock (so time is always ticking)
   try { initLiveClock(); } catch(e) { console.error("initLiveClock error:", e); }
 
@@ -76,7 +76,14 @@ document.addEventListener("DOMContentLoaded", () => {
   } catch (e) {
     console.error("Error activating initial target tab:", e);
   }
-});
+}
+
+// Immediate + DOMContentLoaded execution guard
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initBanLoungApp);
+} else {
+  initBanLoungApp();
+}
 
 // Universal Database Normalizer (Handles Firebase Objects, missing arrays, academic years)
 function normalizeSchoolDatabase(db) {
@@ -264,6 +271,18 @@ function normalizeSchoolDatabase(db) {
   }
   if (db.teachers.length === 0 && window.INITIAL_SCHOOL_DATA && window.INITIAL_SCHOOL_DATA.teachers) {
     db.teachers = JSON.parse(JSON.stringify(window.INITIAL_SCHOOL_DATA.teachers));
+  }
+
+  // 3.1. Ensure staffList (ព័ត៌មានបុគ្គលិក ៩ នាក់ផ្លូវការ)
+  if (db.staffList) {
+    if (!Array.isArray(db.staffList)) {
+      db.staffList = Object.values(db.staffList);
+    }
+  } else {
+    db.staffList = [];
+  }
+  if (db.staffList.length === 0 && window.INITIAL_SCHOOL_DATA && window.INITIAL_SCHOOL_DATA.staffList) {
+    db.staffList = JSON.parse(JSON.stringify(window.INITIAL_SCHOOL_DATA.staffList));
   }
 
   // 4. Ensure examRooms
@@ -1034,7 +1053,7 @@ function switchTab(tabId) {
         }
       `;
     }
-  } else if (tabId === "study_book" || tabId === "trainee" || tabId === "scores" || tabId === "semester_scores" || tabId === "semester_extract") {
+  } else if (tabId === "staff_info" || tabId === "study_book" || tabId === "trainee" || tabId === "scores" || tabId === "semester_scores" || tabId === "semester_extract") {
     styleEl.innerHTML = `
       @page {
         size: A4 landscape !important;
@@ -1065,7 +1084,9 @@ function switchTab(tabId) {
     teachers: "គ្រប់គ្រងគ្រូបង្រៀន (Teacher Management)",
     exams: "បន្ទប់ប្រឡងតេស្ដស្តង់ដា (Exam Rooms)",
     reports: "របាយការណ៍ & ស្ថិតិ (Reports & Statistics)",
-    library: "បណ្ណាល័យថ្នាក់រៀនឌីជីថល (Classroom Digital Library)"
+    library: "បណ្ណាល័យថ្នាក់រៀនឌីជីថល (Classroom Digital Library)",
+    school_monthly_report: "របាយការណ៍ប្រចាំខែរបស់សាលា (School Monthly Report)",
+    staff_info: "ព័ត៌មានបុគ្គលិក (Staff Information)"
   };
   const titleElem = document.getElementById("pageTitle");
   if (titleElem && titles[tabId]) {
@@ -1198,6 +1219,9 @@ function renderActiveTab() {
       break;
     case "school_monthly_report":
       if (typeof renderSchoolMonthlyReports === "function") renderSchoolMonthlyReports();
+      break;
+    case "staff_info":
+      if (typeof renderStaffInfo === "function") renderStaffInfo();
       break;
     case "teachers":
       renderTeachers();
@@ -12380,3 +12404,338 @@ function resetMonthlyReportDefaults() {
     renderMonthlyReport();
   }
 }
+
+
+/* ==========================================================================
+   STAFF INFORMATION MANAGEMENT (ព័ត៌មានបុគ្គលិក - 100% IDENTICAL TO EXCEL TEMPLATE)
+   ========================================================================== */
+
+function getStaffList() {
+  if (state.db && Array.isArray(state.db.staffList) && state.db.staffList.length > 0) {
+    return state.db.staffList;
+  }
+  if (typeof INITIAL_SCHOOL_DATA !== "undefined" && INITIAL_SCHOOL_DATA && Array.isArray(INITIAL_SCHOOL_DATA.staffList)) {
+    return INITIAL_SCHOOL_DATA.staffList;
+  }
+  return [];
+}
+
+let staffInfoFilterQuery = "";
+
+function filterStaffInfoTable() {
+  const input = document.getElementById("staffInfoSearch");
+  staffInfoFilterQuery = input ? input.value.trim().toLowerCase() : "";
+  renderStaffInfoTableBody();
+}
+
+function renderStaffInfo() {
+  const container = document.getElementById("staffInfoContentWrap");
+  if (!container) return;
+
+  const staffList = getStaffList();
+
+  container.innerHTML = `
+    <div class="content-header no-print" style="margin-bottom: 16px;">
+      <div class="header-title">
+        <h2 class="title-with-badge" style="display: flex; align-items: center; gap: 10px; margin: 0 0 6px 0;">
+          <span>ព័ត៌មានបុគ្គលិក (Staff Information)</span>
+          <span class="badge" style="background: #2563eb; color: #fff; font-size: 12px; padding: 3px 10px; border-radius: 9999px;">ផ្លូវការ (${staffList.length} នាក់)</span>
+        </h2>
+        <p style="margin: 0; color: #64748b; font-size: 13px;">តារាងព័ត៌មានលម្អិតរបស់លោកគ្រូ អ្នកគ្រូ និងបុគ្គលិកអប់រំទាំងអស់នៃសាលាបឋមសិក្សា បាន្លួង</p>
+      </div>
+      <div class="header-actions" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+        <div class="search-box" style="position: relative; min-width: 260px;">
+          <i class="fa fa-search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94a3b8;"></i>
+          <input type="text" id="staffInfoSearch" value="${staffInfoFilterQuery}" placeholder="ស្វែងរកតាមឈ្មោះ, មុខងារ, ទូរស័ព្ទ..." oninput="filterStaffInfoTable()" style="width: 100%; padding: 8px 12px 8px 34px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 13px;">
+        </div>
+        <button class="btn btn-success" onclick="exportStaffInfoToExcel()" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: #16a34a; color: #fff; border: none; border-radius: 8px; font-weight: 500; cursor: pointer;">
+          <i class="fa-solid fa-file-excel"></i> ទាញយក Excel (.xlsx)
+        </button>
+        <button class="btn btn-primary" onclick="printStaffInfo()" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: #2563eb; color: #fff; border: none; border-radius: 8px; font-weight: 500; cursor: pointer;">
+          <i class="fa-solid fa-print"></i> បោះពុម្ព (Print A4 ផ្ដេក)
+        </button>
+      </div>
+    </div>
+
+    <div class="staff-info-container card">
+      <div class="staff-info-table-wrap" id="staffInfoTableWrap">
+        <table class="staff-info-excel-table" id="staffInfoTable">
+          <thead>
+            <tr class="staff-title-row">
+              <th colspan="29" class="staff-title-cell">តារាងព័ត៌មានគ្រូបង្រៀន</th>
+            </tr>
+            <tr class="staff-header-row-1">
+              <th rowspan="2" style="width: 45px;">ល.រ</th>
+              <th colspan="2" style="min-width: 150px;">គោត្តនាម និង នាម</th>
+              <th rowspan="2" style="width: 55px;">ភេទ</th>
+              <th colspan="3" style="min-width: 160px;">ថ្ងៃ  ខែ  ឆ្នាំ កំណើត</th>
+              <th colspan="2" style="min-width: 180px;">ទីកន្លែងកំណើត</th>
+              <th rowspan="2" style="width: 50px;">អាយុ</th>
+              <th rowspan="2" style="min-width: 120px;">លេខទូរស័ព្ទ</th>
+              <th rowspan="2" style="min-width: 110px;">កម្រិតវប្បធម៌</th>
+              <th colspan="3" style="min-width: 160px;">ថ្ងៃខែចូលបម្រើការងារ</th>
+              <th rowspan="2" style="min-width: 130px;">មុខងារ</th>
+              <th rowspan="2" style="width: 65px;">កាំប្រាក់</th>
+              <th rowspan="2" style="min-width: 120px;">ប្រភេទក្របខណ្ឌ</th>
+              <th rowspan="2" style="min-width: 110px;">អត្ដលេខមន្ដ្រី</th>
+              <th rowspan="2" style="min-width: 160px;">លេខគណនីធនាគារ</th>
+              <th colspan="2" style="min-width: 140px;">ឈ្មោះប្ដី/ប្រពន្ធ</th>
+              <th rowspan="2" style="width: 65px;">ចំនួនកូន</th>
+              <th colspan="2" style="min-width: 190px;">អាស័យដ្ឋានបច្ចុប្បន្ន</th>
+              <th rowspan="2" style="min-width: 120px;">អត្ដសញ្ញាណបណ្ណ</th>
+              <th colspan="3" style="min-width: 170px;">តែងតាំងស៊ុប</th>
+            </tr>
+            <tr class="staff-header-row-2">
+              <th style="min-width: 75px;">គោត្តនាម</th>
+              <th style="min-width: 75px;">នាម</th>
+              <th style="width: 45px;">ថ្ងៃ</th>
+              <th style="width: 65px;">ខែ</th>
+              <th style="width: 50px;">ឆ្នាំ</th>
+              <th style="min-width: 90px;">ភូមិ</th>
+              <th style="min-width: 90px;">ឃុំ</th>
+              <th style="width: 45px;">ថ្ងៃ</th>
+              <th style="width: 65px;">ខែ</th>
+              <th style="width: 50px;">ឆ្នាំ</th>
+              <th style="min-width: 70px;">គោត្តនាម</th>
+              <th style="min-width: 70px;">នាម</th>
+              <th style="min-width: 95px;">ភូមិ</th>
+              <th style="min-width: 95px;">ឃុំ</th>
+              <th style="width: 45px;">ថ្ងៃ</th>
+              <th style="width: 65px;">ខែ</th>
+              <th style="width: 50px;">ឆ្នាំ</th>
+            </tr>
+          </thead>
+          <tbody id="staffInfoTableBody">
+            <!-- Dynamic rows generated by renderStaffInfoTableBody() -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+
+  renderStaffInfoTableBody();
+}
+
+function renderStaffInfoTableBody() {
+  const tbody = document.getElementById("staffInfoTableBody");
+  if (!tbody) return;
+
+  const staffList = getStaffList();
+  const q = staffInfoFilterQuery;
+
+  const filtered = staffList.filter(s => {
+    if (!q) return true;
+    const searchStr = `${s.num} ${s.lastName} ${s.firstName} ${s.fullName} ${s.gender} ${s.pobVillage} ${s.pobCommune} ${s.phone} ${s.education} ${s.role} ${s.salaryScale} ${s.frameworkType} ${s.officialId} ${s.bankAccount} ${s.spouseFullName} ${s.currVillage} ${s.currCommune} ${s.nationalId}`.toLowerCase();
+    return searchStr.includes(q);
+  });
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="29" style="padding: 24px; text-align: center; color: #64748b; font-size: 14px;">
+          មិនមានទិន្នន័យបុគ្គលិកដែលត្រូវនឹងពាក្យស្វែងរក "${q}" ឡើយ
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  tbody.innerHTML = filtered.map((s, idx) => {
+    const rowClass = idx % 2 === 0 ? "staff-row-even" : "staff-row-odd";
+    return `
+      <tr class="${rowClass}">
+        <td class="staff-cell-center font-bold">${toKhmerNum(s.num || idx + 1)}</td>
+        <td class="staff-cell-name staff-cell-left">${s.lastName || ""}</td>
+        <td class="staff-cell-name staff-cell-left">${s.firstName || ""}</td>
+        <td class="staff-cell-center">${s.gender || ""}</td>
+        <td class="staff-cell-center">${s.dobDay || ""}</td>
+        <td class="staff-cell-center">${s.dobMonth || ""}</td>
+        <td class="staff-cell-center">${s.dobYear || ""}</td>
+        <td class="staff-cell-left">${s.pobVillage || ""}</td>
+        <td class="staff-cell-left">${s.pobCommune || ""}</td>
+        <td class="staff-cell-center">${s.age || ""}</td>
+        <td class="staff-cell-phone staff-cell-center">${s.phone || ""}</td>
+        <td class="staff-cell-center">${s.education || ""}</td>
+        <td class="staff-cell-center">${s.entryDay || ""}</td>
+        <td class="staff-cell-center">${s.entryMonth || ""}</td>
+        <td class="staff-cell-center">${s.entryYear || ""}</td>
+        <td class="staff-cell-role staff-cell-left">${s.role || ""}</td>
+        <td class="staff-cell-center">${s.salaryScale || ""}</td>
+        <td class="staff-cell-center">${s.frameworkType || ""}</td>
+        <td class="staff-cell-center font-mono">${s.officialId || ""}</td>
+        <td class="staff-cell-center font-mono">${s.bankAccount || ""}</td>
+        <td class="staff-cell-left">${s.spouseLastName || ""}</td>
+        <td class="staff-cell-left">${s.spouseFirstName || ""}</td>
+        <td class="staff-cell-center">${s.childrenCount || ""}</td>
+        <td class="staff-cell-left">${s.currVillage || ""}</td>
+        <td class="staff-cell-left">${s.currCommune || ""}</td>
+        <td class="staff-cell-center font-mono">${s.nationalId || ""}</td>
+        <td class="staff-cell-center">${s.appointDay || ""}</td>
+        <td class="staff-cell-center">${s.appointMonth || ""}</td>
+        <td class="staff-cell-center">${s.appointYear || ""}</td>
+      </tr>
+    `;
+  }).join("");
+}
+
+function printStaffInfo() {
+  if (state.activeTab !== "staff_info") {
+    switchTab("staff_info");
+  }
+
+  let styleEl = document.getElementById("printPageOrientationStyle");
+  if (!styleEl) {
+    styleEl = document.createElement("style");
+    styleEl.id = "printPageOrientationStyle";
+    document.head.appendChild(styleEl);
+  }
+  styleEl.innerHTML = `
+    @page {
+      size: A4 landscape !important;
+      margin: 4mm 5mm !important;
+    }
+  `;
+
+  setTimeout(() => {
+    window.print();
+  }, 100);
+}
+
+function exportStaffInfoToExcel() {
+  const staffList = getStaffList();
+  if (!staffList || staffList.length === 0) {
+    alert("មិនមានទិន្នន័យបុគ្គលិកសម្រាប់ទាញយកឡើយ!");
+    return;
+  }
+
+  if (typeof XLSX === "undefined") {
+    alert("កម្មវិធីទាញយក Excel កំពុងរៀបចំ សូមព្យាយាមម្តងទៀត!");
+    return;
+  }
+
+  // Build 2D array matching the template exactly
+  const data = [];
+
+  // Row 1: Title
+  const r1 = new Array(29).fill("");
+  r1[0] = "តារាងព័ត៌មានគ្រូបង្រៀន";
+  data.push(r1);
+
+  // Row 2: Header 1
+  const r2 = new Array(29).fill("");
+  r2[0] = "ល.រ";
+  r2[1] = "គោត្តនាម និង នាម";
+  r2[3] = "ភេទ";
+  r2[4] = "ថ្ងៃ  ខែ  ឆ្នាំ កំណើត";
+  r2[7] = "ទីកន្លែងកំណើត";
+  r2[9] = "អាយុ";
+  r2[10] = "លេខទូរស័ព្ទ";
+  r2[11] = "កម្រិតវប្បធម៌";
+  r2[12] = "ថ្ងៃខែចូលបម្រើការងារ";
+  r2[15] = "មុខងារ";
+  r2[16] = "កាំប្រាក់";
+  r2[17] = "ប្រភេទក្របខណ្ឌ";
+  r2[18] = "អត្ដលេខមន្ដ្រី";
+  r2[19] = "លេខគណនីធនាគារ";
+  r2[20] = "ឈ្មោះប្ដី/ប្រពន្ធ";
+  r2[22] = "ចំនួនកូន";
+  r2[23] = "អាស័យដ្ឋានបច្ចុប្បន្ន";
+  r2[25] = "អត្ដសញ្ញាណបណ្ណ";
+  r2[26] = "តែងតាំងស៊ុប";
+  data.push(r2);
+
+  // Data rows (3 to 11)
+  staffList.forEach(s => {
+    data.push([
+      s.num || "",
+      s.lastName || "",
+      s.firstName || "",
+      s.gender || "",
+      s.dobDay || "",
+      s.dobMonth || "",
+      s.dobYear || "",
+      s.pobVillage || "",
+      s.pobCommune || "",
+      s.age || "",
+      s.phone || "",
+      s.education || "",
+      s.entryDay || "",
+      s.entryMonth || "",
+      s.entryYear || "",
+      s.role || "",
+      s.salaryScale || "",
+      s.frameworkType || "",
+      s.officialId || "",
+      s.bankAccount || "",
+      s.spouseLastName || "",
+      s.spouseFirstName || "",
+      s.childrenCount || "",
+      s.currVillage || "",
+      s.currCommune || "",
+      s.nationalId || "",
+      s.appointDay || "",
+      s.appointMonth || "",
+      s.appointYear || ""
+    ]);
+  });
+
+  const ws = XLSX.utils.aoa_to_sheet(data);
+
+  // Exact Merges matching media_1795175845321_3b1c8018.xlsx:
+  // ['A1:AC1', 'U2:V2', 'B2:C2', 'M2:O2', 'E2:G2', 'AA2:AC2', 'X2:Y2', 'H2:I2']
+  ws["!merges"] = [
+    { s: { r: 0, c: 0 }, e: { r: 0, c: 28 } }, // A1:AC1 (Title)
+    { s: { r: 1, c: 1 }, e: { r: 1, c: 2 } },  // B2:C2 (គោត្តនាម និង នាម)
+    { s: { r: 1, c: 4 }, e: { r: 1, c: 6 } },  // E2:G2 (ថ្ងៃ ខែ ឆ្នាំ កំណើត)
+    { s: { r: 1, c: 7 }, e: { r: 1, c: 8 } },  // H2:I2 (ទីកន្លែងកំណើត)
+    { s: { r: 1, c: 12 }, e: { r: 1, c: 14 } }, // M2:O2 (ថ្ងៃខែចូលបម្រើការងារ)
+    { s: { r: 1, c: 20 }, e: { r: 1, c: 21 } }, // U2:V2 (ឈ្មោះប្ដី/ប្រពន្ធ)
+    { s: { r: 1, c: 23 }, e: { r: 1, c: 24 } }, // X2:Y2 (អាស័យដ្ឋានបច្ចុប្បន្ន)
+    { s: { r: 1, c: 26 }, e: { r: 1, c: 28 } }  // AA2:AC2 (តែងតាំងស៊ុប)
+  ];
+
+  // Exact column widths from original xlsx
+  ws["!cols"] = [
+    { wch: 6 },   // A
+    { wch: 12 },  // B
+    { wch: 13 },  // C
+    { wch: 8 },   // D
+    { wch: 7 },   // E
+    { wch: 10 },  // F
+    { wch: 8 },   // G
+    { wch: 15 },  // H
+    { wch: 13 },  // I
+    { wch: 7 },   // J
+    { wch: 16 },  // K
+    { wch: 16 },  // L
+    { wch: 7 },   // M
+    { wch: 10 },  // N
+    { wch: 8 },   // O
+    { wch: 19 },  // P
+    { wch: 10 },  // Q
+    { wch: 17 },  // R
+    { wch: 15 },  // S
+    { wch: 23 },  // T
+    { wch: 11 },  // U
+    { wch: 9.2 }, // V
+    { wch: 10 },  // W
+    { wch: 15 },  // X
+    { wch: 14 },  // Y
+    { wch: 17 },  // Z
+    { wch: 8 },   // AA
+    { wch: 10 },  // AB
+    { wch: 8 }    // AC
+  ];
+
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "ព័ត៌មានរបស់គ្រូ");
+
+  XLSX.writeFile(wb, "ព័ត៌មានរបស់គ្រូ_សាលាបឋមសិក្សាបាន្លួង.xlsx");
+}
+
+window.getStaffList = getStaffList;
+window.renderStaffInfo = renderStaffInfo;
+window.filterStaffInfoTable = filterStaffInfoTable;
+window.printStaffInfo = printStaffInfo;
+window.exportStaffInfoToExcel = exportStaffInfoToExcel;
+window.switchTab = switchTab;

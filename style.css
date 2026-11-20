@@ -9461,3 +9461,195 @@ body {
     print-color-adjust: exact !important;
   }
 }
+
+
+/* ==========================================================================
+   STAFF INFORMATION (ព័ត៌មានបុគ្គលិក - 100% IDENTICAL TO EXCEL TEMPLATE)
+   ========================================================================== */
+.staff-info-container {
+  padding: 16px;
+  background: var(--bg-card, #ffffff);
+  border-radius: var(--radius-md, 12px);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 24px;
+}
+
+.staff-info-table-wrap {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid #b7c9d6;
+  background: #ffffff;
+  padding: 12px;
+}
+
+.staff-info-excel-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Khmer OS Battambang', 'Battambang', sans-serif;
+  font-size: 11px;
+  color: #202020;
+  text-align: center;
+  background-color: #ffffff;
+}
+
+.staff-info-excel-table th,
+.staff-info-excel-table td {
+  border: 1px solid #b7c9d6;
+  padding: 6px 4px;
+  vertical-align: middle;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+/* Title Row */
+.staff-title-row {
+  height: 48px;
+}
+
+.staff-title-cell {
+  background-color: #17365d !important;
+  color: #ffffff !important;
+  font-family: 'Khmer OS Muol Light', 'Moul', 'Khmer OS Battambang', sans-serif !important;
+  font-size: 16px !important;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid #17365d !important;
+  padding: 10px 8px !important;
+}
+
+/* Header Rows */
+.staff-header-row-1 th,
+.staff-header-row-2 th {
+  background-color: #2f5597 !important;
+  color: #ffffff !important;
+  font-family: 'Khmer OS Battambang', 'Battambang', sans-serif;
+  font-weight: 700;
+  font-size: 11.5px;
+  border: 1px solid #4172b8 !important;
+  text-align: center;
+  vertical-align: middle;
+  padding: 8px 4px;
+}
+
+.staff-header-row-2 th {
+  background-color: #3864ad !important;
+  font-size: 10.5px;
+  font-weight: 600;
+}
+
+/* Data Rows */
+.staff-row-even td {
+  background-color: #f3f7fb;
+}
+
+.staff-row-odd td {
+  background-color: #ffffff;
+}
+
+.staff-info-excel-table tbody tr:hover td {
+  background-color: #e6f0fa !important;
+}
+
+/* Alignments */
+.staff-cell-center {
+  text-align: center;
+}
+
+.staff-cell-left {
+  text-align: left;
+  padding-left: 8px !important;
+}
+
+.staff-cell-name {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.staff-cell-role {
+  font-weight: 500;
+  color: #1e3a8a;
+}
+
+.staff-cell-phone {
+  font-family: 'Kantumruy Pro', sans-serif;
+  font-size: 11px;
+}
+
+/* Print Styling for Staff Info */
+@media print {
+  body[data-active-tab="staff_info"] {
+    background: #ffffff !important;
+  }
+
+  body[data-active-tab="staff_info"] .sidebar,
+  body[data-active-tab="staff_info"] .top-bar,
+  body[data-active-tab="staff_info"] .content-header,
+  body[data-active-tab="staff_info"] .no-print {
+    display: none !important;
+  }
+
+  body[data-active-tab="staff_info"] .main-content {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  body[data-active-tab="staff_info"] .tab-pane {
+    display: none !important;
+  }
+
+  body[data-active-tab="staff_info"] #tab-staff_info {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  body[data-active-tab="staff_info"] .staff-info-container {
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  body[data-active-tab="staff_info"] .staff-info-table-wrap {
+    border: none !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  body[data-active-tab="staff_info"] .staff-info-excel-table {
+    width: 100% !important;
+    font-size: 8.5pt !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  body[data-active-tab="staff_info"] .staff-title-cell {
+    background-color: #17365d !important;
+    color: #ffffff !important;
+    font-size: 12pt !important;
+  }
+
+  body[data-active-tab="staff_info"] .staff-header-row-1 th,
+  body[data-active-tab="staff_info"] .staff-header-row-2 th {
+    background-color: #2f5597 !important;
+    color: #ffffff !important;
+    font-size: 8.5pt !important;
+  }
+
+  body[data-active-tab="staff_info"] .staff-row-even td {
+    background-color: #f3f7fb !important;
+  }
+
+  body[data-active-tab="staff_info"] .staff-row-odd td {
+    background-color: #ffffff !important;
+  }
+
+  body[data-active-tab="staff_info"] .staff-info-excel-table td,
+  body[data-active-tab="staff_info"] .staff-info-excel-table th {
+    border: 1px solid #7f9db9 !important;
+    padding: 3px 2px !important;
+  }
+}

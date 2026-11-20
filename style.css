@@ -2005,10 +2005,10 @@ body {
 }
 
 .sem-extract-table th.th-vert {
-  height: 90px;
-  max-height: 90px;
+  height: 105px;
+  max-height: 105px;
   vertical-align: bottom;
-  padding-bottom: 2px;
+  padding-bottom: 3px;
   padding-top: 2px;
 }
 
@@ -2017,10 +2017,12 @@ body {
   transform: rotate(180deg);
   white-space: nowrap;
   display: inline-block;
-  font-family: var(--font-moul);
-  font-size: 7.5pt;
-  line-height: 1.0;
+  font-family: 'Khmer OS Content', 'Khmer OS Battambang', var(--font-battambang);
+  font-weight: 700;
+  font-size: 8.5pt;
+  line-height: 1.1;
   text-align: left;
+  color: #002060;
 }
 
 .sem-extract-table td {
@@ -2125,16 +2127,16 @@ body {
 
 /* Semester 2 Table Specifics */
 .sem-extract-table.sem2-table th.th-vert {
-  height: 90px;
-  max-height: 90px;
+  height: 105px;
+  max-height: 105px;
   vertical-align: bottom;
-  padding-bottom: 2px;
+  padding-bottom: 3px;
   padding-top: 2px;
 }
 
 .sem-extract-table.sem2-table th.th-vert .v-text {
-  font-size: 7.5pt;
-  line-height: 1.0;
+  font-size: 8pt;
+  line-height: 1.1;
 }
 
 .sem-extract-table.sem2-table td {

@@ -143,8 +143,9 @@ function normalizeSchoolDatabase(db) {
 
   // Ensure CLS_G1 has 34 students if empty
   const g1Class = db.classes.find(c => c.id === 'CLS_G1' && c.academicYear === "២០២៦-២០២៧");
-  if (g1Class && (!g1Class.students || g1Class.students.length === 0) && window.INITIAL_SCHOOL_DATA) {
-    const initG1 = window.INITIAL_SCHOOL_DATA.classes.find(c => c.id === 'CLS_G1');
+  if (g1Class && (!g1Class.students || g1Class.students.length === 0) && (initData?.classes || window.INITIAL_SCHOOL_DATA?.classes)) {
+    const srcClasses = initData?.classes || window.INITIAL_SCHOOL_DATA?.classes || [];
+    const initG1 = srcClasses.find(c => c.id === 'CLS_G1');
     if (initG1 && initG1.students && initG1.students.length > 0) {
       g1Class.students = JSON.parse(JSON.stringify(initG1.students));
       g1Class.totalStudents = g1Class.students.length;
@@ -152,6 +153,26 @@ function normalizeSchoolDatabase(db) {
       g1Class.maleStudents = g1Class.totalStudents - g1Class.femaleStudents;
     }
   }
+
+  // Ensure all 2026-2027 classes have complete semester scores and extract data
+  db.classes.forEach(c => {
+    if (c.academicYear === "២០២៦-២០២៧" && c.students && c.students.length > 0) {
+      const srcClasses = initData?.classes || window.INITIAL_SCHOOL_DATA?.classes || [];
+      const initCls = srcClasses.find(ic => ic.id === c.id);
+      if ((!c.semesterExtractData || !c.semesterExtractData["1"] || Object.keys(c.semesterExtractData["1"]).length === 0) && initCls && initCls.semesterExtractData) {
+        c.semesterExtractData = JSON.parse(JSON.stringify(initCls.semesterExtractData));
+      }
+      if ((!c.semesterScores || !c.semesterScores["1"] || Object.keys(c.semesterScores["1"]).length === 0) && initCls && initCls.semesterScores) {
+        c.semesterScores = JSON.parse(JSON.stringify(initCls.semesterScores));
+      }
+      if ((!c.semesterExtractAnnual || Object.keys(c.semesterExtractAnnual).length === 0) && initCls && initCls.semesterExtractAnnual) {
+        c.semesterExtractAnnual = JSON.parse(JSON.stringify(initCls.semesterExtractAnnual));
+      }
+      if ((!c.semesterExtractDates || Object.keys(c.semesterExtractDates).length === 0) && initCls && initCls.semesterExtractDates) {
+        c.semesterExtractDates = JSON.parse(JSON.stringify(initCls.semesterExtractDates));
+      }
+    }
+  });
 
   // Ensure 2027-2028 classes exist
   const y2027Classes = db.classes.filter(c => c.academicYear === "២០២៧-២០២៨");
@@ -10810,6 +10831,8 @@ const SEMESTER_EXTRACT_SUBJECTS = [
   { key: "kh_dictation",    name: "សរសេរតាមអាន",            semKey: "kh_dictation" },
   { key: "kh_essay",        name: "តែងសេចក្ដី",             semKey: "kh_essay" },
   { key: "math",            name: "គណិតវិទ្យា",             semKey: "math" },
+  { key: "kh_calligraphy",  name: "អក្សរផ្ចង់",             semKey: "kh_dictation" },
+  { key: "science",         name: "វិទ្យាសាស្ត្រ",            semKey: "science" },
   { key: "social",          name: "សិក្សាសង្គម",            semKey: "moral" },
   { key: "home_art",        name: "គេហវិទ្យា-អប់រំសិល្បៈ",    semKey: "drawing" },
   { key: "pe_health",       name: "អប់រំកាយ-សុខភាព",       semKey: "sport" },

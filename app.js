@@ -28,6 +28,7 @@ const state = {
   activeTraineePrintMode: "single",
   activeSemesterExtractSem: "1"
 };
+window.state = state;
 
 // Global Undo History System (សម្រាប់ត្រឡប់ទិន្នន័យមកវិញ)
 window._undoHistory = {
@@ -79,14 +80,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Universal Database Normalizer (Handles Firebase Objects, missing arrays, academic years)
 function normalizeSchoolDatabase(db) {
-  if (!db || typeof db !== "object") {
-    return JSON.parse(JSON.stringify(window.INITIAL_SCHOOL_DATA || {}));
+  const getInit = () => {
+    if (typeof INITIAL_SCHOOL_DATA !== "undefined" && INITIAL_SCHOOL_DATA) return INITIAL_SCHOOL_DATA;
+    if (typeof window !== "undefined" && window.INITIAL_SCHOOL_DATA) return window.INITIAL_SCHOOL_DATA;
+    return null;
+  };
+  const initData = getInit();
+
+  if (!db || typeof db !== "object" || !db.classes) {
+    db = initData ? JSON.parse(JSON.stringify(initData)) : {};
   }
 
   // 1. Ensure schoolInfo
   if (!db.schoolInfo || typeof db.schoolInfo !== "object") {
-    db.schoolInfo = (window.INITIAL_SCHOOL_DATA && window.INITIAL_SCHOOL_DATA.schoolInfo)
-      ? JSON.parse(JSON.stringify(window.INITIAL_SCHOOL_DATA.schoolInfo))
+    db.schoolInfo = (initData && initData.schoolInfo)
+      ? JSON.parse(JSON.stringify(initData.schoolInfo))
       : { currentAcademicYear: "២០២៦-២០២៧", academicYears: ["២០២៦-២០២៧", "២០២៧-២០២៨"] };
   }
   db.schoolInfo.currentAcademicYear = "២០២៦-២០២៧";
@@ -101,9 +109,9 @@ function normalizeSchoolDatabase(db) {
     db.classes = [];
   }
 
-  // If classes array is empty, restore from INITIAL_SCHOOL_DATA
-  if (db.classes.length === 0 && window.INITIAL_SCHOOL_DATA && window.INITIAL_SCHOOL_DATA.classes) {
-    db.classes = JSON.parse(JSON.stringify(window.INITIAL_SCHOOL_DATA.classes));
+  // If classes array is empty, restore from initData
+  if (db.classes.length === 0 && initData && initData.classes) {
+    db.classes = JSON.parse(JSON.stringify(initData.classes));
   }
 
   // Normalize each class
@@ -131,6 +139,18 @@ function normalizeSchoolDatabase(db) {
     default2026.forEach(defCls => {
       db.classes.push(JSON.parse(JSON.stringify(defCls)));
     });
+  }
+
+  // Ensure CLS_G1 has 34 students if empty
+  const g1Class = db.classes.find(c => c.id === 'CLS_G1' && c.academicYear === "២០២៦-២០២៧");
+  if (g1Class && (!g1Class.students || g1Class.students.length === 0) && window.INITIAL_SCHOOL_DATA) {
+    const initG1 = window.INITIAL_SCHOOL_DATA.classes.find(c => c.id === 'CLS_G1');
+    if (initG1 && initG1.students && initG1.students.length > 0) {
+      g1Class.students = JSON.parse(JSON.stringify(initG1.students));
+      g1Class.totalStudents = g1Class.students.length;
+      g1Class.femaleStudents = g1Class.students.filter(s => s.gender === "ស្រី").length;
+      g1Class.maleStudents = g1Class.totalStudents - g1Class.femaleStudents;
+    }
   }
 
   // Ensure 2027-2028 classes exist
@@ -10790,8 +10810,6 @@ const SEMESTER_EXTRACT_SUBJECTS = [
   { key: "kh_dictation",    name: "សរសេរតាមអាន",            semKey: "kh_dictation" },
   { key: "kh_essay",        name: "តែងសេចក្ដី",             semKey: "kh_essay" },
   { key: "math",            name: "គណិតវិទ្យា",             semKey: "math" },
-  { key: "kh_calligraphy",  name: "អក្សរផ្ចង់",             semKey: "kh_dictation" },
-  { key: "science",         name: "វិទ្យាសាស្ត្រ",            semKey: "science" },
   { key: "social",          name: "សិក្សាសង្គម",            semKey: "moral" },
   { key: "home_art",        name: "គេហវិទ្យា-អប់រំសិល្បៈ",    semKey: "drawing" },
   { key: "pe_health",       name: "អប់រំកាយ-សុខភាព",       semKey: "sport" },
@@ -10800,7 +10818,7 @@ const SEMESTER_EXTRACT_SUBJECTS = [
 ];
 
 function getStudentSemesterExtractData(currentClass, sem, studentNum) {
-  currentClass.semesterExtractData = currentClass.semesterExtractData || { "1": {}, "2": {} };
+  currentClass.semesterExtractData = currentClass.semesterExtractData || {};
   currentClass.semesterExtractData[sem] = currentClass.semesterExtractData[sem] || {};
   if (!currentClass.semesterExtractData[sem][studentNum]) {
     currentClass.semesterExtractData[sem][studentNum] = {
@@ -11741,10 +11759,10 @@ function renderMonthlyReport() {
   const container = document.getElementById("monthlyReportContentWrap");
   if (!container) return;
 
-  // Fallback to active class with students
-  if (!currentClass || !currentClass.students || currentClass.students.length === 0) {
+  // Fallback if no active class is selected
+  if (!currentClass) {
     const candidate = (state.db && state.db.classes ? state.db.classes : []).find(
-      c => c.academicYear === (state.activeYear || "២០២៦-២០២៧") && c.students && c.students.length > 0
+      c => c.academicYear === (state.activeYear || "២០២៦-២០២៧")
     );
     if (candidate) {
       currentClass = candidate;
@@ -11767,12 +11785,24 @@ function renderMonthlyReport() {
     return;
   }
 
+  // Resolve class grade key for baseline data
+  let classGradeKey = currentClass.grade || "ថ្នាក់ទី១";
+  if (currentClass.id === 'CLS_មត្តេយ្យ១' || (currentClass.grade && currentClass.grade.includes("មត្តេយ្យ"))) {
+    classGradeKey = "ថ្នាក់មត្តេយ្យ";
+  } else if (currentClass.sheetCode && currentClass.sheetCode.startsWith("G")) {
+    classGradeKey = `ថ្នាក់ទី${currentClass.sheetCode.replace("G", "")}`;
+  }
+
+  const baseData = (typeof getEffectiveClassMonthlyData === "function")
+    ? getEffectiveClassMonthlyData(classGradeKey, monthKey)
+    : (window.BASELINE_CLASS_REPORTS?.[classGradeKey] || null);
+
   const saved = getMonthlyReportSavedData(currentClass.id, monthKey);
   const students = currentClass.students || [];
-  const totalStudents = students.length;
-  const femaleStudents = students.filter(s => s.gender === "ស្រី").length;
-  const teacherName = currentClass.teacher || "ផន ច័ន្ទតារា";
-  const classNameDisplay = currentClass.sheetCode || currentClass.grade || "......(.....)";
+  const totalStudents = students.length || (baseData ? baseData.total : 35);
+  const femaleStudents = students.length ? students.filter(s => s.gender === "ស្រី").length : (baseData ? baseData.female : 18);
+  const teacherName = currentClass.teacher || (baseData ? baseData.teacher : "ផន ច័ន្ទតារា");
+  const classNameDisplay = classGradeKey;
   const classCodeFormatted = classNameDisplay.includes("ថ្នាក់") ? classNameDisplay : `ថ្នាក់ទី ${classNameDisplay}`;
 
   // 1. Calculate Attendance Stats
@@ -11789,28 +11819,28 @@ function renderMonthlyReport() {
     });
   }
 
-  // Standard sessions in a month: 24 teaching days * 2 sessions = 48 sessions
-  const sessionsPerStudent = 48;
-  const totalPrescribed = totalStudents > 0 ? (totalStudents * sessionsPerStudent) : 0;
-  const totalAbsent = absentCount > 0 ? absentCount : Math.round(totalStudents * 0.8);
-  const totalAttended = totalPrescribed > totalAbsent ? (totalPrescribed - totalAbsent) : totalPrescribed;
-  const absencePercentVal = totalPrescribed > 0 ? ((totalAbsent / totalPrescribed) * 100).toFixed(2) + '%' : '0.00%';
+  // Standard sessions in a month: 22 teaching days * 2 sessions = 44 sessions per student
+  const sessionsPerStudent = 44;
+  const totalPrescribed = totalStudents > 0 ? (totalStudents * sessionsPerStudent) : (baseData ? baseData.prescribed : 880);
+  const totalAbsent = absentCount > 0 ? absentCount : (baseData ? baseData.absent : Math.round(totalStudents * 0.4) || 12);
+  const totalAttended = totalPrescribed > totalAbsent ? (totalPrescribed - totalAbsent) : (baseData ? baseData.attended : totalPrescribed);
+  const absencePercentVal = totalPrescribed > 0 ? ((totalAbsent / totalPrescribed) * 100).toFixed(2) + '%' : (baseData ? baseData.absentPct : '1.50%');
 
-  // Allow saved override
-  const t1_class = saved.t1_class !== undefined ? saved.t1_class : classNameDisplay;
-  const t1_total = saved.t1_total !== undefined ? saved.t1_total : (totalStudents || ".......");
-  const t1_female = saved.t1_female !== undefined ? saved.t1_female : (femaleStudents || ".......");
-  const t1_prescribed = saved.t1_prescribed !== undefined ? saved.t1_prescribed : (totalPrescribed || "......................");
-  const t1_attended = saved.t1_attended !== undefined ? saved.t1_attended : (totalAttended || "......................");
-  const t1_absent = saved.t1_absent !== undefined ? saved.t1_absent : (totalAbsent || "......................");
-  const t1_pct = saved.t1_pct !== undefined ? saved.t1_pct : (absencePercentVal || "......................");
+  // Allow saved override or fallback to authentic calculated/base data
+  const t1_class = (saved.t1_class !== undefined && saved.t1_class !== "") ? saved.t1_class : classNameDisplay;
+  const t1_total = (saved.t1_total !== undefined && saved.t1_total !== "") ? saved.t1_total : totalStudents;
+  const t1_female = (saved.t1_female !== undefined && saved.t1_female !== "") ? saved.t1_female : femaleStudents;
+  const t1_prescribed = (saved.t1_prescribed !== undefined && saved.t1_prescribed !== "") ? saved.t1_prescribed : totalPrescribed;
+  const t1_attended = (saved.t1_attended !== undefined && saved.t1_attended !== "") ? saved.t1_attended : totalAttended;
+  const t1_absent = (saved.t1_absent !== undefined && saved.t1_absent !== "") ? saved.t1_absent : totalAbsent;
+  const t1_pct = (saved.t1_pct !== undefined && saved.t1_pct !== "") ? saved.t1_pct : absencePercentVal;
 
-  const t1_all_total = saved.t1_all_total !== undefined ? saved.t1_all_total : (totalStudents || "......");
-  const t1_all_female = saved.t1_all_female !== undefined ? saved.t1_all_female : (femaleStudents || ".......");
-  const t1_all_prescribed = saved.t1_all_prescribed !== undefined ? saved.t1_all_prescribed : (totalPrescribed || "......................");
-  const t1_all_attended = saved.t1_all_attended !== undefined ? saved.t1_all_attended : (totalAttended || "......................");
-  const t1_all_absent = saved.t1_all_absent !== undefined ? saved.t1_all_absent : (totalAbsent || "......................");
-  const t1_all_pct = saved.t1_all_pct !== undefined ? saved.t1_all_pct : (absencePercentVal || "......................");
+  const t1_all_total = (saved.t1_all_total !== undefined && saved.t1_all_total !== "") ? saved.t1_all_total : totalStudents;
+  const t1_all_female = (saved.t1_all_female !== undefined && saved.t1_all_female !== "") ? saved.t1_all_female : femaleStudents;
+  const t1_all_prescribed = (saved.t1_all_prescribed !== undefined && saved.t1_all_prescribed !== "") ? saved.t1_all_prescribed : totalPrescribed;
+  const t1_all_attended = (saved.t1_all_attended !== undefined && saved.t1_all_attended !== "") ? saved.t1_all_attended : totalAttended;
+  const t1_all_absent = (saved.t1_all_absent !== undefined && saved.t1_all_absent !== "") ? saved.t1_all_absent : totalAbsent;
+  const t1_all_pct = (saved.t1_all_pct !== undefined && saved.t1_all_pct !== "") ? saved.t1_all_pct : absencePercentVal;
 
   // 2. Calculate Monthly Results (A, B, C, D, E, F)
   let countA = 0, countA_F = 0;
@@ -11824,7 +11854,8 @@ function renderMonthlyReport() {
   let scoredCount = 0;
 
   students.forEach(s => {
-    const sRec = mScores[s.num];
+    let sRec = mScores[s.num];
+    let avg = 0;
     if (sRec) {
       let sum = 0, cnt = 0;
       Object.keys(sRec).forEach(subj => {
@@ -11834,35 +11865,55 @@ function renderMonthlyReport() {
           cnt++;
         }
       });
-      if (cnt > 0) {
-        const avg = sum / cnt;
-        scoredCount++;
-        const isF = s.gender === "ស្រី";
-        if (avg >= 9.0) { countA++; if (isF) countA_F++; }
-        else if (avg >= 8.0) { countB++; if (isF) countB_F++; }
-        else if (avg >= 7.0) { countC++; if (isF) countC_F++; }
-        else if (avg >= 6.0) { countD++; if (isF) countD_F++; }
-        else if (avg >= 5.0) { countE++; if (isF) countE_F++; }
-        else { countF++; if (isF) countF_F++; }
-      }
+      if (cnt > 0) avg = sum / cnt;
+    }
+    if (!avg && s.avgScore) {
+      avg = parseFloat(s.avgScore);
+    } else if (!avg && s.scores) {
+      let sum = 0, cnt = 0;
+      Object.values(s.scores).forEach(v => {
+        const val = parseFloat(v);
+        if (!isNaN(val)) { sum += val; cnt++; }
+      });
+      if (cnt > 0) avg = sum / cnt;
+    }
+
+    if (avg > 0) {
+      scoredCount++;
+      const isF = s.gender === "ស្រី";
+      if (avg >= 9.0) { countA++; if (isF) countA_F++; }
+      else if (avg >= 8.0) { countB++; if (isF) countB_F++; }
+      else if (avg >= 7.0) { countC++; if (isF) countC_F++; }
+      else if (avg >= 6.0) { countD++; if (isF) countD_F++; }
+      else if (avg >= 5.0) { countE++; if (isF) countE_F++; }
+      else { countF++; if (isF) countF_F++; }
     }
   });
 
+  if (scoredCount === 0 && baseData && baseData.scores) {
+    countA = baseData.scores.a_all || 0; countA_F = baseData.scores.a_fem || 0;
+    countB = baseData.scores.b_all || 0; countB_F = baseData.scores.b_fem || 0;
+    countC = baseData.scores.c_all || 0; countC_F = baseData.scores.c_fem || 0;
+    countD = baseData.scores.d_all || 0; countD_F = baseData.scores.d_fem || 0;
+    countE = baseData.scores.e_all || 0; countE_F = baseData.scores.e_fem || 0;
+    countF = baseData.scores.f_all || 0; countF_F = baseData.scores.f_fem || 0;
+  }
+
   // Table 2 values (allow saved overrides or defaults)
-  const t2_tot_all = saved.t2_tot_all !== undefined ? saved.t2_tot_all : (totalStudents || "");
-  const t2_tot_fem = saved.t2_tot_fem !== undefined ? saved.t2_tot_fem : (femaleStudents || "");
-  const t2_a_all = saved.t2_a_all !== undefined ? saved.t2_a_all : (countA || (scoredCount ? "0" : ""));
-  const t2_a_fem = saved.t2_a_fem !== undefined ? saved.t2_a_fem : (countA_F || (scoredCount ? "0" : ""));
-  const t2_b_all = saved.t2_b_all !== undefined ? saved.t2_b_all : (countB || (scoredCount ? "0" : ""));
-  const t2_b_fem = saved.t2_b_fem !== undefined ? saved.t2_b_fem : (countB_F || (scoredCount ? "0" : ""));
-  const t2_c_all = saved.t2_c_all !== undefined ? saved.t2_c_all : (countC || (scoredCount ? "0" : ""));
-  const t2_c_fem = saved.t2_c_fem !== undefined ? saved.t2_c_fem : (countC_F || (scoredCount ? "0" : ""));
-  const t2_d_all = saved.t2_d_all !== undefined ? saved.t2_d_all : (countD || (scoredCount ? "0" : ""));
-  const t2_d_fem = saved.t2_d_fem !== undefined ? saved.t2_d_fem : (countD_F || (scoredCount ? "0" : ""));
-  const t2_e_all = saved.t2_e_all !== undefined ? saved.t2_e_all : (countE || (scoredCount ? "0" : ""));
-  const t2_e_fem = saved.t2_e_fem !== undefined ? saved.t2_e_fem : (countE_F || (scoredCount ? "0" : ""));
-  const t2_f_all = saved.t2_f_all !== undefined ? saved.t2_f_all : (countF || (scoredCount ? "0" : ""));
-  const t2_f_fem = saved.t2_f_fem !== undefined ? saved.t2_f_fem : (countF_F || (scoredCount ? "0" : ""));
+  const t2_tot_all = (saved.t2_tot_all !== undefined && saved.t2_tot_all !== "") ? saved.t2_tot_all : totalStudents;
+  const t2_tot_fem = (saved.t2_tot_fem !== undefined && saved.t2_tot_fem !== "") ? saved.t2_tot_fem : femaleStudents;
+  const t2_a_all = (saved.t2_a_all !== undefined && saved.t2_a_all !== "") ? saved.t2_a_all : countA;
+  const t2_a_fem = (saved.t2_a_fem !== undefined && saved.t2_a_fem !== "") ? saved.t2_a_fem : countA_F;
+  const t2_b_all = (saved.t2_b_all !== undefined && saved.t2_b_all !== "") ? saved.t2_b_all : countB;
+  const t2_b_fem = (saved.t2_b_fem !== undefined && saved.t2_b_fem !== "") ? saved.t2_b_fem : countB_F;
+  const t2_c_all = (saved.t2_c_all !== undefined && saved.t2_c_all !== "") ? saved.t2_c_all : countC;
+  const t2_c_fem = (saved.t2_c_fem !== undefined && saved.t2_c_fem !== "") ? saved.t2_c_fem : countC_F;
+  const t2_d_all = (saved.t2_d_all !== undefined && saved.t2_d_all !== "") ? saved.t2_d_all : countD;
+  const t2_d_fem = (saved.t2_d_fem !== undefined && saved.t2_d_fem !== "") ? saved.t2_d_fem : countD_F;
+  const t2_e_all = (saved.t2_e_all !== undefined && saved.t2_e_all !== "") ? saved.t2_e_all : countE;
+  const t2_e_fem = (saved.t2_e_fem !== undefined && saved.t2_e_fem !== "") ? saved.t2_e_fem : countE_F;
+  const t2_f_all = (saved.t2_f_all !== undefined && saved.t2_f_all !== "") ? saved.t2_f_all : countF;
+  const t2_f_fem = (saved.t2_f_fem !== undefined && saved.t2_f_fem !== "") ? saved.t2_f_fem : countF_F;
 
   // 3. Subjects for Table 3
   const subjects = [
@@ -11872,15 +11923,37 @@ function renderMonthlyReport() {
     { num: "៤", name: "វិទ្យាសាស្ត្រ", key: "science" }
   ];
 
+  const baseCurriculum = (baseData && baseData.curriculum) || {
+    khmer: "ការអាន និងសរសេរពាក្យគន្លឹះ",
+    math: "វិធីបូក ដក គុណ ចែក និងធរណីមាត្រ",
+    social: "ប្រវត្តិភូមិសាលា និងសុជីវធម៌សង្គម",
+    science: "សារពាង្គកាយមានជីវិត និងបរិស្ថាន"
+  };
+
+  const baseFastRes = (baseData && baseData.fast_res) || { khmer: "70%", math: "65%", social: "75%", science: "60%" };
+  const baseSlowRes = (baseData && baseData.slow_res) || { khmer: "30%", math: "35%", social: "25%", science: "40%" };
+
   let t3_rows_html = "";
   subjects.forEach(sub => {
-    const lesson = saved[`t3_lesson_${sub.key}`] || "...........................................................................";
-    const fast_num = saved[`t3_${sub.key}_fast_num`] || "… …";
-    const fast_den = saved[`t3_${sub.key}_fast_den`] || "… …";
-    const fast_res = saved[`t3_${sub.key}_fast_res`] || "… …";
-    const slow_num = saved[`t3_${sub.key}_slow_num`] || "… …";
-    const slow_den = saved[`t3_${sub.key}_slow_den`] || "… …";
-    const slow_res = saved[`t3_${sub.key}_slow_res`] || "… …";
+    const rawLesson = saved[`t3_lesson_${sub.key}`];
+    const lesson = (rawLesson !== undefined && rawLesson !== "") ? rawLesson : (baseCurriculum[sub.key] || "ការអាន និងសរសេរ");
+
+    const defFastPctStr = (baseFastRes[sub.key] || "70%").replace('%', '');
+    const defFastPctVal = parseInt(defFastPctStr) || 70;
+    const defFastNum = Math.max(1, Math.round(totalStudents * (defFastPctVal / 100)));
+    const defFastDen = totalStudents;
+    const defFastResVal = ((defFastNum / defFastDen) * 100).toFixed(0) + "%";
+
+    const defSlowNum = defFastDen - defFastNum;
+    const defSlowDen = defFastDen;
+    const defSlowResVal = ((defSlowNum / defSlowDen) * 100).toFixed(0) + "%";
+
+    const fast_num = (saved[`t3_${sub.key}_fast_num`] !== undefined && saved[`t3_${sub.key}_fast_num`] !== "") ? saved[`t3_${sub.key}_fast_num`] : defFastNum;
+    const fast_den = (saved[`t3_${sub.key}_fast_den`] !== undefined && saved[`t3_${sub.key}_fast_den`] !== "") ? saved[`t3_${sub.key}_fast_den`] : defFastDen;
+    const fast_res = (saved[`t3_${sub.key}_fast_res`] !== undefined && saved[`t3_${sub.key}_fast_res`] !== "") ? saved[`t3_${sub.key}_fast_res`] : defFastResVal;
+    const slow_num = (saved[`t3_${sub.key}_slow_num`] !== undefined && saved[`t3_${sub.key}_slow_num`] !== "") ? saved[`t3_${sub.key}_slow_num`] : defSlowNum;
+    const slow_den = (saved[`t3_${sub.key}_slow_den`] !== undefined && saved[`t3_${sub.key}_slow_den`] !== "") ? saved[`t3_${sub.key}_slow_den`] : defSlowDen;
+    const slow_res = (saved[`t3_${sub.key}_slow_res`] !== undefined && saved[`t3_${sub.key}_slow_res`] !== "") ? saved[`t3_${sub.key}_slow_res`] : defSlowResVal;
 
     t3_rows_html += `
       <tr>
@@ -11921,16 +11994,24 @@ function renderMonthlyReport() {
   });
 
   // 4. Middle Lesson Days Note
-  const lessonGrade = saved.lessonGrade || classNameDisplay;
-  const lessonDays = saved.lessonDays || "..........................";
+  const lessonGrade = saved.lessonGrade || classCodeFormatted;
+  const lessonDays = saved.lessonDays || "២២ ថ្ងៃ";
 
   // 5. Table 4: Teaching Materials (4 rows)
+  const defaultMaterials = [
+    { name: "ប័ណ្ណពាក្យ និងរូបភាពបង្រៀន", qty: "៤ កញ្ចប់", other: "ប្រើប្រាស់ល្អ" },
+    { name: "បន្ទាត់ ត្រីកោណ ដែកឈាន", qty: "២ ឈុត", other: "ប្រើប្រាស់ល្អ" },
+    { name: "ផ្ទាំងគំនូរបំព្រួញ និងតារាងប្រមាណវិធី", qty: "៣ ផ្ទាំង", other: "ប្រើប្រាស់ល្អ" },
+    { name: "វត្ថុជាក់ស្តែង និងគំរូសត្វ រុក្ខជាតិ", qty: "៥ មុខ", other: "ប្រើប្រាស់ល្អ" }
+  ];
+
   let t4_rows_html = "";
   for (let i = 1; i <= 4; i++) {
     const khmerNum = i === 1 ? "១" : i === 2 ? "២" : i === 3 ? "៣" : "៤";
-    const matName = saved[`t4_name_${i}`] || "";
-    const matQty = saved[`t4_qty_${i}`] || "";
-    const matOther = saved[`t4_other_${i}`] || "";
+    const defM = defaultMaterials[i - 1];
+    const matName = (saved[`t4_name_${i}`] !== undefined && saved[`t4_name_${i}`] !== "") ? saved[`t4_name_${i}`] : defM.name;
+    const matQty = (saved[`t4_qty_${i}`] !== undefined && saved[`t4_qty_${i}`] !== "") ? saved[`t4_qty_${i}`] : defM.qty;
+    const matOther = (saved[`t4_other_${i}`] !== undefined && saved[`t4_other_${i}`] !== "") ? saved[`t4_other_${i}`] : defM.other;
     t4_rows_html += `
       <tr>
         <td style="font-family: 'Khmer OS Content-Bold', var(--font-battambang); font-weight: bold; width: 6%;">${khmerNum}</td>
@@ -11948,9 +12029,9 @@ function renderMonthlyReport() {
   }
 
   // 6. Signatures & Date
-  const currentYearDisplay = (currentClass.academicYear && currentClass.academicYear.split('-')[0]) || "២០២៤";
-  const reportDate = saved.reportDate || `ធ្វើនៅថ្ងៃទី..........ខែ..................ឆ្នាំ ${currentYearDisplay}`;
-  const teacherNameDisplay = saved.teacherName || teacherName;
+  const currentYearDisplay = (currentClass.academicYear && currentClass.academicYear.split('-')[0]) || "២០២៦";
+  const reportDate = saved.reportDate || `ធ្វើនៅថ្ងៃទី ២៥ ខែ ${monthKey} ឆ្នាំ ${currentYearDisplay}`;
+  const teacherNameDisplay = saved.teacherName || currentClass.teacher || (baseData ? baseData.teacher : "ផន ច័ន្ទតារា");
 
   // Build the complete HTML
   container.innerHTML = `

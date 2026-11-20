@@ -19,6 +19,476 @@ const BANLOUNG_SHEET_ORDER = [
   { id: "លទ្ធផលសិក្សា", label: "លទ្ធផលសិក្សា", icon: "fa-square-poll-vertical", desc: "តារាងបង្ហាញលទ្ធផលសិក្សារបស់សិស្សតាមមធ្យមភាគពិន្ទុ" }
 ];
 
+const BASELINE_CLASS_REPORTS = {
+  "ថ្នាក់មត្តេយ្យ": {
+    gradeNum: 0, teacher: "លី ស្រីនូ", total: 37, female: 18,
+    prescribed: 814, attended: 800, absent: 14, absentPct: "1.72%",
+    scores: { f_all: 0, f_fem: 0, e_all: 2, e_fem: 1, d_all: 5, d_fem: 2, c_all: 12, c_fem: 5, b_all: 10, b_fem: 5, a_all: 8, a_fem: 5, pass_all: 37, pass_fem: 18, pass_pct: "100.00%" },
+    curriculum: { khmer: "ស្តាប់និទានរឿង និងការស្គាល់តួអក្សរ", math: "ការរាប់លេខ ១ ដល់ ១០ និងទម្រង់ធរណីមាត្រ", social: "សុជីវធម៌ក្នុងការរស់នៅ និងអនាម័យខ្លួនប្រាណ", science: "ការស្គាល់សត្វ និងរុក្ខជាតិជុំវិញខ្លួន" },
+    fast_res: { khmer: "75%", math: "70%", social: "80%", science: "75%" },
+    slow_res: { khmer: "25%", math: "30%", social: "20%", science: "25%" },
+    slow_helped: { failing_all: 7, failing_fem: 3, helped_all: 5, helped_fem: 2, rem_all: 2, rem_fem: 1 }
+  },
+  "ថ្នាក់ទី១": {
+    gradeNum: 1, teacher: "ផាន ផុស", total: 34, female: 10,
+    prescribed: 748, attended: 738, absent: 10, absentPct: "1.34%",
+    scores: { f_all: 5, f_fem: 1, e_all: 5, e_fem: 2, d_all: 5, d_fem: 0, c_all: 11, c_fem: 3, b_all: 3, b_fem: 1, a_all: 5, a_fem: 3, pass_all: 29, pass_fem: 9, pass_pct: "85.29%" },
+    curriculum: { khmer: "ព្យញ្ជនៈនិងជើងព្យញ្ជនៈ", math: "ទម្ងន់", social: "កិច្ចការខ្ញុំនៅផ្ទះនិងនៅសាលា", science: "សត្វដែលខ្ញុំចិញ្ចឹម" },
+    fast_res: { khmer: "63%", math: "65%", social: "60%", science: "38%" },
+    slow_res: { khmer: "37%", math: "35%", social: "40%", science: "62%" },
+    slow_helped: { failing_all: 12, failing_fem: 3, helped_all: 7, helped_fem: 2, rem_all: 5, rem_fem: 1 }
+  },
+  "ថ្នាក់ទី២": {
+    gradeNum: 2, teacher: "លី មករា", total: 38, female: 18,
+    prescribed: 836, attended: 822, absent: 14, absentPct: "1.67%",
+    scores: { f_all: 7, f_fem: 3, e_all: 10, e_fem: 6, d_all: 6, d_fem: 1, c_all: 9, c_fem: 5, b_all: 5, b_fem: 2, a_all: 1, a_fem: 1, pass_all: 31, pass_fem: 15, pass_pct: "81.58%" },
+    curriculum: { khmer: "អ្នកលក់មួកនិងសត្វស្វា", math: "វិធីបូកចំនួនមានលេខ៣ខ្ទង់", social: "ប្រវត្តិសាលារៀននិងភូមិខ្ញុំ", science: "សត្វដែលខ្ញុំចិញ្ចឹម" },
+    fast_res: { khmer: "70%", math: "65%", social: "71%", science: "55%" },
+    slow_res: { khmer: "30%", math: "35%", social: "29%", science: "45%" },
+    slow_helped: { failing_all: 13, failing_fem: 7, helped_all: 6, helped_fem: 4, rem_all: 7, rem_fem: 3 }
+  },
+  "ថ្នាក់ទី៣": {
+    gradeNum: 3, teacher: "ក្រូយ ចាន់ធារ៉ា", total: 45, female: 20,
+    prescribed: 990, attended: 980, absent: 10, absentPct: "1.01%",
+    scores: { f_all: 6, f_fem: 0, e_all: 21, e_fem: 10, d_all: 9, d_fem: 3, c_all: 4, c_fem: 2, b_all: 3, b_fem: 3, a_all: 2, a_fem: 2, pass_all: 39, pass_fem: 20, pass_pct: "86.67%" },
+    curriculum: { khmer: "ឥទ្ធិពលនៃគ្រឿងស្រវឹង", math: "ធរណីមាត្រ", social: "ភូមិសាស្ត្រតំបន់", science: "សត្វដែលខ្ញុំចិញ្ចឹម" },
+    fast_res: { khmer: "52%", math: "24%", social: "60%", science: "47%" },
+    slow_res: { khmer: "48%", math: "76%", social: "40%", science: "53%" },
+    slow_helped: { failing_all: 19, failing_fem: 4, helped_all: 13, helped_fem: 4, rem_all: 6, rem_fem: 0 }
+  },
+  "ថ្នាក់ទី៤": {
+    gradeNum: 4, teacher: "សុខ ស្រីនាង", total: 37, female: 20,
+    prescribed: 814, attended: 796, absent: 18, absentPct: "2.21%",
+    scores: { f_all: 3, f_fem: 1, e_all: 15, e_fem: 9, d_all: 6, d_fem: 4, c_all: 8, c_fem: 4, b_all: 4, b_fem: 2, a_all: 1, a_fem: 0, pass_all: 34, pass_fem: 19, pass_pct: "91.89%" },
+    curriculum: { khmer: "ម្ហូបអាហារខ្មែរ", math: "ចំនួនទសភាគ", social: "តម្លៃការងារ", science: "លក្ខណៈនៃរូបធាតុ" },
+    fast_res: { khmer: "70%", math: "71%", social: "67%", science: "53%" },
+    slow_res: { khmer: "30%", math: "29%", social: "33%", science: "47%" },
+    slow_helped: { failing_all: 15, failing_fem: 9, helped_all: 12, helped_fem: 8, rem_all: 3, rem_fem: 1 }
+  },
+  "ថ្នាក់ទី៥": {
+    gradeNum: 5, teacher: "ញឹម ស៊ីវថា", total: 35, female: 14,
+    prescribed: 770, attended: 751, absent: 19, absentPct: "2.47%",
+    scores: { f_all: 5, f_fem: 1, e_all: 11, e_fem: 3, d_all: 7, d_fem: 1, c_all: 7, c_fem: 6, b_all: 4, b_fem: 3, a_all: 1, a_fem: 0, pass_all: 30, pass_fem: 13, pass_pct: "85.71%" },
+    curriculum: { khmer: "អតីតកាលរបស់យើង", math: "រង្វាស់ទម្ងន់", social: "សំណង់អគារបុរាណ", science: "ការចាក់វ៉ាក់សាំង" },
+    fast_res: { khmer: "40%", math: "34%", social: "36%", science: "34%" },
+    slow_res: { khmer: "60%", math: "66%", social: "64%", science: "66%" },
+    slow_helped: { failing_all: 14, failing_fem: 4, helped_all: 9, helped_fem: 3, rem_all: 5, rem_fem: 1 }
+  },
+  "ថ្នាក់ទី៦": {
+    gradeNum: 6, teacher: "ង៉ែត សារុន", total: 41, female: 23,
+    prescribed: 902, attended: 884, absent: 18, absentPct: "2.00%",
+    scores: { f_all: 5, f_fem: 0, e_all: 8, e_fem: 3, d_all: 14, d_fem: 8, c_all: 8, c_fem: 6, b_all: 4, b_fem: 4, a_all: 2, a_fem: 2, pass_all: 36, pass_fem: 23, pass_pct: "87.80%" },
+    curriculum: { khmer: "ចំណងឈ្នាប់ ឬ ឈ្នាប់", math: "វិធីដកចំនួនចម្រុះ", social: "ការសម្តែងល្ខោនបាសាក់", science: "ប្លង់ទេ" },
+    fast_res: { khmer: "72%", math: "73%", social: "72%", science: "34%" },
+    slow_res: { khmer: "28%", math: "27%", social: "28%", science: "66%" },
+    slow_helped: { failing_all: 12, failing_fem: 3, helped_all: 7, helped_fem: 3, rem_all: 5, rem_fem: 0 }
+  }
+};
+
+function getEffectiveClassMonthlyData(gradeName, monthKey) {
+  const base = BASELINE_CLASS_REPORTS[gradeName] || {
+    gradeNum: 1, teacher: "គ្រូប្រចាំថ្នាក់", total: 0, female: 0, prescribed: 0, attended: 0, absent: 0, absentPct: "0%",
+    scores: { f_all: 0, f_fem: 0, e_all: 0, e_fem: 0, d_all: 0, d_fem: 0, c_all: 0, c_fem: 0, b_all: 0, b_fem: 0, a_all: 0, a_fem: 0, pass_all: 0, pass_fem: 0, pass_pct: "0%" },
+    curriculum: { khmer: "", math: "", social: "", science: "" },
+    fast_res: { khmer: "50%", math: "50%", social: "50%", science: "50%" },
+    slow_res: { khmer: "50%", math: "50%", social: "50%", science: "50%" },
+    slow_helped: { failing_all: 0, failing_fem: 0, helped_all: 0, helped_fem: 0, rem_all: 0, rem_fem: 0 }
+  };
+
+  const clsList = (window.state && window.state.db && window.state.db.classes)
+    ? window.state.db.classes
+    : ((window.INITIAL_SCHOOL_DATA && window.INITIAL_SCHOOL_DATA.classes) || []);
+  const targetYear = (window.state && window.state.activeYear) || "២០២៦-២០២៧";
+  const cls = clsList.find(c =>
+    (c.grade === gradeName || c.name === gradeName || c.id === ('CLS_G' + base.gradeNum) || (c.sheetCode && c.sheetCode === ('G' + base.gradeNum))) &&
+    (c.academicYear === targetYear || !c.academicYear)
+  );
+
+  const saved = (cls && cls.monthlyReportData && cls.monthlyReportData[monthKey]) ? cls.monthlyReportData[monthKey] : {};
+
+  const realTotal = (cls && cls.students && cls.students.length > 0) ? cls.students.length : base.total;
+  const realFemale = (cls && cls.students && cls.students.length > 0) ? cls.students.filter(s => s.gender === 'ស្រី').length : base.female;
+
+  const total = (saved.t1_total !== undefined && saved.t1_total !== "") ? parseInt(saved.t1_total) : realTotal;
+  const female = (saved.t1_female !== undefined && saved.t1_female !== "") ? parseInt(saved.t1_female) : realFemale;
+  const femPct = total > 0 ? ((female / total) * 100).toFixed(2) + '%' : '0.00%';
+
+  const prescribed = (saved.t1_prescribed !== undefined && saved.t1_prescribed !== "") ? parseInt(saved.t1_prescribed) : base.prescribed;
+  const attended = (saved.t1_attended !== undefined && saved.t1_attended !== "") ? parseInt(saved.t1_attended) : base.attended;
+  const absent = (saved.t1_absent !== undefined && saved.t1_absent !== "") ? parseInt(saved.t1_absent) : base.absent;
+  const absentPct = (saved.t1_pct !== undefined && saved.t1_pct !== "") ? saved.t1_pct : (prescribed > 0 ? ((absent / prescribed) * 100).toFixed(2) + '%' : base.absentPct);
+
+  const f_all = (saved.t2_f_all !== undefined && saved.t2_f_all !== "") ? parseInt(saved.t2_f_all) : base.scores.f_all;
+  const f_fem = (saved.t2_f_fem !== undefined && saved.t2_f_fem !== "") ? parseInt(saved.t2_f_fem) : base.scores.f_fem;
+  const e_all = (saved.t2_e_all !== undefined && saved.t2_e_all !== "") ? parseInt(saved.t2_e_all) : base.scores.e_all;
+  const e_fem = (saved.t2_e_fem !== undefined && saved.t2_e_fem !== "") ? parseInt(saved.t2_e_fem) : base.scores.e_fem;
+  const d_all = (saved.t2_d_all !== undefined && saved.t2_d_all !== "") ? parseInt(saved.t2_d_all) : base.scores.d_all;
+  const d_fem = (saved.t2_d_fem !== undefined && saved.t2_d_fem !== "") ? parseInt(saved.t2_d_fem) : base.scores.d_fem;
+  const c_all = (saved.t2_c_all !== undefined && saved.t2_c_all !== "") ? parseInt(saved.t2_c_all) : base.scores.c_all;
+  const c_fem = (saved.t2_c_fem !== undefined && saved.t2_c_fem !== "") ? parseInt(saved.t2_c_fem) : base.scores.c_fem;
+  const b_all = (saved.t2_b_all !== undefined && saved.t2_b_all !== "") ? parseInt(saved.t2_b_all) : base.scores.b_all;
+  const b_fem = (saved.t2_b_fem !== undefined && saved.t2_b_fem !== "") ? parseInt(saved.t2_b_fem) : base.scores.b_fem;
+  const a_all = (saved.t2_a_all !== undefined && saved.t2_a_all !== "") ? parseInt(saved.t2_a_all) : base.scores.a_all;
+  const a_fem = (saved.t2_a_fem !== undefined && saved.t2_a_fem !== "") ? parseInt(saved.t2_a_fem) : base.scores.a_fem;
+
+  const pass_all = f_all >= 0 ? (a_all + b_all + c_all + d_all + e_all) : base.scores.pass_all;
+  const pass_fem = f_fem >= 0 ? (a_fem + b_fem + c_fem + d_fem + e_fem) : base.scores.pass_fem;
+  const pass_pct = total > 0 ? ((pass_all / total) * 100).toFixed(2) + '%' : base.scores.pass_pct;
+
+  const curriculum = {
+    khmer: saved.t3_lesson_khmer || base.curriculum.khmer,
+    math: saved.t3_lesson_math || base.curriculum.math,
+    social: saved.t3_lesson_social || base.curriculum.social,
+    science: saved.t3_lesson_science || base.curriculum.science
+  };
+
+  const fast_res = {
+    khmer: saved.t3_khmer_fast_res || base.fast_res.khmer,
+    math: saved.t3_math_fast_res || base.fast_res.math,
+    social: saved.t3_social_fast_res || base.fast_res.social,
+    science: saved.t3_science_fast_res || base.fast_res.science
+  };
+
+  const slow_res = {
+    khmer: saved.t3_khmer_slow_res || base.slow_res.khmer,
+    math: saved.t3_math_slow_res || base.slow_res.math,
+    social: saved.t3_social_slow_res || base.slow_res.social,
+    science: saved.t3_science_slow_res || base.slow_res.science
+  };
+
+  const failing_all = f_all > 0 ? f_all : base.slow_helped.failing_all;
+  const failing_fem = f_fem > 0 ? f_fem : base.slow_helped.failing_fem;
+  const helped_all = (saved.t3_khmer_slow_num !== undefined && saved.t3_khmer_slow_num !== "") ? parseInt(saved.t3_khmer_slow_num) : base.slow_helped.helped_all;
+  const helped_fem = base.slow_helped.helped_fem;
+  const rem_all = failing_all > helped_all ? (failing_all - helped_all) : 0;
+  const rem_fem = failing_fem > helped_fem ? (failing_fem - helped_fem) : 0;
+
+  return {
+    gradeName,
+    gradeNum: base.gradeNum,
+    teacher: (cls && cls.teacher) || base.teacher,
+    total,
+    female,
+    femPct,
+    prescribed,
+    attended,
+    absent,
+    absentPct,
+    scores: {
+      f_all, f_fem, f_pct: total > 0 ? ((f_all / total) * 100).toFixed(2) + '%' : '0.00%',
+      e_all, e_fem, e_pct: total > 0 ? ((e_all / total) * 100).toFixed(2) + '%' : '0.00%',
+      d_all, d_fem, d_pct: total > 0 ? ((d_all / total) * 100).toFixed(2) + '%' : '0.00%',
+      c_all, c_fem, c_pct: total > 0 ? ((c_all / total) * 100).toFixed(2) + '%' : '0.00%',
+      b_all, b_fem, b_pct: total > 0 ? ((b_all / total) * 100).toFixed(2) + '%' : '0.00%',
+      a_all, a_fem, a_pct: total > 0 ? ((a_all / total) * 100).toFixed(2) + '%' : '0.00%',
+      pass_all, pass_fem, pass_pct
+    },
+    curriculum,
+    fast_res,
+    slow_res,
+    slow_helped: { failing_all, failing_fem, helped_all, helped_fem, rem_all, rem_fem }
+  };
+}
+
+function getLiveSchoolReportSheetHtml(sheetName, monthKey) {
+  if (!OFFICIAL_SCHOOL_REPORT_SHEETS[sheetName]) return "";
+  const rawHtml = OFFICIAL_SCHOOL_REPORT_SHEETS[sheetName];
+  monthKey = monthKey || "មករា";
+
+  const grades = ["ថ្នាក់ទី១", "ថ្នាក់ទី២", "ថ្នាក់ទី៣", "ថ្នាក់ទី៤", "ថ្នាក់ទី៥", "ថ្នាក់ទី៦"];
+  const gradeData = grades.map(g => getEffectiveClassMonthlyData(g, monthKey));
+
+  // Compute school-wide totals across 6 classes
+  const totStudents = gradeData.reduce((s, d) => s + d.total, 0);
+  const totFemales = gradeData.reduce((s, d) => s + d.female, 0);
+  const totFemPct = totStudents > 0 ? ((totFemales / totStudents) * 100).toFixed(2) + '%' : '0.00%';
+
+  const totPrescribed = gradeData.reduce((s, d) => s + d.prescribed, 0);
+  const totAttended = gradeData.reduce((s, d) => s + d.attended, 0);
+  const totAbsent = gradeData.reduce((s, d) => s + d.absent, 0);
+  const totAbsentPct = totPrescribed > 0 ? ((totAbsent / totPrescribed) * 100).toFixed(2) + '%' : '0.00%';
+
+  const tot_f_all = gradeData.reduce((s, d) => s + d.scores.f_all, 0);
+  const tot_f_fem = gradeData.reduce((s, d) => s + d.scores.f_fem, 0);
+  const tot_e_all = gradeData.reduce((s, d) => s + d.scores.e_all, 0);
+  const tot_e_fem = gradeData.reduce((s, d) => s + d.scores.e_fem, 0);
+  const tot_d_all = gradeData.reduce((s, d) => s + d.scores.d_all, 0);
+  const tot_d_fem = gradeData.reduce((s, d) => s + d.scores.d_fem, 0);
+  const tot_c_all = gradeData.reduce((s, d) => s + d.scores.c_all, 0);
+  const tot_c_fem = gradeData.reduce((s, d) => s + d.scores.c_fem, 0);
+  const tot_b_all = gradeData.reduce((s, d) => s + d.scores.b_all, 0);
+  const tot_b_fem = gradeData.reduce((s, d) => s + d.scores.b_fem, 0);
+  const tot_a_all = gradeData.reduce((s, d) => s + d.scores.a_all, 0);
+  const tot_a_fem = gradeData.reduce((s, d) => s + d.scores.a_fem, 0);
+  const tot_pass_all = gradeData.reduce((s, d) => s + d.scores.pass_all, 0);
+  const tot_pass_fem = gradeData.reduce((s, d) => s + d.scores.pass_fem, 0);
+  const tot_pass_pct = totStudents > 0 ? ((tot_pass_all / totStudents) * 100).toFixed(2) + '%' : '0.00%';
+
+  const tot_failing_all = gradeData.reduce((s, d) => s + d.slow_helped.failing_all, 0);
+  const tot_failing_fem = gradeData.reduce((s, d) => s + d.slow_helped.failing_fem, 0);
+  const tot_helped_all = gradeData.reduce((s, d) => s + d.slow_helped.helped_all, 0);
+  const tot_helped_fem = gradeData.reduce((s, d) => s + d.slow_helped.helped_fem, 0);
+  const tot_rem_all = gradeData.reduce((s, d) => s + d.slow_helped.rem_all, 0);
+  const tot_rem_fem = gradeData.reduce((s, d) => s + d.slow_helped.rem_fem, 0);
+
+  // Parse HTML
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(rawHtml, 'text/html');
+
+  // Month Title Updates
+  doc.body.querySelectorAll('td, th, p, span, div').forEach(el => {
+    if (el.children.length === 0 && el.textContent.includes('មករា')) {
+      el.textContent = el.textContent.replace(/មករា/g, monthKey);
+    }
+  });
+
+  const trs = Array.from(doc.querySelectorAll('tr'));
+
+  if (sheetName === 'លទ្ធផលសិក្សា') {
+    // Rows 9 to 14: Grades 1 to 6
+    for (let i = 0; i < 6; i++) {
+      const row = trs[9 + i];
+      if (!row) continue;
+      const d = gradeData[i];
+      const tds = row.querySelectorAll('td');
+      if (tds.length >= 25) {
+        tds[2].textContent = d.total;
+        tds[3].textContent = d.female;
+        tds[4].textContent = d.scores.f_all;
+        tds[5].textContent = d.scores.f_fem;
+        tds[6].textContent = d.scores.f_pct;
+        tds[7].textContent = d.scores.e_all;
+        tds[8].textContent = d.scores.e_fem;
+        tds[9].textContent = d.scores.e_pct;
+        tds[10].textContent = d.scores.d_all;
+        tds[11].textContent = d.scores.d_fem;
+        tds[12].textContent = d.scores.d_pct;
+        tds[13].textContent = d.scores.c_all;
+        tds[14].textContent = d.scores.c_fem;
+        tds[15].textContent = d.scores.c_pct;
+        tds[16].textContent = d.scores.b_all;
+        tds[17].textContent = d.scores.b_fem;
+        tds[18].textContent = d.scores.b_pct;
+        tds[19].textContent = d.scores.a_all;
+        tds[20].textContent = d.scores.a_fem;
+        tds[21].textContent = d.scores.a_pct;
+        tds[22].textContent = d.scores.pass_all;
+        tds[23].textContent = d.scores.pass_fem;
+        tds[24].textContent = d.scores.pass_pct;
+      }
+    }
+    // Row 15: Total
+    const rowTot = trs[15];
+    if (rowTot) {
+      const tds = rowTot.querySelectorAll('td');
+      if (tds.length >= 24) {
+        tds[1].textContent = totStudents;
+        tds[2].textContent = totFemales;
+        tds[3].textContent = tot_f_all;
+        tds[4].textContent = tot_f_fem;
+        tds[5].textContent = totStudents > 0 ? ((tot_f_all / totStudents) * 100).toFixed(2) + '%' : '0.00%';
+        tds[6].textContent = tot_e_all;
+        tds[7].textContent = tot_e_fem;
+        tds[8].textContent = totStudents > 0 ? ((tot_e_all / totStudents) * 100).toFixed(2) + '%' : '0.00%';
+        tds[9].textContent = tot_d_all;
+        tds[10].textContent = tot_d_fem;
+        tds[11].textContent = totStudents > 0 ? ((tot_d_all / totStudents) * 100).toFixed(2) + '%' : '0.00%';
+        tds[12].textContent = tot_c_all;
+        tds[13].textContent = tot_c_fem;
+        tds[14].textContent = totStudents > 0 ? ((tot_c_all / totStudents) * 100).toFixed(2) + '%' : '0.00%';
+        tds[15].textContent = tot_b_all;
+        tds[16].textContent = tot_b_fem;
+        tds[17].textContent = totStudents > 0 ? ((tot_b_all / totStudents) * 100).toFixed(2) + '%' : '0.00%';
+        tds[18].textContent = tot_a_all;
+        tds[19].textContent = tot_a_fem;
+        tds[20].textContent = totStudents > 0 ? ((tot_a_all / totStudents) * 100).toFixed(2) + '%' : '0.00%';
+        tds[21].textContent = tot_pass_all;
+        tds[22].textContent = tot_pass_fem;
+        tds[23].textContent = tot_pass_pct;
+      }
+    }
+  } else if (sheetName === 'សិស្សរៀនយឺត') {
+    // Rows 9 to 14: Grades 1 to 6
+    for (let i = 0; i < 6; i++) {
+      const row = trs[9 + i];
+      if (!row) continue;
+      const d = gradeData[i];
+      const tds = row.querySelectorAll('td');
+      if (tds.length >= 31) {
+        tds[3].textContent = d.slow_helped.failing_all;
+        tds[4].textContent = d.slow_helped.failing_fem;
+        tds[5].textContent = d.slow_helped.helped_all;
+        tds[6].textContent = d.slow_helped.helped_fem;
+        for (let col = 7; col <= 11; col++) tds[col].textContent = d.slow_helped.helped_all;
+        tds[12].textContent = d.slow_helped.helped_fem;
+        for (let col = 13; col <= 17; col++) tds[col].textContent = d.slow_helped.helped_all;
+        tds[18].textContent = d.slow_helped.rem_all;
+        tds[19].textContent = d.slow_helped.rem_fem;
+        for (let col = 20; col <= 24; col++) tds[col].textContent = d.slow_helped.rem_all;
+        tds[25].textContent = d.slow_helped.rem_fem;
+        for (let col = 26; col <= 30; col++) tds[col].textContent = d.slow_helped.rem_all;
+      }
+    }
+    // Row 15: Total
+    const rowTot = trs[15];
+    if (rowTot) {
+      const tds = rowTot.querySelectorAll('td');
+      if (tds.length >= 30) {
+        tds[2].textContent = tot_failing_all;
+        tds[3].textContent = tot_failing_fem;
+        tds[4].textContent = tot_helped_all;
+        tds[5].textContent = tot_helped_fem;
+        for (let col = 6; col <= 10; col++) tds[col].textContent = tot_helped_all;
+        tds[11].textContent = tot_helped_fem;
+        for (let col = 12; col <= 16; col++) tds[col].textContent = tot_helped_all;
+        tds[17].textContent = tot_rem_all;
+        tds[18].textContent = tot_rem_fem;
+        for (let col = 19; col <= 23; col++) tds[col].textContent = tot_rem_all;
+        tds[24].textContent = tot_rem_fem;
+        for (let col = 25; col <= 29; col++) tds[col].textContent = tot_rem_all;
+      }
+    }
+  } else if (sheetName === 'ស្ថិតិសិស្ស') {
+    // Row 6: Grades 1 to 6
+    const row6 = trs[6];
+    if (row6) {
+      const tds = row6.querySelectorAll('td');
+      for (let k = 0; k < 6; k++) {
+        const off = k * 4;
+        if (tds[off + 1]) tds[off + 1].textContent = gradeData[k].total;
+        if (tds[off + 2]) tds[off + 2].textContent = gradeData[k].female;
+        if (tds[off + 3]) tds[off + 3].textContent = gradeData[k].femPct;
+      }
+    }
+    // Row 9: Total
+    const row9 = trs[9];
+    if (row9) {
+      const tds = row9.querySelectorAll('td');
+      if (tds[1]) tds[1].textContent = totStudents;
+      if (tds[2]) tds[2].textContent = totFemales;
+      if (tds[3]) tds[3].textContent = totFemPct;
+    }
+    // Table 3: Attendance (Rows 39 to 44)
+    for (let i = 0; i < 6; i++) {
+      const row = trs[39 + i];
+      if (!row) continue;
+      const d = gradeData[i];
+      const tds = row.querySelectorAll('td');
+      if (tds.length >= 8) {
+        tds[1].textContent = d.total;
+        tds[2].textContent = d.female;
+        tds[3].textContent = '22';
+        tds[4].textContent = d.prescribed;
+        tds[5].textContent = d.attended;
+        tds[6].textContent = d.absent;
+        tds[7].textContent = d.absentPct;
+      }
+    }
+    // Row 45: Attendance Total
+    const row45 = trs[45];
+    if (row45) {
+      const tds = row45.querySelectorAll('td');
+      if (tds.length >= 8) {
+        tds[1].textContent = totStudents;
+        tds[2].textContent = totFemales;
+        tds[3].textContent = '22';
+        tds[4].textContent = totPrescribed;
+        tds[5].textContent = totAttended;
+        tds[6].textContent = totAbsent;
+        tds[7].textContent = totAbsentPct;
+      }
+    }
+  } else if (sheetName === 'មេរៀនចុងក្រោយ') {
+    // Row 6: Khmer percentages
+    const row6 = trs[6];
+    if (row6) {
+      const tds = row6.querySelectorAll('td');
+      for (let k = 0; k < 6; k++) {
+        if (tds[1 + k*2]) tds[1 + k*2].textContent = gradeData[k].slow_res.khmer;
+        if (tds[2 + k*2]) tds[2 + k*2].textContent = gradeData[k].fast_res.khmer;
+      }
+    }
+    // Row 7: Social percentages
+    const row7 = trs[7];
+    if (row7) {
+      const tds = row7.querySelectorAll('td');
+      for (let k = 0; k < 6; k++) {
+        if (tds[1 + k*2]) tds[1 + k*2].textContent = gradeData[k].slow_res.social;
+        if (tds[2 + k*2]) tds[2 + k*2].textContent = gradeData[k].fast_res.social;
+      }
+    }
+    // Row 8: Science percentages
+    const row8 = trs[8];
+    if (row8) {
+      const tds = row8.querySelectorAll('td');
+      for (let k = 0; k < 6; k++) {
+        if (tds[1 + k*2]) tds[1 + k*2].textContent = gradeData[k].slow_res.science;
+        if (tds[2 + k*2]) tds[2 + k*2].textContent = gradeData[k].fast_res.science;
+      }
+    }
+    // Row 9: Math percentages
+    const row9 = trs[9];
+    if (row9) {
+      const tds = row9.querySelectorAll('td');
+      for (let k = 0; k < 6; k++) {
+        if (tds[1 + k*2]) tds[1 + k*2].textContent = gradeData[k].slow_res.math;
+        if (tds[2 + k*2]) tds[2 + k*2].textContent = gradeData[k].fast_res.math;
+      }
+    }
+    // Lesson Titles (Row 14, 16, 18, 20)
+    const row14 = trs[14]; // Khmer fast
+    if (row14) {
+      const tds = row14.querySelectorAll('td');
+      for (let k = 0; k < 6; k++) {
+        if (tds[1 + k]) tds[1 + k].textContent = gradeData[k].curriculum.khmer;
+      }
+    }
+    const row16 = trs[16]; // Social fast
+    if (row16) {
+      const tds = row16.querySelectorAll('td');
+      for (let k = 0; k < 6; k++) {
+        if (tds[1 + k]) tds[1 + k].textContent = gradeData[k].curriculum.social;
+      }
+    }
+    const row18 = trs[18]; // Science fast
+    if (row18) {
+      const tds = row18.querySelectorAll('td');
+      for (let k = 0; k < 6; k++) {
+        if (tds[1 + k]) tds[1 + k].textContent = gradeData[k].curriculum.science;
+      }
+    }
+    const row20 = trs[20]; // Math fast
+    if (row20) {
+      const tds = row20.querySelectorAll('td');
+      for (let k = 0; k < 6; k++) {
+        if (tds[1 + k]) tds[1 + k].textContent = gradeData[k].curriculum.math;
+      }
+    }
+  } else if (sheetName === 'បូកសរុបអប់រំ') {
+    // Row 11: Total row
+    const row11 = trs[11];
+    if (row11) {
+      const tds = row11.querySelectorAll('td');
+      if (tds[4]) tds[4].textContent = totStudents;
+      if (tds[6]) tds[6].textContent = totFemales;
+    }
+    // Rows 12 to 17: Grades 1 to 6
+    for (let i = 0; i < 6; i++) {
+      const row = trs[12 + i];
+      if (!row) continue;
+      const d = gradeData[i];
+      const tds = row.querySelectorAll('td');
+      if (tds[5]) tds[5].textContent = d.total;
+      if (tds[7]) tds[7].textContent = d.female;
+    }
+  }
+
+  return doc.body.firstElementChild ? doc.body.firstElementChild.outerHTML : doc.body.innerHTML;
+}
+window.BASELINE_CLASS_REPORTS = BASELINE_CLASS_REPORTS;
+window.getEffectiveClassMonthlyData = getEffectiveClassMonthlyData;
+window.getLiveSchoolReportSheetHtml = getLiveSchoolReportSheetHtml;
+
 // Main Render Function
 function renderSchoolMonthlyReports(targetContainerId) {
   const container = document.getElementById(targetContainerId || "schoolMonthlyReportContentWrap");
@@ -183,7 +653,7 @@ function switchSchoolReportSheet(sheetName) {
   // Update Paper Content
   const paper = document.getElementById('schoolSheetPaper');
   if (paper) {
-    paper.innerHTML = OFFICIAL_SCHOOL_REPORT_SHEETS[sheetName];
+    paper.innerHTML = getLiveSchoolReportSheetHtml(sheetName, schoolReportState.selectedMonth);
   }
 
   // Update print & screen orientation (A4 Portrait for បូកសរុបអប់រំ, A4 Landscape for others)
@@ -194,11 +664,19 @@ window.switchSchoolReportSheet = switchSchoolReportSheet;
 // Change Month
 function handleSchoolReportMonthChange(month) {
   schoolReportState.selectedMonth = month;
+  const paper = document.getElementById('schoolSheetPaper');
+  if (paper && schoolReportState.activeSheet) {
+    paper.innerHTML = getLiveSchoolReportSheetHtml(schoolReportState.activeSheet, month);
+  }
 }
 window.handleSchoolReportMonthChange = handleSchoolReportMonthChange;
 
 // Sync Data with Live Database
 function syncSchoolReportsWithLiveDb() {
+  const paper = document.getElementById('schoolSheetPaper');
+  if (paper && schoolReportState.activeSheet) {
+    paper.innerHTML = getLiveSchoolReportSheetHtml(schoolReportState.activeSheet, schoolReportState.selectedMonth);
+  }
   if (typeof Swal !== 'undefined') {
     Swal.fire({
       icon: 'success',

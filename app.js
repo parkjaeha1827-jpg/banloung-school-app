@@ -47,6 +47,12 @@ function initBanLoungApp() {
   setupNavigation();
   initSidebarResize();
   setupEventListeners();
+
+  // 3. Initialize Authentication & Access Control System
+  if (window.authSystem && typeof window.authSystem.init === "function") {
+    window.authSystem.init();
+  }
+
   renderApp();
 
   try {
@@ -345,6 +351,18 @@ function loadDatabase() {
   if (currentClasses.length > 0) {
     const withStudents = currentClasses.find(c => c.students && c.students.length > 0);
     state.activeClassId = withStudents ? withStudents.id : currentClasses[0].id;
+
+    // Align active class with logged in teacher if applicable
+    if (window.authSystem && typeof window.authSystem.isAdmin === "function" && !window.authSystem.isAdmin()) {
+      const allowedGrade = window.authSystem.getAllowedGrade();
+      if (allowedGrade) {
+        const teacherCls = currentClasses.find(c => c.grade === allowedGrade);
+        if (teacherCls) {
+          state.activeClassId = teacherCls.id;
+        }
+      }
+    }
+
     const activeCls = getActiveClass();
     if (activeCls) {
       ensureDefaultMonthlyAttendance(activeCls, state.activeAttendanceYear, state.activeAttendanceMonth);
@@ -432,6 +450,23 @@ function getClassesForYear(year) {
 
 function getActiveClass() {
   if (!state.db || !state.db.classes) return null;
+
+  // If logged in as teacher (non-admin), ensure active class is locked to their assigned grade
+  if (window.authSystem && typeof window.authSystem.isAdmin === "function" && !window.authSystem.isAdmin()) {
+    const allowedGrade = window.authSystem.getAllowedGrade();
+    if (allowedGrade) {
+      const current = state.db.classes.find(c => c.id === state.activeClassId);
+      if (!current || current.grade !== allowedGrade) {
+        const teacherClass = state.db.classes.find(c => c.grade === allowedGrade && c.academicYear === state.activeYear)
+                           || state.db.classes.find(c => c.grade === allowedGrade);
+        if (teacherClass) {
+          state.activeClassId = teacherClass.id;
+          return teacherClass;
+        }
+      }
+    }
+  }
+
   return state.db.classes.find(c => c.id === state.activeClassId) || null;
 }
 
@@ -975,6 +1010,15 @@ function switchAdminSubTab(subTabId, ensureExpanded = false) {
 window.switchAdminSubTab = switchAdminSubTab;
 
 function switchTab(tabId) {
+  // Admin-Only Tabs Protection
+  const ADMIN_ONLY_TABS = ["teachers", "exams", "reports", "school_monthly_report", "staff_info"];
+  if (ADMIN_ONLY_TABS.includes(tabId) && window.authSystem && typeof window.authSystem.isAdmin === "function" && !window.authSystem.isAdmin()) {
+    window.authSystem.promptAdminAccess(tabId, () => {
+      switchTab(tabId);
+    });
+    return;
+  }
+
   const studentSubTabs = ["students", "attendance_daily", "attendance_monthly", "attendance_yearly"];
   const adminSubTabs = [
     "scores",
@@ -1239,7 +1283,19 @@ function renderActiveTab() {
 }
 
 function updateClassSelectOptions() {
-  const classes = getClassesForYear(state.activeYear);
+  let classes = getClassesForYear(state.activeYear);
+
+  // If user is a teacher (not admin), only show their assigned class/grade
+  if (window.authSystem && typeof window.authSystem.isAdmin === "function" && !window.authSystem.isAdmin()) {
+    const allowedGrade = window.authSystem.getAllowedGrade();
+    if (allowedGrade) {
+      const filtered = classes.filter(c => c.grade === allowedGrade);
+      if (filtered.length > 0) {
+        classes = filtered;
+      }
+    }
+  }
+
   const selectElements = document.querySelectorAll(".class-select-input");
   selectElements.forEach(select => {
     select.innerHTML = "";

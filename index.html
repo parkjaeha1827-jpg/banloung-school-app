@@ -42,6 +42,20 @@
       </button>
     </div>
 
+    <!-- User Account Card in Sidebar -->
+    <div class="sidebar-user-card" id="sidebarUserCard" onclick="window.authSystem && window.authSystem.showLoginModal()" title="ចុចដើម្បីប្តូរគណនី ឬចាកចេញ">
+      <div class="sidebar-user-avatar" id="sidebarUserAvatar">
+        <i class="fa-solid fa-user-shield"></i>
+      </div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-title" id="sidebarUserTitle">អ្នកគ្រប់គ្រង (Admin)</div>
+        <div class="sidebar-user-sub" id="sidebarUserSub">មើលគ្រប់ថ្នាក់</div>
+      </div>
+      <button type="button" class="btn-sidebar-logout" onclick="event.stopPropagation(); window.authSystem && window.authSystem.logout();" title="ចាកចេញ">
+        <i class="fa-solid fa-right-from-bracket"></i>
+      </button>
+    </div>
+
     <ul class="nav-menu">
       <li class="nav-item">
         <a class="nav-link active" data-tab="dashboard" data-tooltip="ផ្ទាំងគ្រប់គ្រងរួម" title="ផ្ទាំងគ្រប់គ្រងរួម">
@@ -249,6 +263,18 @@
             <i class="fa-solid fa-clock" style="color: #16a34a;"></i>
             <span id="systemLiveTime">--:--:--</span>
           </div>
+        </div>
+
+        <!-- User Account Badge & Logout -->
+        <div class="user-auth-badge" id="userAuthBadge" onclick="window.authSystem && window.authSystem.showLoginModal()" title="គណនីបច្ចុប្បន្ន (ចុចដើម្បីប្តូរគណនី ឬចាកចេញ)">
+          <i class="fa-solid fa-crown text-warning" id="userAuthIcon"></i>
+          <div class="user-auth-text-wrap">
+            <span class="user-auth-role" id="userAuthRole">Admin</span>
+            <span class="user-auth-name" id="userAuthName">អ្នកគ្រប់គ្រងទូទៅ</span>
+          </div>
+          <button type="button" class="btn-auth-logout-icon" onclick="event.stopPropagation(); window.authSystem && window.authSystem.logout();" title="ចាកចេញពីប្រព័ន្ធ (Logout)">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
         </div>
       </div>
     </header>
@@ -1587,6 +1613,115 @@
   </div>
 </div>
 
+<!-- ========================================================================== -->
+<!-- FULL-SCREEN AUTHENTICATION & LOGIN MODAL -->
+<!-- ========================================================================== -->
+<div class="auth-modal-overlay" id="authModalOverlay" style="display: none;">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="auth-logo-badge">
+        <i class="fa-solid fa-school"></i>
+      </div>
+      <h2 class="auth-title">សាលាបឋមសិក្សា បាន្លួង</h2>
+      <p class="auth-subtitle">ប្រព័ន្ធគ្រប់គ្រងទិន្នន័យ និងពិន្ទុសិស្សផ្លូវការ</p>
+      <div class="auth-tagline"><i class="fa-solid fa-shield-halved"></i> សូមជ្រើសរើសថ្នាក់ ឬគណនី និងបញ្ចូលពាក្យសម្ងាត់ដើម្បីចូលប្រើប្រាស់</div>
+    </div>
+
+    <form class="auth-form" onsubmit="handleAuthSubmit(event)">
+      <!-- Account / Class Selection -->
+      <div class="auth-form-group">
+        <label for="authClassSelect"><i class="fa-solid fa-chalkboard-user text-primary"></i> ជ្រើសរើសគណនី ឬថ្នាក់រៀន</label>
+        <select id="authClassSelect" class="form-control auth-select" onchange="handleAuthClassChange()">
+          <option value="admin">🔑 អ្នកគ្រប់គ្រងទូទៅ (Admin) - មើលគ្រប់ថ្នាក់</option>
+          <option value="grade_1">🏫 ថ្នាក់ទី១ (លោកគ្រូ ផាន ផុស)</option>
+          <option value="grade_2">🏫 ថ្នាក់ទី២ (អ្នកគ្រូ លី មករា)</option>
+          <option value="grade_3">🏫 ថ្នាក់ទី៣ (អ្នកគ្រូ ក្រូយ ចាន់ធារ៉ា)</option>
+          <option value="grade_4">🏫 ថ្នាក់ទី៤ (អ្នកគ្រូ សុខ ស្រីនាង)</option>
+          <option value="grade_5">🏫 ថ្នាក់ទី៥ (លោកគ្រូ ញឹម ស៊ីវថា)</option>
+          <option value="grade_6">🏫 ថ្នាក់ទី៦ (លោកគ្រូ ង៉ែត សារុន)</option>
+          <option value="kindergarten">🏫 ថ្នាក់មត្តេយ្យ (អ្នកគ្រូ លី ស្រីនូ)</option>
+        </select>
+      </div>
+
+      <!-- Password Input -->
+      <div class="auth-form-group">
+        <label for="authPasswordInput"><i class="fa-solid fa-key text-warning"></i> ពាក្យសម្ងាត់ (Password / PIN)</label>
+        <div class="auth-input-wrapper">
+          <input type="password" id="authPasswordInput" class="form-control auth-password-input" placeholder="បញ្ចូលពាក្យសម្ងាត់..." autocomplete="current-password" required>
+          <button type="button" class="btn-toggle-auth-pwd" onclick="toggleAuthPasswordVisibility()" title="បង្ហាញ / លាក់ ពាក្យសម្ងាត់">
+            <i class="fa-solid fa-eye" id="authPasswordEyeIcon"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Error Message Container -->
+      <div id="authErrorMessage" class="auth-error-alert" style="display: none;"></div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn-auth-submit">
+        <i class="fa-solid fa-right-to-bracket"></i> ចូលប្រព័ន្ធ (Sign In)
+      </button>
+
+      <!-- Quick Credentials Helper Pills -->
+      <div class="auth-pills-box">
+        <div class="auth-pills-title"><i class="fa-solid fa-circle-info"></i> បញ្ជីពាក្យសម្ងាត់ផ្លូវការ (ចុចដើម្បីជ្រើសរើសរហ័ស)៖</div>
+        <div class="auth-pills-grid">
+          <button type="button" class="auth-pill" onclick="quickFillAuth('admin', 'admin')">
+            <span class="pill-name">Admin</span> <span class="pill-code">admin</span>
+          </button>
+          <button type="button" class="auth-pill" onclick="quickFillAuth('grade_1', '1111')">
+            <span class="pill-name">ថ្នាក់ទី១</span> <span class="pill-code">1111</span>
+          </button>
+          <button type="button" class="auth-pill" onclick="quickFillAuth('grade_2', '2222')">
+            <span class="pill-name">ថ្នាក់ទី២</span> <span class="pill-code">2222</span>
+          </button>
+          <button type="button" class="auth-pill" onclick="quickFillAuth('grade_3', '3333')">
+            <span class="pill-name">ថ្នាក់ទី៣</span> <span class="pill-code">3333</span>
+          </button>
+          <button type="button" class="auth-pill" onclick="quickFillAuth('grade_4', '4444')">
+            <span class="pill-name">ថ្នាក់ទី៤</span> <span class="pill-code">4444</span>
+          </button>
+          <button type="button" class="auth-pill" onclick="quickFillAuth('grade_5', '5555')">
+            <span class="pill-name">ថ្នាក់ទី៥</span> <span class="pill-code">5555</span>
+          </button>
+          <button type="button" class="auth-pill" onclick="quickFillAuth('grade_6', '6666')">
+            <span class="pill-name">ថ្នាក់ទី៦</span> <span class="pill-code">6666</span>
+          </button>
+          <button type="button" class="auth-pill" onclick="quickFillAuth('kindergarten', '0000')">
+            <span class="pill-name">ថ្នាក់មត្តេយ្យ</span> <span class="pill-code">0000</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ========================================================================== -->
+<!-- ADMIN ELEVATION PROMPT MODAL -->
+<!-- ========================================================================== -->
+<div class="modal-overlay" id="adminPromptModalOverlay" style="display: none;">
+  <div class="modal-box" style="max-width: 440px;">
+    <div class="modal-header">
+      <div class="modal-title"><i class="fa-solid fa-lock text-warning"></i> សិទ្ធិអ្នកគ្រប់គ្រង (Admin Required)</div>
+      <button class="modal-close" onclick="closeAdminPromptModal()">&times;</button>
+    </div>
+    <div class="modal-body" style="padding: 20px;">
+      <p style="font-size: 0.9rem; color: #475569; margin-bottom: 16px; line-height: 1.6;">
+        ផ្ទាំងនេះសម្រាប់តែ<strong>អ្នកគ្រប់គ្រងទូទៅ (Admin)</strong> ប៉ុណ្ណោះ។ សូមបញ្ចូលពាក្យសម្ងាត់ Admin ដើម្បីបន្តចូលមើល៖
+      </p>
+      <div class="form-group" style="margin-bottom: 12px;">
+        <label for="adminPromptPassword" style="font-size: 0.85rem; font-weight: 600; color: #1e293b; margin-bottom: 6px; display: block;">ពាក្យសម្ងាត់ Admin</label>
+        <input type="password" id="adminPromptPassword" class="form-control" placeholder="បញ្ចូល admin..." onkeydown="if(event.key==='Enter'){event.preventDefault();confirmAdminPrompt();}">
+      </div>
+      <div id="adminPromptError" class="auth-error-alert" style="display: none; margin-top: 8px;"></div>
+    </div>
+    <div class="modal-footer" style="padding: 12px 20px; display: flex; justify-content: flex-end; gap: 8px;">
+      <button type="button" class="btn btn-secondary" onclick="closeAdminPromptModal()">បោះបង់</button>
+      <button type="button" class="btn btn-primary" onclick="confirmAdminPrompt()"><i class="fa-solid fa-shield-halved"></i> ចូលជា Admin</button>
+    </div>
+  </div>
+</div>
+
 
 <script src="pdf.min.js"></script>
 <script src="data.js"></script>
@@ -1596,6 +1731,7 @@
   <script src="firebase-app-compat.js"></script>
   <script src="firebase-database-compat.js"></script>
   <script src="firebase-sync.js"></script>
+  <script src="auth.js"></script>
   <script src="app.js"></script>
 
 </body>

@@ -53,10 +53,28 @@ function initBanLoungApp() {
     window.authSystem.init();
   }
 
-  renderApp();
-
+  // 4. Resolve saved active tab, subtabs, and academic year/class from hash, query param, or localStorage
+  let initialTargetTab = "dashboard";
   try {
     const urlParams = new URLSearchParams(window.location.search);
+    const hashVal = window.location.hash ? window.location.hash.substring(1).replace(/^[#/]+/, "") : null;
+    const queryTab = urlParams.get("tab");
+    const storedTab = localStorage.getItem("banloung_active_tab");
+    const resolvedTab = hashVal || queryTab || storedTab;
+
+    if (resolvedTab) {
+      const ADMIN_ONLY_TABS = ["teachers", "exams", "reports", "school_monthly_report", "staff_info"];
+      const isRestricted = ADMIN_ONLY_TABS.includes(resolvedTab) && window.authSystem && typeof window.authSystem.isAdmin === "function" && !window.authSystem.isAdmin();
+      if (!isRestricted) {
+        initialTargetTab = resolvedTab;
+      }
+    }
+
+    const savedStudentSub = localStorage.getItem("banloung_active_student_subtab");
+    if (savedStudentSub) state.activeStudentSubTab = savedStudentSub;
+    const savedAdminSub = localStorage.getItem("banloung_active_admin_subtab");
+    if (savedAdminSub) state.activeAdminSubTab = savedAdminSub;
+
     if (urlParams.get("traineeMode")) {
       state.activeTraineePrintMode = urlParams.get("traineeMode");
     }
@@ -75,12 +93,57 @@ function initBanLoungApp() {
       );
       if (found) state.activeClassId = found.id;
     }
-    const targetTab = window.location.hash ? window.location.hash.substring(1) : (urlParams.get("tab") || null);
-    if (targetTab && typeof switchTab === "function") {
-      switchTab(targetTab);
-    }
   } catch (e) {
-    console.error("Error activating initial target tab:", e);
+    console.error("Error resolving initial tab state:", e);
+  }
+
+  const studentSubTabs = ["students", "attendance_daily", "attendance_monthly", "attendance_yearly"];
+  const adminSubTabs = [
+    "scores",
+    "monthly_ranks",
+    "honor_roll",
+    "semester_ranks",
+    "semester_scores",
+    "semester_extract",
+    "annual_ranks",
+    "study_book",
+    "trainee",
+    "monthly_report"
+  ];
+
+  if (studentSubTabs.includes(initialTargetTab)) {
+    state.activeTab = "students_management";
+    state.activeStudentSubTab = initialTargetTab;
+  } else if (adminSubTabs.includes(initialTargetTab)) {
+    state.activeTab = "admin_tasks";
+    state.activeAdminSubTab = initialTargetTab;
+  } else {
+    state.activeTab = initialTargetTab;
+  }
+
+  renderApp();
+
+  if (initialTargetTab && typeof switchTab === "function") {
+    try {
+      switchTab(initialTargetTab);
+    } catch (e) {
+      console.error("Error activating initial target tab:", e);
+    }
+  }
+
+  // Support browser Back / Forward history navigation
+  if (!window._banloungHashListenerAdded) {
+    window._banloungHashListenerAdded = true;
+    window.addEventListener("hashchange", () => {
+      try {
+        const h = window.location.hash ? window.location.hash.substring(1).replace(/^[#/]+/, "") : null;
+        if (h && typeof switchTab === "function") {
+          if (h !== state.activeTab && h !== state.activeAdminSubTab && h !== state.activeStudentSubTab) {
+            switchTab(h);
+          }
+        }
+      } catch (e) {}
+    });
   }
 }
 
@@ -346,11 +409,24 @@ function loadDatabase() {
     localStorage.setItem("banloung_school_db", JSON.stringify(state.db));
   } catch (e) {}
 
+  // Restore saved academic year if valid
+  try {
+    const savedYear = localStorage.getItem("banloung_active_year");
+    if (savedYear && state.db.schoolInfo && state.db.schoolInfo.academicYears && state.db.schoolInfo.academicYears.includes(savedYear)) {
+      state.activeYear = savedYear;
+    }
+  } catch (e) {}
+
   // Set default active class
   const currentClasses = getClassesForYear(state.activeYear);
   if (currentClasses.length > 0) {
+    let savedClassId = null;
+    try {
+      savedClassId = localStorage.getItem("banloung_active_class_id");
+    } catch (e) {}
+    const validSaved = savedClassId && currentClasses.find(c => c.id === savedClassId);
     const withStudents = currentClasses.find(c => c.students && c.students.length > 0);
-    state.activeClassId = withStudents ? withStudents.id : currentClasses[0].id;
+    state.activeClassId = validSaved ? validSaved.id : (withStudents ? withStudents.id : currentClasses[0].id);
 
     // Align active class with logged in teacher if applicable
     if (window.authSystem && typeof window.authSystem.isAdmin === "function" && !window.authSystem.isAdmin()) {
@@ -512,9 +588,11 @@ function setupNavigation() {
     yearSelect.value = state.activeYear;
     yearSelect.addEventListener("change", e => {
       state.activeYear = e.target.value;
+      try { localStorage.setItem("banloung_active_year", state.activeYear); } catch (e) {}
       const classes = getClassesForYear(state.activeYear);
       if (classes.length > 0) {
         state.activeClassId = classes[0].id;
+        try { localStorage.setItem("banloung_active_class_id", state.activeClassId); } catch (e) {}
       } else {
         state.activeClassId = null;
       }
@@ -757,9 +835,18 @@ window.toggleAdminTasksHub = toggleAdminTasksHub;
  * @param {string} subTabId ('students', 'attendance_daily', 'attendance_monthly', 'attendance_yearly')
  * @param {boolean} ensureExpanded
  */
-function switchStudentSubTab(subTabId, ensureExpanded = false) {
+function switchStudentSubTab(subTabId, ensureExpanded = true) {
   state.activeTab = "students_management";
   state.activeStudentSubTab = subTabId;
+
+  // Persist to localStorage and URL hash
+  try {
+    localStorage.setItem("banloung_active_tab", subTabId);
+    localStorage.setItem("banloung_active_student_subtab", subTabId);
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState(null, "", "#" + subTabId);
+    }
+  } catch (e) {}
 
   // 1. Activate tab-students_management pane
   document.querySelectorAll(".tab-pane").forEach(p => {
@@ -853,9 +940,18 @@ function switchStudentSubTab(subTabId, ensureExpanded = false) {
  * @param {string} subTabId
  * @param {boolean} ensureExpanded
  */
-function switchAdminSubTab(subTabId, ensureExpanded = false) {
+function switchAdminSubTab(subTabId, ensureExpanded = true) {
   state.activeTab = "admin_tasks";
   state.activeAdminSubTab = subTabId;
+
+  // Persist to localStorage and URL hash
+  try {
+    localStorage.setItem("banloung_active_tab", subTabId);
+    localStorage.setItem("banloung_active_admin_subtab", subTabId);
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState(null, "", "#" + subTabId);
+    }
+  } catch (e) {}
 
   // 1. Activate tab-admin_tasks pane
   document.querySelectorAll(".tab-pane").forEach(p => {
@@ -1039,7 +1135,7 @@ function switchTab(tabId) {
   }
 
   if (tabId === "students_management") {
-    switchStudentSubTab(state.activeStudentSubTab || "students", false);
+    switchStudentSubTab(state.activeStudentSubTab || "students", true);
     return;
   }
 
@@ -1055,6 +1151,14 @@ function switchTab(tabId) {
 
   // Normal tab switching (dashboard, teachers, exams, reports)
   state.activeTab = tabId;
+
+  // Persist to localStorage and URL hash
+  try {
+    localStorage.setItem("banloung_active_tab", tabId);
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState(null, "", "#" + tabId);
+    }
+  } catch (e) {}
 
   const navItem = document.getElementById("navItemStudentsHub");
   if (navItem) navItem.classList.remove("expanded");
@@ -1147,6 +1251,7 @@ function setupEventListeners() {
   classSelects.forEach(sel => {
     sel.addEventListener("change", e => {
       state.activeClassId = e.target.value;
+      try { localStorage.setItem("banloung_active_class_id", state.activeClassId); } catch (e) {}
       const currentClass = getActiveClass();
       if (currentClass) {
         ensureDefaultMonthlyAttendance(currentClass, state.activeAttendanceYear, state.activeAttendanceMonth);
@@ -5664,6 +5769,7 @@ window.printHonorRoll = printHonorRoll;
 if (typeof window.changeClass !== "function") {
   window.changeClass = function(classId) {
     state.activeClassId = classId;
+    try { localStorage.setItem("banloung_active_class_id", classId); } catch (e) {}
     const currentClass = getActiveClass();
     if (currentClass) {
       ensureDefaultMonthlyAttendance(currentClass, state.activeAttendanceYear, state.activeAttendanceMonth);

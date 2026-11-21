@@ -97,6 +97,13 @@
           </li>
         </ul>
       </li>
+      <!-- ថ្នាក់រៀន (Classrooms) -->
+      <li class="nav-item">
+        <a class="nav-link" data-tab="classes" data-tooltip="ថ្នាក់រៀន" title="ថ្នាក់រៀន">
+          <span class="nav-icon"><i class="fa-solid fa-chalkboard" style="color: #f59e0b;"></i></span>
+          <span class="nav-text">ថ្នាក់រៀន</span>
+        </a>
+      </li>
       <!-- កិច្ចការរដ្ឋបាល (Administrative Tasks Hub) - រួមបញ្ចូលទាំង ៩ ផ្ទាំង -->
       <li class="nav-item nav-has-submenu" id="navItemAdminTasksHub">
         <a class="nav-link" data-tab="admin_tasks" data-tooltip="កិច្ចការរដ្ឋបាល" title="កិច្ចការរដ្ឋបាល">
@@ -574,6 +581,38 @@
         </div>
       </section>
 
+      <!-- ========================================== -->
+      <!-- TAB: CLASSROOMS (ថ្នាក់រៀន) -->
+      <!-- ========================================== -->
+      <section id="tab-classes" class="tab-pane">
+        <!-- Filter & Header Toolbar (No-Print) -->
+        <div class="filter-toolbar no-print">
+          <div class="filter-group">
+            <label style="font-weight: 600; font-size: 13px;"><i class="fa fa-calendar-alt"></i> ឆ្នាំសិក្សា៖</label>
+            <select id="classesYearSelect" class="filter-select" onchange="changeClassesYear(this.value)"></select>
+
+            <input type="text" id="classesSearchInput" class="search-input" placeholder="🔍 ស្វែងរកថ្នាក់ ឬឈ្មោះគ្រូ..." oninput="filterClassesCards(this.value)">
+          </div>
+
+          <div class="filter-group">
+            <button type="button" class="btn btn-action-outline" onclick="printAllClassroomBadges()" title="បោះពុម្ពប័ណ្ណសម្គាល់ថ្នាក់រៀន និង QR Code ទាំងអស់">
+              <i class="fa-solid fa-print" style="color: #2563eb; font-size: 14px;"></i> បោះពុម្ពប័ណ្ណ QR គ្រប់ថ្នាក់
+            </button>
+            <button type="button" class="btn btn-action-outline" onclick="exportClassesSummaryExcel()" title="នាំចេញស្ថិតិថ្នាក់រៀនជា Excel">
+              <i class="fa-solid fa-file-excel" style="color: #16a34a; font-size: 14px;"></i> នាំចេញ Excel
+            </button>
+          </div>
+        </div>
+
+        <!-- School Level Statistics Cards -->
+        <div class="classes-stats-banner no-print" id="classesStatsBanner"></div>
+
+        <!-- Class Cards Grid -->
+        <div class="classes-grid" id="classesGridContainer"></div>
+
+        <!-- Printable Classroom Badges Container -->
+        <div class="classes-print-container" id="classesPrintContainer" style="display: none;"></div>
+      </section>
 
       <!-- ========================================== -->
       <!-- TAB 5: SCORES & RANKINGS (តារាងស្រង់ពិន្ទុប្រចាំខែ) -->
@@ -1843,6 +1882,7 @@
 
 
 <script src="pdf.min.js"></script>
+<script src="qrcode.js"></script>
 <script src="data.js"></script>
 <script src="library.js"></script>
 <script src="school_reports.js"></script>

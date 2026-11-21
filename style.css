@@ -10146,3 +10146,542 @@ body.auth-modal-open {
     background: transparent !important;
   }
 }
+
+/* ==========================================================================
+   CLASSROOMS TAB STYLES (ផ្ទាំង ថ្នាក់រៀន)
+   ========================================================================== */
+
+.classes-wrapper {
+  padding: 16px 20px;
+}
+
+.classes-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.class-stat-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #ffffff;
+  padding: 16px 20px;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.class-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.card-total-classes .stat-icon-circle {
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+  color: #ffffff;
+}
+
+.card-total-students .stat-icon-circle {
+  background: linear-gradient(135deg, #0d9488, #14b8a6);
+  color: #ffffff;
+}
+
+.card-female-students .stat-icon-circle {
+  background: linear-gradient(135deg, #be185d, #ec4899);
+  color: #ffffff;
+}
+
+.card-male-students .stat-icon-circle {
+  background: linear-gradient(135deg, #1d4ed8, #60a5fa);
+  color: #ffffff;
+}
+
+.stat-icon-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.stat-info-wrap {
+  flex: 1;
+}
+
+.stat-num-val {
+  font-family: var(--font-battambang);
+  font-size: 24px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+.stat-unit {
+  font-size: 14px;
+  font-weight: 500;
+  color: #64748b;
+}
+
+.stat-badge-percent {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 20px;
+  background: #f1f5f9;
+  color: #475569;
+  margin-left: 4px;
+}
+
+.stat-label-text {
+  font-family: var(--font-battambang);
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+/* Classroom Grid */
+.classes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 22px;
+  margin-top: 14px;
+}
+
+.classroom-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: all 0.25s ease;
+}
+
+.classroom-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.09);
+  border-color: #93c5fd;
+}
+
+.classroom-card.is-active-class {
+  border: 2px solid #3b82f6;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.15);
+}
+
+.class-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 18px;
+  background: linear-gradient(to right, #f8fafc, #f1f5f9);
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.class-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.class-grade-pill {
+  font-family: var(--font-moul);
+  font-size: 13px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  padding: 4px 12px;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(30, 58, 138, 0.25);
+}
+
+.class-year-pill {
+  font-size: 12px;
+  color: #475569;
+  background: #ffffff;
+  padding: 3px 9px;
+  border-radius: 20px;
+  border: 1px solid #cbd5e1;
+  font-weight: 500;
+}
+
+.class-user-tag {
+  font-size: 11px;
+  color: #15803d;
+  background: #dcfce7;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-print-single-badge {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #2563eb;
+  padding: 5px 11px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s;
+}
+
+.btn-print-single-badge:hover {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  color: #1d4ed8;
+}
+
+.class-card-body {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+/* Homeroom Teacher Row */
+.teacher-profile-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.teacher-avatar-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+}
+
+.teacher-meta-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.teacher-meta-title {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.teacher-name-bold {
+  font-family: var(--font-battambang);
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.teacher-badge-tag {
+  font-size: 12px;
+  color: #475569;
+  margin-top: 2px;
+}
+
+/* Student Stats Box */
+.class-student-stats-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 10px 14px;
+  text-align: center;
+}
+
+.stat-count-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.stat-box-num {
+  font-family: var(--font-battambang);
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.stat-box-lbl {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.stat-count-divider {
+  width: 1px;
+  height: 28px;
+  background: #cbd5e1;
+}
+
+/* Gender Proportion Bar */
+.gender-bar-wrapper {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  overflow: hidden;
+  display: flex;
+  margin-top: -8px;
+}
+
+.gender-bar-fill.female {
+  background: #ec4899;
+}
+
+.gender-bar-fill.male {
+  background: #3b82f6;
+}
+
+/* Teacher QR Box */
+.teacher-qr-credentials-box {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  border: 1px dashed #93c5fd;
+  border-radius: 12px;
+  padding: 12px;
+  background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 100%);
+}
+
+.qr-code-holder {
+  background: #ffffff;
+  padding: 6px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.qr-credentials-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.qr-box-heading {
+  font-size: 13px;
+  color: #1e3a8a;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.qr-box-desc {
+  font-size: 11px;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+.qr-password-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.qr-pin-label {
+  font-size: 11px;
+  color: #475569;
+  font-weight: 600;
+}
+
+.qr-pin-code {
+  font-family: monospace;
+  font-size: 13px;
+  font-weight: 700;
+  background: #e2e8f0;
+  color: #1e293b;
+  padding: 2px 8px;
+  border-radius: 6px;
+  letter-spacing: 2px;
+}
+
+.btn-toggle-pin {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 2px 4px;
+  font-size: 12px;
+  border-radius: 4px;
+}
+
+.btn-toggle-pin:hover {
+  color: #1e293b;
+}
+
+.qr-actions-row {
+  margin-top: 4px;
+}
+
+.btn-quick-login-card {
+  background: #1e3a8a;
+  color: #ffffff;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: background 0.2s;
+}
+
+.btn-quick-login-card:hover {
+  background: #2563eb;
+}
+
+/* Card Footer Actions */
+.class-card-footer {
+  display: flex;
+  gap: 8px;
+  padding: 12px 18px;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+}
+
+.btn-class-nav {
+  flex: 1;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: all 0.2s;
+}
+
+.btn-class-nav:hover {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  color: #1d4ed8;
+}
+
+/* Printable Classroom Badge Styles */
+.class-badge-printable-sheet {
+  max-width: 760px;
+  margin: 0 auto 30px auto;
+  background: #ffffff;
+  border: 3px double #1e3a8a;
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  page-break-after: always;
+}
+
+.class-badge-print-header {
+  text-align: center;
+  border-bottom: 2px solid #1e3a8a;
+  padding-bottom: 14px;
+  margin-bottom: 18px;
+}
+
+.class-badge-kingdom {
+  font-family: var(--font-moul);
+  font-size: 16px;
+  color: #1e3a8a;
+  margin-bottom: 4px;
+}
+
+.class-badge-motto {
+  font-family: var(--font-moul);
+  font-size: 14px;
+  color: #1e3a8a;
+}
+
+.class-badge-school {
+  font-family: var(--font-moul);
+  font-size: 18px;
+  color: #0f172a;
+  margin-top: 8px;
+}
+
+.class-badge-doc-title {
+  font-family: var(--font-moul);
+  font-size: 19px;
+  color: #b91c1c;
+  margin: 12px 0 6px 0;
+}
+
+.class-badge-meta-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.class-badge-meta-box {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 12px 16px;
+}
+
+.class-badge-qr-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 18px;
+  background: #fafafa;
+  border: 1px dashed #94a3b8;
+  border-radius: 12px;
+  margin: 18px 0;
+}
+
+.class-badge-print-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+  padding-top: 12px;
+}
+
+@media print {
+  body[data-active-tab="classes"] .filter-toolbar,
+  body[data-active-tab="classes"] .classes-stats-banner,
+  body[data-active-tab="classes"] .classes-grid {
+    display: none !important;
+  }
+  body[data-active-tab="classes"] .classes-print-container {
+    display: block !important;
+  }
+}
+

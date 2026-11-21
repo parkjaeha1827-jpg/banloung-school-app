@@ -445,6 +445,20 @@
 
   // Initialize System
   function initAuth() {
+    // Auto-login from QR Code / URL parameter (e.g. ?login=1111 or ?pin=1111)
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const autoPin = urlParams.get("login") || urlParams.get("pin");
+      if (autoPin) {
+        const loginRes = login(autoPin);
+        if (loginRes && loginRes.success) {
+          console.log("[Auth] Logged in via QR Code / URL param:", loginRes.user.label);
+        }
+      }
+    } catch (e) {
+      console.error("[Auth] QR auto-login error:", e);
+    }
+
     const user = getCurrentUser();
     if (!user) {
       showLoginModal();

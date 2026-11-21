@@ -6498,16 +6498,28 @@ function renderSemesterRanks() {
       return String(num).padStart(2, '0');
     }
 
-    // Generate 19 dual rows (Rows 1..19 on left, 20..38 on right)
+    // Exact rows based on actual student count with ZERO spare empty rows
+    const rowsPerSide = totalStudents > 0 ? Math.ceil(totalStudents / 2) : 0;
+
+    // Dynamic row height so table rows fill the A4 page nicely
+    let rowHeight = 20;
+    if (rowsPerSide <= 17) rowHeight = 23;
+    else if (rowsPerSide <= 19) rowHeight = 21;
+    else if (rowsPerSide <= 21) rowHeight = 19;
+    else rowHeight = 18;
+
     let tableRowsHtml = "";
-    for (let i = 0; i < 19; i++) {
+    for (let i = 0; i < rowsPerSide; i++) {
       const leftStudent = sorted[i];
-      const rightStudent = sorted[i + 19];
+      const rightIndex = i + rowsPerSide;
+      const rightStudent = sorted[rightIndex];
+      const leftNum = i + 1;
+      const rightNum = rightIndex + 1;
 
       let leftHtml = "";
       if (leftStudent) {
         leftHtml = `
-          <td class="sem-dual-td-num">${i + 1}</td>
+          <td class="sem-dual-td-num">${leftNum}</td>
           <td class="sem-dual-td-lastname" style="border-right: hidden !important;">${escapeHtml(leftStudent.lName)}</td>
           <td class="sem-dual-td-firstname" style="border-left: hidden !important;">${escapeHtml(leftStudent.fName)}</td>
           <td class="sem-dual-td-gender">${escapeHtml(leftStudent.gender)}</td>
@@ -6518,7 +6530,7 @@ function renderSemesterRanks() {
         `;
       } else {
         leftHtml = `
-          <td class="sem-dual-td-num">${i + 1}</td>
+          <td class="sem-dual-td-num"></td>
           <td class="sem-dual-td-lastname" style="border-right: hidden !important;"></td>
           <td class="sem-dual-td-firstname" style="border-left: hidden !important;"></td>
           <td class="sem-dual-td-gender"></td>
@@ -6532,7 +6544,7 @@ function renderSemesterRanks() {
       let rightHtml = "";
       if (rightStudent) {
         rightHtml = `
-          <td class="sem-dual-td-num">${i + 20}</td>
+          <td class="sem-dual-td-num">${rightNum}</td>
           <td class="sem-dual-td-lastname" style="border-right: hidden !important;">${escapeHtml(rightStudent.lName)}</td>
           <td class="sem-dual-td-firstname" style="border-left: hidden !important;">${escapeHtml(rightStudent.fName)}</td>
           <td class="sem-dual-td-gender">${escapeHtml(rightStudent.gender)}</td>
@@ -6543,7 +6555,7 @@ function renderSemesterRanks() {
         `;
       } else {
         rightHtml = `
-          <td class="sem-dual-td-num">${i + 20}</td>
+          <td class="sem-dual-td-num"></td>
           <td class="sem-dual-td-lastname" style="border-right: hidden !important;"></td>
           <td class="sem-dual-td-firstname" style="border-left: hidden !important;"></td>
           <td class="sem-dual-td-gender"></td>
@@ -6554,7 +6566,7 @@ function renderSemesterRanks() {
         `;
       }
 
-      tableRowsHtml += `<tr>${leftHtml}${rightHtml}</tr>`;
+      tableRowsHtml += `<tr style="height: ${rowHeight}px;">${leftHtml}${rightHtml}</tr>`;
     }
 
     let dualHtml = `

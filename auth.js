@@ -9,29 +9,46 @@
   'use strict';
 
   // 1. Official Credentials Configuration (តារាងកំណត់ពាក្យសម្ងាត់ផ្លូវការ)
+  const CUSTOM_PASSWORDS_STORAGE_KEY = "banloung_custom_passwords";
+
+  function getCustomPasswords() {
+    try {
+      const raw = localStorage.getItem(CUSTOM_PASSWORDS_STORAGE_KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch (e) {
+      console.error("[Auth] getCustomPasswords error:", e);
+      return {};
+    }
+  }
+
   const AUTH_USERS = [
     {
       id: "admin",
       password: "admin",
       role: "admin",
       isAdmin: true,
-      label: "អ្នកគ្រប់គ្រងទូទៅ (Admin)",
-      badge: "Admin (មើលគ្រប់ថ្នាក់)",
+      label: "គណៈគ្រប់គ្រង Admin (នាយកសាលា ឬ បណ្ណារក្ស)",
+      badge: "Admin (នាយក / បណ្ណារក្ស)",
       grade: null,
       classId: null,
-      teacher: "គណៈគ្រប់គ្រងសាលា",
-      description: "មានសិទ្ធិមើល និងកែប្រែទិន្នន័យគ្រប់ថ្នាក់ទាំងអស់"
+      teacher: "នាយកសាលា ឬ បណ្ណារក្ស",
+      gender: "ប្រុស",
+      title: "លោក",
+      roleKh: "នាយក ឬ បណ្ណារក្ស",
+      description: "តួនាទីជានាយក ឬបណ្ណារក្ស ដែលមានសិទ្ធិប្រើពាក្យសម្ងាត់ Admin ចូលគ្រប់គ្រងគ្រប់ថ្នាក់"
     },
     {
       id: "grade_1",
       password: "1111",
       role: "teacher",
       isAdmin: false,
-      label: "ថ្នាក់ទី១",
-      badge: "គ្រូថ្នាក់ទី១",
+      label: "ថ្នាក់ទី១ (លោកគ្រូ ផាន ផុស)",
+      badge: "លោកគ្រូ ផាន ផុស",
       grade: "ថ្នាក់ទី១",
       classId: "CLS_G1",
       teacher: "ផាន ផុស",
+      gender: "ប្រុស",
+      title: "លោកគ្រូ",
       description: "គ្រប់គ្រងទិន្នន័យសិស្ស និងពិន្ទុថ្នាក់ទី១"
     },
     {
@@ -39,11 +56,13 @@
       password: "2222",
       role: "teacher",
       isAdmin: false,
-      label: "ថ្នាក់ទី២",
-      badge: "គ្រូថ្នាក់ទី២",
+      label: "ថ្នាក់ទី២ (លោកគ្រូ លី មករា)",
+      badge: "លោកគ្រូ លី មករា",
       grade: "ថ្នាក់ទី២",
       classId: "CLS_G2",
       teacher: "លី មករា",
+      gender: "ប្រុស",
+      title: "លោកគ្រូ",
       description: "គ្រប់គ្រងទិន្នន័យសិស្ស និងពិន្ទុថ្នាក់ទី២"
     },
     {
@@ -51,11 +70,13 @@
       password: "3333",
       role: "teacher",
       isAdmin: false,
-      label: "ថ្នាក់ទី៣",
-      badge: "គ្រូថ្នាក់ទី៣",
+      label: "ថ្នាក់ទី៣ (អ្នកគ្រូ ក្រូយ ចាន់ធារ៉ា)",
+      badge: "អ្នកគ្រូ ក្រូយ ចាន់ធារ៉ា",
       grade: "ថ្នាក់ទី៣",
       classId: "CLS_G3",
       teacher: "ក្រូយ ចាន់ធារ៉ា",
+      gender: "ស្រី",
+      title: "អ្នកគ្រូ",
       description: "គ្រប់គ្រងទិន្នន័យសិស្ស និងពិន្ទុថ្នាក់ទី៣"
     },
     {
@@ -63,11 +84,13 @@
       password: "4444",
       role: "teacher",
       isAdmin: false,
-      label: "ថ្នាក់ទី៤",
-      badge: "គ្រូថ្នាក់ទី៤",
+      label: "ថ្នាក់ទី៤ (អ្នកគ្រូ សុខ ស្រីនាង)",
+      badge: "អ្នកគ្រូ សុខ ស្រីនាង",
       grade: "ថ្នាក់ទី៤",
       classId: "CLS_G4",
       teacher: "សុខ ស្រីនាង",
+      gender: "ស្រី",
+      title: "អ្នកគ្រូ",
       description: "គ្រប់គ្រងទិន្នន័យសិស្ស និងពិន្ទុថ្នាក់ទី៤"
     },
     {
@@ -75,11 +98,13 @@
       password: "5555",
       role: "teacher",
       isAdmin: false,
-      label: "ថ្នាក់ទី៥",
-      badge: "គ្រូថ្នាក់ទី៥",
+      label: "ថ្នាក់ទី៥ (លោកគ្រូ ញឹម ស៊ីវថា)",
+      badge: "លោកគ្រូ ញឹម ស៊ីវថា",
       grade: "ថ្នាក់ទី៥",
       classId: "CLS_G5",
       teacher: "ញឹម ស៊ីវថា",
+      gender: "ប្រុស",
+      title: "លោកគ្រូ",
       description: "គ្រប់គ្រងទិន្នន័យសិស្ស និងពិន្ទុថ្នាក់ទី៥"
     },
     {
@@ -87,11 +112,13 @@
       password: "6666",
       role: "teacher",
       isAdmin: false,
-      label: "ថ្នាក់ទី៦",
-      badge: "គ្រូថ្នាក់ទី៦",
+      label: "ថ្នាក់ទី៦ (លោកគ្រូ ង៉ែត សារុន)",
+      badge: "លោកគ្រូ ង៉ែត សារុន",
       grade: "ថ្នាក់ទី៦",
       classId: "CLS_G6",
       teacher: "ង៉ែត សារុន",
+      gender: "ប្រុស",
+      title: "លោកគ្រូ",
       description: "គ្រប់គ្រងទិន្នន័យសិស្ស និងពិន្ទុថ្នាក់ទី៦"
     },
     {
@@ -99,14 +126,97 @@
       password: "0000",
       role: "teacher",
       isAdmin: false,
-      label: "ថ្នាក់មត្តេយ្យ",
-      badge: "គ្រូមត្តេយ្យ",
+      label: "ថ្នាក់មត្តេយ្យ (អ្នកគ្រូ លី ស្រីនូ)",
+      badge: "អ្នកគ្រូ លី ស្រីនូ",
       grade: "ថ្នាក់មត្តេយ្យ",
       classId: "CLS_មត្តេយ្យ១",
       teacher: "លី ស្រីនូ",
+      gender: "ស្រី",
+      title: "អ្នកគ្រូ",
       description: "គ្រប់គ្រងទិន្នន័យសិស្ស និងពិន្ទុថ្នាក់មត្តេយ្យ"
     }
   ];
+
+  // Apply custom passwords stored by users
+  function loadCustomPasswords() {
+    const customPwds = getCustomPasswords();
+    AUTH_USERS.forEach(u => {
+      if (customPwds[u.id]) {
+        u.password = String(customPwds[u.id]).trim();
+      }
+    });
+  }
+
+  // Load custom passwords right away
+  loadCustomPasswords();
+
+  // Synchronize auth users with teachers from Teacher Management (ផ្ទាំងគ្រប់គ្រងគ្រូបង្រៀន)
+  function syncTeachersWithAuth() {
+    let teachers = [];
+    if (window.state && window.state.db && Array.isArray(window.state.db.teachers)) {
+      teachers = window.state.db.teachers;
+    } else if (typeof window.INITIAL_SCHOOL_DATA !== "undefined" && window.INITIAL_SCHOOL_DATA && Array.isArray(window.INITIAL_SCHOOL_DATA.teachers)) {
+      teachers = window.INITIAL_SCHOOL_DATA.teachers;
+    }
+
+    loadCustomPasswords();
+
+    if (teachers && teachers.length > 0) {
+      AUTH_USERS.forEach(user => {
+        if (user.isAdmin) {
+          user.teacher = "នាយកសាលា ឬ បណ្ណារក្ស";
+          user.roleKh = "នាយក ឬ បណ្ណារក្ស";
+          user.badge = "Admin (នាយក / បណ្ណារក្ស)";
+          user.label = "គណៈគ្រប់គ្រង Admin (នាយកសាលា ឬ បណ្ណារក្ស)";
+          return;
+        }
+
+        // Find teacher in teachers database
+        const found = teachers.find(t => {
+          if (!t.grade) return false;
+          const tg = t.grade.trim();
+          const ug = (user.grade || "").trim();
+          return tg === ug || tg.includes(ug) || ug.includes(tg);
+        });
+
+        if (found) {
+          const isFemale = found.gender === "ស្រី";
+          const title = isFemale ? "អ្នកគ្រូ" : "លោកគ្រូ";
+          user.teacher = found.name;
+          user.gender = found.gender || (isFemale ? "ស្រី" : "ប្រុស");
+          user.title = title;
+          user.label = `${user.grade} (${title} ${found.name})`;
+          user.badge = `${title} ${found.name}`;
+        }
+      });
+    }
+
+    updateLoginSelectOptions();
+  }
+
+  function updateLoginSelectOptions() {
+    const select = document.getElementById("authClassSelect");
+    if (!select) return;
+
+    const currentVal = select.value;
+    select.innerHTML = "";
+
+    AUTH_USERS.forEach(u => {
+      const opt = document.createElement("option");
+      opt.value = u.id;
+      if (u.isAdmin) {
+        opt.textContent = "🔑 គណៈគ្រប់គ្រង Admin (នាយកសាលា ឬ បណ្ណារក្ស) - មើលគ្រប់ថ្នាក់";
+      } else {
+        const title = (u.gender === "ស្រី" || u.title === "អ្នកគ្រូ") ? "អ្នកគ្រូ" : "លោកគ្រូ";
+        opt.textContent = `🏫 ${u.grade} (${title} ${u.teacher})`;
+      }
+      select.appendChild(opt);
+    });
+
+    if (currentVal && Array.from(select.options).some(o => o.value === currentVal)) {
+      select.value = currentVal;
+    }
+  }
 
   const STORAGE_KEY = "banloung_auth_user";
   let currentUser = null;
@@ -254,6 +364,7 @@
     document.body.classList.add("auth-modal-open");
     document.body.classList.add("auth-locked");
 
+    syncTeachersWithAuth();
     switchAuthTab("qr");
     const pwdInput = document.getElementById("authPasswordInput");
     if (pwdInput) {
@@ -345,8 +456,8 @@
       if (user) {
         badge.style.display = "flex";
         badge.className = "user-auth-badge " + (isUserAdmin ? "admin" : "teacher");
-        roleElem.textContent = isUserAdmin ? "Admin" : (user.badge || user.label);
-        nameElem.textContent = isUserAdmin ? "អ្នកគ្រប់គ្រងទូទៅ" : (user.teacher || user.label);
+        roleElem.textContent = isUserAdmin ? "Admin (នាយក / បណ្ណារក្ស)" : (user.badge || user.label);
+        nameElem.textContent = isUserAdmin ? "គណៈគ្រប់គ្រង (Admin)" : (user.teacher || user.label);
         if (iconElem) {
           iconElem.className = isUserAdmin ? "fa-solid fa-crown text-warning" : "fa-solid fa-chalkboard-user text-primary";
         }
@@ -364,8 +475,8 @@
     if (sbUserCard && sbUserTitle && sbUserSub) {
       if (user) {
         sbUserCard.style.display = "flex";
-        sbUserTitle.textContent = isUserAdmin ? "អ្នកគ្រប់គ្រងទូទៅ (Admin)" : (user.teacher || user.label);
-        sbUserSub.textContent = isUserAdmin ? "មើលទិន្នន័យគ្រប់ថ្នាក់" : (user.label + " (គ្រូប្រចាំថ្នាក់)");
+        sbUserTitle.textContent = isUserAdmin ? "គណៈគ្រប់គ្រង Admin" : (user.teacher || user.label);
+        sbUserSub.textContent = isUserAdmin ? "តួនាទីជានាយក ឬបណ្ណារក្ស" : (user.label + " (គ្រូប្រចាំថ្នាក់)");
         if (sbUserAvatar) {
           sbUserAvatar.innerHTML = isUserAdmin ? '<i class="fa-solid fa-user-shield"></i>' : '<i class="fa-solid fa-user-tie"></i>';
         }
@@ -759,8 +870,281 @@
     cameraScanReqId = requestAnimationFrame(scanCameraTick);
   }
 
+  // -------------------------------------------------------------------------
+  // CHANGE PASSWORD & QR CODE LOGIC (ផ្លាស់ប្ដូរពាក្យសម្ងាត់ និង QR Code)
+  // -------------------------------------------------------------------------
+  function changePassword(accountId, currentPassword, newPassword) {
+    if (!accountId) {
+      return { success: false, error: "សូមជ្រើសរើសគណនីដែលត្រូវប្តូរពាក្យសម្ងាត់!" };
+    }
+    const user = AUTH_USERS.find(u => u.id === accountId);
+    if (!user) {
+      return { success: false, error: "រកមិនឃើញគណនីនេះក្នុងប្រព័ន្ធឡើយ!" };
+    }
+
+    const cur = getCurrentUser();
+    const isSelf = cur && cur.id === accountId;
+    const isSysAdmin = cur && cur.isAdmin;
+
+    if (!isSysAdmin || isSelf) {
+      if (!currentPassword) {
+        return { success: false, error: "សូមបញ្ចូលពាក្យសម្ងាត់បច្ចុប្បន្ន (ចាស់)!" };
+      }
+      if (currentPassword.trim().toLowerCase() !== user.password.toLowerCase()) {
+        return { success: false, error: "ពាក្យសម្ងាត់បច្ចុប្បន្នមិនត្រឹមត្រូវឡើយ!" };
+      }
+    }
+
+    if (!newPassword || newPassword.trim().length < 3) {
+      return { success: false, error: "ពាក្យសម្ងាត់ថ្មីត្រូវមានយ៉ាងហោចណាស់ ៣ តួអក្សរ ឬលេខ!" };
+    }
+
+    const cleanNew = newPassword.trim();
+    const customPwds = getCustomPasswords();
+    customPwds[user.id] = cleanNew;
+    try {
+      localStorage.setItem(CUSTOM_PASSWORDS_STORAGE_KEY, JSON.stringify(customPwds));
+    } catch (e) {
+      console.error("[Auth] save custom password error:", e);
+    }
+
+    user.password = cleanNew;
+
+    // If currently logged in user is this user, update session
+    if (cur && cur.id === user.id) {
+      cur.password = cleanNew;
+      saveSession(cur);
+    }
+
+    // If on classes tab, re-render it so the QR code and PIN are updated
+    if (typeof window.renderClasses === "function" && window.state && window.state.activeTab === "classes") {
+      window.renderClasses();
+    }
+
+    return {
+      success: true,
+      user: user,
+      newPassword: cleanNew,
+      message: `បានផ្លាស់ប្ដូរពាក្យសម្ងាត់ និងបង្កើត QR Code ថ្មីសម្រាប់ ${user.label} ដោយជោគជ័យ!`
+    };
+  }
+
+  let activeChangePwdTargetId = null;
+
+  function openChangePasswordModal(targetId) {
+    const cur = getCurrentUser();
+    if (!cur) {
+      showLoginModal();
+      return;
+    }
+
+    syncTeachersWithAuth();
+
+    let target = null;
+    if (targetId) {
+      target = AUTH_USERS.find(u => u.id === targetId || u.classId === targetId || u.grade === targetId);
+    }
+
+    if (!target) {
+      target = AUTH_USERS.find(u => u.id === cur.id) || cur;
+    }
+
+    // Permission check: If not admin, can ONLY change own class password
+    if (!cur.isAdmin && target.id !== cur.id && target.grade !== cur.grade) {
+      alert("លោកគ្រូ/អ្នកគ្រូ អាចផ្លាស់ប្ដូរពាក្យសម្ងាត់បានតែថ្នាក់របស់ខ្លួនប៉ុណ្ណោះ!");
+      target = AUTH_USERS.find(u => u.id === cur.id) || cur;
+    }
+
+    activeChangePwdTargetId = target.id;
+
+    const overlay = document.getElementById("changePasswordModalOverlay");
+    if (!overlay) return;
+
+    // Populate Account Subtitle
+    const sub = document.getElementById("changePwdAccountSubtitle");
+    if (sub) {
+      sub.innerHTML = `សម្រាប់៖ <strong>${target.label}</strong>`;
+    }
+
+    // Admin Account Selector
+    const selGroup = document.getElementById("changePwdAccountSelectGroup");
+    const sel = document.getElementById("changePwdAccountSelect");
+    if (selGroup && sel) {
+      if (cur.isAdmin) {
+        selGroup.style.display = "block";
+        sel.innerHTML = "";
+        AUTH_USERS.forEach(u => {
+          const opt = document.createElement("option");
+          opt.value = u.id;
+          opt.textContent = u.label;
+          if (u.id === target.id) opt.selected = true;
+          sel.appendChild(opt);
+        });
+      } else {
+        selGroup.style.display = "none";
+      }
+    }
+
+    // Reset fields
+    const curGroup = document.getElementById("changePwdCurrentGroup");
+    const curInput = document.getElementById("changePwdCurrent");
+    if (curInput) curInput.value = "";
+    if (curGroup) {
+      // If admin changing for someone else, current password is optional/hidden
+      curGroup.style.display = (cur.isAdmin && target.id !== "admin") ? "none" : "block";
+    }
+
+    const newInput = document.getElementById("changePwdNew");
+    if (newInput) newInput.value = "";
+
+    const confInput = document.getElementById("changePwdConfirm");
+    if (confInput) confInput.value = "";
+
+    const alertBox = document.getElementById("changePwdAlert");
+    if (alertBox) {
+      alertBox.style.display = "none";
+      alertBox.textContent = "";
+    }
+
+    // Show form body, hide success pane
+    const formBody = document.getElementById("changePwdFormBody");
+    const successPane = document.getElementById("changePwdSuccessPane");
+    if (formBody) formBody.style.display = "block";
+    if (successPane) successPane.style.display = "none";
+
+    overlay.style.display = "flex";
+    setTimeout(() => {
+      if (curGroup && curGroup.style.display !== "none" && curInput) {
+        curInput.focus();
+      } else if (newInput) {
+        newInput.focus();
+      }
+    }, 150);
+  }
+
+  function closeChangePasswordModal() {
+    const overlay = document.getElementById("changePasswordModalOverlay");
+    if (overlay) overlay.style.display = "none";
+  }
+
+  function handleChangePwdTargetChange() {
+    const sel = document.getElementById("changePwdAccountSelect");
+    if (!sel) return;
+    const targetId = sel.value;
+    const target = AUTH_USERS.find(u => u.id === targetId);
+    if (!target) return;
+
+    activeChangePwdTargetId = target.id;
+    const sub = document.getElementById("changePwdAccountSubtitle");
+    if (sub) {
+      sub.innerHTML = `សម្រាប់៖ <strong>${target.label}</strong>`;
+    }
+
+    const cur = getCurrentUser();
+    const curGroup = document.getElementById("changePwdCurrentGroup");
+    if (curGroup) {
+      curGroup.style.display = (cur && cur.isAdmin && target.id !== "admin") ? "none" : "block";
+    }
+  }
+
+  function handleChangePasswordSubmit(e) {
+    if (e) e.preventDefault();
+
+    const targetId = activeChangePwdTargetId;
+    const curInput = document.getElementById("changePwdCurrent");
+    const newInput = document.getElementById("changePwdNew");
+    const confInput = document.getElementById("changePwdConfirm");
+    const alertBox = document.getElementById("changePwdAlert");
+
+    const currentPwd = curInput ? curInput.value : "";
+    const newPwd = newInput ? newInput.value : "";
+    const confPwd = confInput ? confInput.value : "";
+
+    function showAlert(msg, isErr = true) {
+      if (!alertBox) return;
+      alertBox.textContent = msg;
+      alertBox.className = "change-pwd-alert " + (isErr ? "error" : "success");
+      alertBox.style.display = "block";
+      alertBox.classList.remove("shake");
+      void alertBox.offsetWidth;
+      alertBox.classList.add("shake");
+    }
+
+    if (newPwd !== confPwd) {
+      showAlert("ពាក្យសម្ងាត់ថ្មី និងការបញ្ជាក់ពាក្យសម្ងាត់មិនត្រូវគ្នាឡើយ!");
+      if (confInput) confInput.focus();
+      return;
+    }
+
+    const res = changePassword(targetId, currentPwd, newPwd);
+    if (!res.success) {
+      showAlert(res.error, true);
+      return;
+    }
+
+    // Success! Show success pane and live generated QR Code
+    const formBody = document.getElementById("changePwdFormBody");
+    const successPane = document.getElementById("changePwdSuccessPane");
+    if (formBody) formBody.style.display = "none";
+    if (successPane) successPane.style.display = "block";
+
+    const accNameEl = document.getElementById("changePwdSuccessAccount");
+    if (accNameEl) accNameEl.textContent = res.user.label;
+
+    const pinEl = document.getElementById("changePwdNewPinText");
+    if (pinEl) pinEl.textContent = res.newPassword;
+
+    // Generate live QR code into container
+    const qrHolder = document.getElementById("changePwdQRHolder");
+    if (qrHolder) {
+      qrHolder.innerHTML = "";
+
+      const baseUrl = (window.location.origin && window.location.origin !== "null")
+        ? `${window.location.origin}${window.location.pathname}`
+        : window.location.href.split("?")[0].split("#")[0];
+      const loginUrl = `${baseUrl}?login=${encodeURIComponent(res.newPassword)}&class=${encodeURIComponent(res.user.classId || res.user.id)}`;
+
+      if (typeof window.generateQRCodeSVG === "function") {
+        qrHolder.innerHTML = window.generateQRCodeSVG(loginUrl, 180, 2);
+      } else if (typeof window.QRCode === "function") {
+        new window.QRCode(qrHolder, {
+          text: loginUrl,
+          width: 180,
+          height: 180,
+          colorDark: "#0f172a",
+          colorLight: "#ffffff"
+        });
+      }
+    }
+
+    // Wire up download button
+    const btnDownload = document.getElementById("btnDownloadNewQR");
+    if (btnDownload) {
+      btnDownload.onclick = function () {
+        if (typeof window.downloadClassQRCode === "function") {
+          window.downloadClassQRCode(res.user.classId || res.user.id);
+        }
+      };
+    }
+  }
+
+  function toggleInputEye(inputId, btn) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+    const icon = btn ? btn.querySelector("i") : null;
+    if (input.type === "password") {
+      input.type = "text";
+      if (icon) icon.className = "fa-solid fa-eye-slash";
+    } else {
+      input.type = "password";
+      if (icon) icon.className = "fa-solid fa-eye";
+    }
+  }
+
   // Initialize System
   function initAuth() {
+    syncTeachersWithAuth();
+
     // Check sessionStorage hooks for testing
     try {
       const seedLogin = sessionStorage.getItem("banloung_seed_login");
@@ -788,9 +1172,18 @@
     if (!user) {
       document.body.classList.add("auth-locked");
       showLoginModal();
-      switchAuthTab("qr");
+      if (sessionStorage.getItem("banloung_force_tab_password") || urlParams.get("auth_tab") === "password") {
+        sessionStorage.removeItem("banloung_force_tab_password");
+        switchAuthTab("password");
+      } else {
+        switchAuthTab("qr");
+      }
     } else {
       hideLoginModal();
+      if (sessionStorage.getItem("banloung_auto_open_change_pwd")) {
+        sessionStorage.removeItem("banloung_auto_open_change_pwd");
+        setTimeout(() => openChangePasswordModal(), 200);
+      }
     }
     updateAuthUI();
   }
@@ -824,7 +1217,14 @@
     handleDecodedQRText: handleDecodedQRText,
     parseQRData: parseQRData,
     toggleCameraScanner: toggleCameraScanner,
-    stopCameraScanner: stopCameraScanner
+    stopCameraScanner: stopCameraScanner,
+    syncTeachers: syncTeachersWithAuth,
+    changePassword: changePassword,
+    openChangePasswordModal: openChangePasswordModal,
+    closeChangePasswordModal: closeChangePasswordModal,
+    handleChangePasswordSubmit: handleChangePasswordSubmit,
+    handleChangePwdTargetChange: handleChangePwdTargetChange,
+    toggleInputEye: toggleInputEye
   };
 
   // Expose global helpers for inline HTML event attributes
@@ -844,6 +1244,11 @@
   window.parseQRData = parseQRData;
   window.toggleCameraScanner = toggleCameraScanner;
   window.stopCameraScanner = stopCameraScanner;
+  window.openChangePasswordModal = openChangePasswordModal;
+  window.closeChangePasswordModal = closeChangePasswordModal;
+  window.handleChangePasswordSubmit = handleChangePasswordSubmit;
+  window.handleChangePwdTargetChange = handleChangePwdTargetChange;
+  window.toggleInputEye = toggleInputEye;
   window.handleAuthClassChange = function () {
     const pwdInput = document.getElementById("authPasswordInput");
     if (pwdInput) {

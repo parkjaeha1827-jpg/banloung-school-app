@@ -51,6 +51,9 @@
         <div class="sidebar-user-title" id="sidebarUserTitle">អ្នកគ្រប់គ្រង (Admin)</div>
         <div class="sidebar-user-sub" id="sidebarUserSub">មើលគ្រប់ថ្នាក់</div>
       </div>
+      <button type="button" class="btn-sidebar-change-pwd" onclick="event.stopPropagation(); window.openChangePasswordModal && window.openChangePasswordModal();" title="ផ្លាស់ប្ដូរពាក្យសម្ងាត់ & QR Code">
+        <i class="fa-solid fa-key"></i>
+      </button>
       <button type="button" class="btn-sidebar-logout" onclick="event.stopPropagation(); window.authSystem && window.authSystem.logout();" title="ចាកចេញ">
         <i class="fa-solid fa-right-from-bracket"></i>
       </button>
@@ -279,6 +282,9 @@
             <span class="user-auth-role" id="userAuthRole">Admin</span>
             <span class="user-auth-name" id="userAuthName">អ្នកគ្រប់គ្រងទូទៅ</span>
           </div>
+          <button type="button" class="btn-auth-change-pwd-icon" onclick="event.stopPropagation(); window.openChangePasswordModal && window.openChangePasswordModal();" title="ផ្លាស់ប្ដូរពាក្យសម្ងាត់ & QR Code">
+            <i class="fa-solid fa-key"></i>
+          </button>
           <button type="button" class="btn-auth-logout-icon" onclick="event.stopPropagation(); window.authSystem && window.authSystem.logout();" title="ចាកចេញពីប្រព័ន្ធ (Logout)">
             <i class="fa-solid fa-right-from-bracket"></i>
           </button>
@@ -1887,9 +1893,9 @@
         <div class="auth-form-group">
           <label for="authClassSelect"><i class="fa-solid fa-chalkboard-user text-primary"></i> ជ្រើសរើសគណនី ឬថ្នាក់រៀន</label>
           <select id="authClassSelect" class="form-control auth-select" onchange="handleAuthClassChange()">
-            <option value="admin">🔑 អ្នកគ្រប់គ្រងទូទៅ (Admin) - មើលគ្រប់ថ្នាក់</option>
+            <option value="admin">🔑 គណៈគ្រប់គ្រង Admin (នាយកសាលា ឬ បណ្ណារក្ស) - មើលគ្រប់ថ្នាក់</option>
             <option value="grade_1">🏫 ថ្នាក់ទី១ (លោកគ្រូ ផាន ផុស)</option>
-            <option value="grade_2">🏫 ថ្នាក់ទី២ (អ្នកគ្រូ លី មករា)</option>
+            <option value="grade_2">🏫 ថ្នាក់ទី២ (លោកគ្រូ លី មករា)</option>
             <option value="grade_3">🏫 ថ្នាក់ទី៣ (អ្នកគ្រូ ក្រូយ ចាន់ធារ៉ា)</option>
             <option value="grade_4">🏫 ថ្នាក់ទី៤ (អ្នកគ្រូ សុខ ស្រីនាង)</option>
             <option value="grade_5">🏫 ថ្នាក់ទី៥ (លោកគ្រូ ញឹម ស៊ីវថា)</option>
@@ -1952,6 +1958,111 @@
   </div>
 </div>
 
+<!-- ======================================================= -->
+<!-- MODAL: CHANGE PASSWORD & QR CODE (ផ្លាស់ប្ដូរពាក្យសម្ងាត់ & QR Code) -->
+<!-- ======================================================= -->
+<div id="changePasswordModalOverlay" class="change-pwd-modal-overlay" style="display: none;" onclick="if(event.target===this) closeChangePasswordModal()">
+  <div class="change-pwd-modal-card">
+    <div class="change-pwd-modal-header">
+      <div class="change-pwd-header-icon">
+        <i class="fa-solid fa-key"></i>
+      </div>
+      <div class="change-pwd-header-text">
+        <h3 class="change-pwd-title">ផ្លាស់ប្ដូរពាក្យសម្ងាត់ និង QR Code</h3>
+        <p class="change-pwd-subtitle" id="changePwdAccountSubtitle">សម្រាប់៖ ថ្នាក់រៀន</p>
+      </div>
+      <button type="button" class="change-pwd-close-btn" onclick="closeChangePasswordModal()" title="បិទ">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="change-pwd-modal-body" id="changePwdFormBody">
+      <form id="changePasswordForm" onsubmit="handleChangePasswordSubmit(event)">
+        <!-- Account Selector (Shown for Admin) -->
+        <div class="change-pwd-group" id="changePwdAccountSelectGroup" style="display: none;">
+          <label for="changePwdAccountSelect"><i class="fa-solid fa-user-circle text-primary"></i> ជ្រើសរើសគណនី / ថ្នាក់រៀន</label>
+          <select id="changePwdAccountSelect" class="form-control" onchange="handleChangePwdTargetChange()">
+            <!-- Populated dynamically -->
+          </select>
+        </div>
+
+        <!-- Current Password -->
+        <div class="change-pwd-group" id="changePwdCurrentGroup">
+          <label for="changePwdCurrent"><i class="fa-solid fa-lock-open text-warning"></i> ពាក្យសម្ងាត់បច្ចុប្បន្ន (Current Password / PIN)</label>
+          <div class="change-pwd-input-wrap">
+            <input type="password" id="changePwdCurrent" class="form-control" placeholder="បញ្ចូលពាក្យសម្ងាត់បច្ចុប្បន្ន..." autocomplete="current-password">
+            <button type="button" class="btn-pwd-eye" onclick="toggleInputEye('changePwdCurrent', this)">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- New Password -->
+        <div class="change-pwd-group">
+          <label for="changePwdNew"><i class="fa-solid fa-key text-success"></i> ពាក្យសម្ងាត់ថ្មី (New Password / PIN)</label>
+          <div class="change-pwd-input-wrap">
+            <input type="password" id="changePwdNew" class="form-control" placeholder="បញ្ចូលពាក្យសម្ងាត់ថ្មី (យ៉ាងតិច ៤ តួ)..." autocomplete="new-password" required>
+            <button type="button" class="btn-pwd-eye" onclick="toggleInputEye('changePwdNew', this)">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+          <small class="change-pwd-hint"><i class="fa-solid fa-circle-info"></i> ពាក្យសម្ងាត់ថ្មីនេះ នឹងត្រូវបម្លែងជា QR Code ថ្មីដោយស្វ័យប្រវត្តិ។</small>
+        </div>
+
+        <!-- Confirm New Password -->
+        <div class="change-pwd-group">
+          <label for="changePwdConfirm"><i class="fa-solid fa-check-double text-primary"></i> បញ្ជាក់ពាក្យសម្ងាត់ថ្មី (Confirm New Password)</label>
+          <div class="change-pwd-input-wrap">
+            <input type="password" id="changePwdConfirm" class="form-control" placeholder="វាយបញ្ចូលពាក្យសម្ងាត់ថ្មីម្តងទៀត..." autocomplete="new-password" required>
+            <button type="button" class="btn-pwd-eye" onclick="toggleInputEye('changePwdConfirm', this)">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="changePwdAlert" class="change-pwd-alert" style="display: none;"></div>
+
+        <div class="change-pwd-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeChangePasswordModal()">
+            បោះបង់
+          </button>
+          <button type="submit" class="btn btn-primary btn-save-pwd">
+            <i class="fa-solid fa-floppy-disk"></i> រក្សាទុក & បង្កើត QR Code ថ្មី
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Success Result Pane (Shows new QR Code & Download Button) -->
+    <div class="change-pwd-success-pane" id="changePwdSuccessPane" style="display: none;">
+      <div class="change-pwd-success-badge">
+        <i class="fa-solid fa-circle-check"></i>
+        <h4>ផ្លាស់ប្ដូរពាក្យសម្ងាត់ & QR Code ជោគជ័យ!</h4>
+        <p id="changePwdSuccessAccount">ថ្នាក់ទី១</p>
+      </div>
+
+      <div class="change-pwd-qr-result-box">
+        <div class="change-pwd-qr-canvas-holder" id="changePwdQRHolder"></div>
+        <div class="change-pwd-new-pin-display">
+          កូដសម្ងាត់ថ្មី (PIN)៖ <strong id="changePwdNewPinText">1234</strong>
+        </div>
+      </div>
+
+      <p class="change-pwd-success-tip">
+        <i class="fa-solid fa-qrcode text-primary"></i> QR Code ថ្មីត្រូវបានបង្កើត និងអាប់ឌែតក្នុងប្រព័ន្ធរួចរាល់។ សូមទាញយករូបភាព QR Code ថ្មីនេះទុកសម្រាប់ Log in ចូលប្រើប្រាស់។
+      </p>
+
+      <div class="change-pwd-success-actions">
+        <button type="button" class="btn btn-success btn-lg" id="btnDownloadNewQR">
+          <i class="fa-solid fa-download"></i> ទាញយកប័ណ្ណ QR Code ថ្មី (PNG)
+        </button>
+        <button type="button" class="btn btn-secondary" onclick="closeChangePasswordModal()">
+          <i class="fa-solid fa-check"></i> រួចរាល់ (បិទ)
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script src="pdf.min.js"></script>
 <script src="qrcode.min.js"></script>

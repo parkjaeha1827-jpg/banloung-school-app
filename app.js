@@ -8013,6 +8013,9 @@ function saveTeacherForm() {
   closeTeacherModal();
   renderTeachers();
   renderDashboard();
+  if (window.authSystem && typeof window.authSystem.syncTeachers === "function") {
+    window.authSystem.syncTeachers();
+  }
 }
 
 function deleteTeacher(tId) {
@@ -8024,6 +8027,9 @@ function deleteTeacher(tId) {
     saveDatabase();
     renderTeachers();
     renderDashboard();
+    if (window.authSystem && typeof window.authSystem.syncTeachers === "function") {
+      window.authSystem.syncTeachers();
+    }
   }
 }
 
@@ -13348,6 +13354,8 @@ function renderClasses() {
     // Teacher & credential details
     const authAcc = authUsers.find(u => u.grade === cls.grade || u.classId === cls.id);
     const teacherName = cls.teacher || (authAcc ? authAcc.teacher : "មិនទាន់កំណត់");
+    const isFemale = authAcc && (authAcc.gender === "ស្រី" || authAcc.title === "អ្នកគ្រូ");
+    const teacherTitle = isFemale ? "អ្នកគ្រូ" : "លោកគ្រូ";
     const password = authAcc ? authAcc.password : "";
 
     // Generate QR Login URL
@@ -13374,6 +13382,9 @@ function renderClasses() {
             ${isUserClass ? '<span class="class-user-tag"><i class="fa fa-user-check"></i> ថ្នាក់របស់អ្នក</span>' : ''}
           </div>
           <div class="class-header-actions">
+            <button type="button" class="btn-change-pwd-badge" onclick="openChangePasswordModal('${cls.id}')" title="ប្ដូរពាក្យសម្ងាត់ & QR Code ថ្មី">
+              <i class="fa-solid fa-key"></i> ប្ដូរលេខកូដ
+            </button>
             <button type="button" class="btn-download-single-badge" onclick="downloadClassQRCode('${cls.id}')" title="ទាញយក QR Code ជារូបភាព (PNG) សម្រាប់ចូលប្រព័ន្ធ">
               <i class="fa-solid fa-download"></i> ទាញយក QR
             </button>
@@ -13391,7 +13402,7 @@ function renderClasses() {
             </div>
             <div class="teacher-meta-details">
               <div class="teacher-meta-title">គ្រូប្រចាំថ្នាក់ (Homeroom Teacher)</div>
-              <div class="teacher-name-bold">${teacherName}</div>
+              <div class="teacher-name-bold">${teacherTitle} ${teacherName}</div>
               <div class="teacher-badge-tag"><i class="fa-solid fa-door-closed"></i> បន្ទប់រៀន៖ ${cls.room || 'បន្ទប់ទី១'}</div>
             </div>
           </div>
@@ -13442,6 +13453,9 @@ function renderClasses() {
               <div class="qr-actions-row">
                 <button type="button" class="btn-download-single-qr-btn" onclick="downloadClassQRCode('${cls.id}')" title="ទាញយកជារូបភាព QR Code សម្រាប់ Log In">
                   <i class="fa-solid fa-download"></i> ទាញយក QR
+                </button>
+                <button type="button" class="btn-change-pwd-single-btn" onclick="openChangePasswordModal('${cls.id}')" title="ផ្លាស់ប្ដូរពាក្យសម្ងាត់ និងបង្កើត QR Code ថ្មី">
+                  <i class="fa-solid fa-key"></i> ប្ដូរលេខកូដ
                 </button>
                 <button type="button" class="btn-quick-login-card" onclick="quickLoginClassTeacher('${password}', '${cls.id}')" title="ចូលប្រើជាគ្រូថ្នាក់នេះភ្លាមៗ">
                   <i class="fa-solid fa-right-to-bracket"></i> ចូលប្រើភ្លាមៗ
@@ -13746,14 +13760,31 @@ function exportClassesSummaryExcel() {
 
 function downloadClassQRCode(clsId) {
   const classes = getClassesForYear(state.activeYear) || [];
-  const cls = classes.find(c => c.id === clsId) || classes[0];
+  let cls = classes.find(c => c.id === clsId || c.grade === clsId);
+  const authUsers = (window.authSystem && window.authSystem.USERS) ? window.authSystem.USERS : [];
+  let authAcc = authUsers.find(u => u.grade === (cls && cls.grade) || u.classId === clsId || u.id === clsId);
+
+  if (!cls && (clsId === "admin" || clsId === "ADMIN")) {
+    authAcc = authUsers.find(u => u.id === "admin");
+    cls = {
+      id: "admin",
+      grade: "គណៈគ្រប់គ្រង Admin",
+      name: "គណៈគ្រប់គ្រងសាលា",
+      academicYear: state.activeYear,
+      teacher: "នាយកសាលា ឬ បណ្ណារក្ស",
+      room: "ការិយាល័យរដ្ឋបាល",
+      students: []
+    };
+  }
+
+  if (!cls) cls = classes[0];
   if (!cls) {
     alert("ពុំមានទិន្នន័យថ្នាក់នេះឡើយ!");
     return;
   }
 
-  const authUsers = (window.authSystem && window.authSystem.USERS) ? window.authSystem.USERS : [];
-  const authAcc = authUsers.find(u => u.grade === cls.grade || u.classId === cls.id);
+  const isFemale = authAcc && (authAcc.gender === "ស្រី" || authAcc.title === "អ្នកគ្រូ");
+  const teacherTitle = isFemale ? "អ្នកគ្រូ" : "លោកគ្រូ";
   const teacherName = cls.teacher || (authAcc ? authAcc.teacher : "គ្រូប្រចាំថ្នាក់");
   const password = authAcc ? authAcc.password : "";
   const gradeName = cls.grade || cls.name || "ថ្នាក់រៀន";
@@ -13860,12 +13891,18 @@ function downloadClassQRCode(clsId) {
   // Teacher Name & Room
   ctx.fillStyle = "#0f172a";
   ctx.font = "bold 16px 'Battambang', 'Kantumruy Pro', sans-serif";
-  ctx.fillText(`គ្រូប្រចាំថ្នាក់៖ លោកគ្រូ/អ្នកគ្រូ ${teacherName}   |   បន្ទប់៖ ${cls.room || 'បន្ទប់ទី១'}`, width / 2, infoY + 70);
+  const teacherLine = cls.id === "admin"
+    ? `តួនាទី៖ នាយកសាលា ឬ បណ្ណារក្ស   |   បន្ទប់៖ ${cls.room || 'ការិយាល័យរដ្ឋបាល'}`
+    : `គ្រូប្រចាំថ្នាក់៖ ${teacherTitle} ${teacherName}   |   បន្ទប់៖ ${cls.room || 'បន្ទប់ទី១'}`;
+  ctx.fillText(teacherLine, width / 2, infoY + 70);
 
   // Student Counts
   ctx.fillStyle = "#475569";
   ctx.font = "14px 'Kantumruy Pro', sans-serif";
-  ctx.fillText(`សិស្សក្នុងថ្នាក់សរុប៖ ${stTotal} នាក់  (សិស្សស្រី៖ ${stFemale} នាក់  •  សិស្សប្រុស៖ ${stMale} នាក់)`, width / 2, infoY + 98);
+  const subLine = cls.id === "admin"
+    ? "អ្នកគ្រប់គ្រងប្រព័ន្ធផ្លូវការ  (សិទ្ធិមើលគ្រប់ថ្នាក់ទាំងអស់)"
+    : `សិស្សក្នុងថ្នាក់សរុប៖ ${stTotal} នាក់  (សិស្សស្រី៖ ${stFemale} នាក់  •  សិស្សប្រុស៖ ${stMale} នាក់)`;
+  ctx.fillText(subLine, width / 2, infoY + 98);
 
   // 5. QR Code Drawing
   const qrBoxY = 415;

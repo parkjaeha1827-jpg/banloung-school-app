@@ -743,6 +743,7 @@ body {
 
 /* Admin Subpanes & Hub Bar (កិច្ចការរដ្ឋបាល) */
 .admin-hub-bar {
+  display: none !important;
   background: #ffffff;
   border-radius: 12px;
   padding: 8px 12px;

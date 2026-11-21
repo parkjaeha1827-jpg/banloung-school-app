@@ -222,7 +222,7 @@
       if (!matchedUser.isAdmin && matchedUser.grade) {
         const classes = (window.state.db && window.state.db.classes) ? window.state.db.classes : [];
         const found = classes.find(c => c.grade === matchedUser.grade && c.academicYear === (window.state.activeYear || "២០២៦-២០២៧"))
-                    || classes.find(c => c.grade === matchedUser.grade);
+          || classes.find(c => c.grade === matchedUser.grade);
         if (found) {
           window.state.activeClassId = found.id;
         } else if (matchedUser.classId) {

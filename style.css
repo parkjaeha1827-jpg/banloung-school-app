@@ -10098,3 +10098,45 @@ body.auth-modal-open {
 .admin-restricted-tab {
   opacity: 0.85;
 }
+
+
+/* ==========================================================================
+   STAFF INFO EDITABLE CELLS & ADMIN ACTION STYLES
+   ========================================================================== */
+.staff-editable-cell {
+  cursor: cell;
+  transition: background-color 0.15s ease, outline 0.15s ease;
+  position: relative;
+}
+
+.staff-editable-cell:hover {
+  background-color: #f0fdf4 !important;
+  outline: 1.5px dashed #22c55e !important;
+  outline-offset: -1px;
+}
+
+.staff-editable-cell:focus {
+  background-color: #ffffff !important;
+  outline: 2px solid #2563eb !important;
+  outline-offset: -2px;
+  box-shadow: inset 0 0 0 1px #2563eb;
+  z-index: 5;
+}
+
+.btn-staff-action-edit:hover {
+  background: #bae6fd !important;
+  color: #0369a1 !important;
+}
+
+.btn-staff-action-del:hover {
+  background: #fecaca !important;
+  color: #b91c1c !important;
+}
+
+@media print {
+  .staff-editable-cell {
+    cursor: default !important;
+    outline: none !important;
+    background: transparent !important;
+  }
+}

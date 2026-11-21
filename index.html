@@ -1593,6 +1593,156 @@
 </div>
 
 <!-- ========================================== -->
+<!-- MODAL: EDIT STAFF INFO (កែប្រែព័ត៌មានបុគ្គលិក) -->
+<!-- ========================================== -->
+<div class="modal-overlay" id="staffEditModal" style="display: none;">
+  <div class="modal-box" style="max-width: 840px; max-height: 90vh; display: flex; flex-direction: column;">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title"><i class="fa-solid fa-user-pen text-primary"></i> កែប្រែព័ត៌មានបុគ្គលិក</div>
+        <div style="font-size: 0.8rem; color: #64748b;" id="staffEditModalSub">កែប្រែព័ត៌មានលម្អិតរបស់គ្រូបង្រៀន ឬបុគ្គលិក</div>
+      </div>
+      <button class="modal-close" onclick="closeStaffEditModal()">&times;</button>
+    </div>
+    <form id="staffEditForm" onsubmit="handleStaffEditModalSubmit(event)" style="display: flex; flex-direction: column; overflow: hidden; flex: 1;">
+      <div class="modal-body" style="padding: 20px; overflow-y: auto; max-height: 70vh;">
+        <input type="hidden" id="staffEditRealIdx">
+
+        <h4 style="font-size: 13px; font-weight: 700; color: #1e3a8a; border-bottom: 2px solid #e2e8f0; padding-bottom: 4px; margin-bottom: 12px;">
+          ១. ព័ត៌មានផ្ទាល់ខ្លួន
+        </h4>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+          <div class="form-group">
+            <label style="font-size: 12px; font-weight: 600;">គោត្តនាម</label>
+            <input type="text" id="staffEditLastName" class="form-control" required style="font-size: 13px;">
+          </div>
+          <div class="form-group">
+            <label style="font-size: 12px; font-weight: 600;">នាម</label>
+            <input type="text" id="staffEditFirstName" class="form-control" required style="font-size: 13px;">
+          </div>
+          <div class="form-group">
+            <label style="font-size: 12px; font-weight: 600;">ភេទ</label>
+            <select id="staffEditGender" class="form-control" style="font-size: 13px;">
+              <option value="ប្រុស">ប្រុស</option>
+              <option value="ស្រី">ស្រី</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label style="font-size: 12px; font-weight: 600;">អាយុ</label>
+            <input type="text" id="staffEditAge" class="form-control" style="font-size: 13px;">
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1.5fr 1.5fr; gap: 10px; margin-bottom: 12px;">
+          <div class="form-group">
+            <label style="font-size: 12px; font-weight: 600;">ថ្ងៃ ខែ ឆ្នាំ កំណើត</label>
+            <div style="display: flex; gap: 4px;">
+              <input type="text" id="staffEditDobDay" placeholder="ថ្ងៃ" class="form-control" style="font-size: 12px; width: 32%;">
+              <input type="text" id="staffEditDobMonth" placeholder="ខែ" class="form-control" style="font-size: 12px; width: 36%;">
+              <input type="text" id="staffEditDobYear" placeholder="ឆ្នាំ" class="form-control" style="font-size: 12px; width: 32%;">
+            </div>
+          </div>
+          <div class="form-group">
+            <label style="font-size: 12px; font-weight: 600;">ទីកន្លែងកំណើត (ភូមិ / ឃុំ)</label>
+            <div style="display: flex; gap: 6px;">
+              <input type="text" id="staffEditPobVillage" placeholder="ភូមិ..." class="form-control" style="font-size: 12px;">
+              <input type="text" id="staffEditPobCommune" placeholder="ឃុំ..." class="form-control" style="font-size: 12px;">
+            </div>
+          </div>
+          <div class="form-group">
+            <label style="font-size: 12px; font-weight: 600;">លេខទូរស័ព្ទ</label>
+            <input type="text" id="staffEditPhone" placeholder="012 345 678" class="form-control" style="font-size: 12px;">
+          </div>
+        </div>
+
+        <h4 style="font-size: 13px; font-weight: 700; color: #1e3a8a; border-bottom: 2px solid #e2e8f0; padding-bottom: 4px; margin-bottom: 12px; margin-top: 14px;">
+          ២. ក្របខណ្ឌ & មុខងារ
+        </h4>
+        <div style="display: grid; grid-template-columns: 1.2fr 1.2fr 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+          <div class="form-group">
+            <label style="font-size: 12px; font-weight: 600;">មុខងារ (Role)</label>
+            <input type="text" id="staffEditRole" class="form-control" style="font-size: 12px;">
+          </div>
+          <div class="form-group">
+            <label style="font-size: 12px; font-weight: 600;">កម្រិតវប្បធម៌</label>
+            <input type="text" id="staffEditEducation" class="form-control" style="font-size: 12px;">
+          </div>
+          <div class="form-group">
+            <label style="font-size: 12px; font-weight: 600;">កាំប្រាក់</label>
+            <input type="text" id="staffEditSalaryScale" class="form-control" style="font-size: 12px;">
+          </div>
+          <div class="form-group">
+            <label style="font-size: 12px; font-weight: 600;">ប្រភេទក្របខណ្ឌ</label>
+            <input type="text" id="staffEditFrameworkType" class="form-control" style="font-size: 12px;">
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+          <div class="form-group">
+            <label style="font-size: 12px; font-weight: 600;">ថ្ងៃខែចូលបម្រើការងារ</label>
+            <div style="display: flex; gap: 4px;">
+              <input type="text" id="staffEditEntryDay" placeholder="ថ្ងៃ" class="form-control" style="font-size: 12px; width: 32%;">
+              <input type="text" id="staffEditEntryMonth" placeholder="ខែ" class="form-control" style="font-size: 12px; width: 36%;">
+              <input type="text" id="staffEditEntryYear" placeholder="ឆ្នាំ" class="form-control" style="font-size: 12px; width: 32%;">
+            </div>
+          </div>
+          <div class="form-group">
+            <label style="font-size: 12px; font-weight: 600;">តែងតាំងស៊ុប</label>
+            <div style="display: flex; gap: 4px;">
+              <input type="text" id="staffEditAppointDay" placeholder="ថ្ងៃ" class="form-control" style="font-size: 12px; width: 32%;">
+              <input type="text" id="staffEditAppointMonth" placeholder="ខែ" class="form-control" style="font-size: 12px; width: 36%;">
+              <input type="text" id="staffEditAppointYear" placeholder="ឆ្នាំ" class="form-control" style="font-size: 12px; width: 32%;">
+            </div>
+          </div>
+          <div class="form-group">
+            <label style="font-size: 12px; font-weight: 600;">អត្ដលេខមន្ដ្រី</label>
+            <input type="text" id="staffEditOfficialId" class="form-control font-mono" style="font-size: 12px;">
+          </div>
+          <div class="form-group">
+            <label style="font-size: 12px; font-weight: 600;">លេខគណនីធនាគារ</label>
+            <input type="text" id="staffEditBankAccount" class="form-control font-mono" style="font-size: 12px;">
+          </div>
+        </div>
+
+        <h4 style="font-size: 13px; font-weight: 700; color: #1e3a8a; border-bottom: 2px solid #e2e8f0; padding-bottom: 4px; margin-bottom: 12px; margin-top: 14px;">
+          ៣. គ្រួសារ & អាសយដ្ឋានបច្ចុប្បន្ន
+        </h4>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 0.8fr 1.2fr 1.2fr 1fr; gap: 10px; margin-bottom: 12px;">
+          <div class="form-group">
+            <label style="font-size: 12px; font-weight: 600;">គោត្តនាមប្តី/ប្រពន្ធ</label>
+            <input type="text" id="staffEditSpouseLastName" class="form-control" style="font-size: 12px;">
+          </div>
+          <div class="form-group">
+            <label style="font-size: 12px; font-weight: 600;">នាមប្តី/ប្រពន្ធ</label>
+            <input type="text" id="staffEditSpouseFirstName" class="form-control" style="font-size: 12px;">
+          </div>
+          <div class="form-group">
+            <label style="font-size: 12px; font-weight: 600;">ចំនួនកូន</label>
+            <input type="text" id="staffEditChildrenCount" class="form-control" style="font-size: 12px;">
+          </div>
+          <div class="form-group">
+            <label style="font-size: 12px; font-weight: 600;">ភូមិបច្ចុប្បន្ន</label>
+            <input type="text" id="staffEditCurrVillage" class="form-control" style="font-size: 12px;">
+          </div>
+          <div class="form-group">
+            <label style="font-size: 12px; font-weight: 600;">ឃុំបច្ចុប្បន្ន</label>
+            <input type="text" id="staffEditCurrCommune" class="form-control" style="font-size: 12px;">
+          </div>
+          <div class="form-group">
+            <label style="font-size: 12px; font-weight: 600;">អត្ដសញ្ញាណបណ្ណ</label>
+            <input type="text" id="staffEditNationalId" class="form-control font-mono" style="font-size: 12px;">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="padding: 12px 20px; display: flex; justify-content: flex-end; gap: 8px; border-top: 1px solid #e2e8f0;">
+        <button type="button" class="btn btn-secondary" onclick="closeStaffEditModal()">បោះបង់</button>
+        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-save"></i> រក្សាទុកការកែប្រែ</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ========================================== -->
 <!-- MODAL: LESSON PICKER FOR REPORT (រើសមេរៀន) -->
 <!-- ========================================== -->
 <div class="modal-overlay" id="lessonPickerModal">

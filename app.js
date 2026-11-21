@@ -12471,6 +12471,10 @@ function getStaffList() {
     return state.db.staffList;
   }
   if (typeof INITIAL_SCHOOL_DATA !== "undefined" && INITIAL_SCHOOL_DATA && Array.isArray(INITIAL_SCHOOL_DATA.staffList)) {
+    if (state.db) {
+      state.db.staffList = JSON.parse(JSON.stringify(INITIAL_SCHOOL_DATA.staffList));
+      return state.db.staffList;
+    }
     return INITIAL_SCHOOL_DATA.staffList;
   }
   return [];
@@ -12484,26 +12488,258 @@ function filterStaffInfoTable() {
   renderStaffInfoTableBody();
 }
 
+function showStaffSaveIndicator() {
+  const el = document.getElementById("staffSaveIndicator");
+  if (!el) return;
+  el.style.display = "inline-flex";
+  if (window._staffSaveTimer) clearTimeout(window._staffSaveTimer);
+  window._staffSaveTimer = setTimeout(() => {
+    el.style.display = "none";
+  }, 2500);
+}
+
+function handleStaffCellBlur(cell, realIdx, field) {
+  if (!window.authSystem || !window.authSystem.isAdmin()) return;
+  const list = getStaffList();
+  if (!list || !list[realIdx]) return;
+
+  const newVal = cell.innerText.trim();
+  const staff = list[realIdx];
+  if (staff[field] !== newVal) {
+    staff[field] = newVal;
+    if (field === "lastName" || field === "firstName") {
+      staff.fullName = `${staff.lastName || ""} ${staff.firstName || ""}`.trim();
+    }
+    if (field === "spouseLastName" || field === "spouseFirstName") {
+      staff.spouseFullName = `${staff.spouseLastName || ""} ${staff.spouseFirstName || ""}`.trim();
+    }
+    saveDatabase();
+    showStaffSaveIndicator();
+  }
+}
+
+function handleStaffCellKeydown(event, cell) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    cell.blur();
+  }
+}
+
+function addNewStaffMember() {
+  if (!window.authSystem || !window.authSystem.isAdmin()) {
+    alert("មុខងារនេះសម្រាប់តែអ្នកគ្រប់គ្រង (Admin) ប៉ុណ្ណោះ!");
+    return;
+  }
+  if (!state.db) state.db = normalizeSchoolDatabase(null);
+  if (!state.db.staffList || !Array.isArray(state.db.staffList)) {
+    state.db.staffList = JSON.parse(JSON.stringify(getStaffList()));
+  }
+
+  const newNum = state.db.staffList.length + 1;
+  const newStaff = {
+    num: newNum,
+    lastName: "បុគ្គលិក",
+    firstName: "ថ្មី",
+    fullName: "បុគ្គលិក ថ្មី",
+    gender: "ប្រុស",
+    dobDay: "",
+    dobMonth: "",
+    dobYear: "",
+    pobVillage: "",
+    pobCommune: "",
+    age: "",
+    phone: "",
+    education: "",
+    entryDay: "",
+    entryMonth: "",
+    entryYear: "",
+    role: "គ្រូបង្រៀន",
+    salaryScale: "",
+    frameworkType: "ក្របខណ្ឌ",
+    officialId: "",
+    bankAccount: "",
+    spouseLastName: "",
+    spouseFirstName: "",
+    spouseFullName: "",
+    childrenCount: "0",
+    currVillage: "",
+    currCommune: "",
+    nationalId: "",
+    appointDay: "",
+    appointMonth: "",
+    appointYear: ""
+  };
+
+  state.db.staffList.push(newStaff);
+  saveDatabase();
+  renderStaffInfo();
+  showStaffSaveIndicator();
+}
+
+function deleteStaffMember(realIdx) {
+  if (!window.authSystem || !window.authSystem.isAdmin()) {
+    alert("មុខងារនេះសម្រាប់តែអ្នកគ្រប់គ្រង (Admin) ប៉ុណ្ណោះ!");
+    return;
+  }
+  const list = getStaffList();
+  if (!list || !list[realIdx]) return;
+
+  const s = list[realIdx];
+  const name = s.fullName || `${s.lastName || ""} ${s.firstName || ""}`.trim() || `ល.រ ${s.num}`;
+  if (!confirm(`តើលោកអ្នកពិតជាចង់លុបទិន្នន័យរបស់ "${name}" ចេញពីបញ្ជីបុគ្គលិកមែនទេ?`)) {
+    return;
+  }
+
+  list.splice(realIdx, 1);
+  list.forEach((item, i) => { item.num = i + 1; });
+  saveDatabase();
+  renderStaffInfo();
+  showStaffSaveIndicator();
+}
+
+function resetStaffInfoToDefault() {
+  if (!window.authSystem || !window.authSystem.isAdmin()) {
+    alert("មុខងារនេះសម្រាប់តែអ្នកគ្រប់គ្រង (Admin) ប៉ុណ្ណោះ!");
+    return;
+  }
+  if (!confirm("តើលោកអ្នកចង់កំណត់ទិន្នន័យបុគ្គលិកទាំងអស់ទៅតាមច្បាប់ដើមវិញមែនទេ? (ទិន្នន័យដែលបានកែប្រែទាំងអស់នឹងត្រូវប្តូរទៅដូចដើមវិញ)")) {
+    return;
+  }
+  if (typeof INITIAL_SCHOOL_DATA !== "undefined" && INITIAL_SCHOOL_DATA.staffList) {
+    state.db.staffList = JSON.parse(JSON.stringify(INITIAL_SCHOOL_DATA.staffList));
+  }
+  saveDatabase();
+  renderStaffInfo();
+  showStaffSaveIndicator();
+}
+
+function openStaffEditModal(realIdx) {
+  if (!window.authSystem || !window.authSystem.isAdmin()) {
+    alert("មុខងារនេះសម្រាប់តែអ្នកគ្រប់គ្រង (Admin) ប៉ុណ្ណោះ!");
+    return;
+  }
+  const list = getStaffList();
+  if (!list || !list[realIdx]) return;
+  const s = list[realIdx];
+
+  const modal = document.getElementById("staffEditModal");
+  if (!modal) return;
+
+  document.getElementById("staffEditRealIdx").value = realIdx;
+  document.getElementById("staffEditLastName").value = s.lastName || "";
+  document.getElementById("staffEditFirstName").value = s.firstName || "";
+  document.getElementById("staffEditGender").value = s.gender || "ប្រុស";
+  document.getElementById("staffEditAge").value = s.age || "";
+  document.getElementById("staffEditDobDay").value = s.dobDay || "";
+  document.getElementById("staffEditDobMonth").value = s.dobMonth || "";
+  document.getElementById("staffEditDobYear").value = s.dobYear || "";
+  document.getElementById("staffEditPobVillage").value = s.pobVillage || "";
+  document.getElementById("staffEditPobCommune").value = s.pobCommune || "";
+  document.getElementById("staffEditPhone").value = s.phone || "";
+  document.getElementById("staffEditRole").value = s.role || "";
+  document.getElementById("staffEditEducation").value = s.education || "";
+  document.getElementById("staffEditSalaryScale").value = s.salaryScale || "";
+  document.getElementById("staffEditFrameworkType").value = s.frameworkType || "";
+  document.getElementById("staffEditEntryDay").value = s.entryDay || "";
+  document.getElementById("staffEditEntryMonth").value = s.entryMonth || "";
+  document.getElementById("staffEditEntryYear").value = s.entryYear || "";
+  document.getElementById("staffEditAppointDay").value = s.appointDay || "";
+  document.getElementById("staffEditAppointMonth").value = s.appointMonth || "";
+  document.getElementById("staffEditAppointYear").value = s.appointYear || "";
+  document.getElementById("staffEditOfficialId").value = s.officialId || "";
+  document.getElementById("staffEditBankAccount").value = s.bankAccount || "";
+  document.getElementById("staffEditSpouseLastName").value = s.spouseLastName || "";
+  document.getElementById("staffEditSpouseFirstName").value = s.spouseFirstName || "";
+  document.getElementById("staffEditChildrenCount").value = s.childrenCount || "0";
+  document.getElementById("staffEditCurrVillage").value = s.currVillage || "";
+  document.getElementById("staffEditCurrCommune").value = s.currCommune || "";
+  document.getElementById("staffEditNationalId").value = s.nationalId || "";
+
+  modal.style.display = "flex";
+}
+
+function closeStaffEditModal() {
+  const modal = document.getElementById("staffEditModal");
+  if (modal) modal.style.display = "none";
+}
+
+function handleStaffEditModalSubmit(e) {
+  if (e) e.preventDefault();
+  const realIdx = parseInt(document.getElementById("staffEditRealIdx").value, 10);
+  const list = getStaffList();
+  if (isNaN(realIdx) || !list || !list[realIdx]) return;
+
+  const s = list[realIdx];
+  s.lastName = document.getElementById("staffEditLastName").value.trim();
+  s.firstName = document.getElementById("staffEditFirstName").value.trim();
+  s.fullName = `${s.lastName} ${s.firstName}`.trim();
+  s.gender = document.getElementById("staffEditGender").value;
+  s.age = document.getElementById("staffEditAge").value.trim();
+  s.dobDay = document.getElementById("staffEditDobDay").value.trim();
+  s.dobMonth = document.getElementById("staffEditDobMonth").value.trim();
+  s.dobYear = document.getElementById("staffEditDobYear").value.trim();
+  s.pobVillage = document.getElementById("staffEditPobVillage").value.trim();
+  s.pobCommune = document.getElementById("staffEditPobCommune").value.trim();
+  s.phone = document.getElementById("staffEditPhone").value.trim();
+  s.role = document.getElementById("staffEditRole").value.trim();
+  s.education = document.getElementById("staffEditEducation").value.trim();
+  s.salaryScale = document.getElementById("staffEditSalaryScale").value.trim();
+  s.frameworkType = document.getElementById("staffEditFrameworkType").value.trim();
+  s.entryDay = document.getElementById("staffEditEntryDay").value.trim();
+  s.entryMonth = document.getElementById("staffEditEntryMonth").value.trim();
+  s.entryYear = document.getElementById("staffEditEntryYear").value.trim();
+  s.appointDay = document.getElementById("staffEditAppointDay").value.trim();
+  s.appointMonth = document.getElementById("staffEditAppointMonth").value.trim();
+  s.appointYear = document.getElementById("staffEditAppointYear").value.trim();
+  s.officialId = document.getElementById("staffEditOfficialId").value.trim();
+  s.bankAccount = document.getElementById("staffEditBankAccount").value.trim();
+  s.spouseLastName = document.getElementById("staffEditSpouseLastName").value.trim();
+  s.spouseFirstName = document.getElementById("staffEditSpouseFirstName").value.trim();
+  s.spouseFullName = `${s.spouseLastName} ${s.spouseFirstName}`.trim();
+  s.childrenCount = document.getElementById("staffEditChildrenCount").value.trim();
+  s.currVillage = document.getElementById("staffEditCurrVillage").value.trim();
+  s.currCommune = document.getElementById("staffEditCurrCommune").value.trim();
+  s.nationalId = document.getElementById("staffEditNationalId").value.trim();
+
+  saveDatabase();
+  closeStaffEditModal();
+  renderStaffInfo();
+  showStaffSaveIndicator();
+}
+
 function renderStaffInfo() {
   const container = document.getElementById("staffInfoContentWrap");
   if (!container) return;
 
   const staffList = getStaffList();
+  const isAdmin = !!(window.authSystem && typeof window.authSystem.isAdmin === "function" && window.authSystem.isAdmin());
 
   container.innerHTML = `
     <div class="content-header no-print" style="margin-bottom: 16px;">
       <div class="header-title">
-        <h2 class="title-with-badge" style="display: flex; align-items: center; gap: 10px; margin: 0 0 6px 0;">
+        <h2 class="title-with-badge" style="display: flex; align-items: center; gap: 10px; margin: 0 0 6px 0; flex-wrap: wrap;">
           <span>ព័ត៌មានបុគ្គលិក (Staff Information)</span>
           <span class="badge" style="background: #2563eb; color: #fff; font-size: 12px; padding: 3px 10px; border-radius: 9999px;">ផ្លូវការ (${staffList.length} នាក់)</span>
+          ${isAdmin ? `<span class="badge" style="background: #10b981; color: #fff; font-size: 12px; padding: 4px 12px; border-radius: 9999px; display: inline-flex; align-items: center; gap: 6px;"><i class="fa-solid fa-pen-to-square"></i> សិទ្ធិ Admin: អាចចុចលើប្រអប់ក្នុងតារាងដើម្បីកែប្រែ</span>` : ''}
         </h2>
         <p style="margin: 0; color: #64748b; font-size: 13px;">តារាងព័ត៌មានលម្អិតរបស់លោកគ្រូ អ្នកគ្រូ និងបុគ្គលិកអប់រំទាំងអស់នៃសាលាបឋមសិក្សា បាន្លួង</p>
       </div>
       <div class="header-actions" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-        <div class="search-box" style="position: relative; min-width: 260px;">
+        <span id="staffSaveIndicator" style="display: none; color: #16a34a; font-size: 13px; font-weight: 600; align-items: center; gap: 4px; padding: 5px 12px; background: #f0fdf4; border-radius: 8px; border: 1px solid #bbf7d0;">
+          <i class="fa-solid fa-circle-check"></i> បានរក្សាទុក
+        </span>
+        <div class="search-box" style="position: relative; min-width: 220px;">
           <i class="fa fa-search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94a3b8;"></i>
-          <input type="text" id="staffInfoSearch" value="${staffInfoFilterQuery}" placeholder="ស្វែងរកតាមឈ្មោះ, មុខងារ, ទូរស័ព្ទ..." oninput="filterStaffInfoTable()" style="width: 100%; padding: 8px 12px 8px 34px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 13px;">
+          <input type="text" id="staffInfoSearch" value="${staffInfoFilterQuery}" placeholder="ស្វែងរកតាមឈ្មោះ, មុខងារ..." oninput="filterStaffInfoTable()" style="width: 100%; padding: 8px 12px 8px 34px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 13px;">
         </div>
+        ${isAdmin ? `
+          <button class="btn btn-primary" onclick="addNewStaffMember()" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; background: #2563eb; color: #fff; border: none; border-radius: 8px; font-weight: 500; cursor: pointer;">
+            <i class="fa-solid fa-user-plus"></i> បន្ថែមបុគ្គលិក
+          </button>
+          <button class="btn btn-secondary" onclick="resetStaffInfoToDefault()" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 13px; cursor: pointer;" title="កំណត់ទិន្នន័យដើមឡើងវិញ">
+            <i class="fa-solid fa-rotate-left"></i> កំណត់ដើម
+          </button>
+        ` : ''}
         <button class="btn btn-success" onclick="exportStaffInfoToExcel()" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: #16a34a; color: #fff; border: none; border-radius: 8px; font-weight: 500; cursor: pointer;">
           <i class="fa-solid fa-file-excel"></i> ទាញយក Excel (.xlsx)
         </button>
@@ -12518,7 +12754,7 @@ function renderStaffInfo() {
         <table class="staff-info-excel-table" id="staffInfoTable">
           <thead>
             <tr class="staff-title-row">
-              <th colspan="29" class="staff-title-cell">តារាងព័ត៌មានគ្រូបង្រៀន</th>
+              <th colspan="${isAdmin ? 30 : 29}" class="staff-title-cell">តារាងព័ត៌មានគ្រូបង្រៀន</th>
             </tr>
             <tr class="staff-header-row-1">
               <th rowspan="2" style="width: 45px;">ល.រ</th>
@@ -12540,6 +12776,7 @@ function renderStaffInfo() {
               <th colspan="2" style="min-width: 190px;">អាស័យដ្ឋានបច្ចុប្បន្ន</th>
               <th rowspan="2" style="min-width: 120px;">អត្ដសញ្ញាណបណ្ណ</th>
               <th colspan="3" style="min-width: 170px;">តែងតាំងស៊ុប</th>
+              ${isAdmin ? `<th rowspan="2" class="no-print" style="width: 80px; background-color: #2f5597; color: #fff;">សកម្មភាព</th>` : ''}
             </tr>
             <tr class="staff-header-row-2">
               <th style="min-width: 75px;">គោត្តនាម</th>
@@ -12577,6 +12814,7 @@ function renderStaffInfoTableBody() {
   if (!tbody) return;
 
   const staffList = getStaffList();
+  const isAdmin = !!(window.authSystem && typeof window.authSystem.isAdmin === "function" && window.authSystem.isAdmin());
   const q = staffInfoFilterQuery;
 
   const filtered = staffList.filter(s => {
@@ -12588,7 +12826,7 @@ function renderStaffInfoTableBody() {
   if (filtered.length === 0) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="29" style="padding: 24px; text-align: center; color: #64748b; font-size: 14px;">
+        <td colspan="${isAdmin ? 30 : 29}" style="padding: 24px; text-align: center; color: #64748b; font-size: 14px;">
           មិនមានទិន្នន័យបុគ្គលិកដែលត្រូវនឹងពាក្យស្វែងរក "${q}" ឡើយ
         </td>
       </tr>
@@ -12596,39 +12834,55 @@ function renderStaffInfoTableBody() {
     return;
   }
 
+  const editAttr = isAdmin ? 'contenteditable="true" spellcheck="false" title="ចុចដើម្បីកែប្រែ"' : '';
+  const cellClass = (extra) => `${extra} ${isAdmin ? 'staff-editable-cell' : ''}`;
+
   tbody.innerHTML = filtered.map((s, idx) => {
     const rowClass = idx % 2 === 0 ? "staff-row-even" : "staff-row-odd";
+    const realIdx = staffList.indexOf(s);
+    const blur = (field) => isAdmin ? `onblur="handleStaffCellBlur(this, ${realIdx}, '${field}')" onkeydown="handleStaffCellKeydown(event, this)"` : '';
+
     return `
       <tr class="${rowClass}">
         <td class="staff-cell-center font-bold">${toKhmerNum(s.num || idx + 1)}</td>
-        <td class="staff-cell-name staff-cell-left">${s.lastName || ""}</td>
-        <td class="staff-cell-name staff-cell-left">${s.firstName || ""}</td>
-        <td class="staff-cell-center">${s.gender || ""}</td>
-        <td class="staff-cell-center">${s.dobDay || ""}</td>
-        <td class="staff-cell-center">${s.dobMonth || ""}</td>
-        <td class="staff-cell-center">${s.dobYear || ""}</td>
-        <td class="staff-cell-left">${s.pobVillage || ""}</td>
-        <td class="staff-cell-left">${s.pobCommune || ""}</td>
-        <td class="staff-cell-center">${s.age || ""}</td>
-        <td class="staff-cell-phone staff-cell-center">${s.phone || ""}</td>
-        <td class="staff-cell-center">${s.education || ""}</td>
-        <td class="staff-cell-center">${s.entryDay || ""}</td>
-        <td class="staff-cell-center">${s.entryMonth || ""}</td>
-        <td class="staff-cell-center">${s.entryYear || ""}</td>
-        <td class="staff-cell-role staff-cell-left">${s.role || ""}</td>
-        <td class="staff-cell-center">${s.salaryScale || ""}</td>
-        <td class="staff-cell-center">${s.frameworkType || ""}</td>
-        <td class="staff-cell-center font-mono">${s.officialId || ""}</td>
-        <td class="staff-cell-center font-mono">${s.bankAccount || ""}</td>
-        <td class="staff-cell-left">${s.spouseLastName || ""}</td>
-        <td class="staff-cell-left">${s.spouseFirstName || ""}</td>
-        <td class="staff-cell-center">${s.childrenCount || ""}</td>
-        <td class="staff-cell-left">${s.currVillage || ""}</td>
-        <td class="staff-cell-left">${s.currCommune || ""}</td>
-        <td class="staff-cell-center font-mono">${s.nationalId || ""}</td>
-        <td class="staff-cell-center">${s.appointDay || ""}</td>
-        <td class="staff-cell-center">${s.appointMonth || ""}</td>
-        <td class="staff-cell-center">${s.appointYear || ""}</td>
+        <td class="${cellClass('staff-cell-name staff-cell-left')}" ${editAttr} ${blur('lastName')}>${s.lastName || ""}</td>
+        <td class="${cellClass('staff-cell-name staff-cell-left')}" ${editAttr} ${blur('firstName')}>${s.firstName || ""}</td>
+        <td class="${cellClass('staff-cell-center')}" ${editAttr} ${blur('gender')}>${s.gender || ""}</td>
+        <td class="${cellClass('staff-cell-center')}" ${editAttr} ${blur('dobDay')}>${s.dobDay || ""}</td>
+        <td class="${cellClass('staff-cell-center')}" ${editAttr} ${blur('dobMonth')}>${s.dobMonth || ""}</td>
+        <td class="${cellClass('staff-cell-center')}" ${editAttr} ${blur('dobYear')}>${s.dobYear || ""}</td>
+        <td class="${cellClass('staff-cell-left')}" ${editAttr} ${blur('pobVillage')}>${s.pobVillage || ""}</td>
+        <td class="${cellClass('staff-cell-left')}" ${editAttr} ${blur('pobCommune')}>${s.pobCommune || ""}</td>
+        <td class="${cellClass('staff-cell-center')}" ${editAttr} ${blur('age')}>${s.age || ""}</td>
+        <td class="${cellClass('staff-cell-phone staff-cell-center')}" ${editAttr} ${blur('phone')}>${s.phone || ""}</td>
+        <td class="${cellClass('staff-cell-center')}" ${editAttr} ${blur('education')}>${s.education || ""}</td>
+        <td class="${cellClass('staff-cell-center')}" ${editAttr} ${blur('entryDay')}>${s.entryDay || ""}</td>
+        <td class="${cellClass('staff-cell-center')}" ${editAttr} ${blur('entryMonth')}>${s.entryMonth || ""}</td>
+        <td class="${cellClass('staff-cell-center')}" ${editAttr} ${blur('entryYear')}>${s.entryYear || ""}</td>
+        <td class="${cellClass('staff-cell-role staff-cell-left')}" ${editAttr} ${blur('role')}>${s.role || ""}</td>
+        <td class="${cellClass('staff-cell-center')}" ${editAttr} ${blur('salaryScale')}>${s.salaryScale || ""}</td>
+        <td class="${cellClass('staff-cell-center')}" ${editAttr} ${blur('frameworkType')}>${s.frameworkType || ""}</td>
+        <td class="${cellClass('staff-cell-center font-mono')}" ${editAttr} ${blur('officialId')}>${s.officialId || ""}</td>
+        <td class="${cellClass('staff-cell-center font-mono')}" ${editAttr} ${blur('bankAccount')}>${s.bankAccount || ""}</td>
+        <td class="${cellClass('staff-cell-left')}" ${editAttr} ${blur('spouseLastName')}>${s.spouseLastName || ""}</td>
+        <td class="${cellClass('staff-cell-left')}" ${editAttr} ${blur('spouseFirstName')}>${s.spouseFirstName || ""}</td>
+        <td class="${cellClass('staff-cell-center')}" ${editAttr} ${blur('childrenCount')}>${s.childrenCount || ""}</td>
+        <td class="${cellClass('staff-cell-left')}" ${editAttr} ${blur('currVillage')}>${s.currVillage || ""}</td>
+        <td class="${cellClass('staff-cell-left')}" ${editAttr} ${blur('currCommune')}>${s.currCommune || ""}</td>
+        <td class="${cellClass('staff-cell-center font-mono')}" ${editAttr} ${blur('nationalId')}>${s.nationalId || ""}</td>
+        <td class="${cellClass('staff-cell-center')}" ${editAttr} ${blur('appointDay')}>${s.appointDay || ""}</td>
+        <td class="${cellClass('staff-cell-center')}" ${editAttr} ${blur('appointMonth')}>${s.appointMonth || ""}</td>
+        <td class="${cellClass('staff-cell-center')}" ${editAttr} ${blur('appointYear')}>${s.appointYear || ""}</td>
+        ${isAdmin ? `
+          <td class="staff-cell-center no-print" style="white-space: nowrap; padding: 4px;">
+            <button type="button" class="btn-staff-action-edit" onclick="openStaffEditModal(${realIdx})" title="កែប្រែក្នុងផ្ទាំង" style="background: #e0f2fe; border: 1px solid #7dd3fc; color: #0284c7; border-radius: 6px; padding: 4px 8px; cursor: pointer; font-size: 12px; margin-right: 4px;">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <button type="button" class="btn-staff-action-del" onclick="deleteStaffMember(${realIdx})" title="លុបបុគ្គលិកនេះ" style="background: #fee2e2; border: 1px solid #fca5a5; color: #dc2626; border-radius: 6px; padding: 4px 8px; cursor: pointer; font-size: 12px;">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </td>
+        ` : ''}
       </tr>
     `;
   }).join("");
@@ -12791,7 +13045,16 @@ function exportStaffInfoToExcel() {
 
 window.getStaffList = getStaffList;
 window.renderStaffInfo = renderStaffInfo;
+window.renderStaffInfoTableBody = renderStaffInfoTableBody;
 window.filterStaffInfoTable = filterStaffInfoTable;
 window.printStaffInfo = printStaffInfo;
 window.exportStaffInfoToExcel = exportStaffInfoToExcel;
+window.handleStaffCellBlur = handleStaffCellBlur;
+window.handleStaffCellKeydown = handleStaffCellKeydown;
+window.addNewStaffMember = addNewStaffMember;
+window.deleteStaffMember = deleteStaffMember;
+window.resetStaffInfoToDefault = resetStaffInfoToDefault;
+window.openStaffEditModal = openStaffEditModal;
+window.closeStaffEditModal = closeStaffEditModal;
+window.handleStaffEditModalSubmit = handleStaffEditModalSubmit;
 window.switchTab = switchTab;

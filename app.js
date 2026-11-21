@@ -13201,9 +13201,23 @@ function renderClasses() {
     yearSelect.value = state.activeYear;
   }
 
-  const classes = getClassesForYear(state.activeYear) || [];
+  const allYearClasses = getClassesForYear(state.activeYear) || [];
+
+  // Check role-based permission:
+  // Admin sees all classes; Teacher only sees their assigned class
+  const isAdmin = !!(window.authSystem && typeof window.authSystem.isAdmin === "function" && window.authSystem.isAdmin());
+  const allowedGrade = (window.authSystem && typeof window.authSystem.getAllowedGrade === "function") ? window.authSystem.getAllowedGrade() : null;
+
+  let classes = allYearClasses;
+  if (!isAdmin && allowedGrade) {
+    classes = allYearClasses.filter(c => {
+      const g = (c.grade || c.name || "").trim();
+      const target = allowedGrade.trim();
+      return g === target || g.includes(target) || target.includes(g);
+    });
+  }
   
-  // 1. Calculate School-wide Statistics for this year
+  // 1. Calculate Statistics for the visible classes
   const totalClasses = classes.length;
   let totalStudents = 0;
   let totalFemale = 0;
@@ -13220,41 +13234,79 @@ function renderClasses() {
   // 2. Render Top Stats Banner
   const statsBanner = document.getElementById("classesStatsBanner");
   if (statsBanner) {
-    statsBanner.innerHTML = `
-      <div class="classes-stats-grid">
-        <div class="class-stat-card card-total-classes">
-          <div class="stat-icon-circle"><i class="fa-solid fa-chalkboard"></i></div>
-          <div class="stat-info-wrap">
-            <div class="stat-num-val">${totalClasses} <span class="stat-unit">ថ្នាក់</span></div>
-            <div class="stat-label-text">ចំនួនថ្នាក់រៀនសរុប (${state.activeYear})</div>
+    if (!isAdmin && allowedGrade) {
+      statsBanner.innerHTML = `
+        <div class="classes-stats-grid">
+          <div class="class-stat-card card-total-classes">
+            <div class="stat-icon-circle"><i class="fa-solid fa-chalkboard-user"></i></div>
+            <div class="stat-info-wrap">
+              <div class="stat-num-val">១ <span class="stat-unit">ថ្នាក់</span></div>
+              <div class="stat-label-text">ថ្នាក់របស់អ្នកទទួលបន្ទុក (${allowedGrade})</div>
+            </div>
           </div>
-        </div>
 
-        <div class="class-stat-card card-total-students">
-          <div class="stat-icon-circle"><i class="fa-solid fa-users"></i></div>
-          <div class="stat-info-wrap">
-            <div class="stat-num-val">${totalStudents} <span class="stat-unit">នាក់</span></div>
-            <div class="stat-label-text">សិស្សទូទាំងសាលាសរុប</div>
+          <div class="class-stat-card card-total-students">
+            <div class="stat-icon-circle"><i class="fa-solid fa-users"></i></div>
+            <div class="stat-info-wrap">
+              <div class="stat-num-val">${totalStudents} <span class="stat-unit">នាក់</span></div>
+              <div class="stat-label-text">សិស្សក្នុងថ្នាក់សរុប</div>
+            </div>
           </div>
-        </div>
 
-        <div class="class-stat-card card-female-students">
-          <div class="stat-icon-circle"><i class="fa-solid fa-person-dress"></i></div>
-          <div class="stat-info-wrap">
-            <div class="stat-num-val">${totalFemale} <span class="stat-unit">នាក់</span> <span class="stat-badge-percent">${femalePercent}%</span></div>
-            <div class="stat-label-text">សិស្សស្រីសរុប</div>
+          <div class="class-stat-card card-female-students">
+            <div class="stat-icon-circle"><i class="fa-solid fa-person-dress"></i></div>
+            <div class="stat-info-wrap">
+              <div class="stat-num-val">${totalFemale} <span class="stat-unit">នាក់</span> <span class="stat-badge-percent">${femalePercent}%</span></div>
+              <div class="stat-label-text">សិស្សស្រីក្នុងថ្នាក់</div>
+            </div>
           </div>
-        </div>
 
-        <div class="class-stat-card card-male-students">
-          <div class="stat-icon-circle"><i class="fa-solid fa-person"></i></div>
-          <div class="stat-info-wrap">
-            <div class="stat-num-val">${totalMale} <span class="stat-unit">នាក់</span> <span class="stat-badge-percent">${malePercent}%</span></div>
-            <div class="stat-label-text">សិស្សប្រុសសរុប</div>
+          <div class="class-stat-card card-male-students">
+            <div class="stat-icon-circle"><i class="fa-solid fa-person"></i></div>
+            <div class="stat-info-wrap">
+              <div class="stat-num-val">${totalMale} <span class="stat-unit">នាក់</span> <span class="stat-badge-percent">${malePercent}%</span></div>
+              <div class="stat-label-text">សិស្សប្រុសក្នុងថ្នាក់</div>
+            </div>
           </div>
         </div>
-      </div>
-    `;
+      `;
+    } else {
+      statsBanner.innerHTML = `
+        <div class="classes-stats-grid">
+          <div class="class-stat-card card-total-classes">
+            <div class="stat-icon-circle"><i class="fa-solid fa-chalkboard"></i></div>
+            <div class="stat-info-wrap">
+              <div class="stat-num-val">${totalClasses} <span class="stat-unit">ថ្នាក់</span></div>
+              <div class="stat-label-text">ចំនួនថ្នាក់រៀនសរុប (${state.activeYear})</div>
+            </div>
+          </div>
+
+          <div class="class-stat-card card-total-students">
+            <div class="stat-icon-circle"><i class="fa-solid fa-users"></i></div>
+            <div class="stat-info-wrap">
+              <div class="stat-num-val">${totalStudents} <span class="stat-unit">នាក់</span></div>
+              <div class="stat-label-text">សិស្សទូទាំងសាលាសរុប</div>
+            </div>
+          </div>
+
+          <div class="class-stat-card card-female-students">
+            <div class="stat-icon-circle"><i class="fa-solid fa-person-dress"></i></div>
+            <div class="stat-info-wrap">
+              <div class="stat-num-val">${totalFemale} <span class="stat-unit">នាក់</span> <span class="stat-badge-percent">${femalePercent}%</span></div>
+              <div class="stat-label-text">សិស្សស្រីសរុប</div>
+            </div>
+          </div>
+
+          <div class="class-stat-card card-male-students">
+            <div class="stat-icon-circle"><i class="fa-solid fa-person"></i></div>
+            <div class="stat-info-wrap">
+              <div class="stat-num-val">${totalMale} <span class="stat-unit">នាក់</span> <span class="stat-badge-percent">${malePercent}%</span></div>
+              <div class="stat-label-text">សិស្សប្រុសសរុប</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
   }
 
   // 3. Filter classes if search query is active
@@ -13321,9 +13373,14 @@ function renderClasses() {
             <span class="class-year-pill">${cls.academicYear || state.activeYear}</span>
             ${isUserClass ? '<span class="class-user-tag"><i class="fa fa-user-check"></i> ថ្នាក់របស់អ្នក</span>' : ''}
           </div>
-          <button type="button" class="btn-print-single-badge" onclick="printClassroomBadge('${cls.id}')" title="បោះពុម្ពប័ណ្ណសម្គាល់ និង QR Code ថ្នាក់នេះ">
-            <i class="fa-solid fa-print"></i> ប័ណ្ណ QR
-          </button>
+          <div class="class-header-actions">
+            <button type="button" class="btn-download-single-badge" onclick="downloadClassQRCode('${cls.id}')" title="ទាញយក QR Code ជារូបភាព (PNG) សម្រាប់ចូលប្រព័ន្ធ">
+              <i class="fa-solid fa-download"></i> ទាញយក QR
+            </button>
+            <button type="button" class="btn-print-single-badge" onclick="printClassroomBadge('${cls.id}')" title="បោះពុម្ពប័ណ្ណសម្គាល់ និង QR Code ថ្នាក់នេះ">
+              <i class="fa-solid fa-print"></i> ប័ណ្ណ
+            </button>
+          </div>
         </div>
 
         <div class="class-card-body">
@@ -13383,6 +13440,9 @@ function renderClasses() {
                 </button>
               </div>
               <div class="qr-actions-row">
+                <button type="button" class="btn-download-single-qr-btn" onclick="downloadClassQRCode('${cls.id}')" title="ទាញយកជារូបភាព QR Code សម្រាប់ Log In">
+                  <i class="fa-solid fa-download"></i> ទាញយក QR
+                </button>
                 <button type="button" class="btn-quick-login-card" onclick="quickLoginClassTeacher('${password}', '${cls.id}')" title="ចូលប្រើជាគ្រូថ្នាក់នេះភ្លាមៗ">
                   <i class="fa-solid fa-right-to-bracket"></i> ចូលប្រើភ្លាមៗ
                 </button>
@@ -13684,6 +13744,249 @@ function exportClassesSummaryExcel() {
   }
 }
 
+function downloadClassQRCode(clsId) {
+  const classes = getClassesForYear(state.activeYear) || [];
+  const cls = classes.find(c => c.id === clsId) || classes[0];
+  if (!cls) {
+    alert("ពុំមានទិន្នន័យថ្នាក់នេះឡើយ!");
+    return;
+  }
+
+  const authUsers = (window.authSystem && window.authSystem.USERS) ? window.authSystem.USERS : [];
+  const authAcc = authUsers.find(u => u.grade === cls.grade || u.classId === cls.id);
+  const teacherName = cls.teacher || (authAcc ? authAcc.teacher : "គ្រូប្រចាំថ្នាក់");
+  const password = authAcc ? authAcc.password : "";
+  const gradeName = cls.grade || cls.name || "ថ្នាក់រៀន";
+
+  const stList = cls.students || [];
+  const stTotal = stList.length;
+  const stFemale = stList.filter(s => s.gender === "ស្រី").length;
+  const stMale = stTotal - stFemale;
+
+  // Login URL
+  const baseUrl = (window.location.origin && window.location.origin !== "null")
+    ? `${window.location.origin}${window.location.pathname}`
+    : window.location.href.split("?")[0].split("#")[0];
+  const loginUrl = `${baseUrl}?login=${encodeURIComponent(password)}&class=${encodeURIComponent(cls.id)}`;
+
+  // Create High-Res Canvas
+  const canvas = document.createElement("canvas");
+  const width = 800;
+  const height = 980;
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext("2d");
+
+  // 1. White Background & Decorative Double Border
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, width, height);
+
+  // Outer border (Royal Navy)
+  ctx.strokeStyle = "#1e3a8a";
+  ctx.lineWidth = 8;
+  ctx.strokeRect(18, 18, width - 36, height - 36);
+
+  // Inner border (Gold)
+  ctx.strokeStyle = "#f59e0b";
+  ctx.lineWidth = 2.5;
+  ctx.strokeRect(28, 28, width - 56, height - 56);
+
+  // Corner Ornaments
+  ctx.fillStyle = "#1e3a8a";
+  ctx.fillRect(24, 24, 16, 16);
+  ctx.fillRect(width - 40, 24, 16, 16);
+  ctx.fillRect(24, height - 40, 16, 16);
+  ctx.fillRect(width - 40, height - 40, 16, 16);
+
+  // 2. Official Header
+  ctx.textAlign = "center";
+  ctx.fillStyle = "#1e3a8a";
+  ctx.font = "bold 20px 'Moul', 'Khmer OS Muol Light', serif";
+  ctx.fillText("ព្រះរាជាណាចក្រកម្ពុជា", width / 2, 70);
+
+  ctx.fillStyle = "#d97706";
+  ctx.font = "bold 15px 'Moul', 'Khmer OS Muol Light', serif";
+  ctx.fillText("ជាតិ សាសនា ព្រះមហាក្សត្រ", width / 2, 98);
+
+  // Decorative wavy ornament under header
+  ctx.fillStyle = "#94a3b8";
+  ctx.font = "14px sans-serif";
+  ctx.fillText("៚ ------------------- ៚", width / 2, 118);
+
+  ctx.fillStyle = "#1e3a8a";
+  ctx.font = "bold 24px 'Moul', 'Khmer OS Muol Light', serif";
+  ctx.fillText("សាលាបឋមសិក្សា បាន្លួង", width / 2, 154);
+
+  ctx.fillStyle = "#64748b";
+  ctx.font = "14px 'Kantumruy Pro', sans-serif";
+  ctx.fillText("ប្រព័ន្ធគ្រប់គ្រងទិន្នន័យ និងពិន្ទុសិស្សផ្លូវការ", width / 2, 180);
+
+  // 3. Title Ribbon Banner
+  const ribbonY = 205;
+  const ribbonH = 46;
+  ctx.fillStyle = "#1e3a8a";
+  ctx.beginPath();
+  if (ctx.roundRect) {
+    ctx.roundRect(width / 2 - 260, ribbonY, 520, ribbonH, 23);
+  } else {
+    ctx.rect(width / 2 - 260, ribbonY, 520, ribbonH);
+  }
+  ctx.fill();
+
+  ctx.fillStyle = "#ffffff";
+  ctx.font = "bold 17px 'Moul', 'Khmer OS Muol Light', serif";
+  ctx.fillText("ប័ណ្ណ QR CODE សម្រាប់ចូលប្រព័ន្ធ (LOGIN)", width / 2, ribbonY + 30);
+
+  // 4. Grade, Teacher & Stats Box
+  const infoY = 275;
+  ctx.fillStyle = "#f8fafc";
+  ctx.strokeStyle = "#cbd5e1";
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  if (ctx.roundRect) {
+    ctx.roundRect(60, infoY, width - 120, 115, 14);
+  } else {
+    ctx.rect(60, infoY, width - 120, 115);
+  }
+  ctx.fill();
+  ctx.stroke();
+
+  // Class & Academic Year
+  ctx.textAlign = "center";
+  ctx.fillStyle = "#1e3a8a";
+  ctx.font = "bold 22px 'Moul', 'Khmer OS Muol Light', serif";
+  ctx.fillText(`${gradeName}  •  ឆ្នាំសិក្សា ${cls.academicYear || state.activeYear}`, width / 2, infoY + 36);
+
+  // Teacher Name & Room
+  ctx.fillStyle = "#0f172a";
+  ctx.font = "bold 16px 'Battambang', 'Kantumruy Pro', sans-serif";
+  ctx.fillText(`គ្រូប្រចាំថ្នាក់៖ លោកគ្រូ/អ្នកគ្រូ ${teacherName}   |   បន្ទប់៖ ${cls.room || 'បន្ទប់ទី១'}`, width / 2, infoY + 70);
+
+  // Student Counts
+  ctx.fillStyle = "#475569";
+  ctx.font = "14px 'Kantumruy Pro', sans-serif";
+  ctx.fillText(`សិស្សក្នុងថ្នាក់សរុប៖ ${stTotal} នាក់  (សិស្សស្រី៖ ${stFemale} នាក់  •  សិស្សប្រុស៖ ${stMale} នាក់)`, width / 2, infoY + 98);
+
+  // 5. QR Code Drawing
+  const qrBoxY = 415;
+  const qrSize = 310;
+  const qrX = (width - qrSize) / 2;
+
+  // White framed box for QR
+  ctx.fillStyle = "#ffffff";
+  ctx.strokeStyle = "#93c5fd";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  if (ctx.roundRect) {
+    ctx.roundRect(qrX - 16, qrBoxY - 16, qrSize + 32, qrSize + 32, 16);
+  } else {
+    ctx.rect(qrX - 16, qrBoxY - 16, qrSize + 32, qrSize + 32);
+  }
+  ctx.fill();
+  ctx.stroke();
+
+  // Generate QR onto temp container synchronously
+  const tempDiv = document.createElement("div");
+  tempDiv.style.position = "absolute";
+  tempDiv.style.left = "-9999px";
+  document.body.appendChild(tempDiv);
+
+  if (typeof window.QRCode === "function") {
+    new window.QRCode(tempDiv, {
+      text: loginUrl,
+      width: qrSize,
+      height: qrSize,
+      colorDark: "#0f172a",
+      colorLight: "#ffffff",
+      correctLevel: window.QRCode.CorrectLevel ? window.QRCode.CorrectLevel.H : 2
+    });
+  }
+
+  try {
+    const qrCanvas = tempDiv.querySelector("canvas");
+    const qrImg = tempDiv.querySelector("img");
+    if (qrCanvas) {
+      ctx.drawImage(qrCanvas, qrX, qrBoxY, qrSize, qrSize);
+    } else if (qrImg && qrImg.src) {
+      ctx.drawImage(qrImg, qrX, qrBoxY, qrSize, qrSize);
+    }
+  } catch (e) {
+    console.warn("QR draw error:", e);
+  } finally {
+    if (tempDiv.parentNode) tempDiv.parentNode.removeChild(tempDiv);
+  }
+
+  // 6. PIN Password Box
+  const pinY = 780;
+  ctx.fillStyle = "#eff6ff";
+  ctx.strokeStyle = "#3b82f6";
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  if (ctx.roundRect) {
+    ctx.roundRect(width / 2 - 180, pinY, 360, 44, 22);
+  } else {
+    ctx.rect(width / 2 - 180, pinY, 360, 44);
+  }
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.fillStyle = "#1e3a8a";
+  ctx.font = "bold 15px 'Kantumruy Pro', sans-serif";
+  ctx.fillText(`កូដសម្ងាត់ (PIN)៖ `, width / 2 - 35, pinY + 28);
+  ctx.fillStyle = "#2563eb";
+  ctx.font = "bold 20px monospace";
+  ctx.fillText(`${password}`, width / 2 + 75, pinY + 28);
+
+  // 7. Instructions & Footer
+  ctx.fillStyle = "#334155";
+  ctx.font = "14px 'Kantumruy Pro', sans-serif";
+  ctx.fillText("ស្កេនតាមទូរសព្ទដៃ ឬ នាំចូលរូបភាព QR នេះក្នុងផ្ទាំង Log In ដើម្បីចូលប្រើប្រព័ន្ធ", width / 2, 856);
+
+  ctx.fillStyle = "#94a3b8";
+  ctx.font = "12px 'Kantumruy Pro', sans-serif";
+  ctx.fillText("សាលាបឋមសិក្សា បាន្លួង  •  រក្សាសិទ្ធិគ្រប់យ៉ាង", width / 2, 925);
+
+  // 8. Download
+  const dataUrl = canvas.toDataURL("image/png");
+  const link = document.createElement("a");
+  const safeGrade = (gradeName || "ថ្នាក់រៀន").replace(/\s+/g, "_");
+  link.download = `QR_Code_${safeGrade}_សាលាបាន្លួង.png`;
+  link.href = dataUrl;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  return dataUrl;
+}
+
+function downloadCurrentVisibleQRCodes() {
+  const isAdmin = !!(window.authSystem && typeof window.authSystem.isAdmin === "function" && window.authSystem.isAdmin());
+  const allowedGrade = (window.authSystem && typeof window.authSystem.getAllowedGrade === "function") ? window.authSystem.getAllowedGrade() : null;
+  const classes = getClassesForYear(state.activeYear) || [];
+
+  let targets = classes;
+  if (!isAdmin && allowedGrade) {
+    targets = classes.filter(c => c.grade === allowedGrade);
+  }
+
+  if (targets.length === 0) {
+    alert("ពុំមានថ្នាក់រៀនសម្រាប់ទាញយកឡើយ!");
+    return;
+  }
+
+  // If single class, download directly
+  if (targets.length === 1) {
+    downloadClassQRCode(targets[0].id);
+    return;
+  }
+
+  // If multiple classes (Admin), download one by one with a small gap
+  targets.forEach((cls, idx) => {
+    setTimeout(() => {
+      downloadClassQRCode(cls.id);
+    }, idx * 400);
+  });
+}
+
 window.renderClasses = renderClasses;
 window.changeClassesYear = changeClassesYear;
 window.filterClassesCards = filterClassesCards;
@@ -13695,3 +13998,5 @@ window.openClassAttendance = openClassAttendance;
 window.printClassroomBadge = printClassroomBadge;
 window.printAllClassroomBadges = printAllClassroomBadges;
 window.exportClassesSummaryExcel = exportClassesSummaryExcel;
+window.downloadClassQRCode = downloadClassQRCode;
+window.downloadCurrentVisibleQRCodes = downloadCurrentVisibleQRCodes;

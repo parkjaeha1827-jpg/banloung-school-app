@@ -251,6 +251,7 @@
     overlay.style.display = "flex";
     document.body.classList.add("auth-modal-open");
 
+    switchAuthTab("password");
     const pwdInput = document.getElementById("authPasswordInput");
     if (pwdInput) {
       pwdInput.value = "";
@@ -261,10 +262,12 @@
       errBox.style.display = "none";
       errBox.textContent = "";
     }
+    showQRStatus("", "");
   }
 
   // Hide Login Modal
   function hideLoginModal() {
+    stopCameraScanner();
     const overlay = document.getElementById("authModalOverlay");
     if (!overlay) return;
     overlay.style.display = "none";
@@ -443,8 +446,327 @@
     }
   }
 
+  // -------------------------------------------------------------------------
+  // QR CODE IMPORT, SCANNING & LOGIN (ការនាំចូល និងស្កេន QR Code)
+  // -------------------------------------------------------------------------
+  let activeAuthTab = "password";
+  let cameraStream = null;
+  let cameraScanReqId = null;
+
+  function switchAuthTab(tab) {
+    activeAuthTab = tab;
+    const btnPwd = document.getElementById("authTabBtnPassword");
+    const btnQR = document.getElementById("authTabBtnQR");
+    const panePwd = document.getElementById("authPanePassword");
+    const paneQR = document.getElementById("authPaneQR");
+
+    if (tab === "qr") {
+      if (btnPwd) btnPwd.classList.remove("active");
+      if (btnQR) btnQR.classList.add("active");
+      if (panePwd) panePwd.style.display = "none";
+      if (paneQR) paneQR.style.display = "block";
+      showQRStatus("", "");
+    } else {
+      if (btnQR) btnQR.classList.remove("active");
+      if (btnPwd) btnPwd.classList.add("active");
+      if (paneQR) paneQR.style.display = "none";
+      if (panePwd) panePwd.style.display = "block";
+      stopCameraScanner();
+      const pwdInput = document.getElementById("authPasswordInput");
+      if (pwdInput) setTimeout(() => pwdInput.focus(), 100);
+    }
+  }
+
+  function triggerQRFileInput() {
+    const input = document.getElementById("authQRFileInput");
+    if (input) {
+      input.value = "";
+      input.click();
+    }
+  }
+
+  function handleQRDragOver(e) {
+    if (e) e.preventDefault();
+    const zone = document.getElementById("authQRDropzone");
+    if (zone) zone.classList.add("is-dragover");
+  }
+
+  function handleQRDragLeave(e) {
+    if (e) e.preventDefault();
+    const zone = document.getElementById("authQRDropzone");
+    if (zone) zone.classList.remove("is-dragover");
+  }
+
+  function handleQRDrop(e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    const zone = document.getElementById("authQRDropzone");
+    if (zone) zone.classList.remove("is-dragover");
+
+    if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      const file = e.dataTransfer.files[0];
+      decodeQRFromFile(file);
+    }
+  }
+
+  function handleQRFileChange(e) {
+    if (e && e.target && e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      decodeQRFromFile(file);
+    }
+  }
+
+  // Support Ctrl+V paste of QR screenshot while modal is open
+  window.addEventListener("paste", function(e) {
+    const overlay = document.getElementById("authModalOverlay");
+    if (!overlay || overlay.style.display === "none") return;
+    if (e.clipboardData && e.clipboardData.items) {
+      for (let i = 0; i < e.clipboardData.items.length; i++) {
+        const item = e.clipboardData.items[i];
+        if (item.type.indexOf("image") !== -1) {
+          const file = item.getAsFile();
+          if (file) {
+            switchAuthTab("qr");
+            decodeQRFromFile(file);
+            break;
+          }
+        }
+      }
+    }
+  });
+
+  function showQRStatus(message, type) {
+    const statusBox = document.getElementById("authQRStatus");
+    if (!statusBox) return;
+    if (!message) {
+      statusBox.style.display = "none";
+      statusBox.className = "auth-qr-status";
+      statusBox.innerHTML = "";
+      return;
+    }
+    statusBox.style.display = "flex";
+    statusBox.className = "auth-qr-status " + (type || "info");
+    const icon = (type === "success")
+      ? '<i class="fa-solid fa-circle-check text-success"></i>'
+      : (type === "error")
+      ? '<i class="fa-solid fa-circle-exclamation text-danger"></i>'
+      : '<i class="fa-solid fa-spinner fa-spin text-primary"></i>';
+    statusBox.innerHTML = `${icon} <span>${message}</span>`;
+  }
+
+  // Parse QR content to extract PIN or account
+  function parseQRData(raw) {
+    if (!raw) return null;
+    const str = String(raw).trim();
+
+    // 1. Check if contains URL query params: ?login=... or &login=... or ?pin=...
+    if (str.includes("login=") || str.includes("pin=")) {
+      try {
+        let qs = str;
+        if (str.includes("?")) {
+          qs = str.split("?")[1];
+        }
+        const params = new URLSearchParams(qs);
+        const pin = params.get("login") || params.get("pin");
+        if (pin) return pin.trim();
+      } catch (e) {
+        console.error("URL search params parse error", e);
+      }
+    }
+
+    // 2. Check JSON
+    if (str.startsWith("{") && str.endsWith("}")) {
+      try {
+        const obj = JSON.parse(str);
+        if (obj.pin) return String(obj.pin).trim();
+        if (obj.password) return String(obj.password).trim();
+        if (obj.login) return String(obj.login).trim();
+      } catch (e){}
+    }
+
+    // 3. Direct match with any password in AUTH_USERS
+    const matched = AUTH_USERS.find(u => u.password.toLowerCase() === str.toLowerCase());
+    if (matched) return matched.password;
+
+    // 4. Return trimmed string directly
+    return str;
+  }
+
+  function handleDecodedQRText(decodedText) {
+    const pin = parseQRData(decodedText);
+    if (!pin) {
+      showQRStatus("ទិន្នន័យ QR Code មិនត្រឹមត្រូវសម្រាប់ប្រព័ន្ធនេះឡើយ!", "error");
+      return;
+    }
+
+    const res = login(pin);
+    if (res && res.success) {
+      const u = res.user;
+      showQRStatus(`ស្កេនជោគជ័យ! ស្វាគមន៍ ${u.label} (${u.teacher || u.role})`, "success");
+      stopCameraScanner();
+      setTimeout(() => {
+        hideLoginModal();
+      }, 700);
+    } else {
+      showQRStatus((res && res.error) || "ការចូលប្រើប្រព័ន្ធមិនត្រឹមត្រូវ!", "error");
+    }
+  }
+
+  function decodeQRFromFile(file) {
+    if (!file || !file.type.startsWith("image/")) {
+      showQRStatus("សូមជ្រើសរើសឯកសាររូបភាព QR Code (PNG, JPG, WebP)!", "error");
+      return;
+    }
+
+    showQRStatus("កំពុងដំណើរការពិនិត្យ និងស្កេនរូបភាព QR Code...", "loading");
+
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      const img = new Image();
+      img.onload = function() {
+        try {
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d", { willReadFrequently: true });
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0, img.width, img.height);
+          const imageData = ctx.getImageData(0, 0, img.width, img.height);
+
+          if (typeof window.jsQR === "function") {
+            // First attempt normal
+            let code = window.jsQR(imageData.data, imageData.width, imageData.height, {
+              inversionAttempts: "dontInvert"
+            });
+            // Fallback attempt both
+            if (!code) {
+              code = window.jsQR(imageData.data, imageData.width, imageData.height, {
+                inversionAttempts: "attemptBoth"
+              });
+            }
+
+            if (code && code.data) {
+              handleDecodedQRText(code.data);
+            } else {
+              showQRStatus("មិនអាចរកឃើញ QR Code ក្នុងរូបភាពនេះទេ! សូមជ្រើសរើសរូបភាពដែលច្បាស់។", "error");
+            }
+          } else {
+            showQRStatus("បណ្ណាល័យស្កេន QR (jsQR) មិនទាន់ដំណើរការ!", "error");
+          }
+        } catch (err) {
+          console.error("QR decode error:", err);
+          showQRStatus("មានបញ្ហាក្នុងការស្កេនរូបភាព៖ " + err.message, "error");
+        }
+      };
+      img.onerror = function() {
+        showQRStatus("មិនអាចបើករូបភាពនេះបានឡើយ!", "error");
+      };
+      img.src = evt.target.result;
+    };
+    reader.onerror = function() {
+      showQRStatus("មិនអាចអានឯកសាររូបភាពបានឡើយ!", "error");
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // Camera Scanner
+  function toggleCameraScanner() {
+    const container = document.getElementById("qrCameraContainer");
+    if (!container) return;
+    if (container.style.display === "none" || !cameraStream) {
+      startCameraScanner();
+    } else {
+      stopCameraScanner();
+    }
+  }
+
+  function startCameraScanner() {
+    const container = document.getElementById("qrCameraContainer");
+    const video = document.getElementById("qrCameraVideo");
+    const btn = document.getElementById("btnToggleCameraScan");
+    if (!container || !video) return;
+
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      showQRStatus("ឧបករណ៍ ឬកម្មវិធីរុករកនេះមិនគាំទ្រការបើកកាមេរ៉ាទេ! សូមប្រើការនាំចូលរូបភាពជំនួសវិញ។", "error");
+      return;
+    }
+
+    showQRStatus("កំពុងបើកកាមេរ៉ា...", "loading");
+
+    navigator.mediaDevices.getUserMedia({
+      video: { facingMode: "environment" }
+    }).then(function(stream) {
+      cameraStream = stream;
+      video.srcObject = stream;
+      video.setAttribute("playsinline", true);
+      video.play();
+      container.style.display = "block";
+      if (btn) btn.innerHTML = '<i class="fa-solid fa-video-slash"></i> បិទកាមេរ៉ាស្កេន';
+      showQRStatus("សូមដាក់ QR Code ឱ្យចំប្រអប់កាមេរ៉ា...", "info");
+      cameraScanReqId = requestAnimationFrame(scanCameraTick);
+    }).catch(function(err) {
+      console.warn("Camera access denied or failed:", err);
+      showQRStatus("មិនអាចបើកកាមេរ៉ាបានទេ (សូមអនុញ្ញាត Camera Permission ឬប្រើការនាំចូលរូបភាព)!", "error");
+      stopCameraScanner();
+    });
+  }
+
+  function stopCameraScanner() {
+    if (cameraScanReqId) {
+      cancelAnimationFrame(cameraScanReqId);
+      cameraScanReqId = null;
+    }
+    if (cameraStream) {
+      try {
+        cameraStream.getTracks().forEach(t => t.stop());
+      } catch(e){}
+      cameraStream = null;
+    }
+    const container = document.getElementById("qrCameraContainer");
+    const video = document.getElementById("qrCameraVideo");
+    const btn = document.getElementById("btnToggleCameraScan");
+    if (container) container.style.display = "none";
+    if (video) video.srcObject = null;
+    if (btn) btn.innerHTML = '<i class="fa-solid fa-camera"></i> បើកកាមេរ៉ាស្កេនផ្ទាល់ (Scan Camera)';
+  }
+
+  function scanCameraTick() {
+    const video = document.getElementById("qrCameraVideo");
+    if (!video || !cameraStream) return;
+
+    if (video.readyState === video.HAVE_ENOUGH_DATA) {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d", { willReadFrequently: true });
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+      if (typeof window.jsQR === "function") {
+        const code = window.jsQR(imageData.data, imageData.width, imageData.height, {
+          inversionAttempts: "dontInvert"
+        });
+        if (code && code.data) {
+          handleDecodedQRText(code.data);
+          return;
+        }
+      }
+    }
+    cameraScanReqId = requestAnimationFrame(scanCameraTick);
+  }
+
   // Initialize System
   function initAuth() {
+    // Check sessionStorage hooks for testing
+    try {
+      const seedLogin = sessionStorage.getItem("banloung_seed_login");
+      if (seedLogin) {
+        sessionStorage.removeItem("banloung_seed_login");
+        login(seedLogin);
+      }
+    } catch(e){}
+
     // Auto-login from QR Code / URL parameter (e.g. ?login=1111 or ?pin=1111)
     try {
       const urlParams = new URLSearchParams(window.location.search);
@@ -462,6 +784,13 @@
     const user = getCurrentUser();
     if (!user) {
       showLoginModal();
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get("auth_tab") === "qr" || sessionStorage.getItem("banloung_force_qr_tab")) {
+          sessionStorage.removeItem("banloung_force_qr_tab");
+          switchAuthTab("qr");
+        }
+      } catch(e){}
     } else {
       hideLoginModal();
     }
@@ -486,7 +815,18 @@
     updateAuthUI: updateAuthUI,
     handleAuthSubmit: handleAuthSubmit,
     toggleAuthPasswordVisibility: toggleAuthPasswordVisibility,
-    quickFillAuth: quickFillAuth
+    quickFillAuth: quickFillAuth,
+    switchAuthTab: switchAuthTab,
+    triggerQRFileInput: triggerQRFileInput,
+    handleQRDragOver: handleQRDragOver,
+    handleQRDragLeave: handleQRDragLeave,
+    handleQRDrop: handleQRDrop,
+    handleQRFileChange: handleQRFileChange,
+    decodeQRFromFile: decodeQRFromFile,
+    handleDecodedQRText: handleDecodedQRText,
+    parseQRData: parseQRData,
+    toggleCameraScanner: toggleCameraScanner,
+    stopCameraScanner: stopCameraScanner
   };
 
   // Expose global helpers for inline HTML event attributes
@@ -495,6 +835,17 @@
   window.toggleAuthPasswordVisibility = toggleAuthPasswordVisibility;
   window.closeAdminPromptModal = closeAdminPromptModal;
   window.confirmAdminPrompt = confirmAdminPrompt;
+  window.switchAuthTab = switchAuthTab;
+  window.triggerQRFileInput = triggerQRFileInput;
+  window.handleQRDragOver = handleQRDragOver;
+  window.handleQRDragLeave = handleQRDragLeave;
+  window.handleQRDrop = handleQRDrop;
+  window.handleQRFileChange = handleQRFileChange;
+  window.decodeQRFromFile = decodeQRFromFile;
+  window.handleDecodedQRText = handleDecodedQRText;
+  window.parseQRData = parseQRData;
+  window.toggleCameraScanner = toggleCameraScanner;
+  window.stopCameraScanner = stopCameraScanner;
   window.handleAuthClassChange = function () {
     const pwdInput = document.getElementById("authPasswordInput");
     if (pwdInput) {

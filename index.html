@@ -595,8 +595,11 @@
           </div>
 
           <div class="filter-group">
-            <button type="button" class="btn btn-action-outline" onclick="printAllClassroomBadges()" title="បោះពុម្ពប័ណ្ណសម្គាល់ថ្នាក់រៀន និង QR Code ទាំងអស់">
-              <i class="fa-solid fa-print" style="color: #2563eb; font-size: 14px;"></i> បោះពុម្ពប័ណ្ណ QR គ្រប់ថ្នាក់
+            <button type="button" class="btn btn-action-outline" id="btnDownloadClassQRCodesTop" onclick="downloadCurrentVisibleQRCodes()" title="ទាញយកជារូបភាព QR Code សម្រាប់ប្រើប្រាស់ និង Log In">
+              <i class="fa-solid fa-download" style="color: #0284c7; font-size: 14px;"></i> ទាញយក QR Code
+            </button>
+            <button type="button" class="btn btn-action-outline" onclick="printAllClassroomBadges()" title="បោះពុម្ពប័ណ្ណសម្គាល់ថ្នាក់រៀន និង QR Code">
+              <i class="fa-solid fa-print" style="color: #2563eb; font-size: 14px;"></i> បោះពុម្ពប័ណ្ណ QR
             </button>
             <button type="button" class="btn btn-action-outline" onclick="exportClassesSummaryExcel()" title="នាំចេញស្ថិតិថ្នាក់រៀនជា Excel">
               <i class="fa-solid fa-file-excel" style="color: #16a34a; font-size: 14px;"></i> នាំចេញ Excel
@@ -1806,51 +1809,120 @@
 <!-- FULL-SCREEN AUTHENTICATION & LOGIN MODAL -->
 <!-- ========================================================================== -->
 <div class="auth-modal-overlay" id="authModalOverlay" style="display: none;">
-  <div class="auth-card">
+  <div class="auth-card-modern">
+    <!-- Glow ambient background effect -->
+    <div class="auth-card-glow"></div>
+
+    <!-- Header with Golden/Navy Crest -->
     <div class="auth-header">
-      <div class="auth-logo-badge">
-        <i class="fa-solid fa-school"></i>
+      <div class="auth-crest-wrapper">
+        <div class="auth-logo-badge">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+          </svg>
+        </div>
+        <span class="auth-crest-pulse"></span>
       </div>
       <h2 class="auth-title">សាលាបឋមសិក្សា បាន្លួង</h2>
       <p class="auth-subtitle">ប្រព័ន្ធគ្រប់គ្រងទិន្នន័យ និងពិន្ទុសិស្សផ្លូវការ</p>
-      <div class="auth-tagline"><i class="fa-solid fa-shield-halved"></i> សូមជ្រើសរើសថ្នាក់ ឬគណនី និងបញ្ចូលពាក្យសម្ងាត់ដើម្បីចូលប្រើប្រាស់</div>
     </div>
 
-    <form class="auth-form" onsubmit="handleAuthSubmit(event)">
-      <!-- Account / Class Selection -->
-      <div class="auth-form-group">
-        <label for="authClassSelect"><i class="fa-solid fa-chalkboard-user text-primary"></i> ជ្រើសរើសគណនី ឬថ្នាក់រៀន</label>
-        <select id="authClassSelect" class="form-control auth-select" onchange="handleAuthClassChange()">
-          <option value="admin">🔑 អ្នកគ្រប់គ្រងទូទៅ (Admin) - មើលគ្រប់ថ្នាក់</option>
-          <option value="grade_1">🏫 ថ្នាក់ទី១ (លោកគ្រូ ផាន ផុស)</option>
-          <option value="grade_2">🏫 ថ្នាក់ទី២ (អ្នកគ្រូ លី មករា)</option>
-          <option value="grade_3">🏫 ថ្នាក់ទី៣ (អ្នកគ្រូ ក្រូយ ចាន់ធារ៉ា)</option>
-          <option value="grade_4">🏫 ថ្នាក់ទី៤ (អ្នកគ្រូ សុខ ស្រីនាង)</option>
-          <option value="grade_5">🏫 ថ្នាក់ទី៥ (លោកគ្រូ ញឹម ស៊ីវថា)</option>
-          <option value="grade_6">🏫 ថ្នាក់ទី៦ (លោកគ្រូ ង៉ែត សារុន)</option>
-          <option value="kindergarten">🏫 ថ្នាក់មត្តេយ្យ (អ្នកគ្រូ លី ស្រីនូ)</option>
-        </select>
-      </div>
-
-      <!-- Password Input -->
-      <div class="auth-form-group">
-        <label for="authPasswordInput"><i class="fa-solid fa-key text-warning"></i> ពាក្យសម្ងាត់ (Password / PIN)</label>
-        <div class="auth-input-wrapper">
-          <input type="password" id="authPasswordInput" class="form-control auth-password-input" placeholder="បញ្ចូលពាក្យសម្ងាត់..." autocomplete="current-password" required>
-          <button type="button" class="btn-toggle-auth-pwd" onclick="toggleAuthPasswordVisibility()" title="បង្ហាញ / លាក់ ពាក្យសម្ងាត់">
-            <i class="fa-solid fa-eye" id="authPasswordEyeIcon"></i>
-          </button>
-        </div>
-      </div>
-
-      <!-- Error Message Container -->
-      <div id="authErrorMessage" class="auth-error-alert" style="display: none;"></div>
-
-      <!-- Submit Button -->
-      <button type="submit" class="btn-auth-submit">
-        <i class="fa-solid fa-right-to-bracket"></i> ចូលប្រព័ន្ធ (Sign In)
+    <!-- Login Method Switcher Tabs -->
+    <div class="auth-tab-switch">
+      <button type="button" class="auth-tab-btn active" id="authTabBtnPassword" onclick="switchAuthTab('password')">
+        <i class="fa-solid fa-key"></i> បញ្ចូលពាក្យសម្ងាត់ (PIN)
       </button>
-    </form>
+      <button type="button" class="auth-tab-btn" id="authTabBtnQR" onclick="switchAuthTab('qr')">
+        <i class="fa-solid fa-qrcode"></i> នាំចូល / ស្កេន QR Code
+      </button>
+    </div>
+
+    <!-- TAB 1: Password / PIN Form -->
+    <div id="authPanePassword" class="auth-pane active">
+      <form class="auth-form" onsubmit="handleAuthSubmit(event)">
+        <!-- Account / Class Selection -->
+        <div class="auth-form-group">
+          <label for="authClassSelect"><i class="fa-solid fa-chalkboard-user text-primary"></i> ជ្រើសរើសគណនី ឬថ្នាក់រៀន</label>
+          <select id="authClassSelect" class="form-control auth-select" onchange="handleAuthClassChange()">
+            <option value="admin">🔑 អ្នកគ្រប់គ្រងទូទៅ (Admin) - មើលគ្រប់ថ្នាក់</option>
+            <option value="grade_1">🏫 ថ្នាក់ទី១ (លោកគ្រូ ផាន ផុស)</option>
+            <option value="grade_2">🏫 ថ្នាក់ទី២ (អ្នកគ្រូ លី មករា)</option>
+            <option value="grade_3">🏫 ថ្នាក់ទី៣ (អ្នកគ្រូ ក្រូយ ចាន់ធារ៉ា)</option>
+            <option value="grade_4">🏫 ថ្នាក់ទី៤ (អ្នកគ្រូ សុខ ស្រីនាង)</option>
+            <option value="grade_5">🏫 ថ្នាក់ទី៥ (លោកគ្រូ ញឹម ស៊ីវថា)</option>
+            <option value="grade_6">🏫 ថ្នាក់ទី៦ (លោកគ្រូ ង៉ែត សារុន)</option>
+            <option value="kindergarten">🏫 ថ្នាក់មត្តេយ្យ (អ្នកគ្រូ លី ស្រីនូ)</option>
+          </select>
+        </div>
+
+        <!-- Password Input -->
+        <div class="auth-form-group">
+          <label for="authPasswordInput"><i class="fa-solid fa-lock text-warning"></i> ពាក្យសម្ងាត់ (Password / PIN)</label>
+          <div class="auth-input-wrapper">
+            <input type="password" id="authPasswordInput" class="form-control auth-password-input" placeholder="បញ្ចូលពាក្យសម្ងាត់ ឬ PIN..." autocomplete="current-password" required>
+            <button type="button" class="btn-toggle-auth-pwd" onclick="toggleAuthPasswordVisibility()" title="បង្ហាញ / លាក់ ពាក្យសម្ងាត់">
+              <i class="fa-solid fa-eye" id="authPasswordEyeIcon"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Error Message Container -->
+        <div id="authErrorMessage" class="auth-error-alert" style="display: none;"></div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn-auth-submit">
+          <i class="fa-solid fa-right-to-bracket"></i> ចូលប្រព័ន្ធ (Sign In)
+        </button>
+      </form>
+    </div>
+
+    <!-- TAB 2: QR Code Import & Scan Form -->
+    <div id="authPaneQR" class="auth-pane" style="display: none;">
+      <div class="auth-qr-pane-content">
+        <div class="auth-qr-dropzone" id="authQRDropzone" onclick="triggerQRFileInput()" ondragover="handleQRDragOver(event)" ondragleave="handleQRDragLeave(event)" ondrop="handleQRDrop(event)">
+          <input type="file" id="authQRFileInput" accept="image/*" style="display: none;" onchange="handleQRFileChange(event)">
+          <div class="qr-dropzone-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+          </div>
+          <div class="qr-dropzone-title">ទម្លាក់រូបភាព QR Code នៅទីនេះ</div>
+          <div class="qr-dropzone-sub">ឬចុចត្រង់នេះដើម្បីជ្រើសរើសរូបភាពពីកុំព្យូទ័រ / ទូរសព្ទ</div>
+          <div class="qr-dropzone-badge"><i class="fa-solid fa-image"></i> នាំចូលរូបភាព (PNG, JPG, WebP)</div>
+        </div>
+
+        <!-- Camera Scanner Section (Live Scanner) -->
+        <div class="auth-qr-camera-wrap">
+          <button type="button" class="btn-toggle-camera-scan" id="btnToggleCameraScan" onclick="toggleCameraScanner()">
+            <i class="fa-solid fa-camera"></i> បើកកាមេរ៉ាស្កេនផ្ទាល់ (Scan Camera)
+          </button>
+          <div id="qrCameraContainer" class="qr-camera-container" style="display: none;">
+            <video id="qrCameraVideo" playsinline></video>
+            <div class="qr-camera-overlay">
+              <div class="qr-camera-target">
+                <div class="qr-target-corner top-left"></div>
+                <div class="qr-target-corner top-right"></div>
+                <div class="qr-target-corner bottom-left"></div>
+                <div class="qr-target-corner bottom-right"></div>
+                <div class="qr-target-laser"></div>
+              </div>
+            </div>
+            <button type="button" class="btn-close-camera" onclick="stopCameraScanner()"><i class="fa-solid fa-times"></i> បិទកាមេរ៉ា</button>
+          </div>
+        </div>
+
+        <!-- QR Status & Feedback Alert -->
+        <div id="authQRStatus" class="auth-qr-status" style="display: none;"></div>
+      </div>
+    </div>
+
+    <!-- Footer Note -->
+    <div class="auth-footer-note">
+      <i class="fa-solid fa-shield-halved text-primary"></i> ប្រព័ន្ធសុវត្ថិភាពសាលាបឋមសិក្សា បាន្លួង
+    </div>
   </div>
 </div>
 
@@ -1882,7 +1954,9 @@
 
 
 <script src="pdf.min.js"></script>
+<script src="qrcode.min.js"></script>
 <script src="qrcode.js"></script>
+<script src="jsqr.min.js"></script>
 <script src="data.js"></script>
 <script src="library.js"></script>
 <script src="school_reports.js"></script>

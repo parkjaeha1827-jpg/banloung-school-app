@@ -62,6 +62,18 @@ body {
   min-height: 100vh;
   align-items: stretch;
   background-color: var(--bg-main);
+  animation: appReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes appReveal {
+  from {
+    opacity: 0;
+    transform: scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /* Sidebar Navigation (អាចពង្រីក ឬបង្រួមបានតាមចិត្ត) */
@@ -9665,19 +9677,29 @@ body {
    AUTHENTICATION & ACCESS CONTROL STYLES (ប្រព័ន្ធគ្រប់គ្រងសិទ្ធិ & ពាក្យសម្ងាត់)
    ========================================================================== */
 
+/* Full-Screen Gatekeeper: Hide whole app until authenticated */
+body.auth-locked {
+  background: radial-gradient(circle at 50% 15%, #1e3a8a 0%, #0f172a 65%, #020617 100%) !important;
+  min-height: 100vh;
+  overflow: hidden !important;
+}
+
+body.auth-locked .app-container {
+  display: none !important;
+}
+
 /* Full-Screen Authentication Overlay */
 .auth-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.78);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: radial-gradient(circle at 50% 15%, #1e3a8a 0%, #0f172a 65%, #020617 100%);
   z-index: 99999;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 16px;
-  animation: authFadeIn 0.25s ease-out;
+  overflow-y: auto;
+  animation: authFadeIn 0.3s ease-out;
 }
 
 body.auth-modal-open {

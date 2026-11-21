@@ -180,7 +180,7 @@
   }
 
   // Perform Login
-  function login(password, selectedId) {
+  function login(password, selectedId, skipHideModal = false) {
     if (!password) {
       return { success: false, error: "សូមបញ្ចូលពាក្យសម្ងាត់!" };
     }
@@ -214,7 +214,9 @@
 
     // Success: Save user & update application
     saveSession(matchedUser);
-    hideLoginModal();
+    if (!skipHideModal) {
+      hideLoginModal();
+    }
     updateAuthUI();
 
     // Align application active class with teacher's class
@@ -250,12 +252,12 @@
     if (!overlay) return;
     overlay.style.display = "flex";
     document.body.classList.add("auth-modal-open");
+    document.body.classList.add("auth-locked");
 
-    switchAuthTab("password");
+    switchAuthTab("qr");
     const pwdInput = document.getElementById("authPasswordInput");
     if (pwdInput) {
       pwdInput.value = "";
-      setTimeout(() => pwdInput.focus(), 150);
     }
     const errBox = document.getElementById("authErrorMessage");
     if (errBox) {
@@ -272,6 +274,7 @@
     if (!overlay) return;
     overlay.style.display = "none";
     document.body.classList.remove("auth-modal-open");
+    document.body.classList.remove("auth-locked");
   }
 
   // Toggle Password Visibility
@@ -449,7 +452,7 @@
   // -------------------------------------------------------------------------
   // QR CODE IMPORT, SCANNING & LOGIN (ការនាំចូល និងស្កេន QR Code)
   // -------------------------------------------------------------------------
-  let activeAuthTab = "password";
+  let activeAuthTab = "qr";
   let cameraStream = null;
   let cameraScanReqId = null;
 
@@ -601,7 +604,7 @@
       return;
     }
 
-    const res = login(pin);
+    const res = login(pin, null, true);
     if (res && res.success) {
       const u = res.user;
       showQRStatus(`ស្កេនជោគជ័យ! ស្វាគមន៍ ${u.label} (${u.teacher || u.role})`, "success");
@@ -767,10 +770,10 @@
       }
     } catch(e){}
 
-    // Auto-login from QR Code / URL parameter (e.g. ?login=1111 or ?pin=1111)
+    // Auto-login from QR Code / URL parameter (e.g. ?login=1111 or ?pin=1111 or ?auth_qr=1111)
     try {
       const urlParams = new URLSearchParams(window.location.search);
-      const autoPin = urlParams.get("login") || urlParams.get("pin");
+      const autoPin = urlParams.get("login") || urlParams.get("pin") || urlParams.get("auth_qr");
       if (autoPin) {
         const loginRes = login(autoPin);
         if (loginRes && loginRes.success) {
@@ -783,14 +786,9 @@
 
     const user = getCurrentUser();
     if (!user) {
+      document.body.classList.add("auth-locked");
       showLoginModal();
-      try {
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get("auth_tab") === "qr" || sessionStorage.getItem("banloung_force_qr_tab")) {
-          sessionStorage.removeItem("banloung_force_qr_tab");
-          switchAuthTab("qr");
-        }
-      } catch(e){}
+      switchAuthTab("qr");
     } else {
       hideLoginModal();
     }

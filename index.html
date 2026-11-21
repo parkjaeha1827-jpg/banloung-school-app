@@ -16,9 +16,9 @@
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="auth-locked">
 
-<div class="app-container">
+<div class="app-container" id="appContainer">
 
   <!-- ========================================== -->
   <!-- SIDEBAR NAVIGATION                        -->
@@ -1828,57 +1828,18 @@
       <p class="auth-subtitle">ប្រព័ន្ធគ្រប់គ្រងទិន្នន័យ និងពិន្ទុសិស្សផ្លូវការ</p>
     </div>
 
-    <!-- Login Method Switcher Tabs -->
+    <!-- Login Method Switcher Tabs (Default: QR Code) -->
     <div class="auth-tab-switch">
-      <button type="button" class="auth-tab-btn active" id="authTabBtnPassword" onclick="switchAuthTab('password')">
-        <i class="fa-solid fa-key"></i> បញ្ចូលពាក្យសម្ងាត់ (PIN)
-      </button>
-      <button type="button" class="auth-tab-btn" id="authTabBtnQR" onclick="switchAuthTab('qr')">
+      <button type="button" class="auth-tab-btn active" id="authTabBtnQR" onclick="switchAuthTab('qr')">
         <i class="fa-solid fa-qrcode"></i> នាំចូល / ស្កេន QR Code
       </button>
+      <button type="button" class="auth-tab-btn" id="authTabBtnPassword" onclick="switchAuthTab('password')">
+        <i class="fa-solid fa-key"></i> បញ្ចូលពាក្យសម្ងាត់ (PIN)
+      </button>
     </div>
 
-    <!-- TAB 1: Password / PIN Form -->
-    <div id="authPanePassword" class="auth-pane active">
-      <form class="auth-form" onsubmit="handleAuthSubmit(event)">
-        <!-- Account / Class Selection -->
-        <div class="auth-form-group">
-          <label for="authClassSelect"><i class="fa-solid fa-chalkboard-user text-primary"></i> ជ្រើសរើសគណនី ឬថ្នាក់រៀន</label>
-          <select id="authClassSelect" class="form-control auth-select" onchange="handleAuthClassChange()">
-            <option value="admin">🔑 អ្នកគ្រប់គ្រងទូទៅ (Admin) - មើលគ្រប់ថ្នាក់</option>
-            <option value="grade_1">🏫 ថ្នាក់ទី១ (លោកគ្រូ ផាន ផុស)</option>
-            <option value="grade_2">🏫 ថ្នាក់ទី២ (អ្នកគ្រូ លី មករា)</option>
-            <option value="grade_3">🏫 ថ្នាក់ទី៣ (អ្នកគ្រូ ក្រូយ ចាន់ធារ៉ា)</option>
-            <option value="grade_4">🏫 ថ្នាក់ទី៤ (អ្នកគ្រូ សុខ ស្រីនាង)</option>
-            <option value="grade_5">🏫 ថ្នាក់ទី៥ (លោកគ្រូ ញឹម ស៊ីវថា)</option>
-            <option value="grade_6">🏫 ថ្នាក់ទី៦ (លោកគ្រូ ង៉ែត សារុន)</option>
-            <option value="kindergarten">🏫 ថ្នាក់មត្តេយ្យ (អ្នកគ្រូ លី ស្រីនូ)</option>
-          </select>
-        </div>
-
-        <!-- Password Input -->
-        <div class="auth-form-group">
-          <label for="authPasswordInput"><i class="fa-solid fa-lock text-warning"></i> ពាក្យសម្ងាត់ (Password / PIN)</label>
-          <div class="auth-input-wrapper">
-            <input type="password" id="authPasswordInput" class="form-control auth-password-input" placeholder="បញ្ចូលពាក្យសម្ងាត់ ឬ PIN..." autocomplete="current-password" required>
-            <button type="button" class="btn-toggle-auth-pwd" onclick="toggleAuthPasswordVisibility()" title="បង្ហាញ / លាក់ ពាក្យសម្ងាត់">
-              <i class="fa-solid fa-eye" id="authPasswordEyeIcon"></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- Error Message Container -->
-        <div id="authErrorMessage" class="auth-error-alert" style="display: none;"></div>
-
-        <!-- Submit Button -->
-        <button type="submit" class="btn-auth-submit">
-          <i class="fa-solid fa-right-to-bracket"></i> ចូលប្រព័ន្ធ (Sign In)
-        </button>
-      </form>
-    </div>
-
-    <!-- TAB 2: QR Code Import & Scan Form -->
-    <div id="authPaneQR" class="auth-pane" style="display: none;">
+    <!-- TAB 1: QR Code Import & Scan Form (Active by default) -->
+    <div id="authPaneQR" class="auth-pane active">
       <div class="auth-qr-pane-content">
         <div class="auth-qr-dropzone" id="authQRDropzone" onclick="triggerQRFileInput()" ondragover="handleQRDragOver(event)" ondragleave="handleQRDragLeave(event)" ondrop="handleQRDrop(event)">
           <input type="file" id="authQRFileInput" accept="image/*" style="display: none;" onchange="handleQRFileChange(event)">
@@ -1917,6 +1878,45 @@
         <!-- QR Status & Feedback Alert -->
         <div id="authQRStatus" class="auth-qr-status" style="display: none;"></div>
       </div>
+    </div>
+
+    <!-- TAB 2: Password / PIN Form -->
+    <div id="authPanePassword" class="auth-pane" style="display: none;">
+      <form class="auth-form" onsubmit="handleAuthSubmit(event)">
+        <!-- Account / Class Selection -->
+        <div class="auth-form-group">
+          <label for="authClassSelect"><i class="fa-solid fa-chalkboard-user text-primary"></i> ជ្រើសរើសគណនី ឬថ្នាក់រៀន</label>
+          <select id="authClassSelect" class="form-control auth-select" onchange="handleAuthClassChange()">
+            <option value="admin">🔑 អ្នកគ្រប់គ្រងទូទៅ (Admin) - មើលគ្រប់ថ្នាក់</option>
+            <option value="grade_1">🏫 ថ្នាក់ទី១ (លោកគ្រូ ផាន ផុស)</option>
+            <option value="grade_2">🏫 ថ្នាក់ទី២ (អ្នកគ្រូ លី មករា)</option>
+            <option value="grade_3">🏫 ថ្នាក់ទី៣ (អ្នកគ្រូ ក្រូយ ចាន់ធារ៉ា)</option>
+            <option value="grade_4">🏫 ថ្នាក់ទី៤ (អ្នកគ្រូ សុខ ស្រីនាង)</option>
+            <option value="grade_5">🏫 ថ្នាក់ទី៥ (លោកគ្រូ ញឹម ស៊ីវថា)</option>
+            <option value="grade_6">🏫 ថ្នាក់ទី៦ (លោកគ្រូ ង៉ែត សារុន)</option>
+            <option value="kindergarten">🏫 ថ្នាក់មត្តេយ្យ (អ្នកគ្រូ លី ស្រីនូ)</option>
+          </select>
+        </div>
+
+        <!-- Password Input -->
+        <div class="auth-form-group">
+          <label for="authPasswordInput"><i class="fa-solid fa-lock text-warning"></i> ពាក្យសម្ងាត់ (Password / PIN)</label>
+          <div class="auth-input-wrapper">
+            <input type="password" id="authPasswordInput" class="form-control auth-password-input" placeholder="បញ្ចូលពាក្យសម្ងាត់ ឬ PIN..." autocomplete="current-password">
+            <button type="button" class="btn-toggle-auth-pwd" onclick="toggleAuthPasswordVisibility()" title="បង្ហាញ / លាក់ ពាក្យសម្ងាត់">
+              <i class="fa-solid fa-eye" id="authPasswordEyeIcon"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Error Message Container -->
+        <div id="authErrorMessage" class="auth-error-alert" style="display: none;"></div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn-auth-submit">
+          <i class="fa-solid fa-right-to-bracket"></i> ចូលប្រព័ន្ធ (Sign In)
+        </button>
+      </form>
     </div>
 
     <!-- Footer Note -->

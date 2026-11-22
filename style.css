@@ -4242,8 +4242,14 @@ body {
   .main-wrapper,
   .content-body,
   .tab-pane,
+  .student-subpane,
   .admin-subpane,
   .a4-preview-wrapper,
+  #studentRosterContent,
+  #dailyAttendanceTableWrap,
+  #monthlyAttendanceWrap,
+  #yearlyAttendanceWrap,
+  .attendance-grid-card,
   #scoresContentWrap {
     padding: 0 !important;
     margin: 0 !important;
@@ -4257,6 +4263,141 @@ body {
     max-height: none !important;
     scrollbar-width: none !important;
     -ms-overflow-style: none !important;
+  }
+
+  /* ==========================================================================
+     STUDENT MANAGEMENT PRINT VISIBILITY & STYLING (គ្រប់គ្រងសិស្សទាំង ៤ ផ្ទាំង)
+     ========================================================================== */
+  body[data-active-tab="students"] #tab-students_management,
+  body[data-active-tab="attendance_daily"] #tab-students_management,
+  body[data-active-tab="attendance_monthly"] #tab-students_management,
+  body[data-active-tab="attendance_yearly"] #tab-students_management,
+  body[data-active-tab="students_management"] #tab-students_management,
+  body.tab-students-active #tab-students_management,
+  body.tab-attendance_daily-active #tab-students_management,
+  body.tab-attendance_monthly-active #tab-students_management,
+  body.tab-attendance_yearly-active #tab-students_management,
+  body.tab-students_management-active #tab-students_management {
+    display: block !important;
+    visibility: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    overflow: visible !important;
+  }
+
+  body.tab-students_management-active .tab-pane:not(#tab-students_management),
+  body.tab-students-active .tab-pane:not(#tab-students_management),
+  body.tab-attendance_daily-active .tab-pane:not(#tab-students_management),
+  body.tab-attendance_monthly-active .tab-pane:not(#tab-students_management),
+  body.tab-attendance_yearly-active .tab-pane:not(#tab-students_management),
+  body[data-active-tab="students"] .tab-pane:not(#tab-students_management),
+  body[data-active-tab="attendance_daily"] .tab-pane:not(#tab-students_management),
+  body[data-active-tab="attendance_monthly"] .tab-pane:not(#tab-students_management),
+  body[data-active-tab="attendance_yearly"] .tab-pane:not(#tab-students_management) {
+    display: none !important;
+  }
+
+  .student-subpane {
+    display: none !important;
+  }
+
+  .student-subpane.active {
+    display: block !important;
+    visibility: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    overflow: visible !important;
+  }
+
+  #subpane-students.active,
+  #subpane-attendance_daily.active,
+  #subpane-attendance_monthly.active,
+  #subpane-attendance_yearly.active {
+    display: block !important;
+    visibility: visible !important;
+  }
+
+  #studentRosterContent,
+  #dailyAttendanceTableWrap,
+  #monthlyAttendanceWrap,
+  #yearlyAttendanceWrap,
+  .attendance-grid-card {
+    display: block !important;
+    visibility: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    overflow: visible !important;
+    width: 100% !important;
+  }
+
+  /* Daily Attendance Print Styling */
+  .daily-print-header {
+    display: block !important;
+    margin-bottom: 8px !important;
+  }
+  .daily-print-signatures {
+    display: flex !important;
+    justify-content: space-between !important;
+    margin-top: 18px !important;
+    padding: 0 20px !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+  .att-status-btn:not(.present):not(.excused):not(.unexcused) {
+    display: none !important;
+  }
+  .att-status-btn.present,
+  .att-status-btn.excused,
+  .att-status-btn.unexcused {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    font-weight: 700 !important;
+    font-size: 11px !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    display: inline-block !important;
+  }
+  .att-status-btn.present {
+    color: #009900 !important;
+  }
+  .att-status-btn.excused {
+    color: #d97706 !important;
+  }
+  .att-status-btn.unexcused {
+    color: #dc2626 !important;
+  }
+  .att-reason-input,
+  .data-table input.form-control {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+  .data-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    border: 1.5pt solid #000000 !important;
+  }
+  .data-table th,
+  .data-table td {
+    border: 0.75pt solid #000000 !important;
+    padding: 5px 6px !important;
+    text-align: center !important;
+  }
+  .data-table th {
+    background: #f1f5f9 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .data-table td.text-left {
+    text-align: left !important;
   }
 
   .a4-preview-wrapper {
@@ -5234,8 +5375,8 @@ body {
     -ms-overflow-style: none !important;
   }
 
-  body[data-active-tab="scores"] .tab-pane:not(#tab-admin_tasks),
-  body.tab-scores-active .tab-pane:not(#tab-admin_tasks) {
+  body[data-active-tab="scores"]:not(.tab-students_management-active) .tab-pane:not(#tab-admin_tasks),
+  body.tab-scores-active:not(.tab-students_management-active) .tab-pane:not(#tab-admin_tasks) {
     display: none !important;
   }
 

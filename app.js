@@ -928,7 +928,48 @@ function switchStudentSubTab(subTabId, ensureExpanded = true) {
     titleElem.innerText = `គ្រប់គ្រងសិស្ស — ${subTitles[subTabId] || "បញ្ជីឈ្មោះសិស្ស"}`;
   }
 
-  // 7. Auto-sync attendance parameters if monthly or daily
+  // 7. Update body attributes and scoped classes for print and CSS
+  document.body.setAttribute("data-active-tab", subTabId);
+  document.body.classList.remove(
+    "tab-scores-active",
+    "tab-honor_roll-active",
+    "tab-monthly_ranks-active",
+    "tab-semester_ranks-active",
+    "tab-semester_scores-active",
+    "tab-semester_extract-active",
+    "tab-annual_ranks-active",
+    "tab-study_book-active",
+    "tab-trainee-active",
+    "tab-monthly_report-active",
+    "tab-school_monthly_report-active",
+    "tab-staff_info-active",
+    "tab-teachers-active",
+    "tab-exams-active",
+    "tab-reports-active",
+    "tab-classes-active",
+    "tab-students-active",
+    "tab-attendance_daily-active",
+    "tab-attendance_monthly-active",
+    "tab-attendance_yearly-active"
+  );
+  document.body.classList.add("tab-students_management-active");
+  document.body.classList.add(`tab-${subTabId}-active`);
+
+  // 8. Enforce correct print orientation per subtab (A4 Landscape)
+  let styleEl = document.getElementById("printPageOrientationStyle");
+  if (!styleEl) {
+    styleEl = document.createElement("style");
+    styleEl.id = "printPageOrientationStyle";
+    document.head.appendChild(styleEl);
+  }
+  styleEl.innerHTML = `
+    @page {
+      size: A4 landscape !important;
+      margin: 4mm 6mm !important;
+    }
+  `;
+
+  // 9. Auto-sync attendance parameters if monthly or daily
   if (subTabId === "attendance_monthly") {
     if (state.activeAttendanceDate) {
       const parts = state.activeAttendanceDate.split("-");
@@ -961,6 +1002,107 @@ function switchStudentSubTab(subTabId, ensureExpanded = true) {
     renderYearlyAttendance();
   }
 }
+
+/**
+ * Global Helper: Prepare Student Sub-Tab for Clean Official Print
+ * @param {string} subTabId
+ */
+function prepareStudentSubTabForPrint(subTabId) {
+  if (!subTabId) subTabId = state.activeStudentSubTab || "students";
+  state.activeTab = "students_management";
+  state.activeStudentSubTab = subTabId;
+
+  // Set body scoped attributes and classes
+  document.body.setAttribute("data-active-tab", subTabId);
+  document.body.classList.remove(
+    "tab-scores-active",
+    "tab-honor_roll-active",
+    "tab-monthly_ranks-active",
+    "tab-semester_ranks-active",
+    "tab-semester_scores-active",
+    "tab-semester_extract-active",
+    "tab-annual_ranks-active",
+    "tab-study_book-active",
+    "tab-trainee-active",
+    "tab-monthly_report-active",
+    "tab-school_monthly_report-active",
+    "tab-staff_info-active",
+    "tab-teachers-active",
+    "tab-exams-active",
+    "tab-reports-active",
+    "tab-classes-active",
+    "tab-students-active",
+    "tab-attendance_daily-active",
+    "tab-attendance_monthly-active",
+    "tab-attendance_yearly-active"
+  );
+  document.body.classList.add("tab-students_management-active");
+  document.body.classList.add(`tab-${subTabId}-active`);
+
+  // Set print page orientation to landscape
+  let styleEl = document.getElementById("printPageOrientationStyle");
+  if (!styleEl) {
+    styleEl = document.createElement("style");
+    styleEl.id = "printPageOrientationStyle";
+    document.head.appendChild(styleEl);
+  }
+  styleEl.innerHTML = `
+    @page {
+      size: A4 landscape !important;
+      margin: 4mm 6mm !important;
+    }
+  `;
+
+  // Ensure tab-students_management section is strictly active
+  document.querySelectorAll(".tab-pane").forEach(p => {
+    p.classList.toggle("active", p.id === "tab-students_management");
+  });
+
+  // Ensure target subpane is active and displayed, others hidden
+  const subpanes = [
+    { id: "subpane-students", subTab: "students" },
+    { id: "subpane-attendance_daily", subTab: "attendance_daily" },
+    { id: "subpane-attendance_monthly", subTab: "attendance_monthly" },
+    { id: "subpane-attendance_yearly", subTab: "attendance_yearly" }
+  ];
+  subpanes.forEach(item => {
+    const el = document.getElementById(item.id);
+    if (el) {
+      if (item.subTab === subTabId) {
+        el.style.display = "block";
+        el.classList.add("active");
+      } else {
+        el.style.display = "none";
+        el.classList.remove("active");
+      }
+    }
+  });
+
+  // Ensure content is rendered
+  if (subTabId === "students") {
+    renderStudentsRoster();
+  } else if (subTabId === "attendance_daily") {
+    renderDailyAttendance();
+  } else if (subTabId === "attendance_monthly") {
+    renderMonthlyAttendance();
+  } else if (subTabId === "attendance_yearly") {
+    renderYearlyAttendance();
+  }
+}
+window.prepareStudentSubTabForPrint = prepareStudentSubTabForPrint;
+
+// Official Print Actions for Student Management Sub-tabs
+function printDailyAttendance() {
+  prepareStudentSubTabForPrint("attendance_daily");
+  window.print();
+}
+window.printDailyAttendance = printDailyAttendance;
+
+function printMonthlyAttendance() {
+  prepareStudentSubTabForPrint("attendance_monthly");
+  window.print();
+}
+window.printMonthlyAttendance = printMonthlyAttendance;
 
 /**
  * Switch Sub-Tab inside កិច្ចការរដ្ឋបាល (Administrative Tasks Hub)
@@ -2111,8 +2253,10 @@ function deleteStudent(studentNum) {
 
 // Print Action
 function printRoster() {
+  prepareStudentSubTabForPrint("students");
   window.print();
 }
+window.printRoster = printRoster;
 
 /**
  * Clear Student Roster Data for Active Class (សម្អាតទិន្នន័យបញ្ជីឈ្មោះសិស្សក្នុងថ្នាក់)
@@ -3174,6 +3318,27 @@ function renderDailyAttendance() {
   }
 
   let html = `
+    <!-- Official Print Header (Visible strictly in print) -->
+    <div class="daily-print-header" style="display: none;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+        <div style="text-align: left; font-size: 11px; line-height: 1.5; font-family: var(--font-battambang);">
+          មន្ទីរអប់រំ យុវជន និងកីឡា ខេត្តតាកែវ<br>
+          ការិយាល័យអប់រំ យុវជន និងកីឡា ស្រុកព្រៃកប្បាស<br>
+          <strong>សាលាបឋមសិក្សា បាន្លួង</strong>
+        </div>
+        <div style="text-align: center;">
+          <div style="font-family: var(--font-moul); font-size: 12px; color: #000080;">ព្រះរាជាណាចក្រកម្ពុជា</div>
+          <div style="font-family: var(--font-moul); font-size: 10.5px; color: #000080; margin-top: 2px;">ជាតិ សាសនា ព្រះមហាក្សត្រ</div>
+        </div>
+      </div>
+      <div style="text-align: center; margin: 10px 0;">
+        <h2 style="font-family: var(--font-moul); font-size: 15px; color: #002060; margin: 0;">បញ្ជីវត្តមានសិស្សប្រចាំថ្ងៃ</h2>
+        <div style="font-size: 12px; font-weight: 600; margin-top: 4px; font-family: var(--font-battambang);">
+          ថ្នាក់ទី៖ <strong>${currentClass.grade}</strong> | ថ្ងៃទី <strong>${day}</strong> ខែ <strong>${monthName}</strong> ឆ្នាំ <strong>${year}</strong> | ឆ្នាំសិក្សា៖ <strong>${currentClass.academicYear}</strong>
+        </div>
+      </div>
+    </div>
+
     <!-- Header Meta & Clean Live Stats -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
       <div>
@@ -3194,7 +3359,7 @@ function renderDailyAttendance() {
         <button type="button" class="btn btn-action-outline" onclick="switchTab('attendance_monthly')" title="មើលតារាងវត្តមានប្រចាំខែ">
           <i class="fa-solid fa-calendar-days" style="color: #2563eb; font-size: 14px;"></i> មើលវត្តមានប្រចាំខែ
         </button>
-        <button type="button" class="btn btn-action-amber" onclick="window.print()" title="បោះពុម្ពបញ្ជីវត្តមានប្រចាំថ្ងៃ">
+        <button type="button" class="btn btn-action-amber" onclick="printDailyAttendance()" title="បោះពុម្ពបញ្ជីវត្តមានប្រចាំថ្ងៃ">
           <i class="fa-solid fa-print" style="font-size: 14px;"></i> បោះពុម្ព
         </button>
         <button type="button" class="btn btn-action-danger" onclick="clearDailyAttendanceData()" title="សម្អាតទិន្នន័យវត្តមានប្រចាំថ្ងៃនេះ">
@@ -3300,6 +3465,22 @@ function renderDailyAttendance() {
   html += `
       </tbody>
     </table>
+
+    <!-- Official Print Signatures (Visible strictly in print) -->
+    <div class="daily-print-signatures" style="display: none;">
+      <div style="text-align: center; width: 220px; font-family: var(--font-battambang); font-size: 11px;">
+        <div>បានឃើញ និងឯកភាព</div>
+        <div style="font-weight: 700; margin-top: 2px;">នាយកសាលា</div>
+        <div style="height: 55px;"></div>
+        <div style="font-weight: 700;">${state.db?.schoolInfo?.principalName || "ផែត សារុន"}</div>
+      </div>
+      <div style="text-align: center; width: 220px; font-family: var(--font-battambang); font-size: 11px;">
+        <div>ថ្ងៃទី....... ខែ....... ឆ្នាំ ${toKhmerNum(year)}</div>
+        <div style="font-weight: 700; margin-top: 2px;">គ្រូប្រចាំថ្នាក់</div>
+        <div style="height: 55px;"></div>
+        <div style="font-weight: 700;">${currentClass.teacher || ""}</div>
+      </div>
+    </div>
 
     <!-- Bottom Save Attendance Panel -->
     <div style="margin-top: 16px; padding: 12px 18px; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
@@ -5195,6 +5376,19 @@ function restoreScoresAfterPrint() {
 
 // Hook into beforeprint and afterprint globally (covers Ctrl+P as well as Print button)
 window.addEventListener("beforeprint", () => {
+  const studentSubTabs = ["students", "attendance_daily", "attendance_monthly", "attendance_yearly"];
+  const isStudentTab = (state && (state.activeTab === "students_management" || studentSubTabs.includes(state.activeStudentSubTab) || studentSubTabs.includes(state.activeTab))) ||
+                       (document.getElementById("tab-students_management")?.classList.contains("active"));
+
+  if (isStudentTab) {
+    const activeSub = state.activeStudentSubTab || 
+      (document.getElementById("subpane-attendance_daily")?.classList.contains("active") ? "attendance_daily" :
+      document.getElementById("subpane-attendance_monthly")?.classList.contains("active") ? "attendance_monthly" :
+      document.getElementById("subpane-attendance_yearly")?.classList.contains("active") ? "attendance_yearly" : "students");
+    prepareStudentSubTabForPrint(activeSub);
+    return;
+  }
+
   const tabScores = document.getElementById("tab-scores");
   const isScoresActive = (state && (state.activeTab === "scores" || state.activeAdminSubTab === "scores")) || 
                          (tabScores && tabScores.classList.contains("active") && tabScores.style.display !== "none");
@@ -8745,8 +8939,10 @@ function saveYearlyStudentRemark(classId, studentId, text) {
 }
 
 function printYearlyAttendance() {
+  prepareStudentSubTabForPrint("attendance_yearly");
   window.print();
 }
+window.printYearlyAttendance = printYearlyAttendance;
 
 function clearYearlyAttendanceData() {
   const currentClass = getActiveClass();

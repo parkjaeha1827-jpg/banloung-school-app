@@ -543,7 +543,7 @@
             <button type="button" class="btn btn-action-outline" onclick="switchTab('attendance_monthly')" title="មើលតារាងវត្តមានប្រចាំខែ">
               <i class="fa-solid fa-calendar-days" style="color: #2563eb; font-size: 14px;"></i> មើលវត្តមានប្រចាំខែ
             </button>
-            <button type="button" class="btn btn-action-amber" onclick="window.print()" title="បោះពុម្ពបញ្ជីវត្តមានប្រចាំថ្ងៃ">
+            <button type="button" class="btn btn-action-amber" onclick="printDailyAttendance()" title="បោះពុម្ពបញ្ជីវត្តមានប្រចាំថ្ងៃ">
               <i class="fa-solid fa-print" style="font-size: 14px;"></i> បោះពុម្ព
             </button>
             <button type="button" class="btn btn-action-danger" onclick="clearDailyAttendanceData()" title="សម្អាតទិន្នន័យវត្តមានប្រចាំថ្ងៃនេះ">
@@ -596,7 +596,7 @@
             <button type="button" class="btn btn-action-outline" onclick="switchTab('attendance_daily')" title="ទៅកាន់ការចុះវត្តមានប្រចាំថ្ងៃ">
               <i class="fa-solid fa-calendar-check" style="color: #2563eb; font-size: 14px;"></i> ចុះវត្តមានប្រចាំថ្ងៃ
             </button>
-            <button type="button" class="btn btn-action-navy" onclick="window.print()" title="បោះពុម្ពបញ្ជីវត្តមានប្រចាំខែ (A4 ផ្ដេក)">
+            <button type="button" class="btn btn-action-navy" onclick="printMonthlyAttendance()" title="បោះពុម្ពបញ្ជីវត្តមានប្រចាំខែ (A4 ផ្ដេក)">
               <i class="fa-solid fa-print" style="font-size: 14px;"></i> បោះពុម្ព (Print)
             </button>
             <button type="button" class="btn btn-action-danger" onclick="clearMonthlyAttendanceData()" title="សម្អាតទិន្នន័យវត្តមានប្រចាំខែនេះ">
@@ -2127,9 +2127,9 @@
   <!-- Firebase Realtime Database SDK & Sync Manager -->
   <script src="firebase-app-compat.js"></script>
   <script src="firebase-database-compat.js"></script>
-  <script src="firebase-sync.js?v=20261122_03"></script>
-  <script src="auth.js?v=20261122_03"></script>
-  <script src="app.js?v=20261122_03"></script>
+  <script src="firebase-sync.js?v=20261122_04"></script>
+  <script src="auth.js?v=20261122_04"></script>
+  <script src="app.js?v=20261122_04"></script>
 
 </body>
 </html>

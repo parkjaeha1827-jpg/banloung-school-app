@@ -14,10 +14,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Main Stylesheet (with cache-buster) -->
-  <link rel="stylesheet" href="style.css?v=20261122_03">
+  <link rel="stylesheet" href="style.css?v=20261122_05">
 
-  <!-- Direct Inline Print Style to eliminate any possibility of scrollbars or right lines during print -->
-  <style id="scoresPrintDirectStyle">
+  <!-- Universal Direct Inline Print Style to eliminate any possibility of scrollbars or lines during print -->
+  <style id="appUniversalPrintStyle">
     @media print {
       *, *::before, *::after {
         scrollbar-width: none !important;
@@ -37,7 +37,7 @@
         opacity: 0 !important;
         visibility: hidden !important;
       }
-      html, body, .app-container, .main-wrapper, .content-body, .tab-pane, .admin-subpane, .a4-preview-wrapper, #scoresContentWrap, #tab-scores, .monthly-score-a4-page, #printableMonthlyScores {
+      html, body, .app-container, .main-wrapper, .content-body, .tab-pane, .admin-subpane, .student-subpane, .a4-preview-wrapper, #scoresContentWrap, #monthlyRanksContentWrap, #honorRollContentWrap, #annualRanksContentWrap, #studyBookContentWrap, #traineeContentWrap, #schoolMonthlyReportWrap, #tab-scores, #tab-monthly_ranks, .monthly-score-a4-page, .monthly-rank-a4-page, #printableMonthlyScores {
         overflow: visible !important;
         overflow-x: visible !important;
         overflow-y: visible !important;
@@ -47,7 +47,7 @@
         scrollbar-width: none !important;
         -ms-overflow-style: none !important;
       }
-      .a4-preview-wrapper, #scoresContentWrap {
+      .a4-preview-wrapper, #scoresContentWrap, #monthlyRanksContentWrap, #honorRollContentWrap, #annualRanksContentWrap {
         display: block !important;
         padding: 0 !important;
         margin: 0 !important;
@@ -57,7 +57,7 @@
         width: 100% !important;
         max-width: 100% !important;
       }
-      .monthly-score-a4-page, #printableMonthlyScores {
+      .monthly-score-a4-page, .monthly-rank-a4-page, #printableMonthlyScores {
         width: 100% !important;
         max-width: 100% !important;
         margin: 0 auto !important;
@@ -2127,9 +2127,9 @@
   <!-- Firebase Realtime Database SDK & Sync Manager -->
   <script src="firebase-app-compat.js"></script>
   <script src="firebase-database-compat.js"></script>
-  <script src="firebase-sync.js?v=20261122_04"></script>
-  <script src="auth.js?v=20261122_04"></script>
-  <script src="app.js?v=20261122_04"></script>
+  <script src="firebase-sync.js?v=20261122_05"></script>
+  <script src="auth.js?v=20261122_05"></script>
+  <script src="app.js?v=20261122_05"></script>
 
 </body>
 </html>

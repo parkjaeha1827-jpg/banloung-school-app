@@ -5240,25 +5240,56 @@ function undoMonthlyScoresData() {
   }
 }
 
-function printMonthlyScores() {
-  document.body.setAttribute("data-active-tab", "scores");
-  document.body.classList.remove(
-    "tab-honor_roll-active",
-    "tab-monthly_ranks-active",
-    "tab-semester_ranks-active",
-    "tab-semester_scores-active",
-    "tab-semester_extract-active",
-    "tab-annual_ranks-active",
-    "tab-study_book-active",
-    "tab-trainee-active",
-    "tab-monthly_report-active"
-  );
-  document.body.classList.add("tab-scores-active");
 
-  // Prepare DOM elements directly to eliminate any scrollbars or overflow
-  prepareScoresForPrint();
+const ADMIN_PRINT_CONFIG = {
+  scores: { orientation: "landscape", margin: "4mm 5mm", wrapId: "scoresContentWrap" },
+  monthly_ranks: { orientation: "portrait", margin: "5mm 7mm", wrapId: "monthlyRanksContentWrap" },
+  honor_roll: { orientation: "portrait", margin: "5mm 7mm", wrapId: "honorRollContentWrap" },
+  semester_ranks: { orientation: "portrait", margin: "5mm 7mm", wrapId: "semesterRanksContentWrap" },
+  semester_scores: { orientation: "landscape", margin: "4mm 5mm", wrapId: "semesterScoresContentWrap" },
+  semester_extract: { orientation: "landscape", margin: "4mm 5mm", wrapId: "semesterExtractContentWrap" },
+  annual_ranks: { orientation: "portrait", margin: "5mm 7mm", wrapId: "annualRanksContentWrap" },
+  study_book: { orientation: "portrait", margin: "5mm 7mm", wrapId: "studyBookContentWrap" },
+  trainee: { orientation: "portrait", margin: "5mm 7mm", wrapId: "traineeContentWrap" },
+  monthly_report: { orientation: "landscape", margin: "4mm 5mm", wrapId: "monthlyReportContentWrap" }
+};
 
-  // Inject comprehensive print rules directly into document head
+function prepareAdminPrint(subTabId) {
+  const cfg = ADMIN_PRINT_CONFIG[subTabId] || { orientation: "portrait", margin: "5mm 7mm", wrapId: "scoresContentWrap" };
+  
+  document.body.setAttribute("data-active-tab", subTabId);
+  document.body.setAttribute("data-admin-subtab", subTabId);
+  
+  // Clean classes
+  Object.keys(ADMIN_PRINT_CONFIG).forEach(k => {
+    document.body.classList.remove("tab-" + k + "-active");
+  });
+  document.body.classList.add("tab-" + subTabId + "-active");
+  document.body.classList.add("admin-print-active");
+
+  // Ensure tab-admin_tasks is active and corresponding subpane is active
+  const adminTab = document.getElementById("tab-admin_tasks");
+  if (adminTab) adminTab.classList.add("active");
+  
+  const subpane = document.getElementById("tab-" + subTabId);
+  if (subpane) {
+    subpane.classList.add("active");
+    subpane.style.display = "block";
+  }
+
+  // Flatten wrappers to prevent any scrollbars or overflow during print
+  const wrappers = document.querySelectorAll(".a4-preview-wrapper, .admin-subpane, #scoresContentWrap, #monthlyRanksContentWrap, #honorRollContentWrap, #annualRanksContentWrap, #studyBookContentWrap, #traineeContentWrap, #monthlyReportContentWrap, .monthly-score-a4-page, .monthly-rank-a4-page, #printableMonthlyScores");
+  wrappers.forEach(w => {
+    w.style.overflow = "visible";
+    w.style.overflowX = "visible";
+    w.style.overflowY = "visible";
+    w.style.display = "block";
+    w.style.boxShadow = "none";
+    w.style.border = "none";
+    w.style.background = "transparent";
+  });
+
+  // Inject or update orientation and scrollbar suppression style
   let styleEl = document.getElementById("printPageOrientationStyle");
   if (!styleEl) {
     styleEl = document.createElement("style");
@@ -5267,8 +5298,8 @@ function printMonthlyScores() {
   }
   styleEl.innerHTML = `
     @page {
-      size: A4 landscape !important;
-      margin: 4mm 5mm !important;
+      size: A4 ${cfg.orientation} !important;
+      margin: ${cfg.margin} !important;
     }
     *, *::before, *::after {
       scrollbar-width: none !important;
@@ -5288,7 +5319,7 @@ function printMonthlyScores() {
       opacity: 0 !important;
       visibility: hidden !important;
     }
-    html, body, .app-container, .main-wrapper, .content-body, .tab-pane, .admin-subpane, .a4-preview-wrapper, #scoresContentWrap, #tab-scores, .monthly-score-a4-page, #printableMonthlyScores {
+    html, body, .app-container, .main-wrapper, .content-body, .tab-pane, .admin-subpane, .a4-preview-wrapper, #scoresContentWrap, #monthlyRanksContentWrap, #tab-scores, #tab-monthly_ranks, .monthly-score-a4-page, .monthly-rank-a4-page, #printableMonthlyScores {
       overflow: visible !important;
       overflow-x: visible !important;
       overflow-y: visible !important;
@@ -5298,27 +5329,25 @@ function printMonthlyScores() {
       scrollbar-width: none !important;
       -ms-overflow-style: none !important;
     }
-    .a4-preview-wrapper, #scoresContentWrap {
-      display: block !important;
-      padding: 0 !important;
-      margin: 0 !important;
-      background: transparent !important;
-      box-shadow: none !important;
-      border: none !important;
-      width: 100% !important;
-      max-width: 100% !important;
-    }
-    .monthly-score-a4-page, #printableMonthlyScores {
-      width: 100% !important;
-      max-width: 100% !important;
-      margin: 0 auto !important;
-      padding: 0 !important;
-      box-shadow: none !important;
-      border: none !important;
-      display: block !important;
-    }
   `;
+}
 
+function restoreAdminPrint(subTabId) {
+  const wrappers = document.querySelectorAll(".a4-preview-wrapper, .admin-subpane, #scoresContentWrap, #monthlyRanksContentWrap, #honorRollContentWrap, #annualRanksContentWrap, #studyBookContentWrap, #traineeContentWrap, #monthlyReportContentWrap, .monthly-score-a4-page, .monthly-rank-a4-page, #printableMonthlyScores");
+  wrappers.forEach(w => {
+    w.style.overflow = "";
+    w.style.overflowX = "";
+    w.style.overflowY = "";
+    w.style.display = "";
+    w.style.boxShadow = "";
+    w.style.border = "";
+    w.style.background = "";
+  });
+}
+
+
+function printMonthlyScores() {
+  prepareAdminPrint("scores");
   window.print();
 }
 
@@ -5522,13 +5551,7 @@ function changeRankMonth(monthVal) {
 }
 
 function printMonthlyRanks() {
-  let styleEl = document.getElementById("printPageOrientationStyle");
-  if (!styleEl) {
-    styleEl = document.createElement("style");
-    styleEl.id = "printPageOrientationStyle";
-    document.head.appendChild(styleEl);
-  }
-  styleEl.innerHTML = "@page { size: A4 portrait !important; margin: 6mm 10mm !important; }";
+  prepareAdminPrint("monthly_ranks");
   window.print();
 }
 
@@ -6126,13 +6149,7 @@ function changeHonorMonth(monthVal) {
 window.changeHonorMonth = changeHonorMonth;
 
 function printHonorRoll() {
-  let styleEl = document.getElementById("printPageOrientationStyle");
-  if (!styleEl) {
-    styleEl = document.createElement("style");
-    styleEl.id = "printPageOrientationStyle";
-    document.head.appendChild(styleEl);
-  }
-  styleEl.innerHTML = "@page { size: A4 portrait !important; margin: 0 !important; }";
+  prepareAdminPrint("honor_roll");
   window.print();
 }
 window.printHonorRoll = printHonorRoll;
@@ -6563,13 +6580,7 @@ function onSemesterRankCellEdit(el, studentNum, field) {
 window.onSemesterRankCellEdit = onSemesterRankCellEdit;
 
 function printSemesterRanks() {
-  let styleEl = document.getElementById("printPageOrientationStyle");
-  if (!styleEl) {
-    styleEl = document.createElement("style");
-    styleEl.id = "printPageOrientationStyle";
-    document.head.appendChild(styleEl);
-  }
-  styleEl.innerHTML = "@page { size: A4 portrait !important; margin: 6mm 10mm !important; }";
+  prepareAdminPrint("semester_ranks");
   window.print();
 }
 window.printSemesterRanks = printSemesterRanks;
@@ -7500,13 +7511,7 @@ function saveSemesterScoreDate(field, val) {
 window.saveSemesterScoreDate = saveSemesterScoreDate;
 
 function printSemesterScores() {
-  let styleEl = document.getElementById("printPageOrientationStyle");
-  if (!styleEl) {
-    styleEl = document.createElement("style");
-    styleEl.id = "printPageOrientationStyle";
-    document.head.appendChild(styleEl);
-  }
-  styleEl.innerHTML = "@page { size: A4 portrait !important; margin: 6mm 10mm !important; }";
+  prepareAdminPrint("semester_scores");
   window.print();
 }
 window.printSemesterScores = printSemesterScores;
@@ -9154,18 +9159,7 @@ function saveAnnualTeacherName(val) {
 window.saveAnnualTeacherName = saveAnnualTeacherName;
 
 function printAnnualRanks() {
-  let styleEl = document.getElementById("printPageOrientationStyle");
-  if (!styleEl) {
-    styleEl = document.createElement("style");
-    styleEl.id = "printPageOrientationStyle";
-    document.head.appendChild(styleEl);
-  }
-  styleEl.innerHTML = `
-    @page {
-      size: A4 portrait !important;
-      margin: 8mm 10mm !important;
-    }
-  `;
+  prepareAdminPrint("annual_ranks");
   window.print();
 }
 window.printAnnualRanks = printAnnualRanks;
@@ -12215,18 +12209,7 @@ function changeSemesterExtractSem(sem) {
 window.changeSemesterExtractSem = changeSemesterExtractSem;
 
 function printSemesterExtract() {
-  let styleEl = document.getElementById("printPageOrientationStyle");
-  if (!styleEl) {
-    styleEl = document.createElement("style");
-    styleEl.id = "printPageOrientationStyle";
-    document.head.appendChild(styleEl);
-  }
-  styleEl.innerHTML = `
-    @page {
-      size: A4 landscape !important;
-      margin: 2mm 3mm !important;
-    }
-  `;
+  prepareAdminPrint("semester_extract");
   window.print();
 }
 window.printSemesterExtract = printSemesterExtract;
@@ -13736,7 +13719,7 @@ function renderClasses() {
     // Generate live SVG QR Code
     let qrSvg = "";
     if (typeof window.generateQRCodeSVG === "function" && password) {
-      qrSvg = window.generateQRCodeSVG(loginUrl, 130, 2);
+      qrSvg = window.generateQRCodeSVG(loginUrl, 76, 2);
     }
 
     const isCurrentActive = (state.activeClassId === cls.id);
@@ -14406,3 +14389,45 @@ window.printAllClassroomBadges = printAllClassroomBadges;
 window.exportClassesSummaryExcel = exportClassesSummaryExcel;
 window.downloadClassQRCode = downloadClassQRCode;
 window.downloadCurrentVisibleQRCodes = downloadCurrentVisibleQRCodes;
+
+
+// Universal beforeprint & afterprint hooks for both Admin Tasks and Student Management
+window.addEventListener("beforeprint", () => {
+  // 1. Check Student Management tabs first
+  const stuTabs = ["students", "attendance_daily", "attendance_monthly", "attendance_yearly"];
+  for (const st of stuTabs) {
+    const pane = document.getElementById("subpane-" + st);
+    const isStuActive = (state && (state.activeTab === st || state.activeStudentSubTab === st)) ||
+                        (pane && pane.classList.contains("active") && pane.style.display !== "none");
+    if (isStuActive) {
+      if (typeof prepareStudentSubTabForPrint === "function") {
+        prepareStudentSubTabForPrint(st);
+      }
+      return;
+    }
+  }
+
+  // 2. Check Admin Tasks subtabs
+  const adminKeys = Object.keys(ADMIN_PRINT_CONFIG);
+  for (const at of adminKeys) {
+    const pane = document.getElementById("tab-" + at);
+    const isAdminActive = (state && (state.activeAdminSubTab === at || (state.activeTab === at && state.activeTab !== "admin_tasks"))) ||
+                          (pane && pane.classList.contains("active") && pane.style.display !== "none");
+    if (isAdminActive) {
+      prepareAdminPrint(at);
+      return;
+    }
+  }
+
+  // Fallback to activeAdminSubTab or scores
+  if (state && state.activeAdminSubTab && ADMIN_PRINT_CONFIG[state.activeAdminSubTab]) {
+    prepareAdminPrint(state.activeAdminSubTab);
+  }
+});
+
+window.addEventListener("afterprint", () => {
+  restoreAdminPrint();
+  if (typeof restoreStudentSubTabAfterPrint === "function" && state && state.activeStudentSubTab) {
+    restoreStudentSubTabAfterPrint(state.activeStudentSubTab);
+  }
+});

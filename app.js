@@ -5047,7 +5047,10 @@ function printMonthlyScores() {
   );
   document.body.classList.add("tab-scores-active");
 
-  // Ensure landscape print orientation
+  // Prepare DOM elements directly to eliminate any scrollbars or overflow
+  prepareScoresForPrint();
+
+  // Inject comprehensive print rules directly into document head
   let styleEl = document.getElementById("printPageOrientationStyle");
   if (!styleEl) {
     styleEl = document.createElement("style");
@@ -5059,10 +5062,125 @@ function printMonthlyScores() {
       size: A4 landscape !important;
       margin: 4mm 5mm !important;
     }
+    *, *::before, *::after {
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
+    }
+    ::-webkit-scrollbar,
+    ::-webkit-scrollbar-thumb,
+    ::-webkit-scrollbar-track,
+    ::-webkit-scrollbar-track-piece,
+    ::-webkit-scrollbar-button,
+    ::-webkit-scrollbar-corner,
+    ::-webkit-resizer {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+      background: transparent !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+    }
+    html, body, .app-container, .main-wrapper, .content-body, .tab-pane, .admin-subpane, .a4-preview-wrapper, #scoresContentWrap, #tab-scores, .monthly-score-a4-page, #printableMonthlyScores {
+      overflow: visible !important;
+      overflow-x: visible !important;
+      overflow-y: visible !important;
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
+    }
+    .a4-preview-wrapper, #scoresContentWrap {
+      display: block !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      border: none !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+    .monthly-score-a4-page, #printableMonthlyScores {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 auto !important;
+      padding: 0 !important;
+      box-shadow: none !important;
+      border: none !important;
+      display: block !important;
+    }
   `;
 
   window.print();
 }
+
+function prepareScoresForPrint() {
+  const wrapper = document.getElementById("scoresContentWrap");
+  if (wrapper) {
+    wrapper.style.overflow = "visible";
+    wrapper.style.overflowX = "visible";
+    wrapper.style.overflowY = "visible";
+    wrapper.style.display = "block";
+    wrapper.style.padding = "0";
+    wrapper.style.margin = "0";
+    wrapper.style.background = "transparent";
+    wrapper.style.boxShadow = "none";
+    wrapper.style.border = "none";
+  }
+  const page = document.getElementById("printableMonthlyScores");
+  if (page) {
+    page.style.overflow = "visible";
+    page.style.overflowX = "visible";
+    page.style.overflowY = "visible";
+    page.style.boxShadow = "none";
+    page.style.padding = "0";
+    page.style.margin = "0 auto";
+    page.style.maxWidth = "100%";
+    page.style.minHeight = "auto";
+  }
+}
+
+function restoreScoresAfterPrint() {
+  const wrapper = document.getElementById("scoresContentWrap");
+  if (wrapper) {
+    wrapper.style.overflow = "";
+    wrapper.style.overflowX = "";
+    wrapper.style.overflowY = "";
+    wrapper.style.display = "";
+    wrapper.style.padding = "";
+    wrapper.style.margin = "";
+    wrapper.style.background = "";
+    wrapper.style.boxShadow = "";
+    wrapper.style.border = "";
+  }
+  const page = document.getElementById("printableMonthlyScores");
+  if (page) {
+    page.style.overflow = "";
+    page.style.overflowX = "";
+    page.style.overflowY = "";
+    page.style.boxShadow = "";
+    page.style.padding = "";
+    page.style.margin = "";
+    page.style.maxWidth = "";
+    page.style.minHeight = "";
+  }
+}
+
+// Hook into beforeprint and afterprint globally (covers Ctrl+P as well as Print button)
+window.addEventListener("beforeprint", () => {
+  const tabScores = document.getElementById("tab-scores");
+  const isScoresActive = (state && (state.activeTab === "scores" || state.activeAdminSubTab === "scores")) || 
+                         (tabScores && tabScores.classList.contains("active") && tabScores.style.display !== "none");
+  if (isScoresActive) {
+    document.body.setAttribute("data-active-tab", "scores");
+    document.body.classList.add("tab-scores-active");
+    prepareScoresForPrint();
+  }
+});
+
+window.addEventListener("afterprint", () => {
+  restoreScoresAfterPrint();
+});
 
 function exportMonthlyScoresExcel() {
   const currentClass = getActiveClass();

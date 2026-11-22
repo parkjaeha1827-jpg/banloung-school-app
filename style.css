@@ -4163,6 +4163,8 @@ body {
   }
 
   /* Global Scrollbar Suppression for all printouts */
+  html,
+  body,
   *,
   *::before,
   *::after {
@@ -4171,13 +4173,29 @@ body {
   }
 
   ::-webkit-scrollbar,
-  *::-webkit-scrollbar {
+  ::-webkit-scrollbar-thumb,
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-track-piece,
+  ::-webkit-scrollbar-button,
+  ::-webkit-scrollbar-corner,
+  ::-webkit-resizer,
+  *::-webkit-scrollbar,
+  *::-webkit-scrollbar-thumb,
+  *::-webkit-scrollbar-track,
+  *::-webkit-scrollbar-track-piece,
+  *::-webkit-scrollbar-button,
+  *::-webkit-scrollbar-corner,
+  *::-webkit-resizer {
     display: none !important;
     width: 0 !important;
     height: 0 !important;
+    max-width: 0 !important;
+    max-height: 0 !important;
     background: transparent !important;
     opacity: 0 !important;
     visibility: hidden !important;
+    border: none !important;
+    box-shadow: none !important;
   }
 
   html,

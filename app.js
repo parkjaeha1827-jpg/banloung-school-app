@@ -5033,6 +5033,34 @@ function undoMonthlyScoresData() {
 }
 
 function printMonthlyScores() {
+  document.body.setAttribute("data-active-tab", "scores");
+  document.body.classList.remove(
+    "tab-honor_roll-active",
+    "tab-monthly_ranks-active",
+    "tab-semester_ranks-active",
+    "tab-semester_scores-active",
+    "tab-semester_extract-active",
+    "tab-annual_ranks-active",
+    "tab-study_book-active",
+    "tab-trainee-active",
+    "tab-monthly_report-active"
+  );
+  document.body.classList.add("tab-scores-active");
+
+  // Ensure landscape print orientation
+  let styleEl = document.getElementById("printPageOrientationStyle");
+  if (!styleEl) {
+    styleEl = document.createElement("style");
+    styleEl.id = "printPageOrientationStyle";
+    document.head.appendChild(styleEl);
+  }
+  styleEl.innerHTML = `
+    @page {
+      size: A4 landscape !important;
+      margin: 4mm 5mm !important;
+    }
+  `;
+
   window.print();
 }
 

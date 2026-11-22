@@ -4162,10 +4162,36 @@ body {
     margin: 8mm 10mm;
   }
 
+  /* Global Scrollbar Suppression for all printouts */
+  *,
+  *::before,
+  *::after {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+
+  ::-webkit-scrollbar,
+  *::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    background: transparent !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+
+  html,
   body {
     background: #ffffff !important;
     color: #000000 !important;
     font-size: 10.5pt;
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   .sidebar,
@@ -4173,16 +4199,41 @@ body {
   .filter-toolbar,
   .btn,
   .action-col,
-  .no-print {
+  .no-print,
+  .modal,
+  .modal-overlay,
+  .auth-modal-overlay,
+  .admin-prompt-overlay,
+  .change-pwd-overlay,
+  #authModalOverlay {
     display: none !important;
   }
 
+  .app-container,
   .main-wrapper,
   .content-body,
-  .a4-preview-wrapper {
+  .tab-pane,
+  .admin-subpane,
+  .a4-preview-wrapper,
+  #scoresContentWrap {
     padding: 0 !important;
     margin: 0 !important;
     background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+
+  .a4-preview-wrapper {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
   .a4-landscape-page {
@@ -5136,14 +5187,104 @@ body {
 
 /* Print Rules for Monthly Score Sheet - Solid Crisp Borders & Fully Visible Signatures */
 @media print {
-  #tab-scores .monthly-score-a4-page {
+  @page monthly-score-sheet {
+    size: A4 landscape !important;
+    margin: 4mm 5mm !important;
+  }
+
+  body[data-active-tab="scores"],
+  body.tab-scores-active {
+    page: monthly-score-sheet !important;
+    background: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+
+  body[data-active-tab="scores"] .tab-pane:not(#tab-admin_tasks),
+  body.tab-scores-active .tab-pane:not(#tab-admin_tasks) {
+    display: none !important;
+  }
+
+  body[data-active-tab="scores"] #tab-admin_tasks,
+  body.tab-scores-active #tab-admin_tasks {
+    display: block !important;
+    visibility: visible !important;
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+  }
+
+  body[data-active-tab="scores"] .admin-subpane:not(#tab-scores),
+  body.tab-scores-active .admin-subpane:not(#tab-scores) {
+    display: none !important;
+  }
+
+  body[data-active-tab="scores"] #tab-scores,
+  body.tab-scores-active #tab-scores,
+  #tab-scores {
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+
+  body[data-active-tab="scores"] #tab-scores.active,
+  body.tab-scores-active #tab-scores.active {
+    display: block !important;
+    visibility: visible !important;
+  }
+
+  body[data-active-tab="scores"] #scoresContentWrap,
+  body.tab-scores-active #scoresContentWrap,
+  #tab-scores .a4-preview-wrapper,
+  #scoresContentWrap {
+    display: block !important;
+    visibility: visible !important;
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+
+  #tab-scores .monthly-score-a4-page,
+  .monthly-score-a4-page,
+  #printableMonthlyScores {
+    page: monthly-score-sheet !important;
     box-shadow: none !important;
     padding: 0 !important;
     margin: 0 auto !important;
     width: 100% !important;
     max-width: 100% !important;
+    min-height: auto !important;
+    height: auto !important;
+    max-height: none !important;
     overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
     display: block !important;
+    border: none !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
   }
 
   .official-score-table {

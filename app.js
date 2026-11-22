@@ -449,6 +449,13 @@ function loadDatabase() {
   if (window.firebaseSync && typeof window.firebaseSync.initSync === "function") {
     window.firebaseSync.initSync({
       onInitialData: (cloudData) => {
+        // Local-First: If local has pending offline edits, do NOT let cloud overwrite them!
+        if (window.firebaseSync && typeof window.firebaseSync.hasPendingSync === "function" && window.firebaseSync.hasPendingSync()) {
+          console.log("[FirebaseSync] Local has pending offline changes on startup. Flushing local changes to cloud!");
+          window.firebaseSync.flushPendingQueue();
+          return;
+        }
+
         if (cloudData) {
           const normalized = normalizeSchoolDatabase(cloudData);
           const cloudStCount = normalized.classes
@@ -466,6 +473,12 @@ function loadDatabase() {
         }
       },
       onRemoteUpdate: (cloudData) => {
+        // Local-First: If local has pending offline edits, ignore remote overwrite to preserve user's work
+        if (window.firebaseSync && typeof window.firebaseSync.hasPendingSync === "function" && window.firebaseSync.hasPendingSync()) {
+          console.log("[FirebaseSync] Remote update arrived while local has un-synced edits. Preserving local edits.");
+          return;
+        }
+
         if (cloudData) {
           const normalized = normalizeSchoolDatabase(cloudData);
           const cloudStCount = normalized.classes
@@ -496,13 +509,27 @@ function loadDatabase() {
 }
 
 function saveDatabase() {
+  if (!state.db) return;
+
+  // 1. Ensure sync metadata timestamp is updated
+  state.db._syncMeta = state.db._syncMeta || {};
+  state.db._syncMeta.lastUpdatedAt = new Date().toISOString();
+  state.db._syncMeta.clientApp = "banloung-school-app";
+  state.db._syncMeta.schoolName = "សាលាបឋមសិក្សា បាន្លួង";
+
+  // 2. Synchronously save whole latest DB to localStorage immediately (Local-First Guarantee)
   try {
     localStorage.setItem("banloung_school_db", JSON.stringify(state.db));
   } catch (e) {
-    console.error("Storage save error:", e);
+    console.error("[LocalFirst] Storage save error:", e);
   }
 
-  // If running with backend server, sync to backend file
+  // 3. Local-First Pending Sync Queue (records all offline/pending edits)
+  if (window.firebaseSync && typeof window.firebaseSync.enqueuePendingUpdate === "function") {
+    window.firebaseSync.enqueuePendingUpdate(state.db);
+  }
+
+  // 4. If running with backend server, sync to backend file
   if (typeof window !== "undefined" && window.location && window.location.protocol.startsWith("http")) {
     fetch("/api/save", {
       method: "POST",
@@ -513,7 +540,7 @@ function saveDatabase() {
     });
   }
 
-  // Sync to Firebase Realtime Database (with debouncing & live status indicator)
+  // 5. Sync to Firebase Realtime Database
   if (window.firebaseSync && typeof window.firebaseSync.saveToCloud === "function") {
     window.firebaseSync.saveToCloud(state.db);
   }

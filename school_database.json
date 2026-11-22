@@ -10,17 +10,17 @@
       "២០២៦-២០២៧",
       "២០២៧-២០២៨"
     ],
-    "principal": "ង៉ែត សារុន"
+    "principal": "ផែត សារុន"
   },
   "teachers": [
     {
       "id": "T01",
-      "name": "ង៉ែត សារុន",
+      "name": "ផែត សារុន",
       "gender": "ប្រុស",
       "position": "នាយកសាលា / គ្រូបង្រៀន",
       "grade": "ថ្នាក់ទី៦",
       "phone": "012 345 678",
-      "email": "nget.sarun@banloung.edu.kh"
+      "email": "phet.sarun@banloung.edu.kh"
     },
     {
       "id": "T02",
@@ -43,7 +43,7 @@
     {
       "id": "T04",
       "name": "លី មករា",
-      "gender": "ប្រុស",
+      "gender": "ស្រី",
       "position": "គ្រូបង្រៀន",
       "grade": "ថ្នាក់ទី២",
       "phone": "095 844 144",
@@ -51,12 +51,12 @@
     },
     {
       "id": "T05",
-      "name": "ក្រូយ ចាន់ធារ៉ា",
+      "name": "ព្រួយ ចាន់ដារ៉ា",
       "gender": "ស្រី",
       "position": "គ្រូបង្រៀន",
       "grade": "ថ្នាក់ទី៣",
       "phone": "089 452 771",
-      "email": "krouy.chanthira@banloung.edu.kh"
+      "email": "prouy.chandara@banloung.edu.kh"
     },
     {
       "id": "T06",
@@ -72162,7 +72162,7 @@
       "sheetCode": "G3",
       "grade": "ថ្នាក់ទី៣",
       "academicYear": "២០២៦-២០២៧",
-      "teacher": "ក្រូយ ចាន់ធារ៉ា",
+      "teacher": "ព្រួយ ចាន់ដារ៉ា",
       "lunarDate": "ថ្ងៃ សៅរ៍ ៣ រោច  ខែ កត្តិក  ឆ្នាំ ម្សាញ់ សប្ដស័ក ព.ស ២៥៦៩",
       "solarDate": "បាន្លួង  ថ្ងៃទី  ០៨  ខែ វិច្ឆិកា ឆ្នាំ ២០២៦",
       "totalStudents": 45,
@@ -82254,7 +82254,7 @@
           "lessonGrade": "ថ្នាក់ទី៣",
           "lessonDays": "២២ ថ្ងៃ",
           "reportDate": "ធ្វើនៅថ្ងៃទី ២៥ ខែ តុលា ឆ្នាំ ២០២៦",
-          "teacherName": "ក្រូយ ចាន់ធារ៉ា"
+          "teacherName": "ព្រួយ ចាន់ដារ៉ា"
         },
         "វិច្ឆិកា": {
           "t1_class": "ថ្នាក់ទី៣",
@@ -82327,7 +82327,7 @@
           "lessonGrade": "ថ្នាក់ទី៣",
           "lessonDays": "២២ ថ្ងៃ",
           "reportDate": "ធ្វើនៅថ្ងៃទី ២៥ ខែ វិច្ឆិកា ឆ្នាំ ២០២៦",
-          "teacherName": "ក្រូយ ចាន់ធារ៉ា"
+          "teacherName": "ព្រួយ ចាន់ដារ៉ា"
         },
         "ធ្នូ": {
           "t1_class": "ថ្នាក់ទី៣",
@@ -82400,7 +82400,7 @@
           "lessonGrade": "ថ្នាក់ទី៣",
           "lessonDays": "២២ ថ្ងៃ",
           "reportDate": "ធ្វើនៅថ្ងៃទី ២៥ ខែ ធ្នូ ឆ្នាំ ២០២៦",
-          "teacherName": "ក្រូយ ចាន់ធារ៉ា"
+          "teacherName": "ព្រួយ ចាន់ដារ៉ា"
         },
         "មករា": {
           "t1_class": "ថ្នាក់ទី៣",
@@ -82473,7 +82473,7 @@
           "lessonGrade": "ថ្នាក់ទី៣",
           "lessonDays": "២២ ថ្ងៃ",
           "reportDate": "ធ្វើនៅថ្ងៃទី ២៥ ខែ មករា ឆ្នាំ ២០២៦",
-          "teacherName": "ក្រូយ ចាន់ធារ៉ា"
+          "teacherName": "ព្រួយ ចាន់ដារ៉ា"
         },
         "កុម្ភៈ": {
           "t1_class": "ថ្នាក់ទី៣",
@@ -82546,7 +82546,7 @@
           "lessonGrade": "ថ្នាក់ទី៣",
           "lessonDays": "២២ ថ្ងៃ",
           "reportDate": "ធ្វើនៅថ្ងៃទី ២៥ ខែ កុម្ភៈ ឆ្នាំ ២០២៦",
-          "teacherName": "ក្រូយ ចាន់ធារ៉ា"
+          "teacherName": "ព្រួយ ចាន់ដារ៉ា"
         },
         "មីនា": {
           "t1_class": "ថ្នាក់ទី៣",
@@ -82619,7 +82619,7 @@
           "lessonGrade": "ថ្នាក់ទី៣",
           "lessonDays": "២២ ថ្ងៃ",
           "reportDate": "ធ្វើនៅថ្ងៃទី ២៥ ខែ មីនា ឆ្នាំ ២០២៦",
-          "teacherName": "ក្រូយ ចាន់ធារ៉ា"
+          "teacherName": "ព្រួយ ចាន់ដារ៉ា"
         },
         "មេសា": {
           "t1_class": "ថ្នាក់ទី៣",
@@ -82692,7 +82692,7 @@
           "lessonGrade": "ថ្នាក់ទី៣",
           "lessonDays": "២២ ថ្ងៃ",
           "reportDate": "ធ្វើនៅថ្ងៃទី ២៥ ខែ មេសា ឆ្នាំ ២០២៦",
-          "teacherName": "ក្រូយ ចាន់ធារ៉ា"
+          "teacherName": "ព្រួយ ចាន់ដារ៉ា"
         },
         "ឧសភា": {
           "t1_class": "ថ្នាក់ទី៣",
@@ -82765,7 +82765,7 @@
           "lessonGrade": "ថ្នាក់ទី៣",
           "lessonDays": "២២ ថ្ងៃ",
           "reportDate": "ធ្វើនៅថ្ងៃទី ២៥ ខែ ឧសភា ឆ្នាំ ២០២៦",
-          "teacherName": "ក្រូយ ចាន់ធារ៉ា"
+          "teacherName": "ព្រួយ ចាន់ដារ៉ា"
         },
         "មិថុនា": {
           "t1_class": "ថ្នាក់ទី៣",
@@ -82838,7 +82838,7 @@
           "lessonGrade": "ថ្នាក់ទី៣",
           "lessonDays": "២២ ថ្ងៃ",
           "reportDate": "ធ្វើនៅថ្ងៃទី ២៥ ខែ មិថុនា ឆ្នាំ ២០២៦",
-          "teacherName": "ក្រូយ ចាន់ធារ៉ា"
+          "teacherName": "ព្រួយ ចាន់ដារ៉ា"
         },
         "កក្កដា": {
           "t1_class": "ថ្នាក់ទី៣",
@@ -82911,7 +82911,7 @@
           "lessonGrade": "ថ្នាក់ទី៣",
           "lessonDays": "២២ ថ្ងៃ",
           "reportDate": "ធ្វើនៅថ្ងៃទី ២៥ ខែ កក្កដា ឆ្នាំ ២០២៦",
-          "teacherName": "ក្រូយ ចាន់ធារ៉ា"
+          "teacherName": "ព្រួយ ចាន់ដារ៉ា"
         }
       },
       "semesterScores": {
@@ -109287,7 +109287,7 @@
       "sheetCode": "G6",
       "grade": "ថ្នាក់ទី៦",
       "academicYear": "២០២៦-២០២៧",
-      "teacher": "ង៉ែត សារុន",
+      "teacher": "ផែត សារុន",
       "lunarDate": "ថ្ងៃ ពុធ ៥កើត  ខែ ស្រាពណ៍  ឆ្នាំ ម្សាញ់ សប្ដស័ក ព.ស ២៥៦៩",
       "solarDate": "បាន្លួង  ថ្ងៃទី  ៨  ខែ វិច្ឆិកា ឆ្នាំ ២០២៦",
       "totalStudents": 41,
@@ -118491,7 +118491,7 @@
           "lessonGrade": "ថ្នាក់ទី៦",
           "lessonDays": "២២ ថ្ងៃ",
           "reportDate": "ធ្វើនៅថ្ងៃទី ២៥ ខែ តុលា ឆ្នាំ ២០២៦",
-          "teacherName": "ង៉ែត សារុន"
+          "teacherName": "ផែត សារុន"
         },
         "វិច្ឆិកា": {
           "t1_class": "ថ្នាក់ទី៦",
@@ -118564,7 +118564,7 @@
           "lessonGrade": "ថ្នាក់ទី៦",
           "lessonDays": "២២ ថ្ងៃ",
           "reportDate": "ធ្វើនៅថ្ងៃទី ២៥ ខែ វិច្ឆិកា ឆ្នាំ ២០២៦",
-          "teacherName": "ង៉ែត សារុន"
+          "teacherName": "ផែត សារុន"
         },
         "ធ្នូ": {
           "t1_class": "ថ្នាក់ទី៦",
@@ -118637,7 +118637,7 @@
           "lessonGrade": "ថ្នាក់ទី៦",
           "lessonDays": "២២ ថ្ងៃ",
           "reportDate": "ធ្វើនៅថ្ងៃទី ២៥ ខែ ធ្នូ ឆ្នាំ ២០២៦",
-          "teacherName": "ង៉ែត សារុន"
+          "teacherName": "ផែត សារុន"
         },
         "មករា": {
           "t1_class": "ថ្នាក់ទី៦",
@@ -118710,7 +118710,7 @@
           "lessonGrade": "ថ្នាក់ទី៦",
           "lessonDays": "២២ ថ្ងៃ",
           "reportDate": "ធ្វើនៅថ្ងៃទី ២៥ ខែ មករា ឆ្នាំ ២០២៦",
-          "teacherName": "ង៉ែត សារុន"
+          "teacherName": "ផែត សារុន"
         },
         "កុម្ភៈ": {
           "t1_class": "ថ្នាក់ទី៦",
@@ -118783,7 +118783,7 @@
           "lessonGrade": "ថ្នាក់ទី៦",
           "lessonDays": "២២ ថ្ងៃ",
           "reportDate": "ធ្វើនៅថ្ងៃទី ២៥ ខែ កុម្ភៈ ឆ្នាំ ២០២៦",
-          "teacherName": "ង៉ែត សារុន"
+          "teacherName": "ផែត សារុន"
         },
         "មីនា": {
           "t1_class": "ថ្នាក់ទី៦",
@@ -118856,7 +118856,7 @@
           "lessonGrade": "ថ្នាក់ទី៦",
           "lessonDays": "២២ ថ្ងៃ",
           "reportDate": "ធ្វើនៅថ្ងៃទី ២៥ ខែ មីនា ឆ្នាំ ២០២៦",
-          "teacherName": "ង៉ែត សារុន"
+          "teacherName": "ផែត សារុន"
         },
         "មេសា": {
           "t1_class": "ថ្នាក់ទី៦",
@@ -118929,7 +118929,7 @@
           "lessonGrade": "ថ្នាក់ទី៦",
           "lessonDays": "២២ ថ្ងៃ",
           "reportDate": "ធ្វើនៅថ្ងៃទី ២៥ ខែ មេសា ឆ្នាំ ២០២៦",
-          "teacherName": "ង៉ែត សារុន"
+          "teacherName": "ផែត សារុន"
         },
         "ឧសភា": {
           "t1_class": "ថ្នាក់ទី៦",
@@ -119002,7 +119002,7 @@
           "lessonGrade": "ថ្នាក់ទី៦",
           "lessonDays": "២២ ថ្ងៃ",
           "reportDate": "ធ្វើនៅថ្ងៃទី ២៥ ខែ ឧសភា ឆ្នាំ ២០២៦",
-          "teacherName": "ង៉ែត សារុន"
+          "teacherName": "ផែត សារុន"
         },
         "មិថុនា": {
           "t1_class": "ថ្នាក់ទី៦",
@@ -119075,7 +119075,7 @@
           "lessonGrade": "ថ្នាក់ទី៦",
           "lessonDays": "២២ ថ្ងៃ",
           "reportDate": "ធ្វើនៅថ្ងៃទី ២៥ ខែ មិថុនា ឆ្នាំ ២០២៦",
-          "teacherName": "ង៉ែត សារុន"
+          "teacherName": "ផែត សារុន"
         },
         "កក្កដា": {
           "t1_class": "ថ្នាក់ទី៦",
@@ -119148,7 +119148,7 @@
           "lessonGrade": "ថ្នាក់ទី៦",
           "lessonDays": "២២ ថ្ងៃ",
           "reportDate": "ធ្វើនៅថ្ងៃទី ២៥ ខែ កក្កដា ឆ្នាំ ២០២៦",
-          "teacherName": "ង៉ែត សារុន"
+          "teacherName": "ផែត សារុន"
         }
       },
       "semesterScores": {
@@ -122293,7 +122293,7 @@
     {
       "id": "CLS_2027_ថ្នាក់ទី៣",
       "grade": "ថ្នាក់ទី៣",
-      "teacher": "ក្រូយ ចាន់ធារ៉ា",
+      "teacher": "ព្រួយ ចាន់ដារ៉ា",
       "academicYear": "២០២៧-២០២៨",
       "totalStudents": 0,
       "femaleStudents": 0,
@@ -122332,7 +122332,7 @@
     {
       "id": "CLS_2027_ថ្នាក់ទី៦",
       "grade": "ថ្នាក់ទី៦",
-      "teacher": "ង៉ែត សារុន",
+      "teacher": "ផែត សារុន",
       "academicYear": "២០២៧-២០២៨",
       "totalStudents": 0,
       "femaleStudents": 0,
@@ -122350,7 +122350,7 @@
       "roomNumber": "បន្ទប់លេខ ៖១",
       "examDate": "ថ្ងៃទី ៥ ខែ មីនា ឆ្នាំ ២០២៦",
       "proctor": "លី ស្រីនូ",
-      "principal": "ង៉ែត សារុន",
+      "principal": "ផែត សារុន",
       "students": [
         {
           "num": 1,
@@ -122462,7 +122462,7 @@
       "roomNumber": "បន្ទប់លេខ ៖២",
       "examDate": "ថ្ងៃទី ៥ ខែ មីនា ឆ្នាំ ២០២៦",
       "proctor": "ញឹម ស៊ីវថា",
-      "principal": "ង៉ែត សារុន",
+      "principal": "ផែត សារុន",
       "students": [
         {
           "num": 1,
@@ -122573,8 +122573,8 @@
       "grade": "ថ្នាក់ទី២",
       "roomNumber": "បន្ទប់លេខ ៖៣",
       "examDate": "ថ្ងៃទី ៥ ខែ មីនា ឆ្នាំ ២០២៦",
-      "proctor": "ង៉ែត សារុន",
-      "principal": "ង៉ែត សារុន",
+      "proctor": "ផែត សារុន",
+      "principal": "ផែត សារុន",
       "students": [
         {
           "num": 1,
@@ -122698,7 +122698,7 @@
       "roomNumber": "បន្ទប់លេខ ៖៤",
       "examDate": "ថ្ងៃទី ៥ ខែ មីនា ឆ្នាំ ២០២៦",
       "proctor": "លី មករា",
-      "principal": "ង៉ែត សារុន",
+      "principal": "ផែត សារុន",
       "students": [
         {
           "num": 1,
@@ -122822,7 +122822,7 @@
       "roomNumber": "បន្ទប់លេខ ៖៥",
       "examDate": "ថ្ងៃទី ៥ ខែ មីនា ឆ្នាំ ២០២៦",
       "proctor": "សុខ ស្រីនាង",
-      "principal": "ង៉ែត សារុន",
+      "principal": "ផែត សារុន",
       "students": [
         {
           "num": 1,
@@ -122969,8 +122969,8 @@
       "grade": "ថ្នាក់ទី៣",
       "roomNumber": "បន្ទប់លេខ ៖៦",
       "examDate": "ថ្ងៃទី ៥ ខែ មីនា ឆ្នាំ ២០២៦",
-      "proctor": "ក្រូយ ចាន់ធារ៉ា",
-      "principal": "ង៉ែត សារុន",
+      "proctor": "ព្រួយ ចាន់ដារ៉ា",
+      "principal": "ផែត សារុន",
       "students": [
         {
           "num": 1,
@@ -123112,7 +123112,7 @@
       "roomNumber": "បន្ទប់លេខ ៖១",
       "examDate": "ថ្ងៃទី ៦ ខែ មីនា ឆ្នាំ ២០២៦",
       "proctor": "លី ស្រីនូ",
-      "principal": "ង៉ែត សារុន",
+      "principal": "ផែត សារុន",
       "students": [
         {
           "num": 1,
@@ -123236,7 +123236,7 @@
       "roomNumber": "បន្ទប់លេខ ៖២",
       "examDate": "ថ្ងៃទី ៦ ខែ មីនា ឆ្នាំ ២០២៦",
       "proctor": "ញឹម ស៊ីវថា",
-      "principal": "ង៉ែត សារុន",
+      "principal": "ផែត សារុន",
       "students": [
         {
           "num": 1,
@@ -123353,8 +123353,8 @@
       "grade": "ថ្នាក់ទី៥",
       "roomNumber": "បន្ទប់លេខ ៖៣",
       "examDate": "ថ្ងៃទី ៦ ខែ មីនា ឆ្នាំ ២០២៦",
-      "proctor": "ង៉ែត សារុន",
-      "principal": "ង៉ែត សារុន",
+      "proctor": "ផែត សារុន",
+      "principal": "ផែត សារុន",
       "students": [
         {
           "num": 1,
@@ -123472,7 +123472,7 @@
       "roomNumber": "បន្ទប់លេខ ៖៤",
       "examDate": "ថ្ងៃទី ៦ ខែ មីនា ឆ្នាំ ២០២៦",
       "proctor": "លី មករា",
-      "principal": "ង៉ែត សារុន",
+      "principal": "ផែត សារុន",
       "students": [
         {
           "num": 1,
@@ -123584,7 +123584,7 @@
       "roomNumber": "បន្ទប់លេខ ៖៥",
       "examDate": "ថ្ងៃទី ៦ ខែ មីនា ឆ្នាំ ២០២៦",
       "proctor": "សុខ ស្រីនាង",
-      "principal": "ង៉ែត សារុន",
+      "principal": "ផែត សារុន",
       "students": [
         {
           "num": 1,
@@ -123719,8 +123719,8 @@
       "grade": "ថ្នាក់ទី៦",
       "roomNumber": "បន្ទប់លេខ ៖៦",
       "examDate": "ថ្ងៃទី ៦ ខែ មីនា ឆ្នាំ ២០២៦",
-      "proctor": "ក្រូយ ចាន់ធារ៉ា",
-      "principal": "ង៉ែត សារុន",
+      "proctor": "ព្រួយ ចាន់ដារ៉ា",
+      "principal": "ផែត សារុន",
       "students": [
         {
           "num": 1,
@@ -124046,9 +124046,9 @@
     },
     {
       "num": 6,
-      "lastName": "ក្រូយ",
+      "lastName": "ព្រួយ",
       "firstName": "ចាន់ធារ៉ា",
-      "fullName": "ក្រូយ ចាន់ធារ៉ា",
+      "fullName": "ព្រួយ ចាន់ដារ៉ា",
       "gender": "ស្រី",
       "dobDay": "12",
       "dobMonth": "តុលា",
@@ -124079,9 +124079,9 @@
     },
     {
       "num": 7,
-      "lastName": "ង៉ែត",
+      "lastName": "ផែត",
       "firstName": "សារុន",
-      "fullName": "ង៉ែត សារុន",
+      "fullName": "ផែត សារុន",
       "gender": "ប្រុស",
       "dobDay": "9",
       "dobMonth": "វិច្ឆិកា",

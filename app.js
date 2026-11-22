@@ -1475,24 +1475,6 @@ function setupEventListeners() {
       }
     });
   }
-
-  // Automatic Print Orientation Listener
-  window.addEventListener("beforeprint", () => {
-    if (state.activeTab === "study_book" || state.activeTab === "trainee" || document.getElementById("tab-study_book")?.classList.contains("active") || document.getElementById("tab-trainee")?.classList.contains("active")) {
-      let styleEl = document.getElementById("printPageOrientationStyle");
-      if (!styleEl) {
-        styleEl = document.createElement("style");
-        styleEl.id = "printPageOrientationStyle";
-        document.head.appendChild(styleEl);
-      }
-      styleEl.innerHTML = `
-        @page {
-          size: A4 landscape !important;
-          margin: 4mm 5mm !important;
-        }
-      `;
-    }
-  });
 }
 
 // Main Render Dispatcher
@@ -5249,14 +5231,35 @@ const ADMIN_PRINT_CONFIG = {
   semester_scores: { orientation: "landscape", margin: "4mm 5mm", wrapId: "semesterScoresContentWrap" },
   semester_extract: { orientation: "landscape", margin: "4mm 5mm", wrapId: "semesterExtractContentWrap" },
   annual_ranks: { orientation: "portrait", margin: "5mm 7mm", wrapId: "annualRanksContentWrap" },
-  study_book: { orientation: "portrait", margin: "5mm 7mm", wrapId: "studyBookContentWrap" },
-  trainee: { orientation: "portrait", margin: "5mm 7mm", wrapId: "traineeContentWrap" },
+  study_book: { orientation: "landscape", margin: "4mm 5mm", wrapId: "studyBookContentWrap" },
+  trainee: { orientation: "landscape", margin: "4mm 5mm", wrapId: "traineeContentWrap" },
   monthly_report: { orientation: "landscape", margin: "4mm 5mm", wrapId: "monthlyReportContentWrap" }
 };
 
 function prepareAdminPrint(subTabId) {
+  if (!subTabId) subTabId = (state && state.activeAdminSubTab) ? state.activeAdminSubTab : "scores";
   const cfg = ADMIN_PRINT_CONFIG[subTabId] || { orientation: "portrait", margin: "5mm 7mm", wrapId: "scoresContentWrap" };
   
+  if (state) {
+    state.activeTab = "admin_tasks";
+    state.activeAdminSubTab = subTabId;
+  }
+
+  try {
+    if (subTabId === "scores" && typeof renderMonthlyScores === "function") renderMonthlyScores();
+    else if (subTabId === "monthly_ranks" && typeof renderMonthlyRanks === "function") renderMonthlyRanks();
+    else if (subTabId === "honor_roll" && typeof renderHonorRoll === "function") renderHonorRoll();
+    else if (subTabId === "semester_ranks" && typeof renderSemesterRanks === "function") renderSemesterRanks();
+    else if (subTabId === "semester_scores" && typeof renderSemesterScores === "function") renderSemesterScores();
+    else if (subTabId === "semester_extract" && typeof renderSemesterExtract === "function") renderSemesterExtract();
+    else if (subTabId === "annual_ranks" && typeof renderAnnualRanks === "function") renderAnnualRanks();
+    else if (subTabId === "study_book" && typeof renderStudyBookCurrent === "function") renderStudyBookCurrent();
+    else if (subTabId === "trainee" && typeof renderTraineeBook === "function") renderTraineeBook();
+    else if (subTabId === "monthly_report" && typeof renderMonthlyReport === "function") renderMonthlyReport();
+  } catch (err) {
+    console.warn("Render before print error for", subTabId, err);
+  }
+
   document.body.setAttribute("data-active-tab", subTabId);
   document.body.setAttribute("data-admin-subtab", subTabId);
   
@@ -5264,32 +5267,55 @@ function prepareAdminPrint(subTabId) {
   Object.keys(ADMIN_PRINT_CONFIG).forEach(k => {
     document.body.classList.remove("tab-" + k + "-active");
   });
+  document.body.classList.remove(
+    "tab-students_management-active",
+    "tab-students-active",
+    "tab-attendance_daily-active",
+    "tab-attendance_monthly-active",
+    "tab-attendance_yearly-active"
+  );
   document.body.classList.add("tab-" + subTabId + "-active");
   document.body.classList.add("admin-print-active");
 
-  // Ensure tab-admin_tasks is active and corresponding subpane is active
+  // Ensure tab-admin_tasks is active and visible
   const adminTab = document.getElementById("tab-admin_tasks");
-  if (adminTab) adminTab.classList.add("active");
-  
-  const subpane = document.getElementById("tab-" + subTabId);
-  if (subpane) {
-    subpane.classList.add("active");
-    subpane.style.display = "block";
+  if (adminTab) {
+    adminTab.classList.add("active");
+    adminTab.style.display = "block";
+    adminTab.style.visibility = "visible";
   }
+  
+  // Hide all other main tab panes during admin print
+  document.querySelectorAll(".tab-pane:not(#tab-admin_tasks)").forEach(tp => {
+    tp.style.display = "none";
+  });
+  
+  // Strictly display ONLY the active admin subpane, hide all other admin subpanes!
+  const allSubpanes = document.querySelectorAll(".admin-subpane");
+  allSubpanes.forEach(pane => {
+    if (pane.id === "tab-" + subTabId) {
+      pane.classList.add("active");
+      pane.style.display = "block";
+      pane.style.visibility = "visible";
+    } else {
+      pane.classList.remove("active");
+      pane.style.display = "none";
+    }
+  });
 
-  // Flatten wrappers to prevent any scrollbars or overflow during print
-  const wrappers = document.querySelectorAll(".a4-preview-wrapper, .admin-subpane, #scoresContentWrap, #monthlyRanksContentWrap, #honorRollContentWrap, #annualRanksContentWrap, #studyBookContentWrap, #traineeContentWrap, #monthlyReportContentWrap, .monthly-score-a4-page, .monthly-rank-a4-page, #printableMonthlyScores");
+  // Flatten active subtab wrappers to eliminate any scrollbars or overflow during print
+  const wrappers = document.querySelectorAll(".a4-preview-wrapper, #scoresContentWrap, #monthlyRanksContentWrap, #honorRollContentWrap, #semesterRanksContentWrap, #semesterScoresContentWrap, #semesterExtractContentWrap, #annualRanksContentWrap, #studyBookContentWrap, #traineeContentWrap, #monthlyReportContentWrap, .monthly-score-a4-page, .monthly-rank-a4-page, #printableMonthlyScores, .a4-landscape-page, .a4-portrait-page, .official-score-table, .official-rank-table, .data-table");
   wrappers.forEach(w => {
     w.style.overflow = "visible";
     w.style.overflowX = "visible";
     w.style.overflowY = "visible";
-    w.style.display = "block";
     w.style.boxShadow = "none";
     w.style.border = "none";
     w.style.background = "transparent";
+    w.style.scrollbarWidth = "none";
   });
 
-  // Inject or update orientation and scrollbar suppression style
+  // Inject or update orientation and complete scrollbar suppression style
   let styleEl = document.getElementById("printPageOrientationStyle");
   if (!styleEl) {
     styleEl = document.createElement("style");
@@ -5301,48 +5327,82 @@ function prepareAdminPrint(subTabId) {
       size: A4 ${cfg.orientation} !important;
       margin: ${cfg.margin} !important;
     }
-    *, *::before, *::after {
-      scrollbar-width: none !important;
-      -ms-overflow-style: none !important;
-    }
-    ::-webkit-scrollbar,
-    ::-webkit-scrollbar-thumb,
-    ::-webkit-scrollbar-track,
-    ::-webkit-scrollbar-track-piece,
-    ::-webkit-scrollbar-button,
-    ::-webkit-scrollbar-corner,
-    ::-webkit-resizer {
-      display: none !important;
-      width: 0 !important;
-      height: 0 !important;
-      background: transparent !important;
-      opacity: 0 !important;
-      visibility: hidden !important;
-    }
-    html, body, .app-container, .main-wrapper, .content-body, .tab-pane, .admin-subpane, .a4-preview-wrapper, #scoresContentWrap, #monthlyRanksContentWrap, #tab-scores, #tab-monthly_ranks, .monthly-score-a4-page, .monthly-rank-a4-page, #printableMonthlyScores {
-      overflow: visible !important;
-      overflow-x: visible !important;
-      overflow-y: visible !important;
-      height: auto !important;
-      min-height: 0 !important;
-      max-height: none !important;
-      scrollbar-width: none !important;
-      -ms-overflow-style: none !important;
+    @media print {
+      *, *::before, *::after {
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+      }
+      ::-webkit-scrollbar,
+      *::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+        background: transparent !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+      }
+      html, body, .app-container, .main-wrapper, .content-body, .tab-pane, .admin-subpane, .a4-preview-wrapper, #scoresContentWrap, #monthlyRanksContentWrap, #honorRollContentWrap, #semesterRanksContentWrap, #semesterScoresContentWrap, #semesterExtractContentWrap, #annualRanksContentWrap, #studyBookContentWrap, #traineeContentWrap, #monthlyReportContentWrap, #tab-scores, #tab-monthly_ranks, #tab-admin_tasks, .monthly-score-a4-page, .monthly-rank-a4-page, #printableMonthlyScores, .official-score-table, .official-rank-table, table {
+        overflow: visible !important;
+        overflow-x: visible !important;
+        overflow-y: visible !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+      }
+      body.admin-print-active #tab-admin_tasks,
+      body[data-admin-subtab] #tab-admin_tasks {
+        display: block !important;
+        visibility: visible !important;
+      }
+      body.admin-print-active .tab-pane:not(#tab-admin_tasks),
+      body[data-admin-subtab] .tab-pane:not(#tab-admin_tasks) {
+        display: none !important;
+      }
+      .admin-subpane {
+        display: none !important;
+      }
+      .admin-subpane#tab-${subTabId} {
+        display: block !important;
+        visibility: visible !important;
+      }
     }
   `;
 }
 
 function restoreAdminPrint(subTabId) {
-  const wrappers = document.querySelectorAll(".a4-preview-wrapper, .admin-subpane, #scoresContentWrap, #monthlyRanksContentWrap, #honorRollContentWrap, #annualRanksContentWrap, #studyBookContentWrap, #traineeContentWrap, #monthlyReportContentWrap, .monthly-score-a4-page, .monthly-rank-a4-page, #printableMonthlyScores");
+  const wrappers = document.querySelectorAll(".a4-preview-wrapper, #scoresContentWrap, #monthlyRanksContentWrap, #honorRollContentWrap, #semesterRanksContentWrap, #semesterScoresContentWrap, #semesterExtractContentWrap, #annualRanksContentWrap, #studyBookContentWrap, #traineeContentWrap, #monthlyReportContentWrap, .monthly-score-a4-page, .monthly-rank-a4-page, #printableMonthlyScores, .a4-landscape-page, .a4-portrait-page, .official-score-table, .official-rank-table, .data-table");
   wrappers.forEach(w => {
     w.style.overflow = "";
     w.style.overflowX = "";
     w.style.overflowY = "";
-    w.style.display = "";
     w.style.boxShadow = "";
     w.style.border = "";
     w.style.background = "";
+    w.style.scrollbarWidth = "";
   });
+  const styleEl = document.getElementById("printPageOrientationStyle");
+  if (styleEl) styleEl.remove();
+
+  document.body.classList.remove("admin-print-active");
+  document.body.removeAttribute("data-admin-subtab");
+
+  // Restore tab panes inline display so normal clicking works
+  document.querySelectorAll(".tab-pane").forEach(tp => {
+    tp.style.display = "";
+    tp.style.visibility = "";
+  });
+  const curSub = (state && state.activeAdminSubTab) ? state.activeAdminSubTab : (subTabId || "scores");
+  document.querySelectorAll(".admin-subpane").forEach(pane => {
+    pane.style.display = "";
+    pane.style.visibility = "";
+    pane.classList.toggle("active", pane.id === "tab-" + curSub);
+  });
+
+  if (state && state.activeTab && state.activeTab !== "admin_tasks") {
+    document.body.setAttribute("data-active-tab", state.activeTab);
+  }
 }
 
 
@@ -5402,35 +5462,6 @@ function restoreScoresAfterPrint() {
     page.style.minHeight = "";
   }
 }
-
-// Hook into beforeprint and afterprint globally (covers Ctrl+P as well as Print button)
-window.addEventListener("beforeprint", () => {
-  const studentSubTabs = ["students", "attendance_daily", "attendance_monthly", "attendance_yearly"];
-  const isStudentTab = (state && (state.activeTab === "students_management" || studentSubTabs.includes(state.activeStudentSubTab) || studentSubTabs.includes(state.activeTab))) ||
-                       (document.getElementById("tab-students_management")?.classList.contains("active"));
-
-  if (isStudentTab) {
-    const activeSub = state.activeStudentSubTab || 
-      (document.getElementById("subpane-attendance_daily")?.classList.contains("active") ? "attendance_daily" :
-      document.getElementById("subpane-attendance_monthly")?.classList.contains("active") ? "attendance_monthly" :
-      document.getElementById("subpane-attendance_yearly")?.classList.contains("active") ? "attendance_yearly" : "students");
-    prepareStudentSubTabForPrint(activeSub);
-    return;
-  }
-
-  const tabScores = document.getElementById("tab-scores");
-  const isScoresActive = (state && (state.activeTab === "scores" || state.activeAdminSubTab === "scores")) || 
-                         (tabScores && tabScores.classList.contains("active") && tabScores.style.display !== "none");
-  if (isScoresActive) {
-    document.body.setAttribute("data-active-tab", "scores");
-    document.body.classList.add("tab-scores-active");
-    prepareScoresForPrint();
-  }
-});
-
-window.addEventListener("afterprint", () => {
-  restoreScoresAfterPrint();
-});
 
 function exportMonthlyScoresExcel() {
   const currentClass = getActiveClass();
@@ -10543,18 +10574,7 @@ function saveStudyBookProfile(studentNum, field, text) {
 window.saveStudyBookProfile = saveStudyBookProfile;
 
 function printStudyBookCurrent() {
-  let styleEl = document.getElementById("printPageOrientationStyle");
-  if (!styleEl) {
-    styleEl = document.createElement("style");
-    styleEl.id = "printPageOrientationStyle";
-    document.head.appendChild(styleEl);
-  }
-  styleEl.innerHTML = `
-    @page {
-      size: A4 landscape !important;
-      margin: 4mm 5mm !important;
-    }
-  `;
+  prepareAdminPrint("study_book");
   window.print();
 }
 window.printStudyBookCurrent = printStudyBookCurrent;
@@ -10578,18 +10598,7 @@ function printStudyBookAll() {
   });
   container.innerHTML = allHtml;
 
-  let styleEl = document.getElementById("printPageOrientationStyle");
-  if (!styleEl) {
-    styleEl = document.createElement("style");
-    styleEl.id = "printPageOrientationStyle";
-    document.head.appendChild(styleEl);
-  }
-  styleEl.innerHTML = `
-    @page {
-      size: A4 landscape !important;
-      margin: 4mm 5mm !important;
-    }
-  `;
+  prepareAdminPrint("study_book");
 
   setTimeout(() => {
     window.print();
@@ -11366,18 +11375,7 @@ function changeTraineePrintMode(mode) {
 window.changeTraineePrintMode = changeTraineePrintMode;
 
 function printTraineeBook() {
-  let styleEl = document.getElementById("printPageOrientationStyle");
-  if (!styleEl) {
-    styleEl = document.createElement("style");
-    styleEl.id = "printPageOrientationStyle";
-    document.head.appendChild(styleEl);
-  }
-  styleEl.innerHTML = `
-    @page {
-      size: A4 landscape !important;
-      margin: 4mm 5mm !important;
-    }
-  `;
+  prepareAdminPrint("trainee");
   window.print();
 }
 window.printTraineeBook = printTraineeBook;
@@ -12384,6 +12382,7 @@ function changeMonthlyReportMonth(month) {
 }
 
 function printMonthlyReport() {
+  prepareAdminPrint("monthly_report");
   window.print();
 }
 
@@ -13706,7 +13705,8 @@ function renderClasses() {
     // Teacher & credential details
     const authAcc = authUsers.find(u => u.grade === cls.grade || u.classId === cls.id);
     const teacherName = cls.teacher || (authAcc ? authAcc.teacher : "មិនទាន់កំណត់");
-    const isFemale = authAcc && (authAcc.gender === "ស្រី" || authAcc.title === "អ្នកគ្រូ");
+    const tRec = (state && state.db && Array.isArray(state.db.teachers)) ? state.db.teachers.find(t => t.name === teacherName || t.grade === cls.grade) : null;
+    const isFemale = (tRec && tRec.gender === "ស្រី") || (cls.gender === "ស្រី") || (authAcc && (authAcc.gender === "ស្រី" || authAcc.title === "អ្នកគ្រូ"));
     const teacherTitle = isFemale ? "អ្នកគ្រូ" : "លោកគ្រូ";
     const password = authAcc ? authAcc.password : "";
 
@@ -13734,12 +13734,6 @@ function renderClasses() {
             ${isUserClass ? '<span class="class-user-tag"><i class="fa fa-user-check"></i> ថ្នាក់របស់អ្នក</span>' : ''}
           </div>
           <div class="class-header-actions">
-            <button type="button" class="btn-change-pwd-badge" onclick="openChangePasswordModal('${cls.id}')" title="ប្ដូរពាក្យសម្ងាត់ & QR Code ថ្មី">
-              <i class="fa-solid fa-key"></i> ប្ដូរលេខកូដ
-            </button>
-            <button type="button" class="btn-download-single-badge" onclick="downloadClassQRCode('${cls.id}')" title="ទាញយក QR Code ជារូបភាព (PNG) សម្រាប់ចូលប្រព័ន្ធ">
-              <i class="fa-solid fa-download"></i> ទាញយក QR
-            </button>
             <button type="button" class="btn-print-single-badge" onclick="printClassroomBadge('${cls.id}')" title="បោះពុម្ពប័ណ្ណសម្គាល់ និង QR Code ថ្នាក់នេះ">
               <i class="fa-solid fa-print"></i> ប័ណ្ណ
             </button>
@@ -14393,41 +14387,36 @@ window.downloadCurrentVisibleQRCodes = downloadCurrentVisibleQRCodes;
 
 // Universal beforeprint & afterprint hooks for both Admin Tasks and Student Management
 window.addEventListener("beforeprint", () => {
-  // 1. Check Student Management tabs first
-  const stuTabs = ["students", "attendance_daily", "attendance_monthly", "attendance_yearly"];
-  for (const st of stuTabs) {
-    const pane = document.getElementById("subpane-" + st);
-    const isStuActive = (state && (state.activeTab === st || state.activeStudentSubTab === st)) ||
-                        (pane && pane.classList.contains("active") && pane.style.display !== "none");
-    if (isStuActive) {
-      if (typeof prepareStudentSubTabForPrint === "function") {
-        prepareStudentSubTabForPrint(st);
-      }
-      return;
-    }
-  }
-
-  // 2. Check Admin Tasks subtabs
+  // Priority 1: Check if Admin Tasks print is active or if user is on Admin Tasks tab
   const adminKeys = Object.keys(ADMIN_PRINT_CONFIG);
-  for (const at of adminKeys) {
-    const pane = document.getElementById("tab-" + at);
-    const isAdminActive = (state && (state.activeAdminSubTab === at || (state.activeTab === at && state.activeTab !== "admin_tasks"))) ||
-                          (pane && pane.classList.contains("active") && pane.style.display !== "none");
-    if (isAdminActive) {
-      prepareAdminPrint(at);
-      return;
-    }
+  const isAdminActive = document.body.classList.contains("admin-print-active") ||
+                        document.body.hasAttribute("data-admin-subtab") ||
+                        (state && (state.activeTab === "admin_tasks" || adminKeys.includes(state.activeTab)));
+  
+  if (isAdminActive) {
+    const subTab = document.body.getAttribute("data-admin-subtab") ||
+                   (state && adminKeys.includes(state.activeAdminSubTab) ? state.activeAdminSubTab : null) ||
+                   (state && adminKeys.includes(state.activeTab) ? state.activeTab : "scores");
+    prepareAdminPrint(subTab);
+    return;
   }
 
-  // Fallback to activeAdminSubTab or scores
-  if (state && state.activeAdminSubTab && ADMIN_PRINT_CONFIG[state.activeAdminSubTab]) {
-    prepareAdminPrint(state.activeAdminSubTab);
+  // Priority 2: Check Student Management tabs ONLY if user is currently on students management
+  const stuTabs = ["students", "attendance_daily", "attendance_monthly", "attendance_yearly"];
+  const isStuActive = document.body.classList.contains("tab-students_management-active") ||
+                      (state && (state.activeTab === "students_management" || stuTabs.includes(state.activeTab)));
+  
+  if (isStuActive) {
+    const st = (state && stuTabs.includes(state.activeStudentSubTab)) ? state.activeStudentSubTab : (stuTabs.includes(state.activeTab) ? state.activeTab : "students");
+    if (typeof prepareStudentSubTabForPrint === "function") {
+      prepareStudentSubTabForPrint(st);
+    }
+    return;
   }
 });
 
 window.addEventListener("afterprint", () => {
-  restoreAdminPrint();
-  if (typeof restoreStudentSubTabAfterPrint === "function" && state && state.activeStudentSubTab) {
-    restoreStudentSubTabAfterPrint(state.activeStudentSubTab);
+  if (document.body.classList.contains("admin-print-active") || document.body.hasAttribute("data-admin-subtab")) {
+    restoreAdminPrint();
   }
 });

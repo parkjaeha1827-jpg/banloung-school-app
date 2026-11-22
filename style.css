@@ -5375,6 +5375,28 @@ body {
   /* ==========================================================================
      ADMINISTRATIVE TASKS PRINT RULES (ចំណាត់ថ្នាក់ប្រចាំខែ, សម្រង់ពិន្ទុ, តារាងកិត្តិយស...)
      ========================================================================== */
+@media print {
+  *, *::before, *::after {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+
+  ::-webkit-scrollbar,
+  *::-webkit-scrollbar,
+  ::-webkit-scrollbar-thumb,
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-track-piece,
+  ::-webkit-scrollbar-button,
+  ::-webkit-scrollbar-corner,
+  ::-webkit-resizer {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    background: transparent !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+
   body[data-active-tab="monthly_ranks"] .tab-pane:not(#tab-admin_tasks),
   body[data-active-tab="scores"] .tab-pane:not(#tab-admin_tasks),
   body[data-active-tab="honor_roll"] .tab-pane:not(#tab-admin_tasks),
@@ -5385,11 +5407,13 @@ body {
   body[data-active-tab="study_book"] .tab-pane:not(#tab-admin_tasks),
   body[data-active-tab="trainee"] .tab-pane:not(#tab-admin_tasks),
   body[data-active-tab="monthly_report"] .tab-pane:not(#tab-admin_tasks),
-  body.admin-print-active .tab-pane:not(#tab-admin_tasks) {
+  body.admin-print-active .tab-pane:not(#tab-admin_tasks),
+  body[data-admin-subtab] .tab-pane:not(#tab-admin_tasks) {
     display: none !important;
   }
 
   body.admin-print-active #tab-admin_tasks,
+  body[data-admin-subtab] #tab-admin_tasks,
   body[data-active-tab="monthly_ranks"] #tab-admin_tasks,
   body[data-active-tab="scores"] #tab-admin_tasks,
   body[data-active-tab="honor_roll"] #tab-admin_tasks,
@@ -5408,6 +5432,8 @@ body {
     padding: 0 !important;
     margin: 0 !important;
     border: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
   /* Hide sibling subpanes */
@@ -5424,7 +5450,41 @@ body {
     display: none !important;
   }
 
+  .admin-subpane {
+    display: none !important;
+  }
+
   /* Display active subpane cleanly */
+  body[data-active-tab="scores"] #tab-scores,
+  body[data-admin-subtab="scores"] #tab-scores,
+  body.tab-scores-active #tab-scores,
+  body[data-active-tab="monthly_ranks"] #tab-monthly_ranks,
+  body[data-admin-subtab="monthly_ranks"] #tab-monthly_ranks,
+  body.tab-monthly_ranks-active #tab-monthly_ranks,
+  body[data-active-tab="honor_roll"] #tab-honor_roll,
+  body[data-admin-subtab="honor_roll"] #tab-honor_roll,
+  body.tab-honor_roll-active #tab-honor_roll,
+  body[data-active-tab="semester_ranks"] #tab-semester_ranks,
+  body[data-admin-subtab="semester_ranks"] #tab-semester_ranks,
+  body.tab-semester_ranks-active #tab-semester_ranks,
+  body[data-active-tab="semester_scores"] #tab-semester_scores,
+  body[data-admin-subtab="semester_scores"] #tab-semester_scores,
+  body.tab-semester_scores-active #tab-semester_scores,
+  body[data-active-tab="semester_extract"] #tab-semester_extract,
+  body[data-admin-subtab="semester_extract"] #tab-semester_extract,
+  body.tab-semester_extract-active #tab-semester_extract,
+  body[data-active-tab="annual_ranks"] #tab-annual_ranks,
+  body[data-admin-subtab="annual_ranks"] #tab-annual_ranks,
+  body.tab-annual_ranks-active #tab-annual_ranks,
+  body[data-active-tab="study_book"] #tab-study_book,
+  body[data-admin-subtab="study_book"] #tab-study_book,
+  body.tab-study_book-active #tab-study_book,
+  body[data-active-tab="trainee"] #tab-trainee,
+  body[data-admin-subtab="trainee"] #tab-trainee,
+  body.tab-trainee-active #tab-trainee,
+  body[data-active-tab="monthly_report"] #tab-monthly_report,
+  body[data-admin-subtab="monthly_report"] #tab-monthly_report,
+  body.tab-monthly_report-active #tab-monthly_report,
   #tab-monthly_ranks.active,
   #tab-scores.active,
   #tab-honor_roll.active,
@@ -5442,6 +5502,7 @@ body {
     overflow-y: visible !important;
     padding: 0 !important;
     margin: 0 !important;
+    width: 100% !important;
   }
 
   /* Universal preview wrappers reset in print */
@@ -5449,6 +5510,9 @@ body {
   #scoresContentWrap,
   #monthlyRanksContentWrap,
   #honorRollContentWrap,
+  #semesterRanksContentWrap,
+  #semesterScoresContentWrap,
+  #semesterExtractContentWrap,
   #annualRanksContentWrap,
   #studyBookContentWrap,
   #traineeContentWrap,
@@ -5471,7 +5535,9 @@ body {
 
   .monthly-rank-a4-page,
   .monthly-score-a4-page,
-  #printableMonthlyScores {
+  #printableMonthlyScores,
+  .a4-landscape-page,
+  .a4-portrait-page {
     box-shadow: none !important;
     padding: 0 !important;
     margin: 0 auto !important;
@@ -5488,6 +5554,17 @@ body {
     scrollbar-width: none !important;
     -ms-overflow-style: none !important;
   }
+
+  .official-score-table,
+  .official-rank-table,
+  .data-table {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+}
 
 
 /* Print Rules for Monthly Score Sheet - Solid Crisp Borders & Fully Visible Signatures */

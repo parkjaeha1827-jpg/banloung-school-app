@@ -48,7 +48,7 @@ const BASELINE_CLASS_REPORTS = {
     slow_helped: { failing_all: 13, failing_fem: 7, helped_all: 6, helped_fem: 4, rem_all: 7, rem_fem: 3 }
   },
   "ថ្នាក់ទី៣": {
-    gradeNum: 3, teacher: "ក្រូយ ចាន់ធារ៉ា", total: 45, female: 20,
+    gradeNum: 3, teacher: "ព្រួយ ចាន់ដារ៉ា", total: 45, female: 20,
     prescribed: 990, attended: 980, absent: 10, absentPct: "1.01%",
     scores: { f_all: 6, f_fem: 0, e_all: 21, e_fem: 10, d_all: 9, d_fem: 3, c_all: 4, c_fem: 2, b_all: 3, b_fem: 3, a_all: 2, a_fem: 2, pass_all: 39, pass_fem: 20, pass_pct: "86.67%" },
     curriculum: { khmer: "ឥទ្ធិពលនៃគ្រឿងស្រវឹង", math: "ធរណីមាត្រ", social: "ភូមិសាស្ត្រតំបន់", science: "សត្វដែលខ្ញុំចិញ្ចឹម" },
@@ -75,7 +75,7 @@ const BASELINE_CLASS_REPORTS = {
     slow_helped: { failing_all: 14, failing_fem: 4, helped_all: 9, helped_fem: 3, rem_all: 5, rem_fem: 1 }
   },
   "ថ្នាក់ទី៦": {
-    gradeNum: 6, teacher: "ង៉ែត សារុន", total: 41, female: 23,
+    gradeNum: 6, teacher: "ផែត សារុន", total: 41, female: 23,
     prescribed: 902, attended: 884, absent: 18, absentPct: "2.00%",
     scores: { f_all: 5, f_fem: 0, e_all: 8, e_fem: 3, d_all: 14, d_fem: 8, c_all: 8, c_fem: 6, b_all: 4, b_fem: 4, a_all: 2, a_fem: 2, pass_all: 36, pass_fem: 23, pass_pct: "87.80%" },
     curriculum: { khmer: "ចំណងឈ្នាប់ ឬ ឈ្នាប់", math: "វិធីដកចំនួនចម្រុះ", social: "ការសម្តែងល្ខោនបាសាក់", science: "ប្លង់ទេ" },

@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Main Stylesheet (with cache-buster) -->
-  <link rel="stylesheet" href="style.css?v=20261123_05">
+  <link rel="stylesheet" href="style.css?v=20261123_06">
 
   <!-- Universal Direct Inline Print Style to eliminate any possibility of scrollbars or lines during print -->
   <style id="appUniversalPrintStyle">
@@ -32,6 +32,31 @@
       @page annual-rank-sheet {
         size: A4 portrait !important;
         margin: 5mm 7mm !important;
+      }
+      /* Monthly Teacher Report A4 Portrait Strict Rules */
+      @page monthly-report-sheet {
+        size: A4 portrait !important;
+        margin: 5mm 6mm !important;
+      }
+      body[data-active-tab="monthly_report"] .monthly-report-page,
+      body[data-admin-subtab="monthly_report"] .monthly-report-page,
+      body.tab-monthly_report-active .monthly-report-page,
+      #tab-monthly_report .monthly-report-page,
+      .monthly-report-page,
+      #monthlyReportPagePrint {
+        page: monthly-report-sheet !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        min-height: auto !important;
+        height: auto !important;
+        max-height: none !important;
+        padding: 6mm 10mm 6mm 10mm !important;
+        margin: 0 auto !important;
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
       }
       body[data-active-tab="annual_ranks"] .annual-a4-page,
       body[data-admin-subtab="annual_ranks"] .annual-a4-page,
@@ -2273,8 +2298,8 @@
   <script src="firebase-app-compat.js"></script>
   <script src="firebase-database-compat.js"></script>
   <script src="firebase-sync.js?v=20261123_02"></script>
-  <script src="auth.js?v=20261123_05"></script>
-  <script src="app.js?v=20261123_05"></script>
+  <script src="auth.js?v=20261123_06"></script>
+  <script src="app.js?v=20261123_06"></script>
 
 </body>
 </html>

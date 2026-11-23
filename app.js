@@ -5312,7 +5312,7 @@ const ADMIN_PRINT_CONFIG = {
   annual_ranks: { orientation: "portrait", margin: "5mm 7mm", wrapId: "annualRanksContentWrap" },
   study_book: { orientation: "landscape", margin: "4mm 5mm", wrapId: "studyBookContentWrap" },
   trainee: { orientation: "landscape", margin: "4mm 5mm", wrapId: "traineeContentWrap" },
-  monthly_report: { orientation: "landscape", margin: "4mm 5mm", wrapId: "monthlyReportContentWrap" }
+  monthly_report: { orientation: "portrait", margin: "5mm 6mm", wrapId: "monthlyReportContentWrap" }
 };
 
 function prepareAdminPrint(subTabId) {
@@ -5462,6 +5462,30 @@ function prepareAdminPrint(subTabId) {
       page-break-after: avoid !important;
       break-after: avoid !important;
       margin-top: 0 !important;
+    }
+    @page monthly-report-sheet {
+      size: A4 portrait !important;
+      margin: 5mm 6mm !important;
+    }
+    body[data-active-tab="monthly_report"] .monthly-report-page,
+    body[data-admin-subtab="monthly_report"] .monthly-report-page,
+    body.tab-monthly_report-active .monthly-report-page,
+    #tab-monthly_report .monthly-report-page,
+    .monthly-report-page,
+    #monthlyReportPagePrint {
+      page: monthly-report-sheet !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      min-height: auto !important;
+      height: auto !important;
+      max-height: none !important;
+      padding: 6mm 10mm 6mm 10mm !important;
+      margin: 0 auto !important;
+      page-break-after: avoid !important;
+      break-after: avoid !important;
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
     }
     #tab-semester_scores .semester-score-a4-page,
     .semester-score-a4-page,

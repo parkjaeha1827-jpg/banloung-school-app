@@ -7942,7 +7942,7 @@ body {
 @media print {
   @page semester-score-sheet {
     size: A4 portrait !important;
-    margin: 5mm 6mm !important;
+    margin: 4mm 5mm !important;
   }
 
   body[data-active-tab="semester_scores"],
@@ -7969,18 +7969,26 @@ body {
     width: 100% !important;
     max-width: 100% !important;
     box-sizing: border-box !important;
+    min-height: auto !important;
+    height: auto !important;
+    max-height: none !important;
     box-shadow: none !important;
     margin: 0 auto !important;
-    padding: 5mm 8mm !important;
-    page-break-after: always;
-    page-break-inside: avoid;
-    break-inside: avoid;
+    padding: 3mm 5mm !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 
-  #tab-semester_scores .semester-score-a4-page:last-child {
+  #tab-semester_scores .semester-score-a4-page:last-child,
+  .semester-score-a4-page:last-child,
+  #printableSemesterScoresPage2 {
     page-break-after: avoid !important;
+    break-after: avoid !important;
+    margin-top: 0 !important;
   }
 
   #tab-semester_scores .sem-score-table {
@@ -8008,7 +8016,7 @@ body {
   }
 
   #tab-semester_scores .sem-score-table thead th {
-    height: 125px !important;
+    height: 105px !important;
     vertical-align: middle !important;
     text-align: center !important;
     background: #ffffff !important;
@@ -8019,7 +8027,7 @@ body {
   }
 
   #tab-semester_scores .sem-score-table th.th-h {
-    height: 125px !important;
+    height: 105px !important;
     vertical-align: middle !important;
     text-align: center !important;
     font-family: var(--font-moul-light) !important;
@@ -8028,7 +8036,7 @@ body {
   }
 
   #tab-semester_scores .sem-score-table th.th-v {
-    height: 125px !important;
+    height: 105px !important;
     vertical-align: middle !important;
     text-align: center !important;
     padding: 2px 1px !important;

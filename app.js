@@ -5326,7 +5326,7 @@ function prepareAdminPrint(subTabId) {
     }
     @page semester-score-sheet {
       size: A4 portrait !important;
-      margin: 5mm 6mm !important;
+      margin: 4mm 5mm !important;
     }
     #tab-semester_scores .semester-score-a4-page,
     .semester-score-a4-page,
@@ -5336,6 +5336,31 @@ function prepareAdminPrint(subTabId) {
       width: 100% !important;
       max-width: 100% !important;
       box-sizing: border-box !important;
+      min-height: auto !important;
+      height: auto !important;
+      max-height: none !important;
+      padding: 3mm 5mm !important;
+      margin: 0 auto !important;
+      page-break-after: always !important;
+      break-after: page !important;
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+    }
+    #tab-semester_scores .semester-score-a4-page:last-child,
+    .semester-score-a4-page:last-child,
+    #printableSemesterScoresPage2 {
+      page-break-after: avoid !important;
+      break-after: avoid !important;
+      margin-top: 0 !important;
+    }
+    #tab-semester_scores .sem-score-table thead th,
+    #tab-semester_scores .sem-score-table th.th-h,
+    #tab-semester_scores .sem-score-table th.th-v {
+      height: 105px !important;
+    }
+    #tab-semester_scores .sem-score-table tbody td {
+      height: 22px !important;
+      padding: 1px !important;
     }
     @media print {
       *, *::before, *::after {
@@ -7801,8 +7826,8 @@ function renderSemesterScores() {
   const solarTeacher = savedDates.solarTeacher || "បាន្លួង ថ្ងៃទី ១០ ខែ កក្កដា ឆ្នាំ ២០២៣";
   const teacherVal = currentClass.teacher || "ផន ច័ន្ទតារា";
 
-  // Split into pages matching PDF: Page 1 holds up to 27 rows, Page 2 holds 28..N
-  const PAGE_SIZE_P1 = 27;
+  // Split into pages matching PDF: Page 1 holds up to 26 rows, Page 2 holds 27..N
+  const PAGE_SIZE_P1 = 26;
   const page1Rows = studentRows.slice(0, PAGE_SIZE_P1);
   const page2Rows = studentRows.slice(PAGE_SIZE_P1);
 

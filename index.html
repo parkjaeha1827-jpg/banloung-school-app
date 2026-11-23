@@ -14,15 +14,15 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Main Stylesheet (with cache-buster) -->
-  <link rel="stylesheet" href="style.css?v=20261123_01">
+  <link rel="stylesheet" href="style.css?v=20261123_02">
 
   <!-- Universal Direct Inline Print Style to eliminate any possibility of scrollbars or lines during print -->
   <style id="appUniversalPrintStyle">
     @media print {
-      /* Semester Scores A4 Portrait Strict Rules */
+      /* Semester Scores A4 Portrait Strict Rules (Eliminate any blank page gaps) */
       @page semester-score-sheet {
         size: A4 portrait !important;
-        margin: 5mm 6mm !important;
+        margin: 4mm 5mm !important;
       }
       body[data-active-tab="semester_scores"] .semester-score-a4-page,
       body[data-admin-subtab="semester_scores"] .semester-score-a4-page,
@@ -35,14 +35,31 @@
         width: 100% !important;
         max-width: 100% !important;
         box-sizing: border-box !important;
-        padding: 5mm 8mm !important;
+        min-height: auto !important;
+        height: auto !important;
+        max-height: none !important;
+        padding: 3mm 5mm !important;
         margin: 0 auto !important;
-        page-break-after: always;
-        page-break-inside: avoid;
-        break-inside: avoid;
+        page-break-after: always !important;
+        break-after: page !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
       }
-      #tab-semester_scores .semester-score-a4-page:last-child {
+      #tab-semester_scores .semester-score-a4-page:last-child,
+      .semester-score-a4-page:last-child,
+      #printableSemesterScoresPage2 {
         page-break-after: avoid !important;
+        break-after: avoid !important;
+        margin-top: 0 !important;
+      }
+      #tab-semester_scores .sem-score-table thead th,
+      #tab-semester_scores .sem-score-table th.th-h,
+      #tab-semester_scores .sem-score-table th.th-v {
+        height: 105px !important;
+      }
+      #tab-semester_scores .sem-score-table tbody td {
+        height: 22px !important;
+        padding: 1px !important;
       }
       #schoolSyncToastContainer,
       .cloud-sync-badge,
@@ -2220,9 +2237,9 @@
   <!-- Firebase Realtime Database SDK & Sync Manager -->
   <script src="firebase-app-compat.js"></script>
   <script src="firebase-database-compat.js"></script>
-  <script src="firebase-sync.js?v=20261123_01"></script>
-  <script src="auth.js?v=20261123_01"></script>
-  <script src="app.js?v=20261123_01"></script>
+  <script src="firebase-sync.js?v=20261123_02"></script>
+  <script src="auth.js?v=20261123_02"></script>
+  <script src="app.js?v=20261123_02"></script>
 
 </body>
 </html>

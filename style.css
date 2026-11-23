@@ -7956,19 +7956,25 @@ body {
     display: block !important;
   }
 
-  #tab-semester_scores .no-print {
+  #tab-semester_scores .no-print,
+  #schoolSyncToastContainer,
+  .cloud-sync-badge,
+  .sync-status-badge {
     display: none !important;
   }
 
-  #tab-semester_scores .semester-score-a4-page {
-    width: 210mm !important;
-    max-width: 210mm !important;
-    min-height: 297mm !important;
+  #tab-semester_scores .semester-score-a4-page,
+  .semester-score-a4-page {
+    page: semester-score-sheet !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
     box-shadow: none !important;
     margin: 0 auto !important;
-    padding: 8mm 12mm !important;
+    padding: 5mm 8mm !important;
     page-break-after: always;
     page-break-inside: avoid;
+    break-inside: avoid;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }

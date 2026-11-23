@@ -14,11 +14,42 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Main Stylesheet (with cache-buster) -->
-  <link rel="stylesheet" href="style.css?v=20261122_07">
+  <link rel="stylesheet" href="style.css?v=20261123_01">
 
   <!-- Universal Direct Inline Print Style to eliminate any possibility of scrollbars or lines during print -->
   <style id="appUniversalPrintStyle">
     @media print {
+      /* Semester Scores A4 Portrait Strict Rules */
+      @page semester-score-sheet {
+        size: A4 portrait !important;
+        margin: 5mm 6mm !important;
+      }
+      body[data-active-tab="semester_scores"] .semester-score-a4-page,
+      body[data-admin-subtab="semester_scores"] .semester-score-a4-page,
+      body.tab-semester_scores-active .semester-score-a4-page,
+      #tab-semester_scores .semester-score-a4-page,
+      .semester-score-a4-page,
+      #printableSemesterScoresPage1,
+      #printableSemesterScoresPage2 {
+        page: semester-score-sheet !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        padding: 5mm 8mm !important;
+        margin: 0 auto !important;
+        page-break-after: always;
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+      #tab-semester_scores .semester-score-a4-page:last-child {
+        page-break-after: avoid !important;
+      }
+      #schoolSyncToastContainer,
+      .cloud-sync-badge,
+      .sync-status-badge,
+      .no-print {
+        display: none !important;
+      }
       *, *::before, *::after {
         scrollbar-width: none !important;
         -ms-overflow-style: none !important;
@@ -108,7 +139,7 @@
         overflow: visible !important;
         scrollbar-width: none !important;
       }
-      .monthly-score-a4-page, .monthly-rank-a4-page, #printableMonthlyScores, .a4-landscape-page, .a4-portrait-page {
+      .monthly-score-a4-page, .monthly-rank-a4-page, #printableMonthlyScores, .a4-landscape-page, .a4-portrait-page, .semester-score-a4-page {
         width: 100% !important;
         max-width: 100% !important;
         margin: 0 auto !important;
@@ -2189,9 +2220,9 @@
   <!-- Firebase Realtime Database SDK & Sync Manager -->
   <script src="firebase-app-compat.js"></script>
   <script src="firebase-database-compat.js"></script>
-  <script src="firebase-sync.js?v=20261122_07"></script>
-  <script src="auth.js?v=20261122_07"></script>
-  <script src="app.js?v=20261122_07"></script>
+  <script src="firebase-sync.js?v=20261123_01"></script>
+  <script src="auth.js?v=20261123_01"></script>
+  <script src="app.js?v=20261123_01"></script>
 
 </body>
 </html>

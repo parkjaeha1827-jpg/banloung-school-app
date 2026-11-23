@@ -5316,15 +5316,26 @@ function prepareAdminPrint(subTabId) {
 
   // Inject or update orientation and complete scrollbar suppression style
   let styleEl = document.getElementById("printPageOrientationStyle");
-  if (!styleEl) {
-    styleEl = document.createElement("style");
-    styleEl.id = "printPageOrientationStyle";
-    document.head.appendChild(styleEl);
-  }
+  if (styleEl) styleEl.remove();
+  styleEl = document.createElement("style");
+  styleEl.id = "printPageOrientationStyle";
   styleEl.innerHTML = `
     @page {
       size: A4 ${cfg.orientation} !important;
       margin: ${cfg.margin} !important;
+    }
+    @page semester-score-sheet {
+      size: A4 portrait !important;
+      margin: 5mm 6mm !important;
+    }
+    #tab-semester_scores .semester-score-a4-page,
+    .semester-score-a4-page,
+    #printableSemesterScoresPage1,
+    #printableSemesterScoresPage2 {
+      page: semester-score-sheet !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
     }
     @media print {
       *, *::before, *::after {
@@ -5368,6 +5379,7 @@ function prepareAdminPrint(subTabId) {
       }
     }
   `;
+  document.head.appendChild(styleEl);
 }
 
 function restoreAdminPrint(subTabId) {
@@ -7542,7 +7554,9 @@ window.saveSemesterScoreDate = saveSemesterScoreDate;
 
 function printSemesterScores() {
   prepareAdminPrint("semester_scores");
-  window.print();
+  setTimeout(() => {
+    window.print();
+  }, 60);
 }
 window.printSemesterScores = printSemesterScores;
 

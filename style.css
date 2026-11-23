@@ -5667,6 +5667,18 @@ body {
     border: none !important;
     scrollbar-width: none !important;
     -ms-overflow-style: none !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  #tab-scores .monthly-score-a4-page:last-child,
+  .monthly-score-a4-page:last-child {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+    break-after: auto !important;
+    margin-bottom: 0 !important;
   }
 
   .official-score-table {

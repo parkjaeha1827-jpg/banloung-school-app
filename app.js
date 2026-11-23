@@ -4892,35 +4892,6 @@ function renderOfficialMonthlyScoreSheet(currentClass, container) {
     }
   });
 
-  // Build Table Rows in natural roster order (ល.រ 1 to N)
-  let tableRowsHtml = "";
-  studentComputed.forEach((item, idx) => {
-    const s = item.student;
-    const lName = s.lastName || (s.fullName ? s.fullName.trim().split(/\s+/)[0] : "");
-    const fName = s.firstName || (s.fullName ? s.fullName.trim().split(/\s+/).slice(1).join(" ") : "");
-    const gender = s.gender === "ស្រី" ? "ស្រី" : "ប្រុស";
-
-    let skillCells = "";
-    SCORE_SKILLS.forEach(sk => {
-      const v = item.rec[sk.key] !== undefined ? item.rec[sk.key] : 0;
-      skillCells += `<td class="score-td-val" contenteditable="true" data-stunum="${s.num}" data-skill="${sk.key}" onblur="onScoreCellEdit(this, ${s.num}, '${sk.key}')" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur();}" title="ចុចដើម្បីកែប្រែពិន្ទុ">${v}</td>`;
-    });
-
-    tableRowsHtml += `
-      <tr>
-        <td class="score-td-num">${s.num || (idx + 1)}</td>
-        <td class="score-td-lastname border-no-r" style="border-right: hidden !important; border-right-style: hidden !important;">${escapeHtml(lName)}</td>
-        <td class="score-td-firstname border-no-l" style="border-left: hidden !important; border-left-style: hidden !important;">${escapeHtml(fName)}</td>
-        <td class="score-td-gender">${gender}</td>
-        ${skillCells}
-        <td class="score-td-total">${item.total}</td>
-        <td class="score-td-avg">${item.avg.toFixed(2)}</td>
-        <td class="score-td-rank">${item.rank}</td>
-        <td class="score-td-mention">${item.mention || "-"}</td>
-      </tr>
-    `;
-  });
-
   // Extract year for signature
   const startYear = parseInt(academicYear.split("-")[0].replace(/[^\d]/g, ""), 10) || 2026;
   const cleanGrade = getCleanGradeDisplay(currentClass.grade);
@@ -4934,210 +4905,239 @@ function renderOfficialMonthlyScoreSheet(currentClass, container) {
     || currentClass.solarDateScore
     || `ធ្វើនៅ បាន្លួង ថ្ងៃទី ១៩ ខែ ${monthKey} ឆ្នាំ ${startYear}`;
 
-  let html = `
-    <div class="monthly-score-a4-page" id="printableMonthlyScores">
-      <!-- Document Header -->
-      <div class="score-header-wrap">
-        <!-- Center Kingdom Header -->
-        <div class="score-kingdom-center">
-          <div class="score-kingdom-line1">ព្រះរាជាណាចក្រកម្ពុជា</div>
-          <div class="score-kingdom-line2">ជាតិ សាសនា ព្រះមហាក្សត្រ</div>
-          <div class="score-flourish">
-            <img src="flourish.png" alt="Flourish" onerror="this.outerHTML='<span style=\'color:#0000cc; font-size:12px;\'>❖━━━━━━ ❖ ━━━━━━❖</span>'">
-          </div>
-        </div>
+  // Helper function to build 100% official MoEYS table header (reused on every page)
+  function buildOfficialScoreTableHeader() {
+    return `
+      <thead>
+        <!-- Header Row 1 -->
+        <tr>
+          <th rowspan="2" class="score-th-num" style="width: 30px;">ល.រ</th>
+          <th colspan="2" rowspan="2" class="score-th-name" style="width: 145px;">គោត្តនាម និង នាមខ្លួន</th>
+          <th rowspan="2" class="score-th-gender" style="width: 28px;">ភេទ</th>
+          <th colspan="4" class="th-group-khmer">ភាសាខ្មែរ</th>
+          <th colspan="5" class="th-group-math">គណិតវិទ្យា</th>
+          <th rowspan="2" class="th-vertical">វិទ្យាសាស្ត្រ</th>
+          <th rowspan="2" class="th-vertical">សិក្សាសង្គម</th>
+          <th colspan="3" class="th-group-pe">អប់រំកាយ សុខភាព សិល្បៈ</th>
+          <th rowspan="2" class="th-vertical">អប់រំបំណិនជីវិត</th>
+          <th rowspan="2" class="th-vertical">ភាសាបរទេស</th>
+          <th colspan="3" class="th-group-results">លទ្ធផលប្រចាំខែ</th>
+          <th rowspan="2" class="th-vertical">និទ្ទេស</th>
+        </tr>
+        <!-- Header Row 2 (Sub-headers) -->
+        <tr>
+          <!-- ភាសាខ្មែរ -->
+          <th class="th-vertical">សមត្ថភាពស្ដាប់</th>
+          <th class="th-vertical">សមត្ថភាពសរសេរ</th>
+          <th class="th-vertical">សមត្ថភាពអាន</th>
+          <th class="th-vertical">សមត្ថភាពនិយាយ</th>
+          <!-- គណិតវិទ្យា -->
+          <th class="th-vertical">ចំនួន</th>
+          <th class="th-vertical">រង្វាស់រង្វាល់</th>
+          <th class="th-vertical">ធរណីមាត្រ</th>
+          <th class="th-vertical">ពីជគណិត</th>
+          <th class="th-vertical">ស្ថិតិ</th>
+          <!-- អប់រំកាយ សុខភាព សិល្បៈ -->
+          <th class="th-vertical">គេហវិទ្យា-អប់រំសិល្បៈ</th>
+          <th class="th-vertical">អប់រំកាយ-កីឡា</th>
+          <th class="th-vertical">សុខភាព-អនាម័យ</th>
+          <!-- លទ្ធផលប្រចាំខែ -->
+          <th class="th-vertical">ពិន្ទុសរុប</th>
+          <th class="th-vertical">មធ្យមភាគ</th>
+          <th class="th-vertical">ចំណាត់ថ្នាក់</th>
+        </tr>
+      </thead>
+    `;
+  }
 
-        <!-- Left Ministry / Department / School Info -->
-        <div class="score-dept-left">
-          <div class="score-dept-line1">មន្ទីរអប់រំ យុវជន និង កីឡា រាជធានី/ខេត្តតាកែវ</div>
-          <div class="score-dept-line2">ការិយាល័យអប់រំ យុវជន និង កីឡារដ្ឋបាលក្រុង/ស្រុក/ខណ្ឌព្រៃកប្បាស</div>
-          <div class="score-dept-line3">សាលាបឋមសិក្សា បាន្លួង</div>
-        </div>
+  // Helper to build individual student row
+  function buildScoreRowHtml(item, idx) {
+    const s = item.student;
+    const lName = s.lastName || (s.fullName ? s.fullName.trim().split(/\s+/)[0] : "");
+    const fName = s.firstName || (s.fullName ? s.fullName.trim().split(/\s+/).slice(1).join(" ") : "");
+    const gender = s.gender === "ស្រី" ? "ស្រី" : "ប្រុស";
 
-        <!-- Document Title -->
-        <div class="score-doc-title">តារាងស្រង់ពិន្ទុប្រចាំខែ</div>
+    let skillCells = "";
+    SCORE_SKILLS.forEach(sk => {
+      const v = item.rec[sk.key] !== undefined ? item.rec[sk.key] : 0;
+      skillCells += `<td class="score-td-val" contenteditable="true" data-stunum="${s.num}" data-skill="${sk.key}" onblur="onScoreCellEdit(this, ${s.num}, '${sk.key}')" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur();}" title="ចុចដើម្បីកែប្រែពិន្ទុ">${v}</td>`;
+    });
 
-        <!-- Metadata Info Line -->
-        <div class="score-meta-row">
-          <div class="score-meta-item"><span class="meta-label">${cleanGrade}</span></div>
-          <div class="score-meta-item"><span class="meta-label">ប្រចាំខែ៖</span> <span class="meta-val">${monthKey}</span></div>
-          <div class="score-meta-item"><span class="meta-label">ឆ្នាំសិក្សា៖</span> <span class="meta-val">${academicYear}</span></div>
-          <div class="score-meta-item"><span class="meta-label">សិស្សសរុប៖</span> <span class="meta-val">${totalStudents}</span> នាក់</div>
-          <div class="score-meta-item"><span class="meta-label">ប្រុស៖</span> <span class="meta-val">${maleCount}</span> នាក់</div>
-          <div class="score-meta-item"><span class="meta-label">ស្រី៖</span> <span class="meta-val">${femaleCount}</span> នាក់</div>
+    return `
+      <tr>
+        <td class="score-td-num">${s.num || (idx + 1)}</td>
+        <td class="score-td-lastname border-no-r" style="border-right: hidden !important; border-right-style: hidden !important;">${escapeHtml(lName)}</td>
+        <td class="score-td-firstname border-no-l" style="border-left: hidden !important; border-left-style: hidden !important;">${escapeHtml(fName)}</td>
+        <td class="score-td-gender">${gender}</td>
+        ${skillCells}
+        <td class="score-td-total">${item.total}</td>
+        <td class="score-td-avg">${item.avg.toFixed(2)}</td>
+        <td class="score-td-rank">${item.rank}</td>
+        <td class="score-td-mention">${item.mention || "-"}</td>
+      </tr>
+    `;
+  }
+
+  // Official Top Document Header (Page 1 Only)
+  const docHeaderHtml = `
+    <!-- Document Header -->
+    <div class="score-header-wrap">
+      <!-- Center Kingdom Header -->
+      <div class="score-kingdom-center">
+        <div class="score-kingdom-line1">ព្រះរាជាណាចក្រកម្ពុជា</div>
+        <div class="score-kingdom-line2">ជាតិ សាសនា ព្រះមហាក្សត្រ</div>
+        <div class="score-flourish">
+          <img src="flourish.png" alt="Flourish" onerror="this.outerHTML='<span style=\'color:#0000cc; font-size:12px;\'>❖━━━━━━ ❖ ━━━━━━❖</span>'">
         </div>
       </div>
 
-      <!-- 24-Column Official Table Matching MoEYS Standard 100% -->
-      <table class="official-score-table">
-        <thead>
-          <!-- Header Row 1 -->
-          <tr>
-            <th rowspan="2" class="score-th-num" style="width: 30px;">ល.រ</th>
-            <th colspan="2" rowspan="2" class="score-th-name" style="width: 145px;">គោត្តនាម និង នាមខ្លួន</th>
-            <th rowspan="2" class="score-th-gender" style="width: 28px;">ភេទ</th>
-            <th colspan="4" class="th-group-khmer">ភាសាខ្មែរ</th>
-            <th colspan="5" class="th-group-math">គណិតវិទ្យា</th>
-            <th rowspan="2" class="th-vertical">វិទ្យាសាស្ត្រ</th>
-            <th rowspan="2" class="th-vertical">សិក្សាសង្គម</th>
-            <th colspan="3" class="th-group-pe">អប់រំកាយ សុខភាព សិល្បៈ</th>
-            <th rowspan="2" class="th-vertical">អប់រំបំណិនជីវិត</th>
-            <th rowspan="2" class="th-vertical">ភាសាបរទេស</th>
-            <th colspan="3" class="th-group-results">លទ្ធផលប្រចាំខែ</th>
-            <th rowspan="2" class="th-vertical">និទ្ទេស</th>
-          </tr>
-          <!-- Header Row 2 (Sub-headers) -->
-          <tr>
-            <!-- ភាសាខ្មែរ -->
-            <th class="th-vertical">សមត្ថភាពស្ដាប់</th>
-            <th class="th-vertical">សមត្ថភាពសរសេរ</th>
-            <th class="th-vertical">សមត្ថភាពអាន</th>
-            <th class="th-vertical">សមត្ថភាពនិយាយ</th>
-            <!-- គណិតវិទ្យា -->
-            <th class="th-vertical">ចំនួន</th>
-            <th class="th-vertical">រង្វាស់រង្វាល់</th>
-            <th class="th-vertical">ធរណីមាត្រ</th>
-            <th class="th-vertical">ពីជគណិត</th>
-            <th class="th-vertical">ស្ថិតិ</th>
-            <!-- អប់រំកាយ សុខភាព សិល្បៈ -->
-            <th class="th-vertical">គេហវិទ្យា-អប់រំសិល្បៈ</th>
-            <th class="th-vertical">អប់រំកាយ-កីឡា</th>
-            <th class="th-vertical">សុខភាព-អនាម័យ</th>
-            <!-- លទ្ធផលប្រចាំខែ -->
-            <th class="th-vertical">ពិន្ទុសរុប</th>
-            <th class="th-vertical">មធ្យមភាគ</th>
-            <th class="th-vertical">ចំណាត់ថ្នាក់</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${tableRowsHtml}
-        </tbody>
-      </table>
+      <!-- Left Ministry / Department / School Info -->
+      <div class="score-dept-left">
+        <div class="score-dept-line1">មន្ទីរអប់រំ យុវជន និង កីឡា រាជធានី/ខេត្តតាកែវ</div>
+        <div class="score-dept-line2">ការិយាល័យអប់រំ យុវជន និង កីឡារដ្ឋបាលក្រុង/ស្រុក/ខណ្ឌព្រៃកប្បាស</div>
+        <div class="score-dept-line3">សាលាបឋមសិក្សា បាន្លួង</div>
+      </div>
 
-      <!-- Footer Section: Summary of Grades A-F with Bracket & Signatures (Page 3 Standard) -->
-      <div class="score-footer-wrapper">
-        <!-- Left: Summary of Grades A-F with Curly Bracket -->
-        <div class="score-summary-grades">
-          <div class="summary-grade-title">សរុបសិស្សបាននិទ្ទេស</div>
-          <div class="summary-bracket-svg">
-            <svg width="22" height="135" viewBox="0 0 22 135" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #0000cc; stroke-width: 1.6;">
-              <path d="M 20 2 C 10 2, 4 8, 4 20 L 4 56 C 4 64, 1 67.5, 1 67.5 C 1 67.5, 4 71, 4 79 L 4 115 C 4 127, 10 133, 20 133" />
-            </svg>
+      <!-- Document Title -->
+      <div class="score-doc-title">តារាងស្រង់ពិន្ទុប្រចាំខែ</div>
+
+      <!-- Metadata Info Line -->
+      <div class="score-meta-row">
+        <div class="score-meta-item"><span class="meta-label">${cleanGrade}</span></div>
+        <div class="score-meta-item"><span class="meta-label">ប្រចាំខែ៖</span> <span class="meta-val">${monthKey}</span></div>
+        <div class="score-meta-item"><span class="meta-label">ឆ្នាំសិក្សា៖</span> <span class="meta-val">${academicYear}</span></div>
+        <div class="score-meta-item"><span class="meta-label">សិស្សសរុប៖</span> <span class="meta-val">${totalStudents}</span> នាក់</div>
+        <div class="score-meta-item"><span class="meta-label">ប្រុស៖</span> <span class="meta-val">${maleCount}</span> នាក់</div>
+        <div class="score-meta-item"><span class="meta-label">ស្រី៖</span> <span class="meta-val">${femaleCount}</span> នាក់</div>
+      </div>
+    </div>
+  `;
+
+  // Official Document Footer with Summary of Grades & Approval Signatures (Last Page Only)
+  const footerHtml = `
+    <!-- Footer Section: Summary of Grades A-F with Bracket & Signatures (Page 3 Standard) -->
+    <div class="score-footer-wrapper">
+      <!-- Left: Summary of Grades A-F with Curly Bracket -->
+      <div class="score-summary-grades">
+        <div class="summary-grade-title">សរុបសិស្សបាននិទ្ទេស</div>
+        <div class="summary-bracket-svg">
+          <svg width="22" height="135" viewBox="0 0 22 135" fill="none" xmlns="http://www.w3.org/2000/svg" style="stroke: #0000cc; stroke-width: 1.6;">
+            <path d="M 20 2 C 10 2, 4 8, 4 20 L 4 56 C 4 64, 1 67.5, 1 67.5 C 1 67.5, 4 71, 4 79 L 4 115 C 4 127, 10 133, 20 133" />
+          </svg>
+        </div>
+        <div class="summary-grade-rows">
+          <div class="grade-stat-line">
+            <span class="stat-grade">និទ្ទេស A</span>
+            <span class="stat-has">មាន</span>
+            <span class="stat-val">${stats.A.total}</span> <span class="stat-unit">នាក់</span>
+            <span class="stat-female-label">ស្រី</span>
+            <span class="stat-val">${stats.A.female}</span> <span class="stat-unit">នាក់</span>
+            <span class="stat-eq">ត្រូវជា</span>
+            <span class="stat-pct">${stats.A.pct}%</span>
           </div>
-          <div class="summary-grade-rows">
-            <div class="grade-stat-line">
-              <span class="stat-grade">និទ្ទេស A</span>
-              <span class="stat-has">មាន</span>
-              <span class="stat-val">${stats.A.total}</span> <span class="stat-unit">នាក់</span>
-              <span class="stat-female-label">ស្រី</span>
-              <span class="stat-val">${stats.A.female}</span> <span class="stat-unit">នាក់</span>
-              <span class="stat-eq">ត្រូវជា</span>
-              <span class="stat-pct">${stats.A.pct}%</span>
-            </div>
-            <div class="grade-stat-line">
-              <span class="stat-grade">និទ្ទេស B</span>
-              <span class="stat-has">មាន</span>
-              <span class="stat-val">${stats.B.total}</span> <span class="stat-unit">នាក់</span>
-              <span class="stat-female-label">ស្រី</span>
-              <span class="stat-val">${stats.B.female}</span> <span class="stat-unit">នាក់</span>
-              <span class="stat-eq">ត្រូវជា</span>
-              <span class="stat-pct">${stats.B.pct}%</span>
-            </div>
-            <div class="grade-stat-line">
-              <span class="stat-grade">និទ្ទេស C</span>
-              <span class="stat-has">មាន</span>
-              <span class="stat-val">${stats.C.total}</span> <span class="stat-unit">នាក់</span>
-              <span class="stat-female-label">ស្រី</span>
-              <span class="stat-val">${stats.C.female}</span> <span class="stat-unit">នាក់</span>
-              <span class="stat-eq">ត្រូវជា</span>
-              <span class="stat-pct">${stats.C.pct}%</span>
-            </div>
-            <div class="grade-stat-line">
-              <span class="stat-grade">និទ្ទេស D</span>
-              <span class="stat-has">មាន</span>
-              <span class="stat-val">${stats.D.total}</span> <span class="stat-unit">នាក់</span>
-              <span class="stat-female-label">ស្រី</span>
-              <span class="stat-val">${stats.D.female}</span> <span class="stat-unit">នាក់</span>
-              <span class="stat-eq">ត្រូវជា</span>
-              <span class="stat-pct">${stats.D.pct}%</span>
-            </div>
-            <div class="grade-stat-line">
-              <span class="stat-grade">និទ្ទេស E</span>
-              <span class="stat-has">មាន</span>
-              <span class="stat-val">${stats.E.total}</span> <span class="stat-unit">នាក់</span>
-              <span class="stat-female-label">ស្រី</span>
-              <span class="stat-val">${stats.E.female}</span> <span class="stat-unit">នាក់</span>
-              <span class="stat-eq">ត្រូវជា</span>
-              <span class="stat-pct">${stats.E.pct}%</span>
-            </div>
-            <div class="grade-stat-line">
-              <span class="stat-grade">និទ្ទេស F</span>
-              <span class="stat-has">មាន</span>
-              <span class="stat-val">${stats.F.total}</span> <span class="stat-unit">នាក់</span>
-              <span class="stat-female-label">ស្រី</span>
-              <span class="stat-val">${stats.F.female}</span> <span class="stat-unit">នាក់</span>
-              <span class="stat-eq">ត្រូវជា</span>
-              <span class="stat-pct">${stats.F.pct}%</span>
-            </div>
+          <div class="grade-stat-line">
+            <span class="stat-grade">និទ្ទេស B</span>
+            <span class="stat-has">មាន</span>
+            <span class="stat-val">${stats.B.total}</span> <span class="stat-unit">នាក់</span>
+            <span class="stat-female-label">ស្រី</span>
+            <span class="stat-val">${stats.B.female}</span> <span class="stat-unit">នាក់</span>
+            <span class="stat-eq">ត្រូវជា</span>
+            <span class="stat-pct">${stats.B.pct}%</span>
+          </div>
+          <div class="grade-stat-line">
+            <span class="stat-grade">និទ្ទេស C</span>
+            <span class="stat-has">មាន</span>
+            <span class="stat-val">${stats.C.total}</span> <span class="stat-unit">នាក់</span>
+            <span class="stat-female-label">ស្រី</span>
+            <span class="stat-val">${stats.C.female}</span> <span class="stat-unit">នាក់</span>
+            <span class="stat-eq">ត្រូវជា</span>
+            <span class="stat-pct">${stats.C.pct}%</span>
+          </div>
+          <div class="grade-stat-line">
+            <span class="stat-grade">និទ្ទេស D</span>
+            <span class="stat-has">មាន</span>
+            <span class="stat-val">${stats.D.total}</span> <span class="stat-unit">នាក់</span>
+            <span class="stat-female-label">ស្រី</span>
+            <span class="stat-val">${stats.D.female}</span> <span class="stat-unit">នាក់</span>
+            <span class="stat-eq">ត្រូវជា</span>
+            <span class="stat-pct">${stats.D.pct}%</span>
+          </div>
+          <div class="grade-stat-line">
+            <span class="stat-grade">និទ្ទេស E</span>
+            <span class="stat-has">មាន</span>
+            <span class="stat-val">${stats.E.total}</span> <span class="stat-unit">នាក់</span>
+            <span class="stat-female-label">ស្រី</span>
+            <span class="stat-val">${stats.E.female}</span> <span class="stat-unit">នាក់</span>
+            <span class="stat-eq">ត្រូវជា</span>
+            <span class="stat-pct">${stats.E.pct}%</span>
+          </div>
+          <div class="grade-stat-line">
+            <span class="stat-grade">និទ្ទេស F</span>
+            <span class="stat-has">មាន</span>
+            <span class="stat-val">${stats.F.total}</span> <span class="stat-unit">នាក់</span>
+            <span class="stat-female-label">ស្រី</span>
+            <span class="stat-val">${stats.F.female}</span> <span class="stat-unit">នាក់</span>
+            <span class="stat-eq">ត្រូវជា</span>
+            <span class="stat-pct">${stats.F.pct}%</span>
           </div>
         </div>
+      </div>
 
-        <!-- Right: Signatures and Dates -->
-        <div class="score-signatures-block">
-          <div class="signature-columns-row">
-            <div class="signature-col sig-left">
-              <div class="movable-approval-block" id="movableApprovalBlock" title="ចុចអូសដើម្បីផ្លាស់ទី ឬពង្រីក-បង្រួមតាមចិត្ត (Drag to move or resize)">
-                <div class="approval-drag-handle no-print" title="ចុចអូសដើម្បីផ្លាស់ទី (Drag to move)">
-                  <i class="fa-solid fa-arrows-up-down-left-right"></i>
-                </div>
-                <div class="approval-action-toolbar no-print">
-                  <button type="button" class="btn-approval-action" onclick="changeApprovalFontSize(1, 'default')" title="ពង្រីកទំហំអក្សរ (Enlarge font)"><i class="fa-solid fa-plus"></i></button>
-                  <span class="approval-size-badge" id="approvalSizeBadge">11.2pt</span>
-                  <button type="button" class="btn-approval-action" onclick="changeApprovalFontSize(-1, 'default')" title="បង្រួមទំហំអក្សរ (Shrink font)"><i class="fa-solid fa-minus"></i></button>
-                  <button type="button" class="btn-approval-action" onclick="resetApprovalTransform('default')" title="កំណត់ទីតាំង និងទំហំដើម (Reset)"><i class="fa-solid fa-rotate-left"></i></button>
-                </div>
-                <div class="approval-content-box">
-                  <div class="sig-title">បានឃើញ និង ឯកភាព</div>
-                  <div class="sig-role">នាយកសាលា</div>
-                  <div class="sig-space"></div>
-                  <div class="sig-name"></div>
-                </div>
-                <div class="approval-resize-handle no-print" title="ចុចអូសដើម្បីពង្រីក-បង្រួម (Drag to resize)">
-                  <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
-                </div>
+      <!-- Right: Signatures and Dates -->
+      <div class="score-signatures-block">
+        <div class="signature-columns-row">
+          <div class="signature-col sig-left">
+            <div class="movable-approval-block" id="movableApprovalBlock" title="ចុចអូសដើម្បីផ្លាស់ទី ឬពង្រីក-បង្រួមតាមចិត្ត (Drag to move or resize)">
+              <div class="approval-drag-handle no-print" title="ចុចអូសដើម្បីផ្លាស់ទី (Drag to move)">
+                <i class="fa-solid fa-arrows-up-down-left-right"></i>
+              </div>
+              <div class="approval-action-toolbar no-print">
+                <button type="button" class="btn-approval-action" onclick="changeApprovalFontSize(1, 'default')" title="ពង្រីកទំហំអក្សរ (Enlarge font)"><i class="fa-solid fa-plus"></i></button>
+                <span class="approval-size-badge" id="approvalSizeBadge">11.2pt</span>
+                <button type="button" class="btn-approval-action" onclick="changeApprovalFontSize(-1, 'default')" title="បង្រួមទំហំអក្សរ (Shrink font)"><i class="fa-solid fa-minus"></i></button>
+                <button type="button" class="btn-approval-action" onclick="resetApprovalTransform('default')" title="កំណត់ទីតាំង និងទំហំដើម (Reset)"><i class="fa-solid fa-rotate-left"></i></button>
+              </div>
+              <div class="approval-content-box">
+                <div class="sig-title">បានឃើញ និង ឯកភាព</div>
+                <div class="sig-role">នាយកសាលា</div>
+                <div class="sig-space"></div>
+                <div class="sig-name"></div>
+              </div>
+              <div class="approval-resize-handle no-print" title="ចុចអូសដើម្បីពង្រីក-បង្រួម (Drag to resize)">
+                <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
               </div>
             </div>
-            <div class="signature-col sig-right">
-              <div class="movable-approval-block movable-teacher-block" id="movableTeacherBlockScore" title="ចុចអូសដើម្បីផ្លាស់ទី ឬពង្រីក-បង្រួមតាមចិត្ត (Drag to move or resize)">
-                <div class="approval-drag-handle no-print" title="ចុចអូសដើម្បីផ្លាស់ទី (Drag to move)">
-                  <i class="fa-solid fa-arrows-up-down-left-right"></i>
+          </div>
+          <div class="signature-col sig-right">
+            <div class="movable-approval-block movable-teacher-block" id="movableTeacherBlockScore" title="ចុចអូសដើម្បីផ្លាស់ទី ឬពង្រីក-បង្រួមតាមចិត្ត (Drag to move or resize)">
+              <div class="approval-drag-handle no-print" title="ចុចអូសដើម្បីផ្លាស់ទី (Drag to move)">
+                <i class="fa-solid fa-arrows-up-down-left-right"></i>
+              </div>
+              <div class="approval-action-toolbar no-print">
+                <button type="button" class="btn-approval-action" onclick="changeApprovalFontSize(1, 'scoreTeacher')" title="ពង្រីកទំហំអក្សរ"><i class="fa-solid fa-plus"></i></button>
+                <span class="approval-size-badge" id="approvalSizeBadgeScoreTeacher">10.5pt</span>
+                <button type="button" class="btn-approval-action" onclick="changeApprovalFontSize(-1, 'scoreTeacher')" title="បង្រួមទំហំអក្សរ"><i class="fa-solid fa-minus"></i></button>
+                <button type="button" class="btn-approval-action" onclick="changeApprovalWidth(20, 'scoreTeacher')" title="ពង្រីកទទឹងឆ្វេង-ស្ដាំ"><i class="fa-solid fa-arrows-left-right"></i>+</button>
+                <button type="button" class="btn-approval-action" onclick="changeApprovalWidth(-20, 'scoreTeacher')" title="បង្រួមទទឹងឆ្វេង-ស្ដាំ"><i class="fa-solid fa-arrows-left-right"></i>-</button>
+                <button type="button" class="btn-approval-action" onclick="changeApprovalHeight(10, 'scoreTeacher')" title="ពង្រីកគម្លាតលើ-ក្រោម"><i class="fa-solid fa-arrows-up-down"></i>+</button>
+                <button type="button" class="btn-approval-action" onclick="changeApprovalHeight(-10, 'scoreTeacher')" title="បង្រួមគម្លាតលើ-ក្រោម"><i class="fa-solid fa-arrows-up-down"></i>-</button>
+                <button type="button" class="btn-approval-action" onclick="resetApprovalTransform('scoreTeacher')" title="កំណត់ទីតាំង និងទំហំដើម (Reset)"><i class="fa-solid fa-rotate-left"></i></button>
+              </div>
+              <div class="approval-content-box teacher-approval-box">
+                <div class="signature-lunar-date editable-date" contenteditable="true" spellcheck="false" title="ចុចត្រង់នេះដើម្បីកែសម្រួលកាលបរិច្ឆេទចន្ទគតិ (ចុចក្រៅ ឬ Enter ដើម្បីរក្សាទុក)" onblur="saveScoreSheetDateDirect('${currentClass.id}', 'lunar', this.innerText)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur();}">
+                  ${scoreLunar}
                 </div>
-                <div class="approval-action-toolbar no-print">
-                  <button type="button" class="btn-approval-action" onclick="changeApprovalFontSize(1, 'scoreTeacher')" title="ពង្រីកទំហំអក្សរ"><i class="fa-solid fa-plus"></i></button>
-                  <span class="approval-size-badge" id="approvalSizeBadgeScoreTeacher">10.5pt</span>
-                  <button type="button" class="btn-approval-action" onclick="changeApprovalFontSize(-1, 'scoreTeacher')" title="បង្រួមទំហំអក្សរ"><i class="fa-solid fa-minus"></i></button>
-                  <button type="button" class="btn-approval-action" onclick="changeApprovalWidth(20, 'scoreTeacher')" title="ពង្រីកទទឹងឆ្វេង-ស្ដាំ"><i class="fa-solid fa-arrows-left-right"></i>+</button>
-                  <button type="button" class="btn-approval-action" onclick="changeApprovalWidth(-20, 'scoreTeacher')" title="បង្រួមទទឹងឆ្វេង-ស្ដាំ"><i class="fa-solid fa-arrows-left-right"></i>-</button>
-                  <button type="button" class="btn-approval-action" onclick="changeApprovalHeight(10, 'scoreTeacher')" title="ពង្រីកគម្លាតលើ-ក្រោម"><i class="fa-solid fa-arrows-up-down"></i>+</button>
-                  <button type="button" class="btn-approval-action" onclick="changeApprovalHeight(-10, 'scoreTeacher')" title="បង្រួមគម្លាតលើ-ក្រោម"><i class="fa-solid fa-arrows-up-down"></i>-</button>
-                  <button type="button" class="btn-approval-action" onclick="resetApprovalTransform('scoreTeacher')" title="កំណត់ទីតាំង និងទំហំដើម (Reset)"><i class="fa-solid fa-rotate-left"></i></button>
+                <div class="signature-solar-date editable-date" contenteditable="true" spellcheck="false" title="ចុចត្រង់នេះដើម្បីកែសម្រួលកាលបរិច្ឆេទសុរិយគតិ (ចុចក្រៅ ឬ Enter ដើម្បីរក្សាទុក)" onblur="saveScoreSheetDateDirect('${currentClass.id}', 'solar', this.innerText)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur();}">
+                  ${scoreSolar}
                 </div>
-                <div class="approval-content-box teacher-approval-box">
-                  <div class="signature-lunar-date editable-date" contenteditable="true" spellcheck="false" title="ចុចត្រង់នេះដើម្បីកែសម្រួលកាលបរិច្ឆេទចន្ទគតិ (ចុចក្រៅ ឬ Enter ដើម្បីរក្សាទុក)" onblur="saveScoreSheetDateDirect('${currentClass.id}', 'lunar', this.innerText)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur();}">
-                    ${scoreLunar}
-                  </div>
-                  <div class="signature-solar-date editable-date" contenteditable="true" spellcheck="false" title="ចុចត្រង់នេះដើម្បីកែសម្រួលកាលបរិច្ឆេទសុរិយគតិ (ចុចក្រៅ ឬ Enter ដើម្បីរក្សាទុក)" onblur="saveScoreSheetDateDirect('${currentClass.id}', 'solar', this.innerText)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur();}">
-                    ${scoreSolar}
-                  </div>
-                  <div class="sig-role" style="margin-top: 6px;">គ្រូប្រចាំថ្នាក់</div>
-                  <div class="sig-space" style="height: 38px;"></div>
-                  <div class="sig-name" contenteditable="true" spellcheck="false" title="ចុចត្រង់នេះដើម្បីកែសម្រួលឈ្មោះគ្រូប្រចាំថ្នាក់ (ចុចក្រៅ ឬ Enter ដើម្បីរក្សាទុក)" onblur="saveClassTeacherDirect('${currentClass.id}', this.innerText)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur();}">
-                    ${escapeHtml(currentClass.teacher || "ផន ច័ន្ទតារា")}
-                  </div>
+                <div class="sig-role" style="margin-top: 6px;">គ្រូប្រចាំថ្នាក់</div>
+                <div class="sig-space" style="height: 38px;"></div>
+                <div class="sig-name" contenteditable="true" spellcheck="false" title="ចុចត្រង់នេះដើម្បីកែសម្រួលឈ្មោះគ្រូប្រចាំថ្នាក់ (ចុចក្រៅ ឬ Enter ដើម្បីរក្សាទុក)" onblur="saveClassTeacherDirect('${currentClass.id}', this.innerText)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur();}">
+                  ${escapeHtml(currentClass.teacher || "ផន ច័ន្ទតារា")}
                 </div>
-                <div class="approval-resize-handle no-print" title="ចុចអូសដើម្បីពង្រីក-បង្រួម (Drag to resize)">
-                  <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
-                </div>
+              </div>
+              <div class="approval-resize-handle no-print" title="ចុចអូសដើម្បីពង្រីក-បង្រួម (Drag to resize)">
+                <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
               </div>
             </div>
           </div>
@@ -5146,7 +5146,88 @@ function renderOfficialMonthlyScoreSheet(currentClass, container) {
     </div>
   `;
 
-  container.innerHTML = html;
+  // Dynamic Multi-Page Chunking for A4 Landscape
+  // Ensures Page 1, Page 2, Page 3 all contain the complete official table header (<thead>)
+  // Page 1 (with Document Header): up to 12 rows
+  // Middle pages (Table Header only): up to 18 rows
+  // Final page (with Table Header + Summary + Signatures): up to 13 rows
+  const maxPage1Rows = 12;
+  const maxFinalRows = 13;
+  const maxMidRows = 18;
+
+  let pagesChunks = [];
+  if (totalStudents === 0) {
+    pagesChunks.push([]);
+  } else if (totalStudents <= 6) {
+    pagesChunks.push(studentComputed);
+  } else if (totalStudents <= (maxPage1Rows + maxFinalRows)) {
+    let p1Count = Math.min(maxPage1Rows, Math.ceil(totalStudents / 2));
+    let p2Count = totalStudents - p1Count;
+    if (p2Count > maxFinalRows) {
+      p1Count = totalStudents - maxFinalRows;
+    }
+    pagesChunks.push(studentComputed.slice(0, p1Count));
+    pagesChunks.push(studentComputed.slice(p1Count));
+  } else {
+    let remaining = [...studentComputed];
+    pagesChunks.push(remaining.splice(0, maxPage1Rows));
+    while (remaining.length > 0) {
+      if (remaining.length <= maxFinalRows) {
+        pagesChunks.push(remaining.splice(0, remaining.length));
+      } else if (remaining.length <= maxMidRows + maxFinalRows) {
+        let pNextCount = Math.ceil(remaining.length / 2);
+        if (remaining.length - pNextCount > maxFinalRows) {
+          pNextCount = remaining.length - maxFinalRows;
+        }
+        pagesChunks.push(remaining.splice(0, pNextCount));
+      } else {
+        pagesChunks.push(remaining.splice(0, maxMidRows));
+      }
+    }
+  }
+
+  let finalHtml = "";
+  const totalPages = pagesChunks.length;
+
+  pagesChunks.forEach((chunkItems, pIndex) => {
+    const isFirstPage = pIndex === 0;
+    const isLastPage = pIndex === totalPages - 1;
+    const pageNum = pIndex + 1;
+
+    let rowsHtml = "";
+    if (chunkItems.length === 0) {
+      rowsHtml = `
+        <tr>
+          <td colspan="24" style="text-align: center; padding: 24px; color: #64748b; font-family: var(--font-battambang);">
+            មិនទាន់មានទិន្នន័យសិស្សក្នុងថ្នាក់នេះនៅឡើយទេ
+          </td>
+        </tr>
+      `;
+    } else {
+      rowsHtml = chunkItems.map((item, idx) => buildScoreRowHtml(item, idx)).join("");
+    }
+
+    finalHtml += `
+      <div class="monthly-score-a4-page" id="${isFirstPage ? 'printableMonthlyScores' : 'printableMonthlyScoresPage' + pageNum}" style="${!isFirstPage ? 'margin-top: 24px;' : ''}">
+        ${isFirstPage ? docHeaderHtml : `
+          <!-- Page ${pageNum} Compact Sub-Header (Screen view indicator) -->
+          <div class="score-page-subhead no-print" style="margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; font-family: var(--font-battambang); color: #0000cc; font-size: 11pt;">
+            <span><strong>${cleanGrade}</strong> | តារាងស្រង់ពិន្ទុប្រចាំខែ <strong>${monthKey}</strong> (${academicYear})</span>
+            <span>ទំព័រទី ${pageNum} / ${totalPages}</span>
+          </div>
+        `}
+        <table class="official-score-table">
+          ${buildOfficialScoreTableHeader()}
+          <tbody>
+            ${rowsHtml}
+          </tbody>
+        </table>
+        ${isLastPage ? footerHtml : ""}
+      </div>
+    `;
+  });
+
+  container.innerHTML = finalHtml;
   initMovableApproval('movableApprovalBlock', 'default');
   initMovableApproval('movableTeacherBlockScore', 'scoreTeacher');
 }
@@ -5328,6 +5409,32 @@ function prepareAdminPrint(subTabId) {
       size: A4 portrait !important;
       margin: 4mm 5mm !important;
     }
+    @page monthly-score-sheet {
+      size: A4 landscape !important;
+      margin: 4mm 5mm !important;
+    }
+    #tab-scores .monthly-score-a4-page,
+    .monthly-score-a4-page {
+      page: monthly-score-sheet !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      min-height: auto !important;
+      height: auto !important;
+      max-height: none !important;
+      padding: 0 !important;
+      margin: 0 auto !important;
+      page-break-after: always !important;
+      break-after: page !important;
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+    }
+    #tab-scores .monthly-score-a4-page:last-child,
+    .monthly-score-a4-page:last-child {
+      page-break-after: avoid !important;
+      break-after: avoid !important;
+      margin-top: 0 !important;
+    }
     #tab-semester_scores .semester-score-a4-page,
     .semester-score-a4-page,
     #printableSemesterScoresPage1,
@@ -5460,8 +5567,8 @@ function prepareScoresForPrint() {
     wrapper.style.boxShadow = "none";
     wrapper.style.border = "none";
   }
-  const page = document.getElementById("printableMonthlyScores");
-  if (page) {
+  const pages = document.querySelectorAll(".monthly-score-a4-page, #printableMonthlyScores");
+  pages.forEach(page => {
     page.style.overflow = "visible";
     page.style.overflowX = "visible";
     page.style.overflowY = "visible";
@@ -5470,7 +5577,7 @@ function prepareScoresForPrint() {
     page.style.margin = "0 auto";
     page.style.maxWidth = "100%";
     page.style.minHeight = "auto";
-  }
+  });
 }
 
 function restoreScoresAfterPrint() {
@@ -5486,8 +5593,8 @@ function restoreScoresAfterPrint() {
     wrapper.style.boxShadow = "";
     wrapper.style.border = "";
   }
-  const page = document.getElementById("printableMonthlyScores");
-  if (page) {
+  const pages = document.querySelectorAll(".monthly-score-a4-page, #printableMonthlyScores");
+  pages.forEach(page => {
     page.style.overflow = "";
     page.style.overflowX = "";
     page.style.overflowY = "";
@@ -5496,7 +5603,7 @@ function restoreScoresAfterPrint() {
     page.style.margin = "";
     page.style.maxWidth = "";
     page.style.minHeight = "";
-  }
+  });
 }
 
 function exportMonthlyScoresExcel() {

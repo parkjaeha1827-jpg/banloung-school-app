@@ -14,11 +14,15 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Main Stylesheet (with cache-buster) -->
-  <link rel="stylesheet" href="style.css?v=20261123_02">
+  <link rel="stylesheet" href="style.css?v=20261123_03">
 
   <!-- Universal Direct Inline Print Style to eliminate any possibility of scrollbars or lines during print -->
   <style id="appUniversalPrintStyle">
     @media print {
+      @page monthly-score-sheet {
+        size: A4 landscape !important;
+        margin: 4mm 5mm !important;
+      }
       /* Semester Scores A4 Portrait Strict Rules (Eliminate any blank page gaps) */
       @page semester-score-sheet {
         size: A4 portrait !important;
@@ -166,6 +170,17 @@
         display: block !important;
         overflow: visible !important;
         scrollbar-width: none !important;
+      }
+      .monthly-score-a4-page {
+        page-break-after: always !important;
+        break-after: page !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      .monthly-score-a4-page:last-child {
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+        margin-bottom: 0 !important;
       }
       .official-score-table, .official-rank-table, .data-table {
         width: 100% !important;
@@ -2238,8 +2253,8 @@
   <script src="firebase-app-compat.js"></script>
   <script src="firebase-database-compat.js"></script>
   <script src="firebase-sync.js?v=20261123_02"></script>
-  <script src="auth.js?v=20261123_02"></script>
-  <script src="app.js?v=20261123_02"></script>
+  <script src="auth.js?v=20261123_03"></script>
+  <script src="app.js?v=20261123_03"></script>
 
 </body>
 </html>

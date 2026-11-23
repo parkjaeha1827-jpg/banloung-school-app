@@ -1201,7 +1201,6 @@ function switchAdminSubTab(subTabId, ensureExpanded = true) {
     subTabId === "study_book" ||
     subTabId === "trainee" ||
     subTabId === "scores" ||
-    subTabId === "semester_scores" ||
     subTabId === "semester_extract"
   ) {
     styleEl.innerHTML = `
@@ -1370,7 +1369,7 @@ function switchTab(tabId) {
         }
       `;
     }
-  } else if (tabId === "staff_info" || tabId === "study_book" || tabId === "trainee" || tabId === "scores" || tabId === "semester_scores" || tabId === "semester_extract") {
+  } else if (tabId === "staff_info" || tabId === "study_book" || tabId === "trainee" || tabId === "scores" || tabId === "semester_extract") {
     styleEl.innerHTML = `
       @page {
         size: A4 landscape !important;
@@ -5228,7 +5227,7 @@ const ADMIN_PRINT_CONFIG = {
   monthly_ranks: { orientation: "portrait", margin: "5mm 7mm", wrapId: "monthlyRanksContentWrap" },
   honor_roll: { orientation: "portrait", margin: "5mm 7mm", wrapId: "honorRollContentWrap" },
   semester_ranks: { orientation: "portrait", margin: "5mm 7mm", wrapId: "semesterRanksContentWrap" },
-  semester_scores: { orientation: "landscape", margin: "4mm 5mm", wrapId: "semesterScoresContentWrap" },
+  semester_scores: { orientation: "portrait", margin: "5mm 6mm", wrapId: "semesterScoresContentWrap" },
   semester_extract: { orientation: "landscape", margin: "4mm 5mm", wrapId: "semesterExtractContentWrap" },
   annual_ranks: { orientation: "portrait", margin: "5mm 7mm", wrapId: "annualRanksContentWrap" },
   study_book: { orientation: "landscape", margin: "4mm 5mm", wrapId: "studyBookContentWrap" },

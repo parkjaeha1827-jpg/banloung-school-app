@@ -7940,6 +7940,17 @@ body {
 
 /* Print Rules for Semester Scores (A4 Portrait) */
 @media print {
+  @page semester-score-sheet {
+    size: A4 portrait !important;
+    margin: 5mm 6mm !important;
+  }
+
+  body[data-active-tab="semester_scores"],
+  body[data-admin-subtab="semester_scores"],
+  body.tab-semester_scores-active {
+    page: semester-score-sheet !important;
+  }
+
   body.tab-semester_scores-active #tab-semester_scores,
   #tab-semester_scores.active {
     display: block !important;

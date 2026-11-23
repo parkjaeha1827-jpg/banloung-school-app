@@ -8198,6 +8198,18 @@ body {
     print-color-adjust: exact !important;
   }
 
+  #tab-annual_ranks .annual-footer-wrap,
+  #tab-annual_ranks .annual-header-wrap,
+  #tab-annual_ranks .annual-signatures-wrap {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  #tab-annual_ranks .annual-footer-wrap {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
   /* STUDY BOOK PRINT - FULL A4 LANDSCAPE EXACT 1 SHEET PER STUDENT */
   @page study-book-sheet {
     size: A4 landscape !important;

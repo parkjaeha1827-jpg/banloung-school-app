@@ -5434,6 +5434,35 @@ function prepareAdminPrint(subTabId) {
       break-after: avoid !important;
       margin-top: 0 !important;
     }
+    @page annual-rank-sheet {
+      size: A4 portrait !important;
+      margin: 5mm 7mm !important;
+    }
+    #tab-annual_ranks .annual-a4-page,
+    .annual-a4-page,
+    #printableAnnualRanksPage1,
+    #printableAnnualRanksPage2 {
+      page: annual-rank-sheet !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      min-height: auto !important;
+      height: auto !important;
+      max-height: none !important;
+      padding: 0 !important;
+      margin: 0 auto !important;
+      page-break-after: always !important;
+      break-after: page !important;
+      page-break-inside: avoid !important;
+      break-inside: avoid !important;
+    }
+    #tab-annual_ranks .annual-a4-page:last-child,
+    .annual-a4-page:last-child,
+    #printableAnnualRanksPage2 {
+      page-break-after: avoid !important;
+      break-after: avoid !important;
+      margin-top: 0 !important;
+    }
     #tab-semester_scores .semester-score-a4-page,
     .semester-score-a4-page,
     #printableSemesterScoresPage1,
@@ -9787,6 +9816,23 @@ function renderAnnualRanks() {
     </colgroup>
   `;
 
+  const tableHeaderHtml = `
+    <thead>
+      <tr>
+        <th style="width: 32px;">ល.រ</th>
+        <th style="width: 50px;">អត្តលេខ</th>
+        <th colspan="2" style="width: 165px;">គោត្តនាម និង នាម</th>
+        <th style="width: 35px;">ភេទ</th>
+        <th style="width: 95px;">ថ្ងៃ ខែ ឆ្នាំ កំណើត</th>
+        <th style="width: 68px;">មធ្យមភាគ<br>ឆមាសទី១</th>
+        <th style="width: 68px;">មធ្យមភាគ<br>ឆមាសទី២</th>
+        <th style="width: 68px;">មធ្យមភាគ<br>ប្រចាំឆ្នាំ</th>
+        <th style="width: 85px;" class="annual-th-red">ចំណាត់<br>ថ្នាក់ប្រចាំឆ្នាំ</th>
+        <th style="width: 56px;">និទ្ទេស</th>
+      </tr>
+    </thead>
+  `;
+
   const headerHtml = `
     <!-- HEADER -->
     <div class="annual-header-wrap">
@@ -9901,20 +9947,7 @@ function renderAnnualRanks() {
         ${headerHtml}
         <table class="annual-table">
           ${colGroupHtml}
-          <thead>
-            <tr>
-              <th style="width: 32px;">ល.រ</th>
-              <th style="width: 50px;">អត្តលេខ</th>
-              <th colspan="2" style="width: 165px;">គោត្តនាម និង នាម</th>
-              <th style="width: 35px;">ភេទ</th>
-              <th style="width: 95px;">ថ្ងៃ ខែ ឆ្នាំ កំណើត</th>
-              <th style="width: 68px;">មធ្យមភាគ<br>ឆមាសទី១</th>
-              <th style="width: 68px;">មធ្យមភាគ<br>ឆមាសទី២</th>
-              <th style="width: 68px;">មធ្យមភាគ<br>ប្រចាំឆ្នាំ</th>
-              <th style="width: 85px;" class="annual-th-red">ចំណាត់<br>ថ្នាក់ប្រចាំឆ្នាំ</th>
-              <th style="width: 56px;">និទ្ទេស</th>
-            </tr>
-          </thead>
+          ${tableHeaderHtml}
           <tbody>
             ${page1RowsHtml}
           </tbody>
@@ -9929,20 +9962,7 @@ function renderAnnualRanks() {
         ${headerHtml}
         <table class="annual-table">
           ${colGroupHtml}
-          <thead>
-            <tr>
-              <th style="width: 32px;">ល.រ</th>
-              <th style="width: 50px;">អត្តលេខ</th>
-              <th colspan="2" style="width: 165px;">គោត្តនាម និង នាម</th>
-              <th style="width: 35px;">ភេទ</th>
-              <th style="width: 95px;">ថ្ងៃ ខែ ឆ្នាំ កំណើត</th>
-              <th style="width: 68px;">មធ្យមភាគ<br>ឆមាសទី១</th>
-              <th style="width: 68px;">មធ្យមភាគ<br>ឆមាសទី២</th>
-              <th style="width: 68px;">មធ្យមភាគ<br>ប្រចាំឆ្នាំ</th>
-              <th style="width: 85px;" class="annual-th-red">ចំណាត់<br>ថ្នាក់ប្រចាំឆ្នាំ</th>
-              <th style="width: 56px;">និទ្ទេស</th>
-            </tr>
-          </thead>
+          ${tableHeaderHtml}
           <tbody>
             ${page1RowsHtml}
           </tbody>
@@ -9953,6 +9973,7 @@ function renderAnnualRanks() {
       <div class="annual-a4-page" id="printableAnnualRanksPage2">
         <table class="annual-table">
           ${colGroupHtml}
+          ${tableHeaderHtml}
           <tbody>
             ${page2RowsHtml}
           </tbody>

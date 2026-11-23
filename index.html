@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Main Stylesheet (with cache-buster) -->
-  <link rel="stylesheet" href="style.css?v=20261123_04">
+  <link rel="stylesheet" href="style.css?v=20261123_05">
 
   <!-- Universal Direct Inline Print Style to eliminate any possibility of scrollbars or lines during print -->
   <style id="appUniversalPrintStyle">
@@ -27,6 +27,39 @@
       @page semester-score-sheet {
         size: A4 portrait !important;
         margin: 4mm 5mm !important;
+      }
+      /* Annual Ranks A4 Portrait Strict Rules */
+      @page annual-rank-sheet {
+        size: A4 portrait !important;
+        margin: 5mm 7mm !important;
+      }
+      body[data-active-tab="annual_ranks"] .annual-a4-page,
+      body[data-admin-subtab="annual_ranks"] .annual-a4-page,
+      body.tab-annual_ranks-active .annual-a4-page,
+      #tab-annual_ranks .annual-a4-page,
+      .annual-a4-page,
+      #printableAnnualRanksPage1,
+      #printableAnnualRanksPage2 {
+        page: annual-rank-sheet !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        min-height: auto !important;
+        height: auto !important;
+        max-height: none !important;
+        padding: 0 !important;
+        margin: 0 auto !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+      }
+      #tab-annual_ranks .annual-a4-page:last-child,
+      .annual-a4-page:last-child,
+      #printableAnnualRanksPage2 {
+        page-break-after: avoid !important;
+        break-after: avoid !important;
+        margin-top: 0 !important;
       }
       body[data-active-tab="semester_scores"] .semester-score-a4-page,
       body[data-admin-subtab="semester_scores"] .semester-score-a4-page,
@@ -2240,8 +2273,8 @@
   <script src="firebase-app-compat.js"></script>
   <script src="firebase-database-compat.js"></script>
   <script src="firebase-sync.js?v=20261123_02"></script>
-  <script src="auth.js?v=20261123_04"></script>
-  <script src="app.js?v=20261123_04"></script>
+  <script src="auth.js?v=20261123_05"></script>
+  <script src="app.js?v=20261123_05"></script>
 
 </body>
 </html>

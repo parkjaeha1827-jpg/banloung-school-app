@@ -11630,99 +11630,89 @@ body.auth-modal-open {
    ENHANCED MODERN AUTHENTICATION & QR SCANNER STYLES
    ========================================================================== */
 
-@property --auth-beam-angle {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
-
+/* Animated Glowing Light Beam running around Login Card */
 @keyframes authBorderRotate {
   0% {
-    --auth-beam-angle: 0deg;
+    transform: rotate(0deg);
   }
   100% {
-    --auth-beam-angle: 360deg;
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes authCardGlowPulse {
+  0%, 100% {
+    box-shadow: 
+      0 25px 70px -12px rgba(15, 23, 42, 0.5),
+      0 0 25px -4px rgba(37, 99, 235, 0.3),
+      0 0 45px -8px rgba(251, 191, 36, 0.2);
+  }
+  50% {
+    box-shadow: 
+      0 25px 70px -12px rgba(15, 23, 42, 0.5),
+      0 0 40px 0px rgba(56, 189, 248, 0.45),
+      0 0 65px -4px rgba(251, 191, 36, 0.35);
   }
 }
 
 .auth-card-modern {
   position: relative;
-  background: #ffffff;
+  background: #e2e8f0;
   border-radius: 24px;
-  border: 2px solid #e2e8f0;
   box-shadow: 
-    0 25px 70px -12px rgba(15, 23, 42, 0.45),
-    0 0 35px -5px rgba(37, 99, 235, 0.25);
+    0 25px 70px -12px rgba(15, 23, 42, 0.5),
+    0 0 35px -5px rgba(37, 99, 235, 0.35);
   max-width: 480px;
   width: 100%;
   padding: 34px 28px 26px;
-  animation: authSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: authSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1), authCardGlowPulse 4s ease-in-out infinite;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 /* Dual Glowing Light Beams running along the border (Opposite sides) */
-.auth-card-modern::after {
-  content: "";
-  position: absolute;
-  inset: -3.5px;
-  border-radius: 27.5px;
-  padding: 4px;
-  background: conic-gradient(
-    from var(--auth-beam-angle),
-    #2563eb 0deg,
-    #38bdf8 25deg,
-    #fbbf24 45deg,
-    #ffffff 55deg,
-    transparent 65deg,
-    transparent 180deg,
-    #2563eb 180deg,
-    #38bdf8 205deg,
-    #fbbf24 225deg,
-    #ffffff 235deg,
-    transparent 245deg,
-    transparent 360deg
-  );
-  -webkit-mask: 
-    linear-gradient(#fff 0 0) content-box, 
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  animation: authBorderRotate 3s linear infinite;
-  z-index: 10;
-}
-
-/* Ambient soft glow following both beams outside the card */
 .auth-card-modern::before {
   content: "";
   position: absolute;
-  inset: -6px;
-  border-radius: 30px;
-  padding: 6px;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
   background: conic-gradient(
-    from var(--auth-beam-angle),
-    rgba(37, 99, 235, 0.8) 0deg,
-    rgba(56, 189, 248, 0.9) 25deg,
-    rgba(251, 191, 36, 0.9) 45deg,
-    #ffffff 55deg,
-    transparent 70deg,
-    transparent 180deg,
-    rgba(37, 99, 235, 0.8) 180deg,
-    rgba(56, 189, 248, 0.9) 205deg,
-    rgba(251, 191, 36, 0.9) 225deg,
-    #ffffff 235deg,
-    transparent 250deg,
+    transparent 0deg,
+    transparent 45deg,
+    #2563eb 70deg,
+    #38bdf8 95deg,
+    #fbbf24 120deg,
+    #ffffff 135deg,
+    transparent 145deg,
+    transparent 225deg,
+    #2563eb 250deg,
+    #38bdf8 275deg,
+    #fbbf24 300deg,
+    #ffffff 315deg,
+    transparent 325deg,
     transparent 360deg
   );
-  -webkit-mask: 
-    linear-gradient(#fff 0 0) content-box, 
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  filter: blur(10px);
+  animation: authBorderRotate 4s linear infinite;
   pointer-events: none;
-  animation: authBorderRotate 3s linear infinite;
-  z-index: 9;
+  z-index: 1;
+}
+
+/* Inner Solid White Card Background (leaves 2.5px glowing border track) */
+.auth-card-modern::after {
+  content: "";
+  position: absolute;
+  inset: 2.5px;
+  background: #ffffff;
+  border-radius: 21.5px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.auth-card-modern > *:not(.auth-card-glow) {
+  position: relative;
+  z-index: 2;
 }
 
 /* Ambient glow accent */

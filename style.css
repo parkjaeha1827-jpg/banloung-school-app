@@ -12133,3 +12133,113 @@ body.auth-modal-open {
   color: #ffffff;
 }
 
+
+
+/* ==========================================================================
+   TAB CLICK & TRANSITION ANIMATIONS
+   ========================================================================== */
+
+/* --- Keyframes --- */
+@keyframes tabSlideIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.99); }
+  to   { opacity: 1; transform: translateY(0)   scale(1);    }
+}
+@keyframes tabFadeScale {
+  from { opacity: 0; transform: scale(0.98); }
+  to   { opacity: 1; transform: scale(1);    }
+}
+@keyframes navLinkPop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(0.93); }
+  70%  { transform: scale(1.04); }
+  100% { transform: scale(1); }
+}
+@keyframes pillPop {
+  0%   { transform: scale(1); }
+  35%  { transform: scale(0.92); }
+  65%  { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+@keyframes cardLift {
+  0%   { transform: translateY(0)    scale(1);    box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
+  40%  { transform: translateY(-5px) scale(0.98); box-shadow: 0 10px 25px rgba(37,99,235,0.18); }
+  100% { transform: translateY(0)    scale(1);    box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
+}
+
+/* --- Enhanced tab-pane entry (overrides existing fadeIn) --- */
+.tab-pane.active {
+  animation: tabSlideIn 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --- Enhanced admin/student subpane entry (overrides existing fadeInSubpane) --- */
+.admin-subpane.active,
+.student-subpane.active {
+  animation: tabFadeScale 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --- Nav link click feedback --- */
+.nav-link:active {
+  animation: navLinkPop 0.28s ease-out;
+  transform-origin: center;
+}
+
+/* --- Nav sublink click feedback --- */
+.nav-sublink:active {
+  animation: navLinkPop 0.25s ease-out;
+  transform-origin: center;
+}
+
+/* --- Admin pill click feedback --- */
+.admin-pill:active {
+  animation: pillPop 0.25s ease-out;
+  transform-origin: center;
+}
+
+/* --- Student hub card click feedback --- */
+.student-hub-card:active {
+  animation: cardLift 0.3s ease-out;
+}
+
+/* --- Library grade pill click feedback --- */
+.lib-grade-pill:active {
+  animation: pillPop 0.22s ease-out;
+  transform-origin: center;
+}
+
+/* --- Library subject button click feedback --- */
+.lib-subj-btn:active {
+  animation: pillPop 0.2s ease-out;
+  transform-origin: center;
+}
+
+/* --- School monthly report sheet tab click feedback --- */
+.school-sheet-tab-btn:active {
+  animation: pillPop 0.22s ease-out;
+  transform-origin: center;
+}
+
+/* --- Classroom card click feedback --- */
+.classroom-card:active {
+  transform: translateY(-4px) scale(0.98);
+  transition: transform 0.15s ease;
+}
+
+/* --- Respect reduced-motion preference --- */
+@media (prefers-reduced-motion: reduce) {
+  .tab-pane.active,
+  .admin-subpane.active,
+  .student-subpane.active {
+    animation: none !important;
+  }
+  .nav-link:active,
+  .nav-sublink:active,
+  .admin-pill:active,
+  .student-hub-card:active,
+  .lib-grade-pill:active,
+  .lib-subj-btn:active,
+  .school-sheet-tab-btn:active,
+  .classroom-card:active {
+    animation: none !important;
+    transform: none !important;
+  }
+}

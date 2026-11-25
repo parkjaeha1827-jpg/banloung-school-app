@@ -486,7 +486,7 @@
     }
 
     // 3. Mark Admin-Only Tabs in Sidebar
-    const ADMIN_ONLY_TABS = ["teachers", "reports", "school_monthly_report", "staff_info"];
+    const ADMIN_ONLY_TABS = ["teachers", "school_monthly_report", "staff_info"];
     ADMIN_ONLY_TABS.forEach(tabId => {
       const link = document.querySelector(`.nav-link[data-tab="${tabId}"]`);
       if (link) {

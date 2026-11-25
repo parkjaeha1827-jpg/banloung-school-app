@@ -62,8 +62,8 @@ function initBanLoungApp() {
     const storedTab = localStorage.getItem("banloung_active_tab");
     const resolvedTab = hashVal || queryTab || storedTab;
 
-    if (resolvedTab && resolvedTab !== "exams") {
-      const ADMIN_ONLY_TABS = ["teachers", "reports", "school_monthly_report", "staff_info"];
+    if (resolvedTab && resolvedTab !== "exams" && resolvedTab !== "reports") {
+      const ADMIN_ONLY_TABS = ["teachers", "school_monthly_report", "staff_info"];
       const isRestricted = ADMIN_ONLY_TABS.includes(resolvedTab) && window.authSystem && typeof window.authSystem.isAdmin === "function" && !window.authSystem.isAdmin();
       if (!isRestricted) {
         initialTargetTab = resolvedTab;
@@ -944,7 +944,6 @@ function switchStudentSubTab(subTabId, ensureExpanded = true) {
     "tab-school_monthly_report-active",
     "tab-staff_info-active",
     "tab-teachers-active",
-    "tab-reports-active",
     "tab-classes-active",
     "tab-students-active",
     "tab-attendance_daily-active",
@@ -1027,7 +1026,6 @@ function prepareStudentSubTabForPrint(subTabId) {
     "tab-school_monthly_report-active",
     "tab-staff_info-active",
     "tab-teachers-active",
-    "tab-reports-active",
     "tab-classes-active",
     "tab-students-active",
     "tab-attendance_daily-active",
@@ -1272,13 +1270,13 @@ function switchAdminSubTab(subTabId, ensureExpanded = true) {
 window.switchAdminSubTab = switchAdminSubTab;
 
 function switchTab(tabId) {
-  if (tabId === "exams") {
+  if (tabId === "exams" || tabId === "reports") {
     switchTab("classes");
     return;
   }
 
   // Admin-Only Tabs Protection
-  const ADMIN_ONLY_TABS = ["teachers", "reports", "school_monthly_report", "staff_info"];
+  const ADMIN_ONLY_TABS = ["teachers", "school_monthly_report", "staff_info"];
   if (ADMIN_ONLY_TABS.includes(tabId) && window.authSystem && typeof window.authSystem.isAdmin === "function" && !window.authSystem.isAdmin()) {
     window.authSystem.promptAdminAccess(tabId, () => {
       switchTab(tabId);
@@ -1401,7 +1399,6 @@ function switchTab(tabId) {
     study_book: "សៀវភៅតាមដានការសិក្សា (Study Tracking Book)",
     trainee: "សៀវភៅសិក្ខាគារិក (Trainee Record Book)",
     teachers: "គ្រប់គ្រងគ្រូបង្រៀន (Teacher Management)",
-    reports: "របាយការណ៍ & ស្ថិតិ (Reports & Statistics)",
     library: "បណ្ណាល័យថ្នាក់រៀនឌីជីថល (Classroom Digital Library)",
     school_monthly_report: "របាយការណ៍ប្រចាំខែរបស់សាលា (School Monthly Report)",
     staff_info: "ព័ត៌មានបុគ្គលិក (Staff Information)",
@@ -1527,9 +1524,6 @@ function renderActiveTab() {
       break;
     case "teachers":
       renderTeachers();
-      break;
-    case "reports":
-      renderReports();
       break;
     case "library":
       if (typeof renderLibrary === "function") renderLibrary();

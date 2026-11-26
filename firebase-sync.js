@@ -230,17 +230,21 @@
 
       let finalDataToPush = localData;
 
-      // Conflict check with current Cloud version
+      // Conflict check with current Cloud version (lightweight check first to save ~2 MB download)
       try {
-        const snap = await schoolDbRef.once('value');
-        const cloudVal = snap.val();
-        if (cloudVal && cloudVal._syncMeta && cloudVal._syncMeta.lastUpdatedAt) {
-          const cloudTime = new Date(cloudVal._syncMeta.lastUpdatedAt).getTime();
+        const snap = await schoolDbRef.child('_syncMeta').once('value');
+        const cloudMeta = snap.val();
+        if (cloudMeta && cloudMeta.lastUpdatedAt) {
+          const cloudTime = new Date(cloudMeta.lastUpdatedAt).getTime();
           const localTime = latestPending.timestamp || new Date(localData._syncMeta?.lastUpdatedAt || 0).getTime();
 
           if (cloudTime > localTime) {
             console.log('[FirebaseSync] Cloud has changes made during offline period. Merging conflict-free...');
-            finalDataToPush = mergeSchoolDatabases(localData, cloudVal);
+            const fullSnap = await schoolDbRef.once('value');
+            const cloudVal = fullSnap.val();
+            if (cloudVal) {
+              finalDataToPush = mergeSchoolDatabases(localData, cloudVal);
+            }
           }
         }
       } catch (readErr) {
@@ -431,10 +435,125 @@
   }
 
   // ==========================================================================
-  // 7. INITIALIZE SYNCHRONIZATION WITH CALLBACKS
+  // 7. INITIALIZE SYNCHRONIZATION WITH CALLBACKS (LOCAL CACHE FIRST)
   // ==========================================================================
 
-  function initSync(options) {
+  async function fetchFullFromCloud(isInitial = false) {
+    if (!schoolDbRef) return;
+    syncState.isSyncing = true;
+    updateSyncStatusUI('loading', 'កំពុងទាញទិន្នន័យ...');
+
+    try {
+      const snapshot = await schoolDbRef.once('value');
+      syncState.rulesRequired = false;
+      syncState.isVerifiedOnline = true;
+
+      if (hasPendingSync()) {
+        console.log('[FirebaseSync] Local has pending offline changes. Flushing to Cloud...');
+        await flushPendingQueue();
+        return;
+      }
+
+      const rawCloudData = snapshot.val();
+      const cloudData = (typeof window.normalizeSchoolDatabase === 'function')
+        ? window.normalizeSchoolDatabase(rawCloudData)
+        : rawCloudData;
+
+      const totalCloudStudents = (cloudData && cloudData.classes && Array.isArray(cloudData.classes))
+        ? cloudData.classes.reduce((sum, c) => sum + (c.students ? c.students.length : 0), 0)
+        : 0;
+
+      // Case 1: Realtime Database is empty or has 0 students -> Safe auto-seed
+      if (!snapshot.exists() || !cloudData || !cloudData.classes || totalCloudStudents === 0) {
+        console.log('[FirebaseSync] Cloud Database is empty or has 0 students. Seeding initial data...');
+        const initialToSeed = (typeof syncState.getLocalDataCb === 'function' ? syncState.getLocalDataCb() : null) || window.INITIAL_SCHOOL_DATA;
+
+        if (initialToSeed && initialToSeed.classes && initialToSeed.classes.length > 0) {
+          await importLocalDatabaseToCloud(true, initialToSeed);
+          updateSyncStatusUI('synced', 'Cloud: បានតភ្ជាប់ (Synced)');
+          showSyncToast('បាននាំចូលទិន្នន័យដើមទៅកាន់ Cloud ដោយជោគជ័យ!', 'success');
+          if (typeof syncState.onInitialDataCb === 'function') {
+            syncState.onInitialDataCb(initialToSeed);
+          }
+        } else {
+          updateSyncStatusUI('synced', 'Cloud: បានតភ្ជាប់ (ទទេ)');
+        }
+      } else {
+        // Case 2: Cloud has active data
+        console.log('[FirebaseSync] Cloud data loaded successfully! Classes:', cloudData.classes.length, 'Students:', totalCloudStudents);
+        syncState.lastSyncTime = new Date();
+        updateSyncStatusUI('synced', 'Cloud: បានតភ្ជាប់ (Synced)');
+
+        const localData = (typeof syncState.getLocalDataCb === 'function' ? syncState.getLocalDataCb() : null) || (window.state && window.state.db);
+        const merged = mergeSchoolDatabases(localData, cloudData);
+
+        if (window.state) {
+          window.state.db = merged;
+          try {
+            localStorage.setItem("banloung_school_db", JSON.stringify(window.state.db));
+          } catch(e) {}
+        }
+
+        if (typeof syncState.onInitialDataCb === 'function') {
+          syncState.onInitialDataCb(merged);
+        } else if (typeof window.renderApp === 'function') {
+          window.renderApp();
+        }
+      }
+    } catch (err) {
+      console.warn('[FirebaseSync] fetchFullFromCloud error:', err);
+      if (err.code === 'PERMISSION_DENIED' || (err.message && err.message.includes('permission_denied'))) {
+        syncState.rulesRequired = true;
+        updateSyncStatusUI('rules_required', 'Cloud: រង់ចាំបើក Rules');
+      } else {
+        if (hasPendingSync()) {
+          updateSyncStatusUI('pending_sync', 'រក្សាទុកក្នុងម៉ាស៊ីន (រង់ចាំ Sync)');
+        } else {
+          updateSyncStatusUI('offline', 'ប្រើប្រាស់ក្នុងម៉ាស៊ីន (Offline)');
+        }
+      }
+    } finally {
+      syncState.isSyncing = false;
+    }
+  }
+
+  // Fetch only a single updated class node (~100 KB instead of 2 MB)
+  async function fetchSingleClassFromCloud(classIndex, meta) {
+    if (!schoolDbRef || typeof classIndex !== 'number' || classIndex < 0) return;
+    try {
+      console.log('[FirebaseSync] Fetching single class update for index:', classIndex);
+      const snap = await schoolDbRef.child('classes/' + classIndex).once('value');
+      const cloudClass = snap.val();
+      if (!cloudClass) return;
+
+      if (window.state && window.state.db && Array.isArray(window.state.db.classes)) {
+        if (hasPendingSync()) {
+          console.log('[FirebaseSync] Local has pending edits. Preserving local edits.');
+          return;
+        }
+
+        window.state.db.classes[classIndex] = cloudClass;
+        window.state.db._syncMeta = meta;
+
+        try {
+          localStorage.setItem("banloung_school_db", JSON.stringify(window.state.db));
+        } catch (e) {}
+
+        syncState.lastSyncTime = new Date();
+        updateSyncStatusUI('synced', 'Cloud: បានតភ្ជាប់ (Synced)');
+
+        const activeEl = document.activeElement;
+        const isTyping = activeEl && (activeEl.tagName === "INPUT" || activeEl.tagName === "TEXTAREA");
+        if (!isTyping && typeof window.renderApp === 'function') {
+          window.renderApp();
+        }
+      }
+    } catch (err) {
+      console.warn('[FirebaseSync] Error fetching single class update:', err);
+    }
+  }
+
+  async function initSync(options) {
     options = options || {};
     syncState.onInitialDataCb = options.onInitialData || null;
     syncState.onRemoteUpdateCb = options.onRemoteUpdate || null;
@@ -447,116 +566,121 @@
 
     if (!initFirebase()) return;
 
-    if (!hasPendingSync()) {
-      updateSyncStatusUI('loading', 'កំពុងទាញទិន្នន័យ...');
-    }
+    // 1. Check local cache (Local-First Guarantee)
+    const localData = (typeof syncState.getLocalDataCb === 'function')
+      ? syncState.getLocalDataCb()
+      : (window.state && window.state.db);
 
-    // Read initial data from Firebase Realtime Database
-    schoolDbRef.once('value').then((snapshot) => {
-      syncState.rulesRequired = false;
+    const hasLocalStudents = (localData && Array.isArray(localData.classes))
+      ? localData.classes.reduce((sum, c) => sum + (c.students ? c.students.length : 0), 0) > 0
+      : false;
+
+    if (hasLocalStudents) {
+      // Show Synced/Connected immediately without waiting for network!
       syncState.isVerifiedOnline = true;
+      updateSyncStatusUI('synced', 'Cloud: បានតភ្ជាប់ (Synced)');
 
-      // If local has pending offline changes on startup, do NOT let cloud overwrite it!
+      // If local has pending offline edits on startup, flush them
       if (hasPendingSync()) {
         console.log('[FirebaseSync] Local has pending offline changes on startup. Flushing to Cloud...');
-        flushPendingQueue();
-        attachRealtimeListener();
+        await flushPendingQueue();
+        attachMetaListener();
         return;
       }
 
-      const rawCloudData = snapshot.val();
+      // Ultra-lightweight timestamp check (~50 bytes instead of 2 MB!)
+      try {
+        const snap = await schoolDbRef.child('_syncMeta/lastUpdatedAt').once('value');
+        const cloudTimeStr = snap.val();
 
-      // Normalize cloud data (rebuilding arrays if Firebase stored as objects)
-      const cloudData = (typeof window.normalizeSchoolDatabase === 'function')
-        ? window.normalizeSchoolDatabase(rawCloudData)
-        : rawCloudData;
+        if (cloudTimeStr) {
+          const cloudTime = new Date(cloudTimeStr).getTime();
+          const localTime = new Date(localData._syncMeta?.lastUpdatedAt || 0).getTime();
 
-      const totalCloudStudents = (cloudData && cloudData.classes && Array.isArray(cloudData.classes))
-        ? cloudData.classes.reduce((sum, c) => sum + (c.students ? c.students.length : 0), 0)
-        : 0;
-
-      // Case 1: Database is empty OR has 0 students -> Safe Auto-import initial authentic data
-      if (!snapshot.exists() || !cloudData || !cloudData.classes || totalCloudStudents === 0) {
-        console.log('[FirebaseSync] Realtime Database is empty or has 0 students. Seeding initial data safely...');
-        const initialToSeed = (typeof syncState.getLocalDataCb === 'function' ? syncState.getLocalDataCb() : null) || window.INITIAL_SCHOOL_DATA;
-
-        if (initialToSeed && initialToSeed.classes && initialToSeed.classes.length > 0) {
-          importLocalDatabaseToCloud(true, initialToSeed).then(() => {
+          if (cloudTime > localTime) {
+            console.log('[FirebaseSync] Cloud has newer data updated at', cloudTimeStr, 'vs local', localData._syncMeta?.lastUpdatedAt, '. Syncing update...');
+            await fetchFullFromCloud(false);
+          } else {
+            console.log('[FirebaseSync] Local cache is up to date with Cloud. Zero download required! (Saved ~2 MB)');
+            syncState.lastSyncTime = new Date();
             updateSyncStatusUI('synced', 'Cloud: បានតភ្ជាប់ (Synced)');
-            showSyncToast('បាននាំចូលទិន្នន័យដើមទៅកាន់ Cloud ដោយជោគជ័យ!', 'success');
-            if (typeof syncState.onInitialDataCb === 'function') {
-              syncState.onInitialDataCb(initialToSeed);
-            }
-          }).catch(err => {
-            console.error('[FirebaseSync] Seeding error:', err);
-            updateSyncStatusUI('synced', 'Cloud: បានតភ្ជាប់');
-          });
+          }
         } else {
-          updateSyncStatusUI('synced', 'Cloud: បានតភ្ជាប់ (ទទេ)');
+          // Cloud has no timestamp, check if cloud has data
+          const cloudMetaSnap = await schoolDbRef.child('_syncMeta').once('value');
+          if (!cloudMetaSnap.exists()) {
+            console.log('[FirebaseSync] Cloud meta missing. Checking and seeding initial data...');
+            await fetchFullFromCloud(false);
+          }
         }
-      } else {
-        // Case 2: Database has existing data with real students -> Provide to application
-        console.log('[FirebaseSync] Cloud data loaded successfully! Records:', cloudData.classes.length, 'Students:', totalCloudStudents);
-        syncState.lastSyncTime = new Date();
-        updateSyncStatusUI('synced', 'Cloud: បានតភ្ជាប់ (Synced)');
-        showSyncToast('ទិន្នន័យត្រូវបានទាញយកពី Cloud ដោយជោគជ័យ!', 'success');
-
-        if (typeof syncState.onInitialDataCb === 'function') {
-          syncState.onInitialDataCb(cloudData);
+      } catch (err) {
+        console.warn('[FirebaseSync] Timestamp check warning:', err);
+        if (err.code === 'PERMISSION_DENIED' || (err.message && err.message.includes('permission_denied'))) {
+          syncState.rulesRequired = true;
+          updateSyncStatusUI('rules_required', 'Cloud: រង់ចាំបើក Rules');
         }
       }
 
-      // Start listening for real-time live updates from other computers
-      attachRealtimeListener();
-
-    }).catch((err) => {
-      console.warn('[FirebaseSync] Once value error:', err);
-      if (err.code === 'PERMISSION_DENIED' || (err.message && err.message.includes('permission_denied'))) {
-        syncState.rulesRequired = true;
-        updateSyncStatusUI('rules_required', 'Cloud: រង់ចាំបើក Rules');
-        console.info('[FirebaseSync] To enable Cloud sync, please set .read: true, .write: true in Firebase Console Rules tab.');
-      } else {
-        if (hasPendingSync()) {
-          updateSyncStatusUI('pending_sync', 'រក្សាទុកក្នុងម៉ាស៊ីន (រង់ចាំ Sync)');
-        } else {
-          updateSyncStatusUI('offline', 'ប្រើប្រាស់ក្នុងម៉ាស៊ីន (Offline)');
-        }
-      }
-    });
+      // Attach lightweight listener for remote changes (listens ONLY to _syncMeta)
+      attachMetaListener();
+    } else {
+      // First time launch on new device (no local cache in localStorage)
+      console.log('[FirebaseSync] First time launch (no local cache). Fetching initial data from Cloud...');
+      updateSyncStatusUI('loading', 'កំពុងទាញទិន្នន័យ...');
+      await fetchFullFromCloud(true);
+      attachMetaListener();
+    }
   }
 
   // ==========================================================================
-  // 8. ATTACH REALTIME LISTENER (ON 'VALUE')
+  // 8. ATTACH LIGHTWEIGHT METADATA LISTENER (LISTENS ONLY TO _syncMeta, NOT 2MB ROOT)
   // ==========================================================================
 
-  function attachRealtimeListener() {
+  function attachMetaListener() {
     if (!schoolDbRef) return;
 
-    schoolDbRef.on('value', (snapshot) => {
-      // If the change came from our own local saveDatabase call, ignore to avoid re-render loops
+    // Detach any previous full-root listener to stop downloading 2MB on every change!
+    schoolDbRef.off('value');
+
+    const metaRef = schoolDbRef.child('_syncMeta');
+    metaRef.off('value');
+
+    metaRef.on('value', (snap) => {
+      // Ignore if change was triggered locally
       if (syncState.isLocalChange) {
         syncState.isLocalChange = false;
         return;
       }
 
-      // If local has pending un-synced changes, do not overwrite with remote data
       if (hasPendingSync()) {
         console.log('[FirebaseSync] Remote update arrived while local has un-synced edits. Preserving local edits.');
         return;
       }
 
-      const remoteData = snapshot.val();
-      if (!remoteData) return;
+      const meta = snap.val();
+      if (!meta || !meta.lastUpdatedAt) return;
 
-      console.log('[FirebaseSync] Realtime update received from Cloud!');
-      syncState.lastSyncTime = new Date();
-      updateSyncStatusUI('synced', 'Cloud: បានតភ្ជាប់ (Synced)');
+      const localData = (typeof syncState.getLocalDataCb === 'function')
+        ? syncState.getLocalDataCb()
+        : (window.state && window.state.db);
+      const localTime = new Date(localData?._syncMeta?.lastUpdatedAt || 0).getTime();
+      const remoteTime = new Date(meta.lastUpdatedAt).getTime();
 
-      if (typeof syncState.onRemoteUpdateCb === 'function') {
-        syncState.onRemoteUpdateCb(remoteData);
+      if (remoteTime > localTime) {
+        console.log('[FirebaseSync] Remote change notification received via _syncMeta. Updated class:', meta.updatedClassId);
+        syncState.lastSyncTime = new Date();
+        updateSyncStatusUI('synced', 'Cloud: បានតភ្ជាប់ (Synced)');
+
+        // Granular: fetch only the changed class if known
+        if (typeof meta.updatedClassIndex === 'number' && meta.updatedClassIndex >= 0) {
+          fetchSingleClassFromCloud(meta.updatedClassIndex, meta);
+        } else {
+          // Fallback: fetch full cloud data
+          fetchFullFromCloud(false);
+        }
       }
     }, (err) => {
-      console.warn('[FirebaseSync] Realtime listener error:', err);
+      console.warn('[FirebaseSync] Meta listener error:', err);
       if (err.code === 'PERMISSION_DENIED') {
         syncState.rulesRequired = true;
         updateSyncStatusUI('rules_required', 'Cloud: រង់ចាំបើក Rules');
@@ -564,11 +688,16 @@
     });
   }
 
+  // Alias for backward compatibility
+  function attachRealtimeListener() {
+    attachMetaListener();
+  }
+
   // ==========================================================================
-  // 9. SAVE APPLICATION STATE TO CLOUD (DEBOUNCED & OFFLINE-AWARE)
+  // 9. SAVE APPLICATION STATE TO CLOUD (GRANULAR & DEBOUNCED)
   // ==========================================================================
 
-  function saveToCloud(data, immediate = false) {
+  function saveToCloud(data, immediate = false, changedClassId = null) {
     if (!data) return;
 
     // Enqueue to Pending Sync Queue immediately (Local-First Guarantee)
@@ -587,20 +716,47 @@
 
     updateSyncStatusUI('saving', 'កំពុងរក្សាទុក...');
 
-    const doSave = () => {
+    const doSave = async () => {
       syncState.isSyncing = true;
       syncState.isLocalChange = true;
 
-      // Add sync metadata
-      const payload = Object.assign({}, data, {
-        _syncMeta: {
-          lastUpdatedAt: new Date().toISOString(),
-          clientApp: "banloung-school-app",
-          schoolName: "សាលាបឋមសិក្សា បាន្លួង"
-        }
-      });
+      const nowIso = new Date().toISOString();
 
-      schoolDbRef.set(payload).then(() => {
+      try {
+        // Granular saving: If only a specific class was edited, push only that class node!
+        let classIndex = -1;
+        if (changedClassId && Array.isArray(data.classes)) {
+          classIndex = data.classes.findIndex(c => c.id === changedClassId || c.grade === changedClassId);
+        }
+
+        if (classIndex >= 0) {
+          // ULTRA-EFFICIENT GRANULAR UPDATE (~100 KB instead of 2 MB!)
+          const syncMeta = {
+            lastUpdatedAt: nowIso,
+            clientApp: "banloung-school-app",
+            schoolName: "សាលាបឋមសិក្សា បាន្លួង",
+            updatedClassId: changedClassId,
+            updatedClassIndex: classIndex
+          };
+          const updates = {};
+          updates['classes/' + classIndex] = data.classes[classIndex];
+          updates['_syncMeta'] = syncMeta;
+
+          await schoolDbRef.update(updates);
+          console.log('[FirebaseSync] Granular update saved successfully for class index:', classIndex);
+        } else {
+          // Full database update (e.g. settings, import, all classes)
+          const payload = Object.assign({}, data, {
+            _syncMeta: {
+              lastUpdatedAt: nowIso,
+              clientApp: "banloung-school-app",
+              schoolName: "សាលាបឋមសិក្សា បាន្លួង"
+            }
+          });
+          await schoolDbRef.set(payload);
+          console.log('[FirebaseSync] Full database saved to Cloud.');
+        }
+
         syncState.isSyncing = false;
         syncState.lastSyncTime = new Date();
         clearPendingQueue(); // Successfully sent to cloud!
@@ -612,17 +768,16 @@
             updateSyncStatusUI('synced', 'Cloud: បានតភ្ជាប់ (Synced)');
           }
         }, 2000);
-      }).catch((err) => {
+      } catch (err) {
         syncState.isSyncing = false;
         console.warn('[FirebaseSync] Error saving to Cloud, keeping in local pending queue:', err);
         if (err.code === 'PERMISSION_DENIED') {
           syncState.rulesRequired = true;
           updateSyncStatusUI('rules_required', 'Cloud: រង់ចាំបើក Rules');
         } else {
-          // Never lose data: keep item in pending queue and indicate saved locally
           updateSyncStatusUI('pending_sync', 'រក្សាទុកក្នុងម៉ាស៊ីន (រង់ចាំ Sync)');
         }
-      });
+      }
     };
 
     if (immediate) {
@@ -644,9 +799,9 @@
     updateSyncStatusUI('loading', 'កំពុងនាំចូលទិន្នន័យ...');
 
     if (!force) {
-      const snap = await schoolDbRef.once('value');
+      const snap = await schoolDbRef.child('classes/0').once('value');
       const existing = snap.val();
-      if (snap.exists() && existing && existing.classes && existing.classes.length > 0) {
+      if (snap.exists() && existing) {
         console.log('[FirebaseSync] Cloud already contains active database. Skipping duplicate import.');
         updateSyncStatusUI('synced', 'Cloud: មានទិន្នន័យស្រាប់');
         return false;
@@ -673,6 +828,79 @@
     syncState.lastSyncTime = new Date();
     updateSyncStatusUI('synced', 'Cloud: បានតភ្ជាប់ (Synced)');
     return true;
+  }
+
+  // ==========================================================================
+  // 10.1 MANUAL REFRESH FROM CLOUD (FOR MANUAL REFRESH BUTTON)
+  // ==========================================================================
+
+  async function refreshFromCloud(manualTrigger = true) {
+    const refreshBtn = document.getElementById('btnManualCloudRefresh');
+    const refreshIcon = document.getElementById('cloudRefreshIcon');
+
+    if (refreshIcon) refreshIcon.classList.add('fa-spin');
+    if (refreshBtn) refreshBtn.classList.add('is-refreshing');
+
+    if (!navigator.onLine || !syncState.isConnected || !schoolDbRef) {
+      if (refreshIcon) refreshIcon.classList.remove('fa-spin');
+      if (refreshBtn) refreshBtn.classList.remove('is-refreshing');
+      showSyncToast('មិនអាចទាញទិន្នន័យបានទេ ដោយសារគ្មានអ៊ីនធឺណិត (Offline)', 'warning');
+      return;
+    }
+
+    updateSyncStatusUI('loading', 'កំពុងទាញទិន្នន័យ...');
+
+    try {
+      // 1. Flush any pending offline edits first
+      if (hasPendingSync()) {
+        await flushPendingQueue();
+      }
+
+      // 2. Fetch latest snapshot from Cloud
+      const snap = await schoolDbRef.once('value');
+      const rawCloudData = snap.val();
+
+      if (!rawCloudData) {
+        showSyncToast('Cloud មិនទាន់មានទិន្នន័យនៅឡើយទេ', 'info');
+        updateSyncStatusUI('synced', 'Cloud: បានតភ្ជាប់');
+        return;
+      }
+
+      const cloudData = (typeof window.normalizeSchoolDatabase === 'function')
+        ? window.normalizeSchoolDatabase(rawCloudData)
+        : rawCloudData;
+
+      const localData = (typeof syncState.getLocalDataCb === 'function')
+        ? syncState.getLocalDataCb()
+        : (window.state && window.state.db);
+
+      const merged = mergeSchoolDatabases(localData, cloudData);
+
+      if (window.state) {
+        window.state.db = merged;
+        try {
+          localStorage.setItem("banloung_school_db", JSON.stringify(window.state.db));
+        } catch (e) {}
+      }
+
+      syncState.lastSyncTime = new Date();
+      updateSyncStatusUI('synced', 'Cloud: បានតភ្ជាប់ (Synced)');
+
+      if (typeof window.renderApp === 'function') {
+        window.renderApp();
+      }
+
+      if (manualTrigger) {
+        showSyncToast('✓ បានទាញយក និងធ្វើបច្ចុប្បន្នភាពទិន្នន័យថ្មីពី Cloud រួចរាល់!', 'success');
+      }
+    } catch (err) {
+      console.error('[FirebaseSync] Manual refresh error:', err);
+      showSyncToast('បរាជ័យក្នុងការទាញទិន្នន័យពី Cloud: ' + err.message, 'error');
+      updateSyncStatusUI('offline', 'ទាញទិន្នន័យបរាជ័យ');
+    } finally {
+      if (refreshIcon) refreshIcon.classList.remove('fa-spin');
+      if (refreshBtn) refreshBtn.classList.remove('is-refreshing');
+    }
   }
 
   // ==========================================================================
@@ -787,25 +1015,7 @@
             flushPendingQueue();
           } else {
             // Manual sync from cloud
-            updateSyncStatusUI('loading', 'កំពុងទាញទិន្នន័យ...');
-            schoolDbRef.once('value').then((snap) => {
-              const val = snap.val();
-              if (val && window.state) {
-                window.state.db = (typeof window.normalizeSchoolDatabase === 'function')
-                  ? window.normalizeSchoolDatabase(val)
-                  : val;
-                localStorage.setItem("banloung_school_db", JSON.stringify(window.state.db));
-                if (typeof window.renderActiveTab === 'function') window.renderActiveTab();
-                if (typeof window.renderDashboard === 'function') window.renderDashboard();
-                showSyncToast('បានទាញយកទិន្នន័យចុងក្រោយពី Cloud រួចរាល់!', 'success');
-                updateSyncStatusUI('synced', 'Cloud: បានតភ្ជាប់ (Synced)');
-              } else {
-                showSyncToast('Cloud មិនទាន់មានទិន្នន័យនៅឡើយទេ', 'info');
-                updateSyncStatusUI('synced', 'Cloud: បានតភ្ជាប់');
-              }
-            }).catch(err => {
-              showSyncToast('បរាជ័យក្នុងការទាញយកទិន្នន័យពី Cloud: ' + err.message, 'error');
-            });
+            refreshFromCloud(true);
           }
         } else if (result.isDenied) {
           // Manual upload current data to cloud
@@ -871,6 +1081,7 @@
     flushPendingQueue: flushPendingQueue,
     mergeSchoolDatabases: mergeSchoolDatabases,
     importLocalDatabaseToCloud: importLocalDatabaseToCloud,
+    refreshFromCloud: refreshFromCloud,
     openCloudSyncModal: openCloudSyncModal,
     triggerManualImport: triggerManualImport,
     updateSyncStatusUI: updateSyncStatusUI

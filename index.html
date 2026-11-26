@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- Main Stylesheet (with cache-buster) -->
-  <link rel="stylesheet" href="style.css?v=20261125_04">
+  <link rel="stylesheet" href="style.css?v=20261126_01">
 
   <!-- Universal Direct Inline Print Style to eliminate any possibility of scrollbars or lines during print -->
   <style id="appUniversalPrintStyle">
@@ -487,6 +487,11 @@
           <i class="fa-solid fa-cloud text-success" id="cloudSyncIcon"></i>
           <span id="cloudSyncText">Cloud Realtime</span>
         </div>
+        <!-- Manual Cloud Refresh Button (កាត់បន្ថយការទាញយកទិន្នន័យស្វ័យប្រវត្តិញឹកញាប់ពេក) -->
+        <button type="button" class="btn-cloud-refresh no-print" id="btnManualCloudRefresh" onclick="window.firebaseSync && window.firebaseSync.refreshFromCloud(true)" title="ចុចដើម្បីទាញទិន្នន័យថ្មីពី Cloud ភ្លាមៗ (Manual Refresh)">
+          <i class="fa-solid fa-arrows-rotate" id="cloudRefreshIcon"></i>
+          <span>Refresh ទិន្នន័យ</span>
+        </button>
         <div class="live-datetime-badge" title="កាលបរិច្ឆេទ និងម៉ោងជាក់ស្តែងបច្ចុប្បន្ន">
           <div class="live-date-text">
             <i class="fa-solid fa-calendar-day" style="color: #2563eb;"></i>
@@ -2284,9 +2289,9 @@
   <!-- Firebase Realtime Database SDK & Sync Manager -->
   <script src="firebase-app-compat.js"></script>
   <script src="firebase-database-compat.js"></script>
-  <script src="firebase-sync.js?v=20261123_02"></script>
+  <script src="firebase-sync.js?v=20261126_01"></script>
   <script src="auth.js?v=20261125_02"></script>
-  <script src="app.js?v=20261125_02"></script>
+  <script src="app.js?v=20261126_01"></script>
 
 </body>
 </html>

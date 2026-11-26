@@ -540,9 +540,9 @@ function saveDatabase() {
     });
   }
 
-  // 5. Sync to Firebase Realtime Database
+  // 5. Sync to Firebase Realtime Database (granular per active class to minimize bandwidth)
   if (window.firebaseSync && typeof window.firebaseSync.saveToCloud === "function") {
-    window.firebaseSync.saveToCloud(state.db);
+    window.firebaseSync.saveToCloud(state.db, false, state.activeClassId || null);
   }
 }
 

@@ -50,7 +50,11 @@ function initBanLoungApp() {
 
   // 3. Initialize Authentication & Access Control System
   if (window.authSystem && typeof window.authSystem.init === "function") {
-    window.authSystem.init();
+    try {
+      window.authSystem.init();
+    } catch (e) {
+      console.error("[Auth] Initialization error:", e);
+    }
   }
 
   // 4. Resolve saved active tab, subtabs, and academic year/class from hash, query param, or localStorage
@@ -989,9 +993,21 @@ function switchStudentSubTab(subTabId, ensureExpanded = true) {
     }
     renderMonthlyAttendance();
   } else if (subTabId === "attendance_daily") {
+    if (!state.activeAttendanceDate) {
+      state.activeAttendanceDate = typeof getTodayDateString === "function" ? getTodayDateString() : _initDateStr;
+    }
     const attDate = document.getElementById("attDatePicker");
     if (attDate && state.activeAttendanceDate) {
       attDate.value = state.activeAttendanceDate;
+    }
+    const currentClass = getActiveClass();
+    if (currentClass && state.activeAttendanceDate) {
+      const parts = state.activeAttendanceDate.split("-");
+      if (parts.length === 3) {
+        state.activeAttendanceYear = parseInt(parts[0], 10);
+        state.activeAttendanceMonth = parseInt(parts[1], 10);
+      }
+      ensureDefaultMonthlyAttendance(currentClass, state.activeAttendanceYear, state.activeAttendanceMonth);
     }
     renderDailyAttendance();
   } else if (subTabId === "students") {
@@ -2274,8 +2290,8 @@ function clearClassStudentsData() {
   saveDatabase();
   renderStudentsRoster();
   renderDashboard();
-  if (state.activeTab === "attendance_daily") renderDailyAttendance();
-  if (state.activeTab === "attendance_monthly") renderMonthlyAttendance();
+  if (state.activeTab === "attendance_daily" || state.activeStudentSubTab === "attendance_daily") renderDailyAttendance();
+  if (state.activeTab === "attendance_monthly" || state.activeStudentSubTab === "attendance_monthly") renderMonthlyAttendance();
 
   showAttendanceToast(`✓ បានសម្អាតទិន្នន័យសិស្សក្នុងថ្នាក់ ${currentClass.grade} ដោយជោគជ័យ! (អាចចុច Undo ដើម្បីត្រឡប់មកវិញ)`, 'info');
 }
@@ -2306,8 +2322,8 @@ function undoClassStudentsData() {
   saveDatabase();
   renderStudentsRoster();
   renderDashboard();
-  if (state.activeTab === "attendance_daily") renderDailyAttendance();
-  if (state.activeTab === "attendance_monthly") renderMonthlyAttendance();
+  if (state.activeTab === "attendance_daily" || state.activeStudentSubTab === "attendance_daily") renderDailyAttendance();
+  if (state.activeTab === "attendance_monthly" || state.activeStudentSubTab === "attendance_monthly") renderMonthlyAttendance();
 
   showAttendanceToast(`↩ បានត្រឡប់ទិន្នន័យសិស្ស (${currentClass.students.length} នាក់) មកវិញដោយជោគជ័យ!`, 'success');
 }
@@ -3175,7 +3191,8 @@ function selectDailyAttendanceDay(d) {
 }
 
 function navigateDailyAttendanceDay(delta) {
-  const parts = state.activeAttendanceDate.split("-");
+  const dateStr = state.activeAttendanceDate || (typeof getTodayDateString === "function" ? getTodayDateString() : _initDateStr);
+  const parts = dateStr.split("-");
   const year = parseInt(parts[0], 10);
   const month = parseInt(parts[1], 10);
   let day = parseInt(parts[2], 10) + delta;
@@ -3187,16 +3204,38 @@ function navigateDailyAttendanceDay(delta) {
 }
 
 function renderDailyAttendance() {
-  const currentClass = getActiveClass();
+  let currentClass = getActiveClass();
   const container = document.getElementById("dailyAttendanceTableWrap");
   if (!container) return;
+
+  // Fallback to active class with students if current is null or has no students
+  if (!currentClass || !currentClass.students || currentClass.students.length === 0) {
+    const candidate = (state.db && state.db.classes ? state.db.classes : []).find(
+      c => c.academicYear === (state.activeYear || "២០២៦-២០២៧") && c.students && c.students.length > 0
+    );
+    if (candidate) {
+      currentClass = candidate;
+      state.activeClassId = candidate.id;
+      const classSelects = document.querySelectorAll(".class-select-input");
+      classSelects.forEach(sel => sel.value = candidate.id);
+    }
+  }
 
   if (!currentClass) {
     container.innerHTML = `<p style="text-align:center; padding: 30px;">សូមជ្រើសរើសថ្នាក់រៀន</p>`;
     return;
   }
 
+  // Ensure active class select in daily subpane is synced
+  const dailyClassSelect = document.querySelector("#subpane-attendance_daily .class-select-input");
+  if (dailyClassSelect && dailyClassSelect.value !== currentClass.id) {
+    dailyClassSelect.value = currentClass.id;
+  }
+
   const students = currentClass.students || [];
+  if (!state.activeAttendanceDate) {
+    state.activeAttendanceDate = typeof getTodayDateString === "function" ? getTodayDateString() : _initDateStr;
+  }
   const dateStr = state.activeAttendanceDate;
   const parts = dateStr.split("-");
   const year = parseInt(parts[0], 10);
@@ -3212,6 +3251,11 @@ function renderDailyAttendance() {
   if (mSel && mSel.value !== String(month)) mSel.value = String(month);
   const ySel = document.getElementById("monthlyYearSelect");
   if (ySel && ySel.value !== String(year)) ySel.value = String(year);
+  const attDate = document.getElementById("attDatePicker");
+  if (attDate && attDate.value !== dateStr) attDate.value = dateStr;
+
+  // Automatically ensure default records for this month if missing
+  ensureDefaultMonthlyAttendance(currentClass, year, month);
 
   // Initialize or load attendance records strictly for this date
   currentClass.attendanceRecords = currentClass.attendanceRecords || {};
@@ -3474,6 +3518,14 @@ function renderDailyAttendance() {
 
   container.innerHTML = html;
   initMovableApproval('movableApprovalBlockMonthly', 'monthly');
+
+  // Smoothly scroll active day pill into center view
+  try {
+    const activePill = container.querySelector(".att-day-pill.active");
+    if (activePill && typeof activePill.scrollIntoView === "function") {
+      activePill.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    }
+  } catch(e) {}
 }
 
 function setDailyStudentStatus(num, status) {
@@ -3674,7 +3726,7 @@ function changeMonthlyMonth(monthVal) {
   if (attDate) attDate.value = state.activeAttendanceDate;
 
   renderMonthlyAttendance();
-  if (state.activeTab === "attendance_daily") {
+  if (state.activeTab === "attendance_daily" || state.activeStudentSubTab === "attendance_daily") {
     renderDailyAttendance();
   }
 }
@@ -3692,7 +3744,7 @@ function changeMonthlyYear(yearVal) {
   if (attDate) attDate.value = state.activeAttendanceDate;
 
   renderMonthlyAttendance();
-  if (state.activeTab === "attendance_daily") {
+  if (state.activeTab === "attendance_daily" || state.activeStudentSubTab === "attendance_daily") {
     renderDailyAttendance();
   }
 }
@@ -4124,6 +4176,14 @@ function renderMonthlyAttendance() {
 
   container.innerHTML = html;
   initMovableApproval('movableApprovalBlockMonthly', 'monthly');
+
+  // Smoothly scroll active day pill into center view
+  try {
+    const activePill = container.querySelector(".att-day-pill.active");
+    if (activePill && typeof activePill.scrollIntoView === "function") {
+      activePill.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    }
+  } catch(e) {}
 }
 
 /**
@@ -4334,7 +4394,7 @@ function clearMonthlyAttendanceData() {
 
   // Re-render
   renderMonthlyAttendance();
-  if (state.activeTab === "attendance_daily") {
+  if (state.activeTab === "attendance_daily" || state.activeStudentSubTab === "attendance_daily") {
     renderDailyAttendance();
   }
 
@@ -8328,6 +8388,14 @@ function renderSummaryScoresView(currentClass, container) {
   html += `</tbody></table></div>`;
   container.innerHTML = html;
   initMovableApproval('movableApprovalBlockMonthly', 'monthly');
+
+  // Smoothly scroll active day pill into center view
+  try {
+    const activePill = container.querySelector(".att-day-pill.active");
+    if (activePill && typeof activePill.scrollIntoView === "function") {
+      activePill.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    }
+  } catch(e) {}
 }
 
 function openStudentReportCard(num) {
@@ -8541,6 +8609,14 @@ function renderTeachers() {
   html += `</tbody></table>`;
   container.innerHTML = html;
   initMovableApproval('movableApprovalBlockMonthly', 'monthly');
+
+  // Smoothly scroll active day pill into center view
+  try {
+    const activePill = container.querySelector(".att-day-pill.active");
+    if (activePill && typeof activePill.scrollIntoView === "function") {
+      activePill.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    }
+  } catch(e) {}
 }
 
 function openAddTeacherModal() {
@@ -8692,6 +8768,14 @@ function renderExamRooms() {
   html += `</div>`;
   container.innerHTML = html;
   initMovableApproval('movableApprovalBlockMonthly', 'monthly');
+
+  // Smoothly scroll active day pill into center view
+  try {
+    const activePill = container.querySelector(".att-day-pill.active");
+    if (activePill && typeof activePill.scrollIntoView === "function") {
+      activePill.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    }
+  } catch(e) {}
 }
 
 /* ==========================================================================
@@ -8736,6 +8820,14 @@ function renderReports() {
   html += `</tbody></table></div>`;
   container.innerHTML = html;
   initMovableApproval('movableApprovalBlockMonthly', 'monthly');
+
+  // Smoothly scroll active day pill into center view
+  try {
+    const activePill = container.querySelector(".att-day-pill.active");
+    if (activePill && typeof activePill.scrollIntoView === "function") {
+      activePill.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    }
+  } catch(e) {}
 }
 
 

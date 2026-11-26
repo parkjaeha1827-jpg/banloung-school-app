@@ -1155,8 +1155,9 @@
     } catch(e){}
 
     // Auto-login from QR Code / URL parameter (e.g. ?login=1111 or ?pin=1111 or ?auth_qr=1111)
+    let urlParams = null;
     try {
-      const urlParams = new URLSearchParams(window.location.search);
+      urlParams = new URLSearchParams(window.location.search);
       const autoPin = urlParams.get("login") || urlParams.get("pin") || urlParams.get("auth_qr");
       if (autoPin) {
         const loginRes = login(autoPin);
@@ -1172,7 +1173,7 @@
     if (!user) {
       document.body.classList.add("auth-locked");
       showLoginModal();
-      if (sessionStorage.getItem("banloung_force_tab_password") || urlParams.get("auth_tab") === "password") {
+      if (sessionStorage.getItem("banloung_force_tab_password") || (urlParams && urlParams.get("auth_tab") === "password")) {
         sessionStorage.removeItem("banloung_force_tab_password");
         switchAuthTab("password");
       } else {

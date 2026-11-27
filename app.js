@@ -203,6 +203,25 @@ function normalizeSchoolDatabase(db) {
     }
     if (!c.attendanceRecords || typeof c.attendanceRecords !== "object") {
       c.attendanceRecords = {};
+    } else {
+      if (Array.isArray(c.attendanceRecords)) {
+        const obj = {};
+        c.attendanceRecords.forEach((item, idx) => {
+          if (item && item.date) obj[item.date] = item;
+          else if (item) obj[String(idx)] = item;
+        });
+        c.attendanceRecords = obj;
+      }
+      Object.keys(c.attendanceRecords).forEach(dKey => {
+        const dObj = c.attendanceRecords[dKey];
+        if (dObj && Array.isArray(dObj.records)) {
+          const recObj = {};
+          dObj.records.forEach((rec, idx) => {
+            if (rec) recObj[idx] = rec;
+          });
+          dObj.records = recObj;
+        }
+      });
     }
     if (!c.monthlyDates || typeof c.monthlyDates !== "object") {
       c.monthlyDates = {};
@@ -2949,9 +2968,10 @@ function syncMonthlyAttendanceForClass(currentClass, dateStr) {
                       s.dailyAttendance?.[dKey];
           if (rec) {
             totalRecordedDays++;
-            if (rec.status === "L") excusedMonth++;
-            else if (rec.status === "A") unexcusedMonth++;
-            else if (rec.status === "P") presentMonth++;
+            const st = (typeof rec === "object" && rec !== null) ? rec.status : rec;
+            if (st === "L") excusedMonth++;
+            else if (st === "A") unexcusedMonth++;
+            else if (st === "P") presentMonth++;
           }
         }
       });
@@ -3204,328 +3224,355 @@ function navigateDailyAttendanceDay(delta) {
 }
 
 function renderDailyAttendance() {
-  let currentClass = getActiveClass();
   const container = document.getElementById("dailyAttendanceTableWrap");
   if (!container) return;
 
-  // Fallback to active class with students if current is null or has no students
-  if (!currentClass || !currentClass.students || currentClass.students.length === 0) {
-    const candidate = (state.db && state.db.classes ? state.db.classes : []).find(
-      c => c.academicYear === (state.activeYear || "២០២៦-២០២៧") && c.students && c.students.length > 0
-    );
-    if (candidate) {
-      currentClass = candidate;
-      state.activeClassId = candidate.id;
-      const classSelects = document.querySelectorAll(".class-select-input");
-      classSelects.forEach(sel => sel.value = candidate.id);
+  try {
+    let currentClass = getActiveClass();
+
+    // Fallback to active class with students if current is null or has no students
+    if (!currentClass || !currentClass.students || currentClass.students.length === 0) {
+      const candidate = (state.db && state.db.classes ? state.db.classes : []).find(
+        c => c.academicYear === (state.activeYear || "២០២៦-២០២៧") && c.students && c.students.length > 0
+      );
+      if (candidate) {
+        currentClass = candidate;
+        state.activeClassId = candidate.id;
+        const classSelects = document.querySelectorAll(".class-select-input");
+        classSelects.forEach(sel => sel.value = candidate.id);
+      }
     }
-  }
 
-  if (!currentClass) {
-    container.innerHTML = `<p style="text-align:center; padding: 30px;">សូមជ្រើសរើសថ្នាក់រៀន</p>`;
-    return;
-  }
+    if (!currentClass) {
+      container.innerHTML = `<p style="text-align:center; padding: 30px;">សូមជ្រើសរើសថ្នាក់រៀន</p>`;
+      return;
+    }
 
-  // Ensure active class select in daily subpane is synced
-  const dailyClassSelect = document.querySelector("#subpane-attendance_daily .class-select-input");
-  if (dailyClassSelect && dailyClassSelect.value !== currentClass.id) {
-    dailyClassSelect.value = currentClass.id;
-  }
+    // Ensure active class select in daily subpane is synced
+    const dailyClassSelect = document.querySelector("#subpane-attendance_daily .class-select-input");
+    if (dailyClassSelect && dailyClassSelect.value !== currentClass.id) {
+      dailyClassSelect.value = currentClass.id;
+    }
 
-  const students = currentClass.students || [];
-  if (!state.activeAttendanceDate) {
-    state.activeAttendanceDate = typeof getTodayDateString === "function" ? getTodayDateString() : _initDateStr;
-  }
-  const dateStr = state.activeAttendanceDate;
-  const parts = dateStr.split("-");
-  const year = parseInt(parts[0], 10);
-  const month = parseInt(parts[1], 10);
-  const day = parseInt(parts[2], 10);
-  const monthName = KHMER_MONTH_NAMES[month - 1] || "";
-  const daysInMonth = new Date(year, month, 0).getDate();
+    const students = currentClass.students || [];
+    if (!state.activeAttendanceDate) {
+      state.activeAttendanceDate = typeof getTodayDateString === "function" ? getTodayDateString() : _initDateStr;
+    }
+    const dateStr = state.activeAttendanceDate;
+    const parts = dateStr.split("-");
+    const year = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10);
+    const day = parseInt(parts[2], 10);
+    const monthName = KHMER_MONTH_NAMES[month - 1] || "";
+    const daysInMonth = new Date(year, month, 0).getDate();
 
-  // Keep state and UI filters in sync
-  state.activeAttendanceYear = year;
-  state.activeAttendanceMonth = month;
-  const mSel = document.getElementById("monthlyMonthSelect");
-  if (mSel && mSel.value !== String(month)) mSel.value = String(month);
-  const ySel = document.getElementById("monthlyYearSelect");
-  if (ySel && ySel.value !== String(year)) ySel.value = String(year);
-  const attDate = document.getElementById("attDatePicker");
-  if (attDate && attDate.value !== dateStr) attDate.value = dateStr;
+    // Keep state and UI filters in sync
+    state.activeAttendanceYear = year;
+    state.activeAttendanceMonth = month;
+    const mSel = document.getElementById("monthlyMonthSelect");
+    if (mSel && mSel.value !== String(month)) mSel.value = String(month);
+    const ySel = document.getElementById("monthlyYearSelect");
+    if (ySel && ySel.value !== String(year)) ySel.value = String(year);
+    const attDate = document.getElementById("attDatePicker");
+    if (attDate && attDate.value !== dateStr) attDate.value = dateStr;
 
-  // Automatically ensure default records for this month if missing
-  ensureDefaultMonthlyAttendance(currentClass, year, month);
+    // Automatically ensure default records for this month if missing
+    try {
+      ensureDefaultMonthlyAttendance(currentClass, year, month);
+    } catch(e) {
+      console.warn("ensureDefaultMonthlyAttendance error:", e);
+    }
 
-  // Initialize or load attendance records strictly for this date
-  currentClass.attendanceRecords = currentClass.attendanceRecords || {};
-  let recMap = currentClass.attendanceRecords[dateStr]?.records;
-  if (!recMap) {
-    recMap = {};
+    // Initialize or load attendance records strictly for this date
+    currentClass.attendanceRecords = currentClass.attendanceRecords || {};
+    let recMap = currentClass.attendanceRecords[dateStr]?.records;
+    if (!recMap) {
+      recMap = {};
+      students.forEach(s => {
+        const sDayRec = s.dailyAttendance?.[dateStr];
+        const st = (typeof sDayRec === "object" && sDayRec !== null) ? (sDayRec.status || "P") : (typeof sDayRec === "string" ? sDayRec : "P");
+        const rz = (typeof sDayRec === "object" && sDayRec !== null) ? (sDayRec.reason || "") : "";
+        recMap[s.num] = { status: st, reason: rz };
+        s.dailyAttendance = s.dailyAttendance || {};
+        s.dailyAttendance[dateStr] = { status: st, reason: rz };
+      });
+      currentClass.attendanceRecords[dateStr] = {
+        date: dateStr,
+        savedAt: new Date().toISOString(),
+        records: recMap
+      };
+    }
+
+    // Count stats strictly for this date
+    let countP = 0, countL = 0, countA = 0;
     students.forEach(s => {
-      const sDayRec = s.dailyAttendance?.[dateStr];
-      const st = sDayRec?.status || "P";
-      const rz = sDayRec?.reason || "";
-      recMap[s.num] = { status: st, reason: rz };
-      s.dailyAttendance = s.dailyAttendance || {};
-      s.dailyAttendance[dateStr] = { status: st, reason: rz };
+      s.activeAttDate = dateStr;
+      const r = (recMap && (recMap[s.num] !== undefined ? recMap[s.num] : (recMap[String(s.num)] !== undefined ? recMap[String(s.num)] : null))) || s.dailyAttendance?.[dateStr];
+      const st = (typeof r === "object" && r !== null) ? (r.status || "P") : (typeof r === "string" ? r : "P");
+      const rz = (typeof r === "object" && r !== null) ? (r.reason || "") : "";
+      s.todayStatus = st;
+      s.todayReason = rz;
+
+      if (st === "P") countP++;
+      else if (st === "L") countL++;
+      else if (st === "A") countA++;
     });
-    currentClass.attendanceRecords[dateStr] = {
-      date: dateStr,
-      savedAt: new Date().toISOString(),
-      records: recMap
-    };
-  }
 
-  // Count stats strictly for this date
-  let countP = 0, countL = 0, countA = 0;
-  students.forEach(s => {
-    s.activeAttDate = dateStr;
-    const r = recMap[s.num] || recMap[String(s.num)] || s.dailyAttendance?.[dateStr];
-    const st = r?.status || "P";
-    const rz = r?.reason || "";
-    s.todayStatus = st;
-    s.todayReason = rz;
+    const totalStudents = students.length;
+    const attRate = totalStudents > 0 ? Math.round((countP / totalStudents) * 100) : 100;
 
-    if (st === "P") countP++;
-    else if (st === "L") countL++;
-    else if (st === "A") countA++;
-  });
+    // Build Day Selector Bar (តាមថ្ងៃនីមួយៗនៃខែ)
+    let dayPillsHtml = "";
+    for (let d = 1; d <= daysInMonth; d++) {
+      const dObj = new Date(year, month - 1, d);
+      const dayOfWeek = dObj.getDay();
+      const dayName = KHMER_DAYS_OF_WEEK_SHORT[dayOfWeek];
+      const isSun = dayOfWeek === 0;
+      const hol = getHolidayName(year, month, d);
+      const isOff = isSun || !!hol;
+      const isActive = d === day;
+      const pillClass = `att-day-pill ${isActive ? 'active' : ''} ${isOff ? 'off-day' : ''}`;
+      const tip = hol ? `${hol} (ថ្ងៃ${dayName})` : (isSun ? `ថ្ងៃអាទិត្យ` : `ថ្ងៃ${dayName}`);
 
-  const totalStudents = students.length;
-  const attRate = totalStudents > 0 ? Math.round((countP / totalStudents) * 100) : 100;
-
-  // Build Day Selector Bar (តាមថ្ងៃនីមួយៗនៃខែ)
-  let dayPillsHtml = "";
-  for (let d = 1; d <= daysInMonth; d++) {
-    const dObj = new Date(year, month - 1, d);
-    const dayOfWeek = dObj.getDay();
-    const dayName = KHMER_DAYS_OF_WEEK_SHORT[dayOfWeek];
-    const isSun = dayOfWeek === 0;
-    const hol = getHolidayName(year, month, d);
-    const isOff = isSun || !!hol;
-    const isActive = d === day;
-    const pillClass = `att-day-pill ${isActive ? 'active' : ''} ${isOff ? 'off-day' : ''}`;
-    const tip = hol ? `${hol} (ថ្ងៃ${dayName})` : (isSun ? `ថ្ងៃអាទិត្យ` : `ថ្ងៃ${dayName}`);
-
-    const dKey = `${year}-${String(month).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-    const dayRec = currentClass.attendanceRecords?.[dKey]?.records;
-    let badgeHtml = "";
-    if (isOff) {
-      badgeHtml = `<span class="day-name" style="${isActive ? 'color:#ffffff;' : 'color:#dc2626; font-weight:700;'}">X (ឈប់)</span>`;
-    } else {
-      let dAbs = 0;
-      if (dayRec) {
-        Object.values(dayRec).forEach(v => {
-          if (v.status === "L" || v.status === "A") dAbs++;
-        });
-      }
-      if (dAbs > 0) {
-        badgeHtml = `<span class="day-name" style="${isActive ? 'color:#fde047; font-weight:700;' : 'color:#d97706; font-weight:700;'}">អវត្ត:${dAbs}</span>`;
+      const dKey = `${year}-${String(month).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+      const dayRec = currentClass.attendanceRecords?.[dKey]?.records;
+      let badgeHtml = "";
+      if (isOff) {
+        badgeHtml = `<span class="day-name" style="${isActive ? 'color:#ffffff;' : 'color:#dc2626; font-weight:700;'}">X (ឈប់)</span>`;
       } else {
-        badgeHtml = `<span class="day-name">${dayName}</span>`;
+        let dAbs = 0;
+        if (dayRec && typeof dayRec === "object") {
+          Object.values(dayRec).forEach(v => {
+            if (!v) return;
+            const sVal = (typeof v === "object" && v !== null) ? v.status : v;
+            if (sVal === "L" || sVal === "A") dAbs++;
+          });
+        }
+        if (dAbs > 0) {
+          badgeHtml = `<span class="day-name" style="${isActive ? 'color:#fde047; font-weight:700;' : 'color:#d97706; font-weight:700;'}">អវត្ត:${dAbs}</span>`;
+        } else {
+          badgeHtml = `<span class="day-name">${dayName}</span>`;
+        }
       }
+
+      dayPillsHtml += `
+        <div class="${pillClass}" onclick="selectDailyAttendanceDay(${d})" title="${tip}">
+          <span class="day-num">${d}</span>
+          ${badgeHtml}
+        </div>
+      `;
     }
 
-    dayPillsHtml += `
-      <div class="${pillClass}" onclick="selectDailyAttendanceDay(${d})" title="${tip}">
-        <span class="day-num">${d}</span>
-        ${badgeHtml}
+    let html = `
+      <!-- Official Print Header (Visible strictly in print) -->
+      <div class="daily-print-header" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+          <div style="text-align: left; font-size: 11px; line-height: 1.5; font-family: var(--font-battambang);">
+            មន្ទីរអប់រំ យុវជន និងកីឡា ខេត្តតាកែវ<br>
+            ការិយាល័យអប់រំ យុវជន និងកីឡា ស្រុកព្រៃកប្បាស<br>
+            <strong>សាលាបឋមសិក្សា បាន្លួង</strong>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-family: var(--font-moul); font-size: 12px; color: #000080;">ព្រះរាជាណាចក្រកម្ពុជា</div>
+            <div style="font-family: var(--font-moul); font-size: 10.5px; color: #000080; margin-top: 2px;">ជាតិ សាសនា ព្រះមហាក្សត្រ</div>
+          </div>
+        </div>
+        <div style="text-align: center; margin: 10px 0;">
+          <h2 style="font-family: var(--font-moul); font-size: 15px; color: #002060; margin: 0;">បញ្ជីវត្តមានសិស្សប្រចាំថ្ងៃ</h2>
+          <div style="font-size: 12px; font-weight: 600; margin-top: 4px; font-family: var(--font-battambang);">
+            ថ្នាក់ទី៖ <strong>${currentClass.grade}</strong> | ថ្ងៃទី <strong>${day}</strong> ខែ <strong>${monthName}</strong> ឆ្នាំ <strong>${year}</strong> | ឆ្នាំសិក្សា៖ <strong>${currentClass.academicYear}</strong>
+          </div>
+        </div>
       </div>
+
+      <!-- Header Meta & Clean Live Stats -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
+        <div>
+          <h3 style="font-size: 16px; font-weight: 700; color: var(--primary); margin: 0;">
+            វត្តមានប្រចាំថ្ងៃ៖ ${currentClass.grade} (ថ្ងៃទី ${day} ខែ ${monthName} ឆ្នាំ ${year})
+          </h3>
+          <p style="font-size: 12px; color: #64748b; margin-top: 4px;">
+            គ្រូប្រចាំថ្នាក់: <strong>${currentClass.teacher}</strong> | ឆ្នាំសិក្សា: <strong>${currentClass.academicYear}</strong> | កាលបរិច្ឆេទ: <code>${dateStr}</code>
+          </p>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center;" class="no-print">
+          <button type="button" class="btn btn-action-save" onclick="saveDailyAttendanceExplicit()" title="រក្សាទុកវត្តមាន និងបញ្ជូនចូលវត្តមានប្រចាំខែ">
+            <i class="fa-solid fa-floppy-disk" style="font-size: 14px;"></i> រក្សាទុកវត្តមាន
+          </button>
+          <button type="button" class="btn btn-action-outline" onclick="markAllDailyPresent()" title="កំណត់សិស្សទាំងអស់ក្នុងថ្នាក់ជា «វត្តមាន» ដោយស្វ័យប្រវត្តិ">
+            <i class="fa-solid fa-check-double" style="color: #16a34a; font-size: 14px;"></i> វត្តមានទាំងអស់
+          </button>
+          <button type="button" class="btn btn-action-outline" onclick="switchTab('attendance_monthly')" title="មើលតារាងវត្តមានប្រចាំខែ">
+            <i class="fa-solid fa-calendar-days" style="color: #2563eb; font-size: 14px;"></i> មើលវត្តមានប្រចាំខែ
+          </button>
+          <button type="button" class="btn btn-action-amber" onclick="printDailyAttendance()" title="បោះពុម្ពបញ្ជីវត្តមានប្រចាំថ្ងៃ">
+            <i class="fa-solid fa-print" style="font-size: 14px;"></i> បោះពុម្ព
+          </button>
+          <button type="button" class="btn btn-action-danger" onclick="clearDailyAttendanceData()" title="សម្អាតទិន្នន័យវត្តមានប្រចាំថ្ងៃនេះ">
+            <i class="fa-solid fa-trash-can" style="color: #dc2626; font-size: 14px;"></i> សម្អាតទិន្នន័យ
+          </button>
+          <button type="button" class="btn btn-action-undo" onclick="undoDailyAttendanceData()" title="ត្រឡប់ទិន្នន័យវត្តមានប្រចាំថ្ងៃមកវិញ">
+            <i class="fa-solid fa-rotate-left" style="color: #4338ca; font-size: 14px;"></i> ត្រឡប់មកវិញ (Undo)
+          </button>
+        </div>
+      </div>
+
+      <!-- Live Stat Badges Bar -->
+      <div style="display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap;">
+        <div class="att-stat-pill total">
+          <i class="fa fa-users" style="color: #64748b;"></i> សិស្សសរុប: <strong>${totalStudents}</strong> នាក់
+        </div>
+        <div class="att-stat-pill present">
+          <i class="fa fa-circle-check" style="color: #16a34a;"></i> វត្តមាន (✓): <strong style="color: #16a34a;">${countP}</strong> នាក់
+        </div>
+        <div class="att-stat-pill excused">
+          <i class="fa fa-clock" style="color: #d97706;"></i> មានច្បាប់ (P): <strong style="color: #d97706;">${countL}</strong> នាក់
+        </div>
+        <div class="att-stat-pill unexcused">
+          <i class="fa fa-circle-xmark" style="color: #dc2626;"></i> ឥតច្បាប់ (A): <strong style="color: #dc2626;">${countA}</strong> នាក់
+        </div>
+        <div class="att-stat-pill present" style="background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe;">
+          <i class="fa fa-chart-pie"></i> អត្រាវត្តមាន: <strong>${attRate}%</strong>
+        </div>
+      </div>
+
+      <!-- Quick Day Selector Bar (តាមថ្ងៃនីមួយៗនៃខែ) -->
+      <div class="att-day-picker-bar no-print">
+        <button type="button" class="att-day-nav-btn" onclick="navigateDailyAttendanceDay(-1)" title="ថ្ងៃមុន">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <div class="att-day-pills-scroll">
+          ${dayPillsHtml}
+        </div>
+        <button type="button" class="att-day-nav-btn" onclick="navigateDailyAttendanceDay(1)" title="ថ្ងៃបន្ទាប់">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <!-- Info Banner: Attendance Symbol Mapping Pattern (លំនាំសញ្ញាវត្តមាន) -->
+      <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 9px 14px; margin-bottom: 14px; font-size: 12.5px; color: #166534; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;" class="no-print">
+        <div>
+          <i class="fa-solid fa-circle-check" style="color: #16a34a; margin-right: 6px;"></i>
+          <strong>លំនាំសញ្ញាវត្តមានស្វ័យប្រវត្តិ៖</strong>
+          រើស <strong>«✓ វត្តមាន»</strong> លោតចេញសញ្ញា <strong><code style="color: #009900; font-weight: 700; font-size: 13.5px; background: #ffffff; padding: 1px 6px; border: 1px solid #86efac; border-radius: 4px;">✓</code></strong> |
+          រើស <strong>«P មានច្បាប់»</strong> លោតចេញអក្សរ <strong><code style="color: #d97706; font-weight: 700; font-size: 13.5px; background: #ffffff; padding: 1px 6px; border: 1px solid #fde68a; border-radius: 4px;">P</code></strong> |
+          រើស <strong>«A ឥតច្បាប់»</strong> លោតចេញអក្សរ <strong><code style="color: #c00000; font-weight: 700; font-size: 13.5px; background: #ffffff; padding: 1px 6px; border: 1px solid #fecaca; border-radius: 4px;">A</code></strong> ក្នុងតារាងវត្តមានប្រចាំខែ
+        </div>
+        <div style="font-size: 11.5px; color: #15803d;">
+          <i class="fa-solid fa-cloud-arrow-up"></i> សមកាលកម្មស្វ័យប្រវត្តទៅ <strong>វត្តមានប្រចាំខែ</strong>
+        </div>
+      </div>
+
+      <!-- Daily Attendance Table -->
+      <table class="data-table" style="font-size: 12px;">
+        <thead>
+          <tr>
+            <th style="width: 45px;">ល.រ</th>
+            <th style="width: 75px;">អត្តលេខ</th>
+            <th style="text-align: left; min-width: 170px;">គោត្តនាម និង នាម</th>
+            <th style="width: 55px;">ភេទ</th>
+            <th style="width: 250px;">ស្ថានភាពវត្តមាន (ចុចរើស)</th>
+            <th>មូលហេតុ / កំណត់សម្គាល់</th>
+          </tr>
+        </thead>
+        <tbody>
     `;
-  }
 
-  let html = `
-    <!-- Official Print Header (Visible strictly in print) -->
-    <div class="daily-print-header" style="display: none;">
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
-        <div style="text-align: left; font-size: 11px; line-height: 1.5; font-family: var(--font-battambang);">
-          មន្ទីរអប់រំ យុវជន និងកីឡា ខេត្តតាកែវ<br>
-          ការិយាល័យអប់រំ យុវជន និងកីឡា ស្រុកព្រៃកប្បាស<br>
-          <strong>សាលាបឋមសិក្សា បាន្លួង</strong>
-        </div>
-        <div style="text-align: center;">
-          <div style="font-family: var(--font-moul); font-size: 12px; color: #000080;">ព្រះរាជាណាចក្រកម្ពុជា</div>
-          <div style="font-family: var(--font-moul); font-size: 10.5px; color: #000080; margin-top: 2px;">ជាតិ សាសនា ព្រះមហាក្សត្រ</div>
-        </div>
-      </div>
-      <div style="text-align: center; margin: 10px 0;">
-        <h2 style="font-family: var(--font-moul); font-size: 15px; color: #002060; margin: 0;">បញ្ជីវត្តមានសិស្សប្រចាំថ្ងៃ</h2>
-        <div style="font-size: 12px; font-weight: 600; margin-top: 4px; font-family: var(--font-battambang);">
-          ថ្នាក់ទី៖ <strong>${currentClass.grade}</strong> | ថ្ងៃទី <strong>${day}</strong> ខែ <strong>${monthName}</strong> ឆ្នាំ <strong>${year}</strong> | ឆ្នាំសិក្សា៖ <strong>${currentClass.academicYear}</strong>
-        </div>
-      </div>
-    </div>
+    students.forEach((s, idx) => {
+      const status = s.todayStatus || "P";
+      const reason = s.todayReason || "";
 
-    <!-- Header Meta & Clean Live Stats -->
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
-      <div>
-        <h3 style="font-size: 16px; font-weight: 700; color: var(--primary); margin: 0;">
-          វត្តមានប្រចាំថ្ងៃ៖ ${currentClass.grade} (ថ្ងៃទី ${day} ខែ ${monthName} ឆ្នាំ ${year})
-        </h3>
-        <p style="font-size: 12px; color: #64748b; margin-top: 4px;">
-          គ្រូប្រចាំថ្នាក់: <strong>${currentClass.teacher}</strong> | ឆ្នាំសិក្សា: <strong>${currentClass.academicYear}</strong> | កាលបរិច្ឆេទ: <code>${dateStr}</code>
-        </p>
-      </div>
-      <div style="display: flex; gap: 8px; align-items: center;" class="no-print">
-        <button type="button" class="btn btn-action-save" onclick="saveDailyAttendanceExplicit()" title="រក្សាទុកវត្តមាន និងបញ្ជូនចូលវត្តមានប្រចាំខែ">
-          <i class="fa-solid fa-floppy-disk" style="font-size: 14px;"></i> រក្សាទុកវត្តមាន
-        </button>
-        <button type="button" class="btn btn-action-outline" onclick="markAllDailyPresent()" title="កំណត់សិស្សទាំងអស់ក្នុងថ្នាក់ជា «វត្តមាន» ដោយស្វ័យប្រវត្តិ">
-          <i class="fa-solid fa-check-double" style="color: #16a34a; font-size: 14px;"></i> វត្តមានទាំងអស់
-        </button>
-        <button type="button" class="btn btn-action-outline" onclick="switchTab('attendance_monthly')" title="មើលតារាងវត្តមានប្រចាំខែ">
-          <i class="fa-solid fa-calendar-days" style="color: #2563eb; font-size: 14px;"></i> មើលវត្តមានប្រចាំខែ
-        </button>
-        <button type="button" class="btn btn-action-amber" onclick="printDailyAttendance()" title="បោះពុម្ពបញ្ជីវត្តមានប្រចាំថ្ងៃ">
-          <i class="fa-solid fa-print" style="font-size: 14px;"></i> បោះពុម្ព
-        </button>
-        <button type="button" class="btn btn-action-danger" onclick="clearDailyAttendanceData()" title="សម្អាតទិន្នន័យវត្តមានប្រចាំថ្ងៃនេះ">
-          <i class="fa-solid fa-trash-can" style="color: #dc2626; font-size: 14px;"></i> សម្អាតទិន្នន័យ
-        </button>
-        <button type="button" class="btn btn-action-undo" onclick="undoDailyAttendanceData()" title="ត្រឡប់ទិន្នន័យវត្តមានប្រចាំថ្ងៃមកវិញ">
-          <i class="fa-solid fa-rotate-left" style="color: #4338ca; font-size: 14px;"></i> ត្រឡប់មកវិញ (Undo)
-        </button>
-      </div>
-    </div>
-
-    <!-- Live Stat Badges Bar -->
-    <div style="display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap;">
-      <div class="att-stat-pill total">
-        <i class="fa fa-users" style="color: #64748b;"></i> សិស្សសរុប: <strong>${totalStudents}</strong> នាក់
-      </div>
-      <div class="att-stat-pill present">
-        <i class="fa fa-circle-check" style="color: #16a34a;"></i> វត្តមាន (✓): <strong style="color: #16a34a;">${countP}</strong> នាក់
-      </div>
-      <div class="att-stat-pill excused">
-        <i class="fa fa-clock" style="color: #d97706;"></i> មានច្បាប់ (P): <strong style="color: #d97706;">${countL}</strong> នាក់
-      </div>
-      <div class="att-stat-pill unexcused">
-        <i class="fa fa-circle-xmark" style="color: #dc2626;"></i> ឥតច្បាប់ (A): <strong style="color: #dc2626;">${countA}</strong> នាក់
-      </div>
-      <div class="att-stat-pill present" style="background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe;">
-        <i class="fa fa-chart-pie"></i> អត្រាវត្តមាន: <strong>${attRate}%</strong>
-      </div>
-    </div>
-
-    <!-- Quick Day Selector Bar (តាមថ្ងៃនីមួយៗនៃខែ) -->
-    <div class="att-day-picker-bar no-print">
-      <button type="button" class="att-day-nav-btn" onclick="navigateDailyAttendanceDay(-1)" title="ថ្ងៃមុន">
-        <i class="fa-solid fa-chevron-left"></i>
-      </button>
-      <div class="att-day-pills-scroll">
-        ${dayPillsHtml}
-      </div>
-      <button type="button" class="att-day-nav-btn" onclick="navigateDailyAttendanceDay(1)" title="ថ្ងៃបន្ទាប់">
-        <i class="fa-solid fa-chevron-right"></i>
-      </button>
-    </div>
-
-    <!-- Info Banner: Attendance Symbol Mapping Pattern (លំនាំសញ្ញាវត្តមាន) -->
-    <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 9px 14px; margin-bottom: 14px; font-size: 12.5px; color: #166534; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;" class="no-print">
-      <div>
-        <i class="fa-solid fa-circle-check" style="color: #16a34a; margin-right: 6px;"></i>
-        <strong>លំនាំសញ្ញាវត្តមានស្វ័យប្រវត្តិ៖</strong>
-        រើស <strong>«✓ វត្តមាន»</strong> លោតចេញសញ្ញា <strong><code style="color: #009900; font-weight: 700; font-size: 13.5px; background: #ffffff; padding: 1px 6px; border: 1px solid #86efac; border-radius: 4px;">✓</code></strong> |
-        រើស <strong>«P មានច្បាប់»</strong> លោតចេញអក្សរ <strong><code style="color: #d97706; font-weight: 700; font-size: 13.5px; background: #ffffff; padding: 1px 6px; border: 1px solid #fde68a; border-radius: 4px;">P</code></strong> |
-        រើស <strong>«A ឥតច្បាប់»</strong> លោតចេញអក្សរ <strong><code style="color: #c00000; font-weight: 700; font-size: 13.5px; background: #ffffff; padding: 1px 6px; border: 1px solid #fecaca; border-radius: 4px;">A</code></strong> ក្នុងតារាងវត្តមានប្រចាំខែ
-      </div>
-      <div style="font-size: 11.5px; color: #15803d;">
-        <i class="fa-solid fa-cloud-arrow-up"></i> សមកាលកម្មស្វ័យប្រវត្តទៅ <strong>វត្តមានប្រចាំខែ</strong>
-      </div>
-    </div>
-
-    <!-- Daily Attendance Table -->
-    <table class="data-table" style="font-size: 12px;">
-      <thead>
+      html += `
         <tr>
-          <th style="width: 45px;">ល.រ</th>
-          <th style="width: 75px;">អត្តលេខ</th>
-          <th style="text-align: left; min-width: 170px;">គោត្តនាម និង នាម</th>
-          <th style="width: 55px;">ភេទ</th>
-          <th style="width: 250px;">ស្ថានភាពវត្តមាន (ចុចរើស)</th>
-          <th>មូលហេតុ / កំណត់សម្គាល់</th>
+          <td>${idx + 1}</td>
+          <td>${s.studentId || "-"}</td>
+          <td class="text-left" style="font-weight: 600;">${s.fullName}</td>
+          <td>${s.gender === "ស្រី" ? '<span class="gender-badge female">ស្រី</span>' : '<span class="gender-badge male">ប្រុស</span>'}</td>
+          <td>
+            <div style="display: flex; justify-content: center; gap: 6px;">
+              <button type="button" class="att-status-btn ${status === 'P' ? 'present' : ''}" onclick="setDailyStudentStatus(${s.num}, 'P')" title="វត្តមាន (បញ្ជូនសញ្ញា ✓ ទៅវត្តមានប្រចាំខែ)">
+                ✓ វត្តមាន
+              </button>
+              <button type="button" class="att-status-btn ${status === 'L' ? 'excused' : ''}" onclick="setDailyStudentStatus(${s.num}, 'L')" title="មានច្បាប់ (បញ្ជូនអក្សរ P ទៅវត្តមានប្រចាំខែ)">
+                P មានច្បាប់
+              </button>
+              <button type="button" class="att-status-btn ${status === 'A' ? 'unexcused' : ''}" onclick="setDailyStudentStatus(${s.num}, 'A')" title="ឥតច្បាប់ (បញ្ជូនអក្សរ A ទៅវត្តមានប្រចាំខែ)">
+                A ឥតច្បាប់
+              </button>
+            </div>
+          </td>
+          <td>
+            <input type="text" class="form-control" style="font-size: 11px; padding: 3px 8px;" placeholder="មូលហេតុ (ឧ. ឈឺ, ធុរៈ...)" value="${escapeHtml(reason)}" oninput="setDailyStudentReason(${s.num}, this.value)">
+          </td>
         </tr>
-      </thead>
-      <tbody>
-  `;
-
-  students.forEach((s, idx) => {
-    const status = s.todayStatus || "P";
-    const reason = s.todayReason || "";
+      `;
+    });
 
     html += `
-      <tr>
-        <td>${idx + 1}</td>
-        <td>${s.studentId || "-"}</td>
-        <td class="text-left" style="font-weight: 600;">${s.fullName}</td>
-        <td>${s.gender === "ស្រី" ? '<span class="gender-badge female">ស្រី</span>' : '<span class="gender-badge male">ប្រុស</span>'}</td>
-        <td>
-          <div style="display: flex; justify-content: center; gap: 6px;">
-            <button type="button" class="att-status-btn ${status === 'P' ? 'present' : ''}" onclick="setDailyStudentStatus(${s.num}, 'P')" title="វត្តមាន (បញ្ជូនសញ្ញា ✓ ទៅវត្តមានប្រចាំខែ)">
-              ✓ វត្តមាន
-            </button>
-            <button type="button" class="att-status-btn ${status === 'L' ? 'excused' : ''}" onclick="setDailyStudentStatus(${s.num}, 'L')" title="មានច្បាប់ (បញ្ជូនអក្សរ P ទៅវត្តមានប្រចាំខែ)">
-              P មានច្បាប់
-            </button>
-            <button type="button" class="att-status-btn ${status === 'A' ? 'unexcused' : ''}" onclick="setDailyStudentStatus(${s.num}, 'A')" title="ឥតច្បាប់ (បញ្ជូនអក្សរ A ទៅវត្តមានប្រចាំខែ)">
-              A ឥតច្បាប់
-            </button>
-          </div>
-        </td>
-        <td>
-          <input type="text" class="form-control" style="font-size: 11px; padding: 3px 8px;" placeholder="មូលហេតុ (ឧ. ឈឺ, ធុរៈ...)" value="${escapeHtml(reason)}" oninput="setDailyStudentReason(${s.num}, this.value)">
-        </td>
-      </tr>
+        </tbody>
+      </table>
+
+      <!-- Official Print Signatures (Visible strictly in print) -->
+      <div class="daily-print-signatures" style="display: none;">
+        <div style="text-align: center; width: 220px; font-family: var(--font-battambang); font-size: 11px;">
+          <div>បានឃើញ និងឯកភាព</div>
+          <div style="font-weight: 700; margin-top: 2px;">នាយកសាលា</div>
+          <div style="height: 55px;"></div>
+          <div style="font-weight: 700;">${state.db?.schoolInfo?.principalName || "ផែត សារុន"}</div>
+        </div>
+        <div style="text-align: center; width: 220px; font-family: var(--font-battambang); font-size: 11px;">
+          <div>ថ្ងៃទី....... ខែ....... ឆ្នាំ ${toKhmerNum(year)}</div>
+          <div style="font-weight: 700; margin-top: 2px;">គ្រូប្រចាំថ្នាក់</div>
+          <div style="height: 55px;"></div>
+          <div style="font-weight: 700;">${currentClass.teacher || ""}</div>
+        </div>
+      </div>
+
+      <!-- Bottom Save Attendance Panel -->
+      <div style="margin-top: 16px; padding: 12px 18px; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <div style="font-size: 12.5px; color: #475569;">
+          <i class="fa fa-info-circle" style="color: #2563eb;"></i> ពេលជ្រើសរើសវត្តមានរួចរាល់ សូមចុច <strong>«រក្សាទុកវត្តមាន»</strong> ដើម្បីឱ្យទិន្នន័យលោតចូលក្នុង <strong>«វត្តមានប្រចាំខែ»</strong> ដោយស្វ័យប្រវត្តិ។
+        </div>
+        <div style="display: flex; gap: 10px; align-items: center;" class="no-print">
+          <button type="button" class="btn btn-action-save" onclick="saveDailyAttendanceExplicit()" style="padding: 7px 18px;" title="រក្សាទុកវត្តមាន និងបញ្ជូនចូលវត្តមានប្រចាំខែ">
+            <i class="fa-solid fa-floppy-disk"></i> រក្សាទុកវត្តមាន
+          </button>
+          <button type="button" class="btn btn-action-outline" onclick="switchTab('attendance_monthly')" style="padding: 7px 16px;">
+            <i class="fa-solid fa-calendar-days" style="color: #2563eb;"></i> មើលវត្តមានប្រចាំខែ <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
     `;
-  });
 
-  html += `
-      </tbody>
-    </table>
-
-    <!-- Official Print Signatures (Visible strictly in print) -->
-    <div class="daily-print-signatures" style="display: none;">
-      <div style="text-align: center; width: 220px; font-family: var(--font-battambang); font-size: 11px;">
-        <div>បានឃើញ និងឯកភាព</div>
-        <div style="font-weight: 700; margin-top: 2px;">នាយកសាលា</div>
-        <div style="height: 55px;"></div>
-        <div style="font-weight: 700;">${state.db?.schoolInfo?.principalName || "ផែត សារុន"}</div>
-      </div>
-      <div style="text-align: center; width: 220px; font-family: var(--font-battambang); font-size: 11px;">
-        <div>ថ្ងៃទី....... ខែ....... ឆ្នាំ ${toKhmerNum(year)}</div>
-        <div style="font-weight: 700; margin-top: 2px;">គ្រូប្រចាំថ្នាក់</div>
-        <div style="height: 55px;"></div>
-        <div style="font-weight: 700;">${currentClass.teacher || ""}</div>
-      </div>
-    </div>
-
-    <!-- Bottom Save Attendance Panel -->
-    <div style="margin-top: 16px; padding: 12px 18px; background: #f8fafc; border: 1px solid var(--border); border-radius: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-      <div style="font-size: 12.5px; color: #475569;">
-        <i class="fa fa-info-circle" style="color: #2563eb;"></i> ពេលជ្រើសរើសវត្តមានរួចរាល់ សូមចុច <strong>«រក្សាទុកវត្តមាន»</strong> ដើម្បីឱ្យទិន្នន័យលោតចូលក្នុង <strong>«វត្តមានប្រចាំខែ»</strong> ដោយស្វ័យប្រវត្តិ។
-      </div>
-      <div style="display: flex; gap: 10px; align-items: center;" class="no-print">
-        <button type="button" class="btn btn-action-save" onclick="saveDailyAttendanceExplicit()" style="padding: 7px 18px;" title="រក្សាទុកវត្តមាន និងបញ្ជូនចូលវត្តមានប្រចាំខែ">
-          <i class="fa-solid fa-floppy-disk"></i> រក្សាទុកវត្តមាន
-        </button>
-        <button type="button" class="btn btn-action-outline" onclick="switchTab('attendance_monthly')" style="padding: 7px 16px;">
-          <i class="fa-solid fa-calendar-days" style="color: #2563eb;"></i> មើលវត្តមានប្រចាំខែ <i class="fa-solid fa-arrow-right"></i>
-        </button>
-      </div>
-    </div>
-  `;
-
-  container.innerHTML = html;
-  initMovableApproval('movableApprovalBlockMonthly', 'monthly');
-
-  // Smoothly scroll active day pill into center view
-  try {
-    const activePill = container.querySelector(".att-day-pill.active");
-    if (activePill && typeof activePill.scrollIntoView === "function") {
-      activePill.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    container.innerHTML = html;
+    if (typeof initMovableApproval === "function") {
+      try {
+        initMovableApproval('movableApprovalBlockMonthly', 'monthly');
+      } catch(e) {}
     }
-  } catch(e) {}
+
+    // Smoothly scroll active day pill into center view
+    try {
+      const activePill = container.querySelector(".att-day-pill.active");
+      if (activePill && typeof activePill.scrollIntoView === "function") {
+        activePill.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+      }
+    } catch(e) {}
+  } catch (err) {
+    console.error("Error in renderDailyAttendance:", err);
+    if (container) {
+      container.innerHTML = `
+        <div style="text-align: center; padding: 40px 20px; color: #dc2626; background: #fff; border-radius: 8px; border: 1px solid #fecaca;">
+          <i class="fa-solid fa-triangle-exclamation" style="font-size: 32px; margin-bottom: 12px;"></i>
+          <h4 style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">មានបញ្ហាក្នុងការបង្ហាញវត្តមានប្រចាំថ្ងៃ</h4>
+          <p style="font-size: 13px; color: #64748b; margin-bottom: 16px;">${typeof escapeHtml === "function" ? escapeHtml(err.message || String(err)) : (err.message || String(err))}</p>
+          <button type="button" class="btn btn-action-outline" onclick="renderDailyAttendance()">
+            <i class="fa-solid fa-rotate-right"></i> ព្យាយាមម្តងទៀត
+          </button>
+        </div>
+      `;
+    }
+  }
 }
 
 function setDailyStudentStatus(num, status) {
@@ -12744,13 +12791,16 @@ function renderMonthlyReport() {
   let absentCount = 0;
   if (currentClass.attendanceRecords && currentClass.attendanceRecords[monthKey]) {
     const recs = currentClass.attendanceRecords[monthKey];
-    Object.values(recs).forEach(dayObj => {
-      if (typeof dayObj === 'object') {
-        Object.values(dayObj).forEach(status => {
-          if (status === 'A' || status === 'P' || status === 'អ') absentCount++;
-        });
-      }
-    });
+    if (recs && typeof recs === 'object') {
+      Object.values(recs).forEach(dayObj => {
+        if (dayObj && typeof dayObj === 'object') {
+          Object.values(dayObj).forEach(status => {
+            const st = (typeof status === 'object' && status !== null) ? status.status : status;
+            if (st === 'A' || st === 'P' || st === 'អ') absentCount++;
+          });
+        }
+      });
+    }
   }
 
   // Standard sessions in a month: 22 teaching days * 2 sessions = 44 sessions per student
